@@ -1,6 +1,4 @@
 #!/bin/bash
-cd backend
-
 echo "deno fmt"
 deno fmt
 

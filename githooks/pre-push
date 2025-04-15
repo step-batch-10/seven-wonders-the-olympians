@@ -1,6 +1,4 @@
 #!/bin/bash
-cd backend
-
 deno fmt
 
 deno lint
