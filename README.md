@@ -1,4 +1,4 @@
-# 7 Wonders
+# 7 Wonders (The Olympians)
 
 **7 Wonders** is a digital, web-based implementation of the popular card
 drafting board game _7 Wonders_, where players lead an ancient civilization by
