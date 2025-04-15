@@ -9,7 +9,8 @@ const createApp = (): Hono => {
     .get("/", serveStatic({ path: "public/index.html" }))
     .get("/test", (ctx: Context) => {
       return ctx.text("Welcome to 7 wonders!");
-    });
+    })
+    .use(serveStatic({root: "public/"}));
 
   return app;
 };

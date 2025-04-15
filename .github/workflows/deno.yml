@@ -19,7 +19,7 @@ permissions:
   contents: read
 
 jobs:
-  test and deploy:
+  test-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
