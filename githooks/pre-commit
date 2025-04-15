@@ -1,0 +1,18 @@
+#!/bin/bash
+cd backend
+
+echo "deno fmt"
+deno fmt
+
+echo "deno lint"
+deno lint
+if [ $? -ne 0 ]; then
+    echo "Lint check failed."
+    exit 1
+fi
+
+deno test -A
+if [ $? -ne 0 ]; then
+    echo "Tests failed."
+    exit 1
+fi
