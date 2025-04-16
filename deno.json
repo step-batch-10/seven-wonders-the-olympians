@@ -23,6 +23,7 @@
   "fmt": {
     "indentWidth": 2,
     "semiColons": true,
-    "lineWidth": 80
+    "lineWidth": 80,
+    "exclude": ["**/*.md"]
   }
 }
