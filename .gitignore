@@ -1,3 +1,4 @@
-.vscode/
-.DS_Store/
-coverage/
+.vscode
+.DS_Store
+coverage
+public/.DS_Store
