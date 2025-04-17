@@ -15,6 +15,7 @@ export const registerUser = async (ctx) => {
   const player = new Player(name.name);
   let game;
   playerMap.set(player.playerId, player);
+
   if (waitingGames.size === 0) {
     game = new Game(4, player);
     waitingGames.add(game.gameID);
