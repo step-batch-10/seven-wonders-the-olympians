@@ -44,6 +44,6 @@ jobs:
       - name: QA deploy
         uses: denoland/deployctl@v1
         with:
-          project: "seven-wonders-qa"
+          project: "seven-wonders-dev"
           entrypoint: "main.ts"
           root: "."
