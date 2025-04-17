@@ -187,7 +187,7 @@ describe("playerReady", () => {
         userId: { game: null },
         userId2: { game: null },
         userId3: { game: null },
-        userId4: { game: null }
+        userId4: { game: null },
       },
       waitQueue: ["userId", "userId2", "userId3", "userId4"],
       req: {
