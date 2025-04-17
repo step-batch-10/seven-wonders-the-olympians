@@ -1,10 +1,8 @@
-import type { Context } from "hono";
-
-export const sendRedirect = (ctx: Context, url: string) => {
+export const sendRedirect = (ctx, url) => {
   return ctx.redirect(url, 303);
 };
 
-export const auth = async (ctx: Context, next: () => Promise<void>) => {
+export const auth = async (ctx, next) => {
   if (ctx.getCookie(ctx, "name") === undefined) {
     return sendRedirect(ctx, "/login.html");
   }
@@ -12,11 +10,11 @@ export const auth = async (ctx: Context, next: () => Promise<void>) => {
   return await next();
 };
 
-export const fetchUserName = (ctx: Context) => {
+export const fetchUserName = (ctx) => {
   return ctx.text(ctx.getCookie(ctx, "name") || "Guest");
 };
 
-export const registerUser = async (ctx: Context) => {
+export const registerUser = async (ctx) => {
   const name = await ctx.req.json();
   ctx.setCookie(ctx, "name", name.name);
   ctx.users[name.name] = { game: null };
@@ -24,12 +22,12 @@ export const registerUser = async (ctx: Context) => {
 
   return sendRedirect(ctx, "/user/waiting_room.html");
 };
-const initGame = (ctx: Context) => {
+const initGame = (ctx) => {
   const player = ctx.waitQueue.pop();
   ctx.users[player].game = "hii";
 };
 
-export const playerReady = (ctx: Context) => {
+export const playerReady = (ctx) => {
   if (ctx.users[ctx.user].game) {
     return sendRedirect(ctx, "/game/");
   }

@@ -1,4 +1,4 @@
-import { createApp } from "./src/app.ts";
+import { createApp } from "./src/app.js";
 import type { Hono } from "hono";
 export type User = {
   game: string | null;

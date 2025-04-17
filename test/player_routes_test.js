@@ -4,7 +4,7 @@ import {
   playerReady,
   registerUser,
   sendRedirect,
-} from "../src/routes/player_route.ts";
+} from "../src/routes/player_route.js";
 import { describe, it } from "jsr:@std/testing/bdd";
 import { assertEquals } from "jsr:@std/assert/equals";
 

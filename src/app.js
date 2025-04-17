@@ -1,20 +1,18 @@
 import { Hono } from "hono";
 import { serveStatic } from "hono/deno";
-import type { Context } from "hono";
 import {
   auth,
   fetchUserName,
   playerReady,
   registerUser,
-} from "./routes/player_route.ts";
+} from "./routes/player_route.js";
 import { getCookie, setCookie } from "hono/cookie";
-import { User } from "../main.ts";
 const createApp = (
-  users: { [key: string]: User },
-  waitQueue: string[],
-): Hono => {
+  users,
+  waitQueue
+) => {
   const app = new Hono();
-  app.use("*", async (ctx: Context, nxt) => {
+  app.use("*", async (ctx, nxt) => {
     ctx.getCookie = getCookie;
     ctx.setCookie = setCookie;
     ctx.users = users;
@@ -29,7 +27,7 @@ const createApp = (
   app.get("/user/name", fetchUserName);
   app
     .get("/", serveStatic({ path: "public/index.html" }))
-    .get("/test", (ctx: Context) => {
+    .get("/test", (ctx) => {
       return ctx.text("Welcome to 7 wonders!");
     })
     .use(serveStatic({ root: "public/" }));

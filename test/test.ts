@@ -1,6 +1,6 @@
 import { assertEquals } from "assert";
 import { describe, it } from "test/bdd";
-import { createApp } from "../src/app.ts";
+import { createApp } from "../src/app.js";
 import type { Hono } from "hono";
 
 type User = {
