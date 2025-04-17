@@ -3,6 +3,7 @@ import { serveStatic } from "hono/deno";
 import { logger } from "hono/logger";
 import { createAuthRoute } from "./routes/auth_route.js";
 import { createGameRoute } from "./routes/game_route.js";
+import { getPlayerDetails } from "./handlers/game_handlers.js";
 
 const injectContext = (gameMap, playerMap, playerGameMap, waitingGames) => {
   return async (ctx, next) => {
@@ -29,6 +30,7 @@ const createApp = () => {
     .get("/", serveStatic({ path: "public/index.html" }))
     .route("/auth", createAuthRoute())
     .route("/game", createGameRoute())
+    .get("/playerInfo", getPlayerDetails)
     .use(serveStatic({ root: "public/" }));
 
   return app;

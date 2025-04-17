@@ -4,8 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script src="/scripts/game.js"></script>
+    <link rel="stylesheet" href="/styles/game.css" />
   </head>
   <body>
-    <h1>anna game start</h1>
+    <main>
+      <header>
+        <p id="player-name"></p>
+        <div id="settings"></div>
+      </header>
+
+      <div id="other-players"></div>
+
+      <div id="three-players">
+        <div id="left-neighbour" class="neighbour"></div>
+
+        <div id="player-placeholder">
+          <div id="wonder-placeholder"></div>
+        </div>
+
+        <div id="right-neighbour" class="neighbour"></div>
+      </div>
+    </main>
+
+    <template id="neighbour-template">
+      <div class="neighbour-header"></div>
+      <div class="cards"></div>
+      <div class="wonder-stats"></div>
+    </template>
   </body>
 </html>
