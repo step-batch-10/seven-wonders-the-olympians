@@ -3,7 +3,7 @@ const login = async (event) => {
   const data = new FormData(event.target);
   const name = data.get("username");
 
-  const res = await fetch("/login", {
+  const res = await fetch("/auth/login", {
     method: "POST",
     headers: {
       "content-type": "application/json",
