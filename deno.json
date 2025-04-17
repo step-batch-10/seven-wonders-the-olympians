@@ -1,5 +1,6 @@
 {
   "tasks": {
+    "testResults": "rm -rf coverage/ && deno test -A --coverage && deno coverage --html",
     "dev": "deno run -A --watch main.ts",
     "test": "deno test -A",
     "test-coverage": "deno test -A --coverage=coverage",
