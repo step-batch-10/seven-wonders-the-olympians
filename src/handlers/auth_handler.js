@@ -1,43 +1,33 @@
+import { Game } from "../models/game.js";
+import { Player } from "../models/player.js";
+
 export const sendRedirect = (ctx, url) => {
   return ctx.redirect(url, 303);
 };
 
-export const auth = async (ctx, next) => {
-  if (ctx.getCookie(ctx, "name") === undefined) {
-    return sendRedirect(ctx, "/login.html");
-  }
-
-  return await next();
-};
-
-export const fetchUserName = (ctx) => {
-  return ctx.text(ctx.getCookie(ctx, "name") || "Guest");
-};
-
 export const registerUser = async (ctx) => {
+  const waitingGames = ctx.get("waitingGames");
+  const playerGameMap = ctx.get("playerGameMap");
+  const gameMap = ctx.get("gameMap");
+  const playerMap = ctx.get("playerMap");
+
   const name = await ctx.req.json();
-  ctx.setCookie(ctx, "name", name.name);
-  ctx.users[name.name] = { game: null };
-  ctx.waitQueue.push(name.name);
-
-  return sendRedirect(ctx, "/user/waiting_room.html");
-};
-const initGame = (ctx) => {
-  const player = ctx.waitQueue.pop();
-  ctx.users[player].game = "hii";
-};
-
-export const playerReady = (ctx) => {
-  if (ctx.users[ctx.user].game) {
-    return sendRedirect(ctx, "/game/");
+  const player = new Player(name.name);
+  let game;
+  playerMap.set(player.playerId, player);
+  if (waitingGames.size === 0) {
+    game = new Game(4, player);
+    waitingGames.add(game.gameID);
+    playerGameMap.set(player.playerId, game.gameID);
+    gameMap.set(game.gameID, game);
+  } else {
+    game = gameMap.get(Array.from(waitingGames)[0]);
+    game.addPlayer(player);
+    game.isGameFull && waitingGames.clear();
   }
 
-  if (ctx.waitQueue.length === 4) {
-    initGame(ctx);
-    initGame(ctx);
-    initGame(ctx);
-    return sendRedirect(ctx, "/game/");
-  }
+  ctx.setCookie(ctx, "playerID", player.playerId);
+  ctx.setCookie(ctx, "gameID", game.gameID);
 
-  return ctx.text("wait");
+  return sendRedirect(ctx, "/waiting_room.html");
 };

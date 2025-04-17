@@ -14,7 +14,7 @@ describe("Testing the Player class", () => {
   it("Player name should be consistent", () => {
     const p1 = new Player("Alice");
 
-    assertEquals(p1.userName, "Alice");
+    assertEquals(p1.name, "Alice");
   });
 });
 

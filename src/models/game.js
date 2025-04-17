@@ -64,6 +64,13 @@ class Game {
   initAge() {
     this.distributeCards();
   }
+
+  gameData() {
+    return {
+      gameStatus: this.gameStatus,
+      currentAge: this.currentAge,
+    };
+  }
 }
 
 export { Game };

@@ -3,7 +3,8 @@ import { serveStatic } from "hono/deno";
 import { logger } from "hono/logger";
 import { createAuthRoute } from "./routes/auth_route.js";
 import { createGameRoute } from "./routes/game_route.js";
-import { getPlayerDetails } from "./handlers/game_handlers.js";
+import { createPlayerRoute } from "./routes/player_route.js";
+import { getCookie, setCookie } from "hono/cookie";
 
 const injectContext = (gameMap, playerMap, playerGameMap, waitingGames) => {
   return async (ctx, next) => {
@@ -11,6 +12,8 @@ const injectContext = (gameMap, playerMap, playerGameMap, waitingGames) => {
     ctx.set("playerMap", playerMap);
     ctx.set("playerGameMap", playerGameMap);
     ctx.set("waitingGames", waitingGames);
+    ctx.getCookie = getCookie;
+    ctx.setCookie = setCookie;
 
     await next();
   };
@@ -30,8 +33,7 @@ const createApp = () => {
     .get("/", serveStatic({ path: "public/index.html" }))
     .route("/auth", createAuthRoute())
     .route("/game", createGameRoute())
-    .get("/playerInfo", getPlayerDetails)
-    .get("/game", serveStatic({ path: "public/game.html" }))
+    .route("/player", createPlayerRoute())
     .use(serveStatic({ root: "public/" }));
 
   return app;

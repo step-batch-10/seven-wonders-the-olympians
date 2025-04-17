@@ -2,7 +2,7 @@
 import uniqid from "uniqid";
 // import { BaseCard } from "./cards.ts";
 class Player {
-  userName;
+  name;
   playerId;
   rightNeighbor;
   leftNeighbor;
@@ -10,7 +10,7 @@ class Player {
   hand;
 
   constructor(userName) {
-    this.userName = userName;
+    this.name = userName;
     this.playerId = Player.generateUniquePlayerID();
     this.rightNeighbor = null;
     this.leftNeighbor = null;
