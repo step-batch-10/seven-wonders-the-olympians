@@ -1,0 +1,55 @@
+body {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-transform: capitalize;
+}
+
+.OuterCircle {
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  border-radius: 50%;
+  border: 3px dotted black;
+  position: relative;
+}
+
+.innerCircle {
+  width: 60%;
+  height: 30%;
+  border-radius: 50%;
+  background-color: white;
+  top: -10%;
+  position: absolute;
+}
+
+.circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: red;
+}
+.loader {
+  animation: rotate 0.7s ease-in-out infinite;
+}
+.circle:first-child {
+  animation: rotate 0.7s ease-in-out infinite;
+}
+
+@keyframes rotate {
+  to {
+    rotate: 0deg;
+  }
+  from {
+    rotate: 360deg;
+  }
+}
