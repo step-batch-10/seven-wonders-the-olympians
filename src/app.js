@@ -9,7 +9,7 @@ import {
 import { getCookie, setCookie } from "hono/cookie";
 const createApp = (
   users,
-  waitQueue
+  waitQueue,
 ) => {
   const app = new Hono();
   app.use("*", async (ctx, nxt) => {

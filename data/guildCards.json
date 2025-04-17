@@ -1,0 +1,183 @@
+[
+  {
+    "name": "Guild of Builders",
+    "age": 3,
+    "color": "guild",
+    "cost": [],
+    "produces": [
+      { "type": "points", "count": 3 },
+      { "type": "resource", "resource": "wood", "count": 1 },
+      { "type": "resource", "resource": "stone", "count": 1 }
+    ],
+    "effect": {
+      "type": "bonus_per_building",
+      "card_type": "blue",
+      "bonus_per_card": 1
+    },
+    "chain_from": null,
+    "chain_to": [],
+    "type": "guild"
+  },
+  {
+    "name": "Guild of Traders",
+    "age": 3,
+    "color": "guild",
+    "cost": [],
+    "produces": [
+      { "type": "points", "count": 3 },
+      { "type": "resource", "resource": "papyrus", "count": 1 }
+    ],
+    "effect": {
+      "type": "bonus_per_card_type",
+      "card_type": "yellow",
+      "bonus_per_card": 1
+    },
+    "chain_from": null,
+    "chain_to": [],
+    "type": "guild"
+  },
+  {
+    "name": "Guild of Scientists",
+    "age": 3,
+    "color": "guild",
+    "cost": [],
+    "produces": [
+      { "type": "points", "count": 3 },
+      { "type": "resource", "resource": "glass", "count": 1 }
+    ],
+    "effect": {
+      "type": "bonus_per_card_type",
+      "card_type": "green",
+      "bonus_per_card": 1
+    },
+    "chain_from": null,
+    "chain_to": [],
+    "type": "guild"
+  },
+  {
+    "name": "Guild of Patrons",
+    "age": 3,
+    "color": "guild",
+    "cost": [],
+    "produces": [
+      { "type": "points", "count": 3 },
+      { "type": "resource", "resource": "ore", "count": 1 }
+    ],
+    "effect": {
+      "type": "bonus_per_card_type",
+      "card_type": "red",
+      "bonus_per_card": 1
+    },
+    "chain_from": null,
+    "chain_to": [],
+    "type": "guild"
+  },
+  {
+    "name": "Guild of Shipbuilders",
+    "age": 3,
+    "color": "guild",
+    "cost": [],
+    "produces": [
+      { "type": "points", "count": 3 },
+      { "type": "resource", "resource": "wood", "count": 1 }
+    ],
+    "effect": {
+      "type": "bonus_per_building",
+      "card_type": "yellow",
+      "bonus_per_card": 1
+    },
+    "chain_from": null,
+    "chain_to": [],
+    "type": "guild"
+  },
+  {
+    "name": "Guild of Politicians",
+    "age": 3,
+    "color": "guild",
+    "cost": [],
+    "produces": [
+      { "type": "points", "count": 3 },
+      { "type": "resource", "resource": "stone", "count": 1 }
+    ],
+    "effect": {
+      "type": "bonus_per_card_type",
+      "card_type": "blue",
+      "bonus_per_card": 1
+    },
+    "chain_from": null,
+    "chain_to": [],
+    "type": "guild"
+  },
+  {
+    "name": "Guild of Masters",
+    "age": 3,
+    "color": "guild",
+    "cost": [],
+    "produces": [
+      { "type": "points", "count": 3 },
+      { "type": "resource", "resource": "textile", "count": 1 }
+    ],
+    "effect": {
+      "type": "bonus_per_building",
+      "card_type": "red",
+      "bonus_per_card": 1
+    },
+    "chain_from": null,
+    "chain_to": [],
+    "type": "guild"
+  },
+  {
+    "name": "Guild of Architects",
+    "age": 3,
+    "color": "guild",
+    "cost": [],
+    "produces": [
+      { "type": "points", "count": 3 },
+      { "type": "resource", "resource": "clay", "count": 1 }
+    ],
+    "effect": {
+      "type": "bonus_per_card_type",
+      "card_type": "green",
+      "bonus_per_card": 1
+    },
+    "chain_from": null,
+    "chain_to": [],
+    "type": "guild"
+  },
+  {
+    "name": "Guild of Merchants",
+    "age": 3,
+    "color": "guild",
+    "cost": [],
+    "produces": [
+      { "type": "points", "count": 3 },
+      { "type": "resource", "resource": "papyrus", "count": 1 }
+    ],
+    "effect": {
+      "type": "bonus_per_building",
+      "card_type": "yellow",
+      "bonus_per_card": 1
+    },
+    "chain_from": null,
+    "chain_to": [],
+    "type": "guild"
+  },
+  {
+    "name": "Guild of Philosophers",
+    "age": 3,
+    "color": "guild",
+    "cost": [],
+    "produces": [
+      { "type": "points", "count": 3 },
+      { "type": "resource", "resource": "glass", "count": 1 }
+    ],
+    "effect": {
+      "type": "bonus_per_card_type",
+      "card_type": "green",
+      "bonus_per_card": 1
+    },
+    "chain_from": null,
+    "chain_to": [],
+    "type": "guild"
+  }
+]

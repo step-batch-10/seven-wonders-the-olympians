@@ -10,7 +10,7 @@
     "jsr:@std/path@^1.0.8": "1.0.8",
     "jsr:@std/testing@*": "1.0.11",
     "jsr:@std/testing@^1.0.11": "1.0.11",
-    "npm:hono@^4.7.6": "4.7.6"
+    "npm:hono@^4.7.7": "4.7.7"
   },
   "jsr": {
     "@std/assert@1.0.12": {
@@ -46,15 +46,15 @@
     }
   },
   "npm": {
-    "hono@4.7.6": {
-      "integrity": "sha512-564rVzELU+9BRqqx5k8sT2NFwGD3I3Vifdb6P7CmM6FiarOSY+fDC+6B+k9wcCb86ReoayteZP2ki0cRLN1jbw=="
+    "hono@4.7.7": {
+      "integrity": "sha512-2PCpQRbN87Crty8/L/7akZN3UyZIAopSoRxCwRbJgUuV1+MHNFHzYFxZTg4v/03cXUm+jce/qa2VSBZpKBm3Qw=="
     }
   },
   "workspace": {
     "dependencies": [
       "jsr:@std/assert@1",
       "jsr:@std/testing@^1.0.11",
-      "npm:hono@^4.7.6"
+      "npm:hono@^4.7.7"
     ]
   }
 }
