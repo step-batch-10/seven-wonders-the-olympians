@@ -1,35 +1,34 @@
 import { Hono } from "hono";
 import { serveStatic } from "hono/deno";
-import {
-  auth,
-  fetchUserName,
-  playerReady,
-  registerUser,
-} from "./routes/player_route.js";
-import { getCookie, setCookie } from "hono/cookie";
-const createApp = (
-  users,
-  waitQueue,
-) => {
-  const app = new Hono();
-  app.use("*", async (ctx, nxt) => {
-    ctx.getCookie = getCookie;
-    ctx.setCookie = setCookie;
-    ctx.users = users;
-    ctx.waitQueue = waitQueue;
-    ctx.user = ctx.getCookie(ctx, "name");
-    await nxt();
-  });
+import { logger } from "hono/logger";
+import { createAuthRoute } from "./routes/auth_route.js";
+import { createGameRoute } from "./routes/game_route.js";
 
-  app.post("/login", registerUser);
-  app.use("/user/*", auth);
-  app.get("/user/playerReady", playerReady);
-  app.get("/user/name", fetchUserName);
+const injectContext = (gameMap, playerMap, playerGameMap, waitingGames) => {
+  return async (ctx, next) => {
+    ctx.set("gameMap", gameMap);
+    ctx.set("playerMap", playerMap);
+    ctx.set("playerGameMap", playerGameMap);
+    ctx.set("waitingGames", waitingGames);
+
+    await next();
+  };
+};
+
+const createApp = () => {
+  const app = new Hono();
+
+  const gameMap = new Map();
+  const playerMap = new Map();
+  const playerGameMap = new Map();
+  const waitingGames = new Set();
+
   app
+    .use(logger())
+    .use(injectContext(gameMap, playerMap, playerGameMap, waitingGames))
     .get("/", serveStatic({ path: "public/index.html" }))
-    .get("/test", (ctx) => {
-      return ctx.text("Welcome to 7 wonders!");
-    })
+    .route("/auth", createAuthRoute())
+    .route("/game", createGameRoute())
     .use(serveStatic({ root: "public/" }));
 
   return app;
