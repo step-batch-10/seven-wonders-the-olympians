@@ -45,5 +45,5 @@ jobs:
         uses: denoland/deployctl@v1
         with:
           project: "seven-wonders-dev"
-          entrypoint: "main.ts"
+          entrypoint: "main.js"
           root: "."
