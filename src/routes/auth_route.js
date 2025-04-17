@@ -1,5 +1,4 @@
 import { Hono } from "hono";
-import { serveStatic } from "hono/deno";
 import {
   auth,
   fetchUserName,
