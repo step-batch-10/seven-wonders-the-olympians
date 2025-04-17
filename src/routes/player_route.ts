@@ -34,7 +34,7 @@ export const playerReady = (ctx: Context) => {
     return sendRedirect(ctx, "/game/");
   }
 
-  if (ctx.waitQueue.length === 3) {
+  if (ctx.waitQueue.length === 4) {
     initGame(ctx);
     initGame(ctx);
     initGame(ctx);
