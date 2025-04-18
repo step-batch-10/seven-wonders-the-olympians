@@ -8,7 +8,7 @@ const renderWonder = (PlayerWonder) => {
   img.src = `/img/wonders/${PlayerWonder}A.jpeg`;
   img.alt = PlayerWonder;
 
-  wonderPlaceHolder.appendChild(img);
+  wonderPlaceHolder.replaceChildren(img);
 };
 
 const renderPlayerName = (player) => {
@@ -32,11 +32,11 @@ const getPlayerPoints = (coins, tokens) => {
 
 const renderPlayerInfo = (playerInfo) => {
   renderWonder(playerInfo.wonder);
-  const header = document.querySelector("header");
+  const header = document.querySelector(".property");
   renderPlayerName(playerInfo.name);
 
   const playerPoints = getPlayerPoints(playerInfo.coins, playerInfo.warTokens);
-  header.append(playerPoints);
+  header.replaceChildren(playerPoints);
 };
 
 const getPlayerStats = (name) => {
@@ -121,14 +121,14 @@ const renderLeftPlayerStats = (leftPlayer, playerTemplate) => {
   const leftPlayerHolder = document.getElementById("left-neighbour");
 
   const leftPlayerStats = getNeighbourStats(leftPlayer, playerTemplate);
-  leftPlayerHolder.append(leftPlayerStats);
+  leftPlayerHolder.replaceChildren(leftPlayerStats);
 };
 
 const renderRightPlayerStats = (rightPlayer, playerTemplate) => {
   const rightPlayerHolder = document.getElementById("right-neighbour");
   const rightPlayerStats = getNeighbourStats(rightPlayer, playerTemplate);
 
-  rightPlayerHolder.append(rightPlayerStats);
+  rightPlayerHolder.replaceChildren(rightPlayerStats);
 };
 
 const renderNeighbours = ({ leftPlayer, rightPlayer }) => {
@@ -148,7 +148,7 @@ const renderOtherPlayerStats = ({ others }) => {
 
   console.log(playersStatsHolders);
 
-  statsHolder.append(...playersStatsHolders);
+  statsHolder.replaceChildren(...playersStatsHolders);
 };
 
 const convert = (name, format) => {
@@ -166,7 +166,7 @@ const createContainer = (card) => {
   image.src = imageUrl;
   image.cardName = card.name;
   imageContainer.classList.add("deck");
-  image.addEventListener("click", selectTheCard);
+  image.addEventListener("click", (event) => selectTheCard(event, card));
   imageContainer.appendChild(image);
 
   return imageContainer;
@@ -214,76 +214,78 @@ const removeList = () => {
   document.querySelector(".actionsBox").remove();
 };
 
+const createElements = (elements) => {
+  return elements.map((ele) => document.createElement(ele));
+};
+
 const createDiscard = (parentEvent) => {
   console.log(parentEvent);
-  const stage = document.createElement("div");
-  const content = document.createElement("p");
-  const image = document.createElement("img");
+  const [stage, content, image] = createElements(["div", "p", "img"]);
+
   image.src = "/img/icons/discard.png";
-  stage.appendChild(image);
   content.innerText = "Discard";
-  stage.append(content);
+
+  stage.append(image, content);
   stage.addEventListener("click", reqToDiscard(parentEvent));
 
   return stage;
 };
 
-const createStage = (parentEvent) => {
-  const stage = document.createElement("div");
-  const content = document.createElement("p");
-  const image = document.createElement("img");
-  image.src = "/img/icons/stage.png";
-  stage.appendChild(image);
-  content.innerText = "Stage";
-  stage.append(content);
-  stage.addEventListener("click", reqStage(parentEvent));
+const addListener = (ele, fn, event) => {
+  ele.addEventListener(event, fn);
+};
 
+const createStage = (parentEvent, card) => {
+  const [stage, content, image] = createElements(["div", "p", "img"]);
+  image.src = "/img/icons/stage.png";
+
+  content.innerText = "Stage";
+  stage.append(image, content);
+  if (card.canStage) addListener(stage, reqStage(parentEvent), "click");
+  stage.className = card.canStage ? "" : "disabled";
   return stage;
 };
 
-const createBuild = (parentEvent) => {
-  const stage = document.createElement("div");
-  const content = document.createElement("p");
-  const image = document.createElement("img");
-  image.src = "/img/icons/build.png";
-  stage.appendChild(image);
-  content.innerText = "Build";
-  stage.append(content);
-  stage.addEventListener("click", reqBuildCard(parentEvent));
+const createBuild = (parentEvent, card) => {
+  const [stage, content, image] = createElements(["div", "p", "img"]);
 
+  image.src = "/img/icons/build.png";
+  content.innerText = "Build";
+  stage.append(image, content);
+
+  if (card.canBuild) addListener(stage, reqBuildCard(parentEvent), "click");
+  stage.className = card.canStage ? "" : "disabled";
   return stage;
 };
 
 const createCancel = () => {
-  const stage = document.createElement("div");
-  const contnet = document.createElement("p");
-  const image = document.createElement("img");
+  const [stage, content, image] = createElements(["div", "p", "img"]);
   image.src = "/img/icons/cancel.avif";
-  stage.appendChild(image);
-  contnet.innerText = "Cancel";
-  stage.append(contnet);
+
+  content.innerText = "Cancel";
+  stage.append(image, content);
   stage.addEventListener("click", removeList);
 
   return stage;
 };
 
-const showActions = (event) => {
+const showActions = (event, card) => {
   const actionBox = document.createElement("div");
   actionBox.classList.add("actionsBox");
 
   actionBox.append(
     createDiscard(event.target),
-    createStage(event.target),
-    createBuild(event.target),
-    createCancel(event.target)
+    createStage(event.target, card),
+    createBuild(event.target, card),
+    createCancel(event.target),
   );
 
   return actionBox;
 };
 
-const selectTheCard = (event) => {
+const selectTheCard = (event, card) => {
   if (document.querySelector(".actionsBox")) return;
-  event.target.parentNode.appendChild(showActions(event));
+  event.target.parentNode.appendChild(showActions(event, card));
 };
 
 const renderCards = async () => {
@@ -295,15 +297,20 @@ const renderCards = async () => {
   container.replaceChildren(...data);
 };
 
-const main = async () => {
+const renderGamePage = async () => {
   const playerInfo = await getPlayerDetails();
 
   renderPlayerInfo(playerInfo);
   renderNeighbours(playerInfo);
 
   renderOtherPlayerStats(playerInfo);
-
   renderCards();
+};
+
+const main = () => {
+  renderGamePage();
+  renderGamePage();
+  renderGamePage();
 };
 
 globalThis.onload = main;

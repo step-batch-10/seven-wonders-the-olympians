@@ -10,11 +10,13 @@ export const disturbuteCards = (ctx) => {
   return ctx.json([
     {
       name: "Lumber Yard",
-      cost: [],
+      canBuild: true,
+      canStage: false
     },
     {
       name: "Stone Pit",
-      cost: [],
+      canBuild: false,
+      canStage: false
     },
   ]);
 };
