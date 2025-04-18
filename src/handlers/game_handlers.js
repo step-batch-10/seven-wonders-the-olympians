@@ -51,12 +51,11 @@ export const disturbuteCards = (ctx) => {
   return ctx.json([
     {
       "name": "Lumber Yard",
-      "cost": []
+      "cost": [],
     },
     {
       "name": "Stone Pit",
-      "cost": []
-    }
-  ]
-  );
+      "cost": [],
+    },
+  ]);
 };

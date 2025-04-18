@@ -138,7 +138,6 @@ const renderNeighbours = ({ leftPlayer, rightPlayer }) => {
   renderRightPlayerStats(rightPlayer, playerTemplate);
 };
 
-
 const renderOtherPlayerStats = ({ others }) => {
   const statsHolder = document.getElementById("other-players");
   const playerTemplate = document.getElementById("other-players-template");
@@ -153,9 +152,9 @@ const renderOtherPlayerStats = ({ others }) => {
 };
 const convert = (name, format) => {
   if (format === "server") {
-    return (name.replace("_", ''));
+    return (name.replace("_", ""));
   }
-  return (name.replace(" ", '_'));
+  return (name.replace(" ", "_")).toLowerCase();
 };
 
 const createContainer = (card) => {
@@ -251,7 +250,12 @@ const createCancel = () => {
 const showActions = (event) => {
   const actionBox = document.createElement("div");
   actionBox.classList.add("actionsBox");
-  actionBox.append(createDiscard(event), createStage(event), createBuild(event), createCancel(event));
+  actionBox.append(
+    createDiscard(event),
+    createStage(event),
+    createBuild(event),
+    createCancel(event),
+  );
 
   return actionBox;
 };
@@ -281,7 +285,6 @@ const main = async () => {
   renderOtherPlayerStats(playerInfo);
 
   renderCards();
-
 };
 
 globalThis.onload = main;
