@@ -8,7 +8,7 @@ const getPlayerDetails = (ctx) => {
   return ctx.json(game.getPlayerInfo(playerID));
 };
 
-export const disturbuteCards = (ctx) => {
+const disturbuteCards = (ctx) => {
   return ctx.json([
     {
       name: "Lumber Yard",
@@ -67,6 +67,8 @@ const performCardActions = async (ctx) => {
 
 export {
   didAllPlayerSelectCard,
+  discard,
+  disturbuteCards,
   getPlayerDetails,
   performCardActions,
   sendStatus,
