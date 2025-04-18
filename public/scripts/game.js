@@ -1,12 +1,12 @@
 const getPlayerDetails = async () => await (await fetch("/player/info")).json();
 
-const renderWonder = (PlayerWonder) => {
+const renderWonder = (playerWonder) => {
   const wonderPlaceHolder = document.getElementById("wonder-placeholder");
   const img = document.createElement("img");
 
   img.id = "player-wonder";
-  img.src = `/img/wonders/${PlayerWonder}A.jpeg`;
-  img.alt = PlayerWonder;
+  img.src = `/img/wonders/${playerWonder.toLowerCase()}A.jpeg`;
+  img.alt = playerWonder;
 
   wonderPlaceHolder.replaceChildren(img);
 };
