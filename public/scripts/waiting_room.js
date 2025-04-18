@@ -15,7 +15,6 @@ const data = async (intervalId) => {
 
 const displayUserName = async () => {
   const name = await userName();
-  console.log(name);
   const location = document.querySelector(".name");
   location.innerText = `${location.innerText}  ${name}`;
   const intervalId = setInterval(() => {

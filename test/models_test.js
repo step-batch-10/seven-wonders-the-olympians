@@ -71,8 +71,6 @@ describe("Testing the Game class", () => {
       g.addPlayer(p3);
       g.addPlayer(p4);
 
-      console.log(g.getPlayerInfo(bobID));
-
       assertEquals(g.getPlayerInfo(bobID), {
         name: "Bob",
         wonder: "Gizah",
@@ -150,9 +148,9 @@ describe("Testing the Game class", () => {
       const p2 = new Player("Bob");
       const p3 = new Player("Adam");
       const p4 = new Player("Eve");
-      const p5 = new Player("Shubha");
+      const p5 = new Player("Tom");
 
-      const shubhaID = p5.playerId;
+      const tomID = p5.playerId;
 
       const g = new Game(5, p1);
       g.addPlayer(p2);
@@ -160,10 +158,8 @@ describe("Testing the Game class", () => {
       g.addPlayer(p4);
       g.addPlayer(p5);
 
-      console.log(g.getPlayerInfo(shubhaID));
-
-      assertEquals(g.getPlayerInfo(shubhaID), {
-        name: "Shubha",
+      assertEquals(g.getPlayerInfo(tomID), {
+        name: "Tom",
         wonder: "Halikarnassos",
         coins: 3,
         warTokens: { positive: 0, negative: 0 },

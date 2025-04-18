@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { getPlayerDetails } from "../handlers/game_handler.js";
 
 const createPlayerRoute = () => {
   const app = new Hono();
@@ -6,7 +7,6 @@ const createPlayerRoute = () => {
   app.get("/name", (ctx) => {
     const playerMap = ctx.get("playerMap");
     const name = playerMap.get(ctx.getCookie(ctx, "playerID")).name;
-    console.log(name);
     return ctx.text(name);
   });
 
@@ -16,6 +16,8 @@ const createPlayerRoute = () => {
 
     return ctx.json({ image });
   });
+
+  app.get("/info", getPlayerDetails);
 
   return app;
 };

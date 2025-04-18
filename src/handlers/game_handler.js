@@ -1,9 +1,11 @@
-import { Game } from "../models/game.js";
+const getPlayerDetails = (ctx) => {
+  const gameID = ctx.getCookie(ctx, "gameID");
+  const playerID = ctx.getCookie(ctx, "playerID");
 
-export const getPlayerDetails = (ctx) => {
-  const game = new Game();
-  // const game = ctx.get("game");
-  return ctx.json(game.getPlayerInfo());
+  const gameMap = ctx.get("gameMap");
+  const game = gameMap.get(gameID);
+
+  return ctx.json(game.getPlayerInfo(playerID));
 };
 
 export const disturbuteCards = (ctx) => {
@@ -49,4 +51,4 @@ const performCardActions = async (ctx) => {
   return actionMap[action](card, ctx);
 };
 
-export { performCardActions, sendStatus };
+export { getPlayerDetails, performCardActions, sendStatus };

@@ -1,4 +1,4 @@
-const getPlayerDetails = async () => await (await fetch("/player-info")).json();
+const getPlayerDetails = async () => await (await fetch("/player/info")).json();
 
 const renderWonder = (PlayerWonder) => {
   const wonderPlaceHolder = document.getElementById("wonder-placeholder");
@@ -131,11 +131,11 @@ const renderRightPlayerStats = (rightPlayer, playerTemplate) => {
   rightPlayerHolder.replaceChildren(rightPlayerStats);
 };
 
-const renderNeighbours = ({ leftPlayer, rightPlayer }) => {
+const renderNeighbours = ({ leftPlayerData, rightPlayerData }) => {
   const playerTemplate = document.getElementById("neighbour-template");
 
-  renderLeftPlayerStats(leftPlayer, playerTemplate);
-  renderRightPlayerStats(rightPlayer, playerTemplate);
+  renderLeftPlayerStats(leftPlayerData, playerTemplate);
+  renderRightPlayerStats(rightPlayerData, playerTemplate);
 };
 
 const renderOtherPlayerStats = ({ others }) => {
@@ -145,8 +145,6 @@ const renderOtherPlayerStats = ({ others }) => {
   const playersStatsHolders = others.map((playerInfo) => {
     return getNeighbourStats(playerInfo, playerTemplate);
   });
-
-  console.log(playersStatsHolders);
 
   statsHolder.replaceChildren(...playersStatsHolders);
 };

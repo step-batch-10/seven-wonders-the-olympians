@@ -21,8 +21,6 @@ class Wonder {
     };
     this.#resources = { choices: [] }; // {ore: 2, choices: [[a,b], [a,b,c]]}
     this.#resources[wonder.resource] = 1;
-    // this.stages = wonder.stages;
-    // this.staged = [];
     this.#discounts = {}; // {wood: [left]}
     this.#militaryStrength = 0;
     this.#victoryPoints = 0;
@@ -55,6 +53,10 @@ class Wonder {
 
   get discounts() {
     return this.#discounts;
+  }
+
+  get img() {
+    return this.#wonder.img;
   }
 
   isResourceCard(card) {
