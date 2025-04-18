@@ -39,7 +39,6 @@ const fetchImage = (cardName, index) => {
 
 const renderBuildings = ([colour, cards]) => {
   const container = document.querySelector(`.${colour}`);
-  console.log(colour);
   container.classList.add(colour);
 
   const cardCont = cards.map((card, index) => fetchImage(card, index));
@@ -192,7 +191,10 @@ const createContainer = (card) => {
 };
 
 const polling = async (currentMove, intervalId) => {
-  await fetch("/player/status", { method: "PUT", body: JSON.stringify({ status: "seleted" }) });
+  await fetch("/player/status", {
+    method: "PUT",
+    body: JSON.stringify({ status: "seleted" }),
+  });
   return async () => {
     const res = await fetch("/game/all-players-ready");
     const { status } = await res.json();
@@ -212,21 +214,21 @@ const polling = async (currentMove, intervalId) => {
 const reqToDiscard = (parentEvent) => {
   return () => {
     const move = { card: parentEvent.cardName, action: "discard" };
-    const intervalId = setInterval(() => polling(move, intervalId)(), 1000);
+    const intervalId = setInterval(async () => (await polling(move, intervalId))(), 1000);
   };
 };
 
 const reqStage = (parentEvent) => {
   return () => {
     const move = { card: parentEvent.cardName, action: "stage" };
-    const intervalId = setInterval(() => polling(move, intervalId)(), 1000);
+    const intervalId = setInterval(async () => (await polling(move, intervalId))(), 1000);
   };
 };
 
 const reqBuildCard = (parentEvent) => {
   return () => {
     const move = { card: parentEvent.cardName, action: "build" };
-    const intervalId = setInterval(() => polling(move, intervalId)(), 1000);
+    const intervalId = setInterval(async () => (await polling(move, intervalId))(), 1000);
   };
 };
 
