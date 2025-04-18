@@ -3,11 +3,12 @@ const userName = async () => {
   return `${await res.text()}!`;
 };
 
-const data = async () => {
+const data = async (intervalId) => {
   const res = await fetch("/game/status");
   const data = await res.json();
 
   if (data.gameStatus === "matched") {
+    clearInterval(intervalId);
     globalThis.location.href = "/player_wonder.html";
   }
 };
@@ -17,8 +18,8 @@ const displayUserName = async () => {
   console.log(name);
   const location = document.querySelector(".name");
   location.innerText = `${location.innerText}  ${name}`;
-  return setInterval(() => {
-    data();
+  const intervalId = setInterval(() => {
+    data(intervalId);
   }, 1000);
 };
 

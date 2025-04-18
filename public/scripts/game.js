@@ -1,9 +1,11 @@
+const getPlayerDetails = async () => await (await fetch("/playerInfo")).json();
+
 const renderWonder = (PlayerWonder) => {
   const wonderPlaceHolder = document.getElementById("wonder-placeholder");
   const img = document.createElement("img");
 
   img.id = "player-wonder";
-  img.src = `/img/wonders/${PlayerWonder}`;
+  img.src = `/img/wonders/${PlayerWonder}.jpeg`;
   img.alt = PlayerWonder;
 
   wonderPlaceHolder.appendChild(img);
@@ -72,6 +74,7 @@ const getStageHolder = () => {
   const stageHolder = document.createElement("img");
 
   stageHolder.src = "/img/stages/empty-stage.png";
+  stageHolder.className = "png";
   stageHolder.alt = "empty-stage.png";
 
   return stageHolder;
@@ -86,7 +89,9 @@ const getWonderStats = (wonder, resource) => {
 };
 
 const appendNeighbourStats = (playerClone, coins, name, warTokens) => {
-  const neighbourPlaceHolder = playerClone.querySelector(".neighbour-header");
+  const neighbourPlaceHolder = playerClone.querySelector(
+    ".player-stats-header",
+  );
 
   const playerStats = getPlayerStats(name);
   const playerPoints = getPlayerPoints(coins, warTokens);
@@ -112,8 +117,6 @@ const getNeighbourStats = (player, template) => {
   return playerClone;
 };
 
-const getPlayerDetails = async () => await (await fetch("/playerInfo")).json();
-
 const renderLeftPlayerStats = (leftPlayer, playerTemplate) => {
   const leftPlayerHolder = document.getElementById("left-neighbour");
 
@@ -135,12 +138,26 @@ const renderNeighbours = ({ leftPlayer, rightPlayer }) => {
   renderRightPlayerStats(rightPlayer, playerTemplate);
 };
 
+const renderOtherPlayerStats = ({ others }) => {
+  const statsHolder = document.getElementById("other-players");
+  const playerTemplate = document.getElementById("other-players-template");
+
+  const playersStatsHolders = others.map((playerInfo) => {
+    return getNeighbourStats(playerInfo, playerTemplate);
+  });
+
+  console.log(playersStatsHolders);
+
+  statsHolder.append(...playersStatsHolders);
+};
+
 const main = async () => {
   const playerInfo = await getPlayerDetails();
-  console.log("this is the player info", playerInfo);
+  // console.log("this is the player info", playerInfo);
 
   renderPlayerInfo(playerInfo);
   renderNeighbours(playerInfo);
+  renderOtherPlayerStats(playerInfo);
 };
 
 globalThis.onload = main;
