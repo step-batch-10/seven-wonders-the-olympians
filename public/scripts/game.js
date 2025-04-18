@@ -90,7 +90,7 @@ const getWonderStats = (wonder, resource) => {
 
 const appendNeighbourStats = (playerClone, coins, name, warTokens) => {
   const neighbourPlaceHolder = playerClone.querySelector(
-    ".player-stats-header"
+    ".player-stats-header",
   );
 
   const playerStats = getPlayerStats(name);
@@ -256,7 +256,7 @@ const showActions = (event) => {
     createDiscard(event),
     createStage(event),
     createBuild(event),
-    createCancel(event)
+    createCancel(event),
   );
 
   return actionBox;

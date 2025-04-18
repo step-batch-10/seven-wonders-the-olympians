@@ -96,14 +96,14 @@ class Game {
   }
 
   getPlayerInfo() {
-    console.log("hello")
+    console.log("hello");
     return {
       name: "Akash",
       wonder: "alexandria",
       coins: 3,
       warTokens: 0,
       bonusResource: "glass",
-  
+
       leftPlayer: {
         name: "Siddu",
         wonder: "olympia",
@@ -113,7 +113,7 @@ class Game {
         bonusResource: "wood",
         cards: [],
       },
-  
+
       rightPlayer: {
         name: "Tom",
         wonder: "rhodos",
@@ -133,7 +133,7 @@ class Game {
           bonusResource: "textile",
         },
       ],
-    }
+    };
   }
 }
 
