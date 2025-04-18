@@ -88,10 +88,52 @@ class Game {
   }
 
   gameData() {
+    // mockdata
     return {
       gameStatus: this.gameStatus,
       currentAge: this.currentAge,
     };
+  }
+
+  getPlayerInfo() {
+    console.log("hello")
+    return {
+      name: "Akash",
+      wonder: "alexandria",
+      coins: 3,
+      warTokens: 0,
+      bonusResource: "glass",
+  
+      leftPlayer: {
+        name: "Siddu",
+        wonder: "olympia",
+        coins: 3,
+        warTokens: 0,
+        noOfStages: 0,
+        bonusResource: "wood",
+        cards: [],
+      },
+  
+      rightPlayer: {
+        name: "Tom",
+        wonder: "rhodos",
+        coins: 3,
+        warTokens: 0,
+        bonusResource: "ore",
+        noOfStages: 0,
+        cards: [],
+      },
+      others: [
+        {
+          name: "Alice",
+          wonder: "halikarnossos",
+          coins: 3,
+          warTokens: 0,
+          noOfStages: 0,
+          bonusResource: "textile",
+        },
+      ],
+    }
   }
 }
 

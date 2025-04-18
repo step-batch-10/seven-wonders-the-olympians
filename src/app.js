@@ -35,7 +35,7 @@ const createApp = () => {
     .route("/auth", createAuthRoute())
     .route("/game", createGameRoute())
     .route("/player", createPlayerRoute())
-    .get("/playerInfo", getPlayerDetails)
+    .get("/player-info", getPlayerDetails)
     .get("/game", serveStatic({ path: "public/game.html" }))
     .use(serveStatic({ root: "public/" }));
 

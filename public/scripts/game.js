@@ -1,4 +1,4 @@
-const getPlayerDetails = async () => await (await fetch("/playerInfo")).json();
+const getPlayerDetails = async () => await (await fetch("/player-info")).json();
 
 const renderWonder = (PlayerWonder) => {
   const wonderPlaceHolder = document.getElementById("wonder-placeholder");
@@ -90,7 +90,7 @@ const getWonderStats = (wonder, resource) => {
 
 const appendNeighbourStats = (playerClone, coins, name, warTokens) => {
   const neighbourPlaceHolder = playerClone.querySelector(
-    ".player-stats-header",
+    ".player-stats-header"
   );
 
   const playerStats = getPlayerStats(name);
@@ -153,9 +153,9 @@ const renderOtherPlayerStats = ({ others }) => {
 
 const convert = (name, format) => {
   if (format === "server") {
-    return (name.replace("_", ""));
+    return name.replace("_", "");
   }
-  return (name.replace(" ", "_")).toLowerCase();
+  return name.replace(" ", "_").toLowerCase();
 };
 
 const createContainer = (card) => {
@@ -256,7 +256,7 @@ const showActions = (event) => {
     createDiscard(event),
     createStage(event),
     createBuild(event),
-    createCancel(event),
+    createCancel(event)
   );
 
   return actionBox;
