@@ -22,9 +22,9 @@ const injectContext = (gameMap, playerMap, playerGameMap, waitingGames) => {
 const createApp = () => {
   const app = new Hono();
 
-  const gameMap = new Map();
-  const playerMap = new Map();
-  const playerGameMap = new Map();
+  const gameMap = new Map(); //gameId, gameObj
+  const playerMap = new Map(); // playerId: player Obj
+  const playerGameMap = new Map(); // player wise game details
   const waitingGames = new Set();
 
   app

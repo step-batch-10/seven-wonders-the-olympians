@@ -50,11 +50,14 @@ class Game {
     });
   }
 
-  distributeWonders() {}
+  distributeWonders() {
+  }
 
-  distributeCoins() {}
+  distributeCoins() {
 
-  setUpTheCardDecks() {}
+  }
+
+  setUpTheCardDecks() { }
 
   distributeCards() {
     //create random four deck
