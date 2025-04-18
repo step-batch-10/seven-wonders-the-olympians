@@ -269,7 +269,7 @@ const showActions = (event) => {
     createDiscard(event.target),
     createStage(event.target),
     createBuild(event.target),
-    createCancel(event.target)
+    createCancel(event.target),
   );
 
   return actionBox;

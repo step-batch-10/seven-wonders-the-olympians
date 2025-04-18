@@ -2,9 +2,9 @@ import { Hono } from "hono";
 import { sendStatus } from "../handlers/game_handler.js";
 import {
   disturbuteCards,
+  getAllPlayersStatus,
   getPlayerDetails,
-  getAllPlayersStatus
-} from "../handlers/game_handlers.js";
+} from "../handlers/game_handler.js";
 const createGameRoute = () => {
   const gameApp = new Hono();
 

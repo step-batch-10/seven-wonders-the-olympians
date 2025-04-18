@@ -4,7 +4,7 @@ import { logger } from "hono/logger";
 import { createAuthRoute } from "./routes/auth_route.js";
 import { createGameRoute } from "./routes/game_route.js";
 import { createPlayerRoute } from "./routes/player_route.js";
-import { getPlayerDetails } from "./handlers/game_handlers.js";
+import { getPlayerDetails } from "./handlers/game_handler.js";
 import { getCookie, setCookie } from "hono/cookie";
 
 const injectContext = (gameMap, playerMap, playerGameMap, waitingGames) => {
