@@ -461,7 +461,7 @@
     "name": "Barracks",
     "age": 1,
     "color": "red",
-    "min_players": 7,
+    "min_players": 5,
     "cost": [{ "type": "ore", "count": 1 }],
     "produces": [{ "type": "shield", "count": 1 }],
     "effect": null,
