@@ -31,26 +31,26 @@ const getPlayerPoints = (coins, tokens) => {
 };
 
 const renderPlayerInfo = (playerInfo) => {
-  renderWonder(playerInfo.wonder);
+  const { wonder, name, coins, warTokens } = playerInfo;
   const header = document.querySelector(".property");
-  renderPlayerName(playerInfo.name);
+  const playerPoints = getPlayerPoints(coins, warTokens.positive);
 
-  const playerPoints = getPlayerPoints(playerInfo.coins, playerInfo.warTokens);
+  renderWonder(wonder);
+  renderPlayerName(name);
+
   header.replaceChildren(playerPoints);
 };
 
 const getPlayerStats = (name) => {
-  const statsHolder = document.createElement("div");
-  const nameHolder = document.createElement("p");
-  const statusHolder = document.createElement("p");
+  const [stats, nameHolder, status] = createElements(["div", "p", "p"]);
 
-  statsHolder.className = "player-points";
+  stats.className = "player-points";
   nameHolder.textContent = name;
-  statusHolder.textContent = "⏳";
+  status.textContent = "⏳";
 
-  statsHolder.append(nameHolder, statusHolder);
+  stats.append(name, status);
 
-  return statsHolder;
+  return stats;
 };
 
 const getResourceHolder = (resource) => {
@@ -111,7 +111,7 @@ const getNeighbourStats = (player, template) => {
   const { coins, warTokens, name, wonder, bonusResource } = player;
   const playerClone = template.content.cloneNode(true);
 
-  appendNeighbourStats(playerClone, coins, name, warTokens);
+  appendNeighbourStats(playerClone, coins, name, warTokens.positive);
   appendWonderStats(playerClone, wonder, bonusResource);
 
   return playerClone;

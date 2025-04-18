@@ -78,8 +78,8 @@ class Game {
     });
   }
 
-  setUpTheCardDecks() { }
-  
+  setUpTheCardDecks() {}
+
   addToDiscarded(card) {
     this.discardedDeck.push(card);
   }
@@ -107,14 +107,14 @@ class Game {
       name: "Akash",
       wonder: "alexandria",
       coins: 3,
-      warTokens: 0,
+      warTokens: {positive:0, negative:0},
       bonusResource: "glass",
 
       leftPlayer: {
         name: "Siddu",
         wonder: "olympia",
         coins: 3,
-        warTokens: 0,
+        warTokens: {positive:0, negative:0},
         noOfStages: 0,
         bonusResource: "wood",
         cards: [],
@@ -124,7 +124,7 @@ class Game {
         name: "Tom",
         wonder: "rhodos",
         coins: 3,
-        warTokens: 0,
+        warTokens: {positive:0, negative:0},
         bonusResource: "ore",
         noOfStages: 0,
         cards: [],
@@ -134,7 +134,7 @@ class Game {
           name: "Alice",
           wonder: "halikarnossos",
           coins: 3,
-          warTokens: 0,
+          warTokens: {positive:0, negative:0},
           noOfStages: 0,
           bonusResource: "textile",
         },

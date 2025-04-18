@@ -11,12 +11,12 @@ export const disturbuteCards = (ctx) => {
     {
       name: "Lumber Yard",
       canBuild: true,
-      canStage: false
+      canStage: false,
     },
     {
       name: "Stone Pit",
       canBuild: false,
-      canStage: false
+      canStage: false,
     },
   ]);
 };
@@ -43,11 +43,10 @@ const discard = (card, ctx) => {
 };
 
 const performCardActions = async (ctx) => {
-
   const actionMap = { discard };
   const { action, card } = await ctx.req.json();
 
   return actionMap[action](card, ctx);
 };
 
-export { sendStatus, performCardActions };
+export { performCardActions, sendStatus };
