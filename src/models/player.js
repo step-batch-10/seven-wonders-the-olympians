@@ -8,6 +8,7 @@ class Player {
   leftNeighbor;
   coins;
   hand;
+  wonder;
 
   constructor(userName) {
     this.name = userName;
@@ -16,6 +17,7 @@ class Player {
     this.leftNeighbor = null;
     this.coins = 0;
     this.hand = new Set();
+    this.wonder = null;
   }
 
   static generateUniquePlayerID() {

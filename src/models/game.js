@@ -1,10 +1,21 @@
 import uniqid from "uniqid";
+import wondersData from "../../data/wonders.json" with { type: "json" };
+
 class Game {
   gameID;
   players;
   noOfPlayers;
   gameStatus;
   currentAge;
+  wonders = [
+    "babylon",
+    "rhodos",
+    "halikarnassos",
+    "alexandria",
+    "ephesos",
+    "gizah",
+    "olympia",
+  ];
 
   constructor(noOfPlayers, player1) {
     this.noOfPlayers = noOfPlayers;
@@ -50,11 +61,22 @@ class Game {
     });
   }
 
-  distributeWonders() {}
+  distributeWonders() {
+    this.players.forEach((player) => {
+      const wonderName = this.wonders.pop();
+      const wonderData = wondersData[wonderName];
 
-  distributeCoins() {}
+      player.wonder = wonderData;
+    });
+  }
 
-  setUpTheCardDecks() {}
+  distributeCoins() {
+    this.players.forEach((player) => {
+      player.coins = 3;
+    });
+  }
+
+  setUpTheCardDecks() { }
 
   distributeCards() {
     //create random four deck
