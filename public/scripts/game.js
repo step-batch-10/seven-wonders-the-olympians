@@ -264,7 +264,7 @@ const createCancel = () => {
 
   content.innerText = "Cancel";
   stage.append(image, content);
-  addListener(stage, removeList, removeList);
+  addListener(stage, removeList, "click");
 
   return stage;
 };
