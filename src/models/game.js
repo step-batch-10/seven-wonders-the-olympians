@@ -80,7 +80,7 @@ class Game {
     });
   }
 
-  setUpTheCardDecks() { }
+  setUpTheCardDecks() {}
 
   addToDiscarded(card) {
     this.discardedDeck.push(card);
