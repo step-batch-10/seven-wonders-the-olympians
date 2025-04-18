@@ -90,7 +90,7 @@ const getWonderStats = (wonder, resource) => {
 
 const appendNeighbourStats = (playerClone, coins, name, warTokens) => {
   const neighbourPlaceHolder = playerClone.querySelector(
-    ".player-stats-header"
+    ".player-stats-header",
   );
 
   const playerStats = getPlayerStats(name);
@@ -155,7 +155,7 @@ const convert = (name, format) => {
   if (format === "server") {
     return name.replace("_", "");
   }
-  return name.replace(" ", "_").toLowerCase();
+  return name.replace(" ", "").toLowerCase();
 };
 
 const createContainer = (card) => {
@@ -254,7 +254,7 @@ const createBuild = (parentEvent, card) => {
   stage.append(image, content);
 
   if (card.canBuild) addListener(stage, reqBuildCard(parentEvent), "click");
-  stage.className = card.canStage ? "" : "disabled";
+  stage.className = card.canBuild ? "" : "disabled";
   return stage;
 };
 

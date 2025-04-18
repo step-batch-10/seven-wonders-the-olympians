@@ -78,7 +78,7 @@ class Game {
     });
   }
 
-  setUpTheCardDecks() {}
+  setUpTheCardDecks() { }
 
   addToDiscarded(card) {
     this.discardedDeck.push(card);
@@ -109,6 +109,12 @@ class Game {
       coins: 3,
       warTokens: { positive: 0, negative: 0 },
       bonusResource: "glass",
+      build: {
+        red: [],
+        grey: [],
+        gold: [],
+        blue: []
+      },
 
       leftPlayer: {
         name: "Siddu",
