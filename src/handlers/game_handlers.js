@@ -1,7 +1,7 @@
 export const getPlayerDetails = (ctx) => {
   return ctx.json({
     name: "Akash",
-    wonder: "alexandriaA",
+    wonder: "alexandria",
     coins: 3,
     warTokens: 0,
     stages: [],
@@ -29,19 +29,11 @@ export const getPlayerDetails = (ctx) => {
     others: [
       {
         name: "Alice",
-        wonder: "olympiaA.jpeg",
+        wonder: "halikarnossos",
         coins: 3,
         warTokens: 0,
         noOfStages: 0,
-        bonusResource: "wood",
-      },
-      {
-        name: "Bob",
-        wonder: "olympiaA.jpeg",
-        coins: 3,
-        warTokens: 0,
-        noOfStages: 0,
-        bonusResource: "wood",
+        bonusResource: "textile",
       },
     ],
   });

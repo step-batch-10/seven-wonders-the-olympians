@@ -5,7 +5,7 @@ const renderWonder = (PlayerWonder) => {
   const img = document.createElement("img");
 
   img.id = "player-wonder";
-  img.src = `/img/wonders/${PlayerWonder}.jpeg`;
+  img.src = `/img/wonders/${PlayerWonder}A.jpeg`;
   img.alt = PlayerWonder;
 
   wonderPlaceHolder.appendChild(img);
@@ -150,6 +150,7 @@ const renderOtherPlayerStats = ({ others }) => {
 
   statsHolder.append(...playersStatsHolders);
 };
+
 const convert = (name, format) => {
   if (format === "server") {
     return (name.replace("_", ""));
@@ -161,6 +162,7 @@ const createContainer = (card) => {
   const imageUrl = `/img/cards/${convert(card.name)}.jpeg`;
   const imageContainer = document.createElement("div");
   const image = document.createElement("img");
+
   image.src = imageUrl;
   image.classList.add(convert(card.name));
   imageContainer.classList.add("deck");

@@ -27,6 +27,10 @@ header,
   gap: 10px;
 }
 
+.player-points {
+  height: 40%;
+}
+
 header,
 #other-players {
   border: 1px solid;
