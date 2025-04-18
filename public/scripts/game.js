@@ -138,6 +138,7 @@ const renderNeighbours = ({ leftPlayer, rightPlayer }) => {
   renderRightPlayerStats(rightPlayer, playerTemplate);
 };
 
+
 const renderOtherPlayerStats = ({ others }) => {
   const statsHolder = document.getElementById("other-players");
   const playerTemplate = document.getElementById("other-players-template");
@@ -150,6 +151,125 @@ const renderOtherPlayerStats = ({ others }) => {
 
   statsHolder.append(...playersStatsHolders);
 };
+const convert = (name, format) => {
+  if (format === "server") {
+    return (name.replace("_", ''));
+  }
+  return (name.replace(" ", '_'));
+};
+
+const createContainer = (card) => {
+  const imageUrl = `/img/cards/${convert(card.name)}.jpeg`;
+  const imageContainer = document.createElement("div");
+  const image = document.createElement("img");
+  image.src = imageUrl;
+  image.classList.add(convert(card.name));
+  imageContainer.classList.add("deck");
+  image.addEventListener("click", selectTheCard);
+  imageContainer.appendChild(image);
+
+  return imageContainer;
+};
+
+const reqToDiscard = () => {
+  return (event) => {
+    console.log(event.target);
+    alert("diacard");
+  };
+};
+
+const reqStage = () => {
+  return (event) => {
+    console.log(event.target);
+    alert("diacard");
+  };
+};
+
+const reqBuildCard = () => {
+  return (event) => {
+    console.log(event.target);
+    alert("diacard");
+  };
+};
+
+const removeList = () => {
+  document.querySelector(".actionsBox").remove();
+};
+
+const createDiscard = (parentEvent) => {
+  const stage = document.createElement("div");
+  const contnet = document.createElement("p");
+  const image = document.createElement("img");
+  image.src = "/img/icons/discard.png";
+  stage.appendChild(image);
+  contnet.innerText = "Discard";
+  stage.append(contnet);
+  stage.addEventListener("click", reqToDiscard(parentEvent));
+
+  return stage;
+};
+
+const createStage = (parentEvent) => {
+  const stage = document.createElement("div");
+  const contnet = document.createElement("p");
+  const image = document.createElement("img");
+  image.src = "/img/icons/stage.png";
+  stage.appendChild(image);
+  contnet.innerText = "Stage";
+  stage.append(contnet);
+  stage.addEventListener("click", reqStage(parentEvent));
+
+  return stage;
+};
+
+const createBuild = (parentEvent) => {
+  const stage = document.createElement("div");
+  const contnet = document.createElement("p");
+  const image = document.createElement("img");
+  image.src = "/img/icons/build.png";
+  stage.appendChild(image);
+  contnet.innerText = "Build";
+  stage.append(contnet);
+  stage.addEventListener("click", reqBuildCard(parentEvent));
+
+  return stage;
+};
+
+const createCancel = () => {
+  const stage = document.createElement("div");
+  const contnet = document.createElement("p");
+  const image = document.createElement("img");
+  image.src = "/img/icons/cancel.avif";
+  stage.appendChild(image);
+  contnet.innerText = "Cancel";
+  stage.append(contnet);
+  stage.addEventListener("click", removeList);
+
+  return stage;
+};
+
+const showActions = (event) => {
+  const actionBox = document.createElement("div");
+  actionBox.classList.add("actionsBox");
+  actionBox.append(createDiscard(event), createStage(event), createBuild(event), createCancel(event));
+
+  return actionBox;
+};
+
+const selectTheCard = (event) => {
+  if (document.querySelector(".actionsBox")) return;
+  console.log(showActions());
+  event.target.parentNode.appendChild(showActions());
+};
+
+const renderCards = async () => {
+  const res = await fetch("/game/cards");
+  const cards = await res.json();
+  const container = document.querySelector("#cardsContainer");
+  const data = cards.map(createContainer);
+
+  container.append(...data);
+};
 
 const main = async () => {
   const playerInfo = await getPlayerDetails();
@@ -157,7 +277,11 @@ const main = async () => {
 
   renderPlayerInfo(playerInfo);
   renderNeighbours(playerInfo);
+
   renderOtherPlayerStats(playerInfo);
+
+  renderCards();
+
 };
 
 globalThis.onload = main;

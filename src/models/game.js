@@ -61,6 +61,7 @@ class Game {
     });
   }
 
+
   distributeWonders() {
     this.players.forEach((player) => {
       const wonderName = this.wonders.pop();
@@ -76,7 +77,10 @@ class Game {
     });
   }
 
-  setUpTheCardDecks() {}
+
+
+
+  setUpTheCardDecks() { }
 
   distributeCards() {
     //create random four deck

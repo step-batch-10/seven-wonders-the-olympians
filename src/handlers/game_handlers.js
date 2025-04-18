@@ -46,3 +46,17 @@ export const getPlayerDetails = (ctx) => {
     ],
   });
 };
+
+export const disturbuteCards = (ctx) => {
+  return ctx.json([
+    {
+      "name": "Lumber Yard",
+      "cost": []
+    },
+    {
+      "name": "Stone Pit",
+      "cost": []
+    }
+  ]
+  );
+};
