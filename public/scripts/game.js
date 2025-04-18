@@ -184,7 +184,7 @@ const polling = (currentMove, intervalId) => {
         body: JSON.stringify(currentMove),
       });
 
-      main();
+      renderGamePage();
     }
   };
 };
@@ -226,7 +226,7 @@ const createDiscard = (parentEvent) => {
   content.innerText = "Discard";
 
   stage.append(image, content);
-  stage.addEventListener("click", reqToDiscard(parentEvent));
+  addListener(stage, reqToDiscard(parentEvent), "click");
 
   return stage;
 };
@@ -264,7 +264,7 @@ const createCancel = () => {
 
   content.innerText = "Cancel";
   stage.append(image, content);
-  stage.addEventListener("click", removeList);
+  addListener(stage, removeList, removeList);
 
   return stage;
 };
@@ -277,7 +277,7 @@ const showActions = (event, card) => {
     createDiscard(event.target),
     createStage(event.target, card),
     createBuild(event.target, card),
-    createCancel(event.target),
+    createCancel(event.target)
   );
 
   return actionBox;
@@ -308,8 +308,6 @@ const renderGamePage = async () => {
 };
 
 const main = () => {
-  renderGamePage();
-  renderGamePage();
   renderGamePage();
 };
 
