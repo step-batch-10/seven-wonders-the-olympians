@@ -90,6 +90,34 @@ class Game {
     this.discardedDeck.push(card);
   }
 
+  #passLeft() {
+    const firstHand = this.players[0].hand;
+    for (let index = 0; index < this.noOfPlayers - 1; index++) {
+      this.players[index].hand = this.players[index + 1].hand;
+    }
+    this.players.at(-1).hand = firstHand;
+
+    const hands = this.players.map(player => player.hand)
+
+    return hands;
+  }
+
+  #passRight() {
+    const lastHand = this.players.at(-1).hand;
+    for (let index = this.noOfPlayers - 1; index > 0; index--) {
+      this.players[index].hand = this.players[index - 1].hand;
+    }
+    this.players[0].hand = lastHand;
+
+    const hands = this.players.map(player => player.hand)
+
+    return hands;
+  }
+
+  passHands() {
+    return this.currentAge === 2 ? this.#passRight : this.#passLeft();
+  }
+
   distributeCards() {
     //create random four deck
     //assign the deck to each player

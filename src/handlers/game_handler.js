@@ -65,6 +65,14 @@ const performCardActions = async (ctx) => {
   return actionMap[action](card, ctx);
 };
 
+const passHands = (ctx) => {
+  const gameMap = ctx.get("gameMap");
+  const game = gameMap.get(ctx.getCookie(ctx, "gameID"));
+  const hands = game.passHands();
+  
+  return ctx.json({ pass: `Cards passed Successfully! ${hands}` });
+};
+
 export {
   didAllPlayerSelectCard,
   discard,
@@ -72,4 +80,5 @@ export {
   getPlayerDetails,
   performCardActions,
   sendStatus,
+  passHands
 };

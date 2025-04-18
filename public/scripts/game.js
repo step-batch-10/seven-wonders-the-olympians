@@ -47,7 +47,7 @@ const renderBuildings = ([colour, cards]) => {
 };
 
 const renderCards = (cards) => {
-  (Object.entries(cards)).map(renderBuildings);
+  Object.entries(cards).map(renderBuildings);
 };
 
 const renderPlayerInfo = (playerInfo) => {
@@ -110,7 +110,7 @@ const getWonderStats = (wonder, resource) => {
 
 const appendNeighbourStats = (playerClone, coins, name, warTokens) => {
   const neighbourPlaceHolder = playerClone.querySelector(
-    ".player-stats-header",
+    ".player-stats-header"
   );
 
   const playerStats = getPlayerStats(name);
@@ -200,11 +200,13 @@ const polling = async (currentMove, intervalId) => {
     const { status } = await res.json();
     if (status) {
       clearInterval(intervalId);
-      await fetch("/game/action", {
+      const _response = await fetch("/game/action", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(currentMove),
       });
+      const res = await fetch("/game/pass-hand", { method: "POST" });
+      alert((await res.json()).pass);
 
       renderGamePage();
     }
@@ -216,7 +218,7 @@ const reqToDiscard = (parentEvent) => {
     const move = { card: parentEvent.cardName, action: "discard" };
     const intervalId = setInterval(
       async () => (await polling(move, intervalId))(),
-      1000,
+      1000
     );
   };
 };
@@ -226,7 +228,7 @@ const reqStage = (parentEvent) => {
     const move = { card: parentEvent.cardName, action: "stage" };
     const intervalId = setInterval(
       async () => (await polling(move, intervalId))(),
-      1000,
+      1000
     );
   };
 };
@@ -236,7 +238,7 @@ const reqBuildCard = (parentEvent) => {
     const move = { card: parentEvent.cardName, action: "build" };
     const intervalId = setInterval(
       async () => (await polling(move, intervalId))(),
-      1000,
+      1000
     );
   };
 };
@@ -308,7 +310,7 @@ const showActions = (event, card) => {
     createDiscard(event.target),
     createStage(event.target, card),
     createBuild(event.target, card),
-    createCancel(event.target),
+    createCancel(event.target)
   );
 
   return actionBox;

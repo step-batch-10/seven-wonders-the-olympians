@@ -5,6 +5,7 @@ import {
   getPlayerDetails,
   performCardActions,
   sendStatus,
+  passHands,
 } from "../handlers/game_handler.js";
 
 const createGameRoute = () => {
@@ -15,6 +16,7 @@ const createGameRoute = () => {
   gameApp.get("/cards", disturbuteCards);
   gameApp.get("/all-players-ready", didAllPlayerSelectCard);
   gameApp.post("/action", performCardActions);
+  gameApp.post("/pass-hand", passHands);
 
   return gameApp;
 };
