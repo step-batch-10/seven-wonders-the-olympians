@@ -30,14 +30,34 @@ const getPlayerPoints = (coins, tokens) => {
   return pointsHolder;
 };
 
+const fetchImage = (cardName, index) => {
+  const image = document.createElement("img");
+  image.src = `/img/cards/${cardName}.jpeg`;
+  image.style = `--index:${index}`;
+  return image;
+};
+
+const renderBuildings = ([colour, cards]) => {
+  const container = document.querySelector(`.${colour}`);
+  container.classList.add(colour);
+
+  const cardCont = cards.map((card, index) => fetchImage(card, index));
+  container.append(...cardCont);
+  return container;
+};
+
+const renderCards = (cards) => {
+  (Object.entries(cards)).map(renderBuildings);
+};
+
 const renderPlayerInfo = (playerInfo) => {
-  const { wonder, name, coins, warTokens } = playerInfo;
+  const { wonder, name, coins, warTokens, buildings } = playerInfo;
   const header = document.querySelector(".property");
   const playerPoints = getPlayerPoints(coins, warTokens.positive);
 
   renderWonder(wonder);
   renderPlayerName(name);
-
+  renderCards(buildings);
   header.replaceChildren(playerPoints);
 };
 
@@ -286,7 +306,7 @@ const selectTheCard = (event, card) => {
   event.target.parentNode.appendChild(showActions(event, card));
 };
 
-const renderCards = async () => {
+const renderDeck = async () => {
   const res = await fetch("/game/cards");
   const cards = await res.json();
   const container = document.querySelector("#cardsContainer");
@@ -302,7 +322,7 @@ const renderGamePage = async () => {
   renderNeighbours(playerInfo);
 
   renderOtherPlayerStats(playerInfo);
-  renderCards();
+  renderDeck();
 };
 
 const main = () => {

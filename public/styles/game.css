@@ -1,9 +1,12 @@
 * {
   margin: 0;
   border: 0;
+  color: white;
   box-sizing: border-box;
 }
-
+body {
+  background: radial-gradient(ellipse at bottom center, #f0ddb7, #ad884c);
+}
 main {
   display: flex;
   position: relative;
@@ -31,11 +34,6 @@ header,
   height: 40%;
 }
 
-header,
-#other-players {
-  border: 1px solid;
-}
-
 #other-players {
   height: 20vh;
 }
@@ -48,7 +46,6 @@ header,
 #left-neighbour,
 #right-neighbour {
   width: 15%;
-  border: 1px solid;
 }
 
 #three-players {
@@ -75,19 +72,16 @@ header,
 .player-stats-header {
   height: 16%;
   width: 100%;
-  border: 1px solid;
 }
 
 .cards {
   height: 100%;
   width: 100%;
-  border: 1px solid;
 }
 
 .wonder-stats {
   height: 10%;
   width: 100%;
-  border: 1px solid;
   align-self: flex-end;
 }
 
@@ -101,9 +95,8 @@ p {
 }
 
 .other-player-stats {
-  border: 1px solid;
   flex-direction: column;
-  gap: 0px;
+  gap: 5px;
 }
 .deck {
   width: 100px;
@@ -140,4 +133,72 @@ p {
 
 .disabled {
   opacity: 0.4;
+}
+.buildedCards > * {
+  height: 150px;
+  width: 130px;
+  position: relative;
+}
+
+.buildedCards > div > img {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  transform: translateY(calc(var(--index) * -38px));
+  z-index: calc(var(--index) * -1);
+}
+
+.buildedCards {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 27px;
+}
+
+.wonder {
+  position: relative;
+  width: 100%;
+  height: 200px;
+}
+
+.wonder > #wonder-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  top: -58%;
+}
+
+.deck {
+  position: relative;
+}
+.actionsBox {
+  position: absolute;
+  background-color: white;
+  top: 75px;
+  left: 30px;
+  z-index: 99;
+  width: 150px;
+}
+.actionsBox > div {
+  display: flex;
+  justify-content: space-evenly;
+  color: black;
+}
+
+main img {
+  border-radius: 5px;
+}
+
+.player-stats-header {
+  background-color: #ddb35b;
+}
+
+.neighbour > .cards {
+  background-color: #9a6a1c;
+}
+
+.other-player-stats > .player-stats-header,
+.other-player-stats > * {
+  background-color: #9a6a1c;
 }
