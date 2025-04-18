@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import {
+  didAllPlayerSelectCard,
   disturbuteCards,
-  getAllPlayersStatus,
   getPlayerDetails,
   performCardActions,
   sendStatus,
@@ -13,7 +13,7 @@ const createGameRoute = () => {
   gameApp.get("/status", sendStatus);
   gameApp.get("/info", getPlayerDetails);
   gameApp.get("/cards", disturbuteCards);
-  gameApp.get("/all-players-ready", getAllPlayersStatus);
+  gameApp.get("/all-players-ready", didAllPlayerSelectCard);
   gameApp.post("/action", performCardActions);
 
   return gameApp;

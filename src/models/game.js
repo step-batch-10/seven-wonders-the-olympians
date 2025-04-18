@@ -82,6 +82,10 @@ class Game {
 
   setUpTheCardDecks() {}
 
+  didAllPlayerSelectCard() {
+    return this.players.every((player) => player.status === "seleted");
+  }
+
   addToDiscarded(card) {
     this.discardedDeck.push(card);
   }

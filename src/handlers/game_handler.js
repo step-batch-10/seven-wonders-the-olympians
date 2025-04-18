@@ -23,9 +23,14 @@ export const disturbuteCards = (ctx) => {
   ]);
 };
 
-export const getAllPlayersStatus = (ctx) => {
-  return ctx.text("Done");
+const didAllPlayerSelectCard = (ctx) => {
+  const gameMap = ctx.get("gameMap");
+  const game = gameMap.get(ctx.getCookie(ctx, "gameID"));
+  const status = game.didAllPlayerSelectCard();
+
+  return ctx.json({ status });
 };
+
 const sendStatus = (ctx) => {
   const gameMap = ctx.get("gameMap");
   const game = gameMap.get(ctx.getCookie(ctx, "gameID"));
@@ -60,4 +65,9 @@ const performCardActions = async (ctx) => {
   return actionMap[action](card, ctx);
 };
 
-export { getPlayerDetails, performCardActions, sendStatus };
+export {
+  didAllPlayerSelectCard,
+  getPlayerDetails,
+  performCardActions,
+  sendStatus,
+};

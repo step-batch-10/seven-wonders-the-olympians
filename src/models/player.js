@@ -10,6 +10,7 @@ class Player {
   hand;
   oldHand;
   wonder;
+  status;
 
   constructor(userName) {
     this.name = userName;
@@ -21,6 +22,7 @@ class Player {
     this.hand = new Set();
     this.oldHand = new Set();
     this.wonder = null;
+    this.status = "waiting";
   }
 
   static generateUniquePlayerID() {
@@ -43,6 +45,10 @@ class Player {
 
   addCoins(coins) {
     this.coins += coins;
+  }
+
+  udpateStatus(status) {
+    this.status = status;
   }
 
   updateHand(card) {
