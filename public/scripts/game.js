@@ -39,6 +39,7 @@ const fetchImage = (cardName, index) => {
 
 const renderBuildings = ([colour, cards]) => {
   const container = document.querySelector(`.${colour}`);
+  console.log(colour);
   container.classList.add(colour);
 
   const cardCont = cards.map((card, index) => fetchImage(card, index));
@@ -190,11 +191,12 @@ const createContainer = (card) => {
   return imageContainer;
 };
 
-const polling = (currentMove, intervalId) => {
+const polling = async (currentMove, intervalId) => {
+  await fetch("/player/status", { method: "PUT", body: JSON.stringify({ status: "seleted" }) });
   return async () => {
     const res = await fetch("/game/all-players-ready");
-    const status = await res.text();
-    if (status === "Done") {
+    const { status } = await res.json();
+    if (status) {
       clearInterval(intervalId);
       await fetch("/game/action", {
         method: "POST",
