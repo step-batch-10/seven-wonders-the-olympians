@@ -3,6 +3,7 @@ import { sendStatus } from "../handlers/game_handler.js";
 import {
   disturbuteCards,
   getPlayerDetails,
+  getAllPlayersStatus
 } from "../handlers/game_handlers.js";
 const createGameRoute = () => {
   const gameApp = new Hono();
@@ -10,6 +11,7 @@ const createGameRoute = () => {
   gameApp.get("/status", sendStatus);
   gameApp.get("/info", getPlayerDetails);
   gameApp.get("/cards", disturbuteCards);
+  gameApp.get("/all-players-ready", getAllPlayersStatus);
   return gameApp;
 };
 

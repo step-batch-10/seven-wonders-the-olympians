@@ -18,3 +18,7 @@ export const disturbuteCards = (ctx) => {
     },
   ]);
 };
+
+export const getAllPlayersStatus = (ctx) => {
+  return ctx.text("Done");
+};

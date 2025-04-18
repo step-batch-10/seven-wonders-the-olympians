@@ -164,7 +164,7 @@ const createContainer = (card) => {
   const image = document.createElement("img");
 
   image.src = imageUrl;
-  image.classList.add(convert(card.name));
+  image.cardName = card.name;
   imageContainer.classList.add("deck");
   image.addEventListener("click", selectTheCard);
   imageContainer.appendChild(image);
@@ -172,24 +172,35 @@ const createContainer = (card) => {
   return imageContainer;
 };
 
-const reqToDiscard = () => {
-  return (event) => {
-    console.log(event.target);
-    alert("diacard");
+const polling = (currentMove, intervalId) => {
+  return async () => {
+    const res = await fetch("/game/all-players-ready");
+    const status = await res.text();
+    if (status === "Done") {
+      clearInterval(intervalId);
+      console.log(currentMove);
+    }
   };
 };
 
-const reqStage = () => {
-  return (event) => {
-    console.log(event.target);
-    alert("diacard");
+const reqToDiscard = (parentEvent) => {
+  return () => {
+    const move = { card: parentEvent.cardName, action: "Discard" };
+    const intervalId = setInterval(() => polling(move, intervalId)(), 5000);
   };
 };
 
-const reqBuildCard = () => {
-  return (event) => {
-    console.log(event.target);
-    alert("diacard");
+const reqStage = (parentEvent) => {
+  return () => {
+    const move = { card: parentEvent.cardName, action: "Stage" };
+    const intervalId = setInterval(() => polling(move, intervalId)(), 5000);
+  };
+};
+
+const reqBuildCard = (parentEvent) => {
+  return () => {
+    const move = { card: parentEvent.cardName, action: "Build" };
+    const intervalId = setInterval(() => polling(move, intervalId)(), 5000);
   };
 };
 
@@ -198,6 +209,7 @@ const removeList = () => {
 };
 
 const createDiscard = (parentEvent) => {
+  console.log(parentEvent);
   const stage = document.createElement("div");
   const contnet = document.createElement("p");
   const image = document.createElement("img");
@@ -252,11 +264,12 @@ const createCancel = () => {
 const showActions = (event) => {
   const actionBox = document.createElement("div");
   actionBox.classList.add("actionsBox");
+
   actionBox.append(
-    createDiscard(event),
-    createStage(event),
-    createBuild(event),
-    createCancel(event),
+    createDiscard(event.target),
+    createStage(event.target),
+    createBuild(event.target),
+    createCancel(event.target)
   );
 
   return actionBox;
@@ -264,8 +277,7 @@ const showActions = (event) => {
 
 const selectTheCard = (event) => {
   if (document.querySelector(".actionsBox")) return;
-  console.log(showActions());
-  event.target.parentNode.appendChild(showActions());
+  event.target.parentNode.appendChild(showActions(event));
 };
 
 const renderCards = async () => {
@@ -279,7 +291,6 @@ const renderCards = async () => {
 
 const main = async () => {
   const playerInfo = await getPlayerDetails();
-  // console.log("this is the player info", playerInfo);
 
   renderPlayerInfo(playerInfo);
   renderNeighbours(playerInfo);
