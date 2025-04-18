@@ -1,6 +1,7 @@
 // import type { uidGenerator } from "../type-alias.ts";
 import uniqid from "uniqid";
 // import { BaseCard } from "./cards.ts";
+
 class Player {
   name;
   playerId;
@@ -26,6 +27,14 @@ class Player {
 
   assignHand(hand) {
     this.hand = hand;
+  }
+
+  addCoins(coins) {
+    this.coins += coins;
+  }
+
+  updateHand(card) {
+    this.hand.delete(card);
   }
 
   selectCard() {}

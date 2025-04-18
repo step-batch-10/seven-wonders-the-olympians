@@ -28,4 +28,24 @@ const sendStatus = (ctx) => {
   return ctx.json(game.gameData());
 };
 
-export { sendStatus };
+const discard = (card, ctx) => {
+  const { gameID, playerID } = ctx.getCookie(ctx);
+  const game = ctx.get("gameMap").get(gameID);
+  const player = ctx.get("playerMap").get(playerID);
+
+  game.addToDiscarded(card);
+  player.updateHand(card);
+  player.addCoins(3);
+
+  return ctx.json({ message: "discarded successfully!" });
+};
+
+const performCardActions = async (ctx) => {
+
+  const actionMap = { discard };
+  const { action, card } = await ctx.req.json();
+
+  return actionMap[action](card, ctx);
+};
+
+export { sendStatus, performCardActions };

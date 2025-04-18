@@ -90,7 +90,7 @@ const getWonderStats = (wonder, resource) => {
 
 const appendNeighbourStats = (playerClone, coins, name, warTokens) => {
   const neighbourPlaceHolder = playerClone.querySelector(
-    ".player-stats-header",
+    ".player-stats-header"
   );
 
   const playerStats = getPlayerStats(name);
@@ -178,29 +178,35 @@ const polling = (currentMove, intervalId) => {
     const status = await res.text();
     if (status === "Done") {
       clearInterval(intervalId);
-      console.log(currentMove);
+      await fetch("/game/action", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(currentMove),
+      });
+
+      main();
     }
   };
 };
 
 const reqToDiscard = (parentEvent) => {
   return () => {
-    const move = { card: parentEvent.cardName, action: "Discard" };
-    const intervalId = setInterval(() => polling(move, intervalId)(), 5000);
+    const move = { card: parentEvent.cardName, action: "discard" };
+    const intervalId = setInterval(() => polling(move, intervalId)(), 1000);
   };
 };
 
 const reqStage = (parentEvent) => {
   return () => {
-    const move = { card: parentEvent.cardName, action: "Stage" };
-    const intervalId = setInterval(() => polling(move, intervalId)(), 5000);
+    const move = { card: parentEvent.cardName, action: "stage" };
+    const intervalId = setInterval(() => polling(move, intervalId)(), 1000);
   };
 };
 
 const reqBuildCard = (parentEvent) => {
   return () => {
-    const move = { card: parentEvent.cardName, action: "Build" };
-    const intervalId = setInterval(() => polling(move, intervalId)(), 5000);
+    const move = { card: parentEvent.cardName, action: "build" };
+    const intervalId = setInterval(() => polling(move, intervalId)(), 1000);
   };
 };
 
@@ -211,12 +217,12 @@ const removeList = () => {
 const createDiscard = (parentEvent) => {
   console.log(parentEvent);
   const stage = document.createElement("div");
-  const contnet = document.createElement("p");
+  const content = document.createElement("p");
   const image = document.createElement("img");
   image.src = "/img/icons/discard.png";
   stage.appendChild(image);
-  contnet.innerText = "Discard";
-  stage.append(contnet);
+  content.innerText = "Discard";
+  stage.append(content);
   stage.addEventListener("click", reqToDiscard(parentEvent));
 
   return stage;
@@ -224,12 +230,12 @@ const createDiscard = (parentEvent) => {
 
 const createStage = (parentEvent) => {
   const stage = document.createElement("div");
-  const contnet = document.createElement("p");
+  const content = document.createElement("p");
   const image = document.createElement("img");
   image.src = "/img/icons/stage.png";
   stage.appendChild(image);
-  contnet.innerText = "Stage";
-  stage.append(contnet);
+  content.innerText = "Stage";
+  stage.append(content);
   stage.addEventListener("click", reqStage(parentEvent));
 
   return stage;
@@ -237,12 +243,12 @@ const createStage = (parentEvent) => {
 
 const createBuild = (parentEvent) => {
   const stage = document.createElement("div");
-  const contnet = document.createElement("p");
+  const content = document.createElement("p");
   const image = document.createElement("img");
   image.src = "/img/icons/build.png";
   stage.appendChild(image);
-  contnet.innerText = "Build";
-  stage.append(contnet);
+  content.innerText = "Build";
+  stage.append(content);
   stage.addEventListener("click", reqBuildCard(parentEvent));
 
   return stage;
@@ -269,7 +275,7 @@ const showActions = (event) => {
     createDiscard(event.target),
     createStage(event.target),
     createBuild(event.target),
-    createCancel(event.target),
+    createCancel(event.target)
   );
 
   return actionBox;
@@ -286,7 +292,7 @@ const renderCards = async () => {
   const container = document.querySelector("#cardsContainer");
   const data = cards.map(createContainer);
 
-  container.append(...data);
+  container.replaceChildren(...data);
 };
 
 const main = async () => {

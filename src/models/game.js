@@ -16,6 +16,7 @@ class Game {
     "gizah",
     "olympia",
   ];
+  discardedDeck;
 
   constructor(noOfPlayers, player1) {
     this.noOfPlayers = noOfPlayers;
@@ -23,6 +24,7 @@ class Game {
     this.gameID = Game.generateUniqueGameID();
     this.gameStatus = "waiting";
     this.currentAge = 0;
+    this.discardedDeck = [];
   }
 
   get isGameFull() {
@@ -76,7 +78,11 @@ class Game {
     });
   }
 
-  setUpTheCardDecks() {}
+  setUpTheCardDecks() { }
+  
+  addToDiscarded(card) {
+    this.discardedDeck.push(card);
+  }
 
   distributeCards() {
     //create random four deck
