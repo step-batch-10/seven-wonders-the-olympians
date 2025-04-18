@@ -8,10 +8,10 @@ class Wonder {
   #militaryStrength;
   #victoryPoints;
 
-  constructor (wonder) {
+  constructor(wonder) {
     this.#wonder = wonder;
     this.#cards = {};
-    this.#resources = {choices: []}; // {ore: 2, choices: [[a,b], [a,b,c]]}
+    this.#resources = { choices: [] }; // {ore: 2, choices: [[a,b], [a,b,c]]}
     this.#resources[wonder.resource] = 1;
     // this.stages = wonder.stages;
     // this.staged = [];
@@ -20,29 +20,29 @@ class Wonder {
     this.#victoryPoints = 0;
   }
 
-  isResourceCard (card) { //  incluse purple and yelow resource card also
+  isResourceCard(card) { //  incluse purple and yelow resource card also
     const resources = ["brown", "grey", "green"];
 
     return resources.includes(card.color);
   }
 
-  isDiscountCard (card) {
+  isDiscountCard(card) {
     const isYellowCard = card.color === "yellow";
     const isDiscountCard = card.effect && card.effect[0]?.effect_type === "buy";
 
     return isYellowCard && isDiscountCard;
   }
 
-  isMilitaryStrength (card) {
+  isMilitaryStrength(card) {
     return card.color == "red";
   }
 
-  isVictoryPoints (card) {
+  isVictoryPoints(card) {
     return card.color == "blue";
   }
 
-  addResources (card) {
-    if(card.produces[0].type === "choice") {
+  addResources(card) {
+    if (card.produces[0].type === "choice") {
       const options = card.produces[0].options;
       this.#resources.choices.push(new Set(options));
       return;
@@ -53,71 +53,73 @@ class Wonder {
     this.#resources[resource] = (this.#resources[resource] || 0) + count;
   }
 
-  addDiscounts (card) {
+  addDiscounts(card) {
     const resources = card.effect[0].options;
     const newNeighbours = card.effect[0].applies_to;
 
     resources.forEach((resource) => {
       const neighbours = this.#discounts[resource];
 
-      if(!neighbours) {
+      if (!neighbours) {
         this.#discounts[resource] = [];
       }
 
-      this.#discounts[resource] = this.#discounts[resource].concat(newNeighbours);
+      this.#discounts[resource] = this.#discounts[resource].concat(
+        newNeighbours,
+      );
     });
   }
 
-  addVictoryPoints (card) {
+  addVictoryPoints(card) {
     const count = card.produces[0].count;
     this.#victoryPoints += count;
   }
 
-  addMilitaryStrength (card) {
+  addMilitaryStrength(card) {
     const count = card.produces[0].count;
     this.#militaryStrength += count;
   }
 
-  getCardBenifits (card) {
-    if(this.isResourceCard(card)) {
+  getCardBenifits(card) {
+    if (this.isResourceCard(card)) {
       this.addResources(card);
     }
 
-    if(this.isDiscountCard(card)) {
+    if (this.isDiscountCard(card)) {
       this.addDiscounts(card);
     }
 
-    if(this.isVictoryPoints(card)) {
+    if (this.isVictoryPoints(card)) {
       this.addVictoryPoints(card);
     }
 
-    if(this.isMilitaryStrength(card)) {
+    if (this.isMilitaryStrength(card)) {
       this.addMilitaryStrength(card);
     }
   }
 
-  build (card) {
+  build(card) {
     this.#cards[card.color] = card;
     this.getCardBenifits(card);
   }
 
   // stage (card) {}
 
-  get resources () {
+  get resources() {
     return this.#resources;
   }
 
-  get militaryStrength () {
+  get militaryStrength() {
     return this.#militaryStrength;
   }
 
-  get victoryPoints () {
+  get victoryPoints() {
     return this.#victoryPoints;
   }
 
-  get discounts () {
+  get discounts() {
     return this.#discounts;
   }
 }
 
-export {Wonder};
+export { Wonder };
