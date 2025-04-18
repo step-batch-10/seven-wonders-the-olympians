@@ -1,16 +1,24 @@
 class Wonder {
   #wonder;
-  #cards;
+  #buildings;
   #resources;
   // stages;
-  // staged;
+  #staged;
   #discounts;
   #militaryStrength;
   #victoryPoints;
 
   constructor(wonder) {
     this.#wonder = wonder;
-    this.#cards = {};
+    this.#buildings = {
+      brown: [],
+      gray: [],
+      green: [],
+      yellow: [],
+      blue: [],
+      red: [],
+      purple: [],
+    };
     this.#resources = { choices: [] }; // {ore: 2, choices: [[a,b], [a,b,c]]}
     this.#resources[wonder.resource] = 1;
     // this.stages = wonder.stages;
@@ -18,9 +26,39 @@ class Wonder {
     this.#discounts = {}; // {wood: [left]}
     this.#militaryStrength = 0;
     this.#victoryPoints = 0;
+    this.#staged = [];
   }
 
-  isResourceCard(card) { //  incluse purple and yelow resource card also
+  get name() {
+    return this.#wonder.name;
+  }
+
+  get bonusResource() {
+    return this.#wonder.resource;
+  }
+
+  get staged() {
+    return this.#staged;
+  }
+
+  get resources() {
+    return this.#resources;
+  }
+  b;
+  get militaryStrength() {
+    return this.#militaryStrength;
+  }
+
+  get victoryPoints() {
+    return this.#victoryPoints;
+  }
+
+  get discounts() {
+    return this.#discounts;
+  }
+
+  isResourceCard(card) {
+    //  incluse purple and yelow resource card also
     const resources = ["brown", "grey", "green"];
 
     return resources.includes(card.color);
@@ -99,26 +137,21 @@ class Wonder {
   }
 
   build(card) {
-    this.#cards[card.color] = card;
+    this.#buildings[card.color].push(card);
     this.getCardBenifits(card);
   }
 
-  // stage (card) {}
-
-  get resources() {
-    return this.#resources;
+  get buildings() {
+    return Object.fromEntries(
+      Object.entries(this.#buildings).map(([colors, cards]) => {
+        const cardNames = cards.map((card) => card.name);
+        return [colors, cardNames];
+      }),
+    );
   }
 
-  get militaryStrength() {
-    return this.#militaryStrength;
-  }
-
-  get victoryPoints() {
-    return this.#victoryPoints;
-  }
-
-  get discounts() {
-    return this.#discounts;
+  stageACard(card) {
+    this.#staged.push(card);
   }
 }
 

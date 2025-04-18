@@ -1,5 +1,6 @@
 import uniqid from "uniqid";
 import wondersData from "../../data/wonders.json" with { type: "json" };
+import { Wonder } from "./wonder.js";
 
 class Game {
   gameID;
@@ -57,8 +58,8 @@ class Game {
 
   arrangePlayers() {
     this.players.forEach((player, idx) => {
-      player.rightNeighbor = this.players[(idx + 1) % this.players.length];
-      player.leftNeighbor =
+      player.rightPlayer = this.players[(idx + 1) % this.players.length];
+      player.leftPlayer =
         this.players[(idx + this.players.length - 1) % this.players.length];
     });
   }
@@ -67,8 +68,9 @@ class Game {
     this.players.forEach((player) => {
       const wonderName = this.wonders.pop();
       const wonderData = wondersData[wonderName];
+      const wonder = new Wonder(wonderData);
 
-      player.wonder = wonderData;
+      player.wonder = wonder;
     });
   }
 
@@ -101,51 +103,15 @@ class Game {
     };
   }
 
-  getPlayerInfo() {
-    console.log("hello");
-    return {
-      name: "Akash",
-      wonder: "alexandria",
-      coins: 3,
-      warTokens: { positive: 0, negative: 0 },
-      bonusResource: "glass",
-      build: {
-        red: [],
-        grey: [],
-        gold: [],
-        blue: []
-      },
+  getPlayerInfo(playerID) {
+    const player = this.players.find((player) => player.playerId === playerID);
+    const playerData = player.playerData();
 
-      leftPlayer: {
-        name: "Siddu",
-        wonder: "olympia",
-        coins: 3,
-        warTokens: { positive: 0, negative: 0 },
-        noOfStages: 0,
-        bonusResource: "wood",
-        cards: [],
-      },
+    playerData.leftPlayerData = player.leftPlayer.playerData();
+    playerData.rightPlayerData = player.rightPlayer.playerData();
+    playerData.others = player.getOtherPlayerData();
 
-      rightPlayer: {
-        name: "Tom",
-        wonder: "rhodos",
-        coins: 3,
-        warTokens: { positive: 0, negative: 0 },
-        bonusResource: "ore",
-        noOfStages: 0,
-        cards: [],
-      },
-      others: [
-        {
-          name: "Alice",
-          wonder: "halikarnossos",
-          coins: 3,
-          warTokens: { positive: 0, negative: 0 },
-          noOfStages: 0,
-          bonusResource: "textile",
-        },
-      ],
-    };
+    return playerData;
   }
 }
 

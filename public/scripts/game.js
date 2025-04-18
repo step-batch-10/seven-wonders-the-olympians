@@ -277,7 +277,7 @@ const showActions = (event, card) => {
     createDiscard(event.target),
     createStage(event.target, card),
     createBuild(event.target, card),
-    createCancel(event.target)
+    createCancel(event.target),
   );
 
   return actionBox;
