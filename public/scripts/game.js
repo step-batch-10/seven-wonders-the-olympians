@@ -214,21 +214,30 @@ const polling = async (currentMove, intervalId) => {
 const reqToDiscard = (parentEvent) => {
   return () => {
     const move = { card: parentEvent.cardName, action: "discard" };
-    const intervalId = setInterval(async () => (await polling(move, intervalId))(), 1000);
+    const intervalId = setInterval(
+      async () => (await polling(move, intervalId))(),
+      1000,
+    );
   };
 };
 
 const reqStage = (parentEvent) => {
   return () => {
     const move = { card: parentEvent.cardName, action: "stage" };
-    const intervalId = setInterval(async () => (await polling(move, intervalId))(), 1000);
+    const intervalId = setInterval(
+      async () => (await polling(move, intervalId))(),
+      1000,
+    );
   };
 };
 
 const reqBuildCard = (parentEvent) => {
   return () => {
     const move = { card: parentEvent.cardName, action: "build" };
-    const intervalId = setInterval(async () => (await polling(move, intervalId))(), 1000);
+    const intervalId = setInterval(
+      async () => (await polling(move, intervalId))(),
+      1000,
+    );
   };
 };
 
