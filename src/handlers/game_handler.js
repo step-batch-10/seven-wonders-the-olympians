@@ -44,8 +44,17 @@ const discard = (card, ctx) => {
   return ctx.json({ message: "discarded successfully!" });
 };
 
+const build = (card, ctx) => {
+  const { playerID } = ctx.getCookie(ctx);
+  const player = ctx.get("playerMap").get(playerID);
+
+  player.buildCard(card.name);
+
+  return ctx.json({ message: "builded successfully!" });
+};
+
 const performCardActions = async (ctx) => {
-  const actionMap = { discard };
+  const actionMap = { discard, build };
   const { action, card } = await ctx.req.json();
 
   return actionMap[action](card, ctx);

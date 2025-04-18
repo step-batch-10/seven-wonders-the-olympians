@@ -11,10 +11,32 @@
     "chain_to": []
   },
   {
+    "name": "Lumber Yard",
+    "age": 1,
+    "color": "brown",
+    "min_players": 4,
+    "cost": [],
+    "produces": [{ "type": "wood", "count": 1 }],
+    "effect": null,
+    "chain_from": null,
+    "chain_to": []
+  },
+  {
     "name": "Stone Pit",
     "age": 1,
     "color": "brown",
     "min_players": 3,
+    "cost": [],
+    "produces": [{ "type": "stone", "count": 1 }],
+    "effect": null,
+    "chain_from": null,
+    "chain_to": []
+  },
+  {
+    "name": "Stone Pit",
+    "age": 1,
+    "color": "brown",
+    "min_players": 5,
     "cost": [],
     "produces": [{ "type": "stone", "count": 1 }],
     "effect": null,
@@ -33,10 +55,32 @@
     "chain_to": []
   },
   {
+    "name": "Clay Pool",
+    "age": 1,
+    "color": "brown",
+    "min_players": 5,
+    "cost": [],
+    "produces": [{ "type": "clay", "count": 1 }],
+    "effect": null,
+    "chain_from": null,
+    "chain_to": []
+  },
+  {
     "name": "Ore Vein",
     "age": 1,
     "color": "brown",
     "min_players": 3,
+    "cost": [],
+    "produces": [{ "type": "ore", "count": 1 }],
+    "effect": null,
+    "chain_from": null,
+    "chain_to": []
+  },
+  {
+    "name": "Ore Vein",
+    "age": 1,
+    "color": "brown",
+    "min_players": 4,
     "cost": [],
     "produces": [{ "type": "ore", "count": 1 }],
     "effect": null,
@@ -157,10 +201,32 @@
     "chain_to": []
   },
   {
+    "name": "Glassworks",
+    "age": 1,
+    "color": "gray",
+    "min_players": 6,
+    "cost": [],
+    "produces": [{ "type": "glass", "count": 1 }],
+    "effect": null,
+    "chain_from": null,
+    "chain_to": []
+  },
+  {
     "name": "Press",
     "age": 1,
     "color": "gray",
     "min_players": 3,
+    "cost": [],
+    "produces": [{ "type": "papyrus", "count": 1 }],
+    "effect": null,
+    "chain_from": null,
+    "chain_to": []
+  },
+  {
+    "name": "Press",
+    "age": 1,
+    "color": "gray",
+    "min_players": 6,
     "cost": [],
     "produces": [{ "type": "papyrus", "count": 1 }],
     "effect": null,
@@ -179,6 +245,17 @@
     "chain_to": []
   },
   {
+    "name": "Loom",
+    "age": 1,
+    "color": "gray",
+    "min_players": 6,
+    "cost": [],
+    "produces": [{ "type": "textile", "count": 1 }],
+    "effect": null,
+    "chain_from": null,
+    "chain_to": []
+  },
+  {
     "name": "Tavern",
     "age": 1,
     "color": "yellow",
@@ -190,10 +267,51 @@
     "chain_to": []
   },
   {
+    "name": "Tavern",
+    "age": 1,
+    "color": "yellow",
+    "min_players": 5,
+    "cost": [],
+    "produces": [{ "type": "coin", "count": 5 }],
+    "effect": null,
+    "chain_from": null,
+    "chain_to": []
+  },
+  {
+    "name": "Tavern",
+    "age": 1,
+    "color": "yellow",
+    "min_players": 7,
+    "cost": [],
+    "produces": [{ "type": "coin", "count": 5 }],
+    "effect": null,
+    "chain_from": null,
+    "chain_to": []
+  },
+  {
     "name": "East Trading Post",
     "age": 1,
     "color": "yellow",
     "min_players": 3,
+    "cost": [],
+    "produces": [],
+    "effect": [
+      {
+        "type": "resource",
+        "effect_type": "buy",
+        "cost": [{ "type": "coin", "count": 1 }],
+        "applies_to": ["right_neighbour"],
+        "options": ["clay", "stone", "wood", "ore"]
+      }
+    ],
+    "chain_from": null,
+    "chain_to": []
+  },
+  {
+    "name": "East Trading Post",
+    "age": 1,
+    "color": "yellow",
+    "min_players": 7,
     "cost": [],
     "produces": [],
     "effect": [
@@ -228,10 +346,48 @@
     "chain_to": []
   },
   {
+    "name": "West Trading Post",
+    "age": 1,
+    "color": "yellow",
+    "min_players": 7,
+    "cost": [],
+    "produces": [],
+    "effect": [
+      {
+        "type": "resource",
+        "effect_type": "buy",
+        "cost": [{ "type": "coin", "count": 1 }],
+        "applies_to": ["left_neighbour"],
+        "options": ["clay", "stone", "wood", "ore"]
+      }
+    ],
+    "chain_from": null,
+    "chain_to": []
+  },
+  {
     "name": "Marketplace",
     "age": 1,
     "color": "yellow",
     "min_players": 3,
+    "cost": [],
+    "produces": [],
+    "effect": [
+      {
+        "type": "resource",
+        "effect_type": "buy",
+        "cost": [{ "type": "coin", "count": 1 }],
+        "applies_to": ["left_neighbour", "right_neighbour"],
+        "options": ["glass", "papyrus", "textile"]
+      }
+    ],
+    "chain_from": null,
+    "chain_to": []
+  },
+  {
+    "name": "Marketplace",
+    "age": 1,
+    "color": "yellow",
+    "min_players": 6,
     "cost": [],
     "produces": [],
     "effect": [
@@ -258,10 +414,32 @@
     "chain_to": []
   },
   {
+    "name": "Guard Tower",
+    "age": 1,
+    "color": "red",
+    "min_players": 4,
+    "cost": [{ "type": "clay", "count": 1 }],
+    "produces": [{ "type": "shield", "count": 1 }],
+    "effect": null,
+    "chain_from": null,
+    "chain_to": []
+  },
+  {
     "name": "Stockade",
     "age": 1,
     "color": "red",
     "min_players": 3,
+    "cost": [{ "type": "wood", "count": 1 }],
+    "produces": [{ "type": "shield", "count": 1 }],
+    "effect": null,
+    "chain_from": null,
+    "chain_to": []
+  },
+  {
+    "name": "Stockade",
+    "age": 1,
+    "color": "red",
+    "min_players": 7,
     "cost": [{ "type": "wood", "count": 1 }],
     "produces": [{ "type": "shield", "count": 1 }],
     "effect": null,
@@ -280,10 +458,32 @@
     "chain_to": ["Stables", "Walls"]
   },
   {
+    "name": "Barracks",
+    "age": 1,
+    "color": "red",
+    "min_players": 7,
+    "cost": [{ "type": "ore", "count": 1 }],
+    "produces": [{ "type": "shield", "count": 1 }],
+    "effect": null,
+    "chain_from": null,
+    "chain_to": ["Stables", "Walls"]
+  },
+  {
     "name": "Scriptorium",
     "age": 1,
     "color": "green",
     "min_players": 3,
+    "cost": [{ "type": "papyrus", "count": 1 }],
+    "produces": [{ "type": "tablet", "count": 1 }],
+    "effect": null,
+    "chain_from": null,
+    "chain_to": ["Library"]
+  },
+  {
+    "name": "Scriptorium",
+    "age": 1,
+    "color": "green",
+    "min_players": 4,
     "cost": [{ "type": "papyrus", "count": 1 }],
     "produces": [{ "type": "tablet", "count": 1 }],
     "effect": null,
@@ -302,10 +502,32 @@
     "chain_to": ["Stables", "Dispensary"]
   },
   {
+    "name": "Apothecary",
+    "age": 1,
+    "color": "green",
+    "min_players": 5,
+    "cost": [{ "type": "textile", "count": 1 }],
+    "produces": [{ "type": "compass", "count": 1 }],
+    "effect": null,
+    "chain_from": null,
+    "chain_to": ["Stables", "Dispensary"]
+  },
+  {
     "name": "Workshop",
     "age": 1,
     "color": "green",
     "min_players": 3,
+    "cost": [{ "type": "glass", "count": 1 }],
+    "produces": [{ "type": "gear", "count": 1 }],
+    "effect": null,
+    "chain_from": null,
+    "chain_to": ["Laboratory"]
+  },
+  {
+    "name": "Workshop",
+    "age": 1,
+    "color": "green",
+    "min_players": 7,
     "cost": [{ "type": "glass", "count": 1 }],
     "produces": [{ "type": "gear", "count": 1 }],
     "effect": null,
@@ -324,10 +546,32 @@
     "type": "civil"
   },
   {
+    "name": "Altar",
+    "age": 1,
+    "color": "blue",
+    "min_players": 5,
+    "cost": [],
+    "produces": [{ "type": "points", "count": 2 }],
+    "chain_from": null,
+    "chain_to": ["Temple"],
+    "type": "civil"
+  },
+  {
     "name": "Baths",
     "age": 1,
     "color": "blue",
     "min_players": 3,
+    "cost": [{ "type": "stone", "count": 1 }],
+    "produces": [{ "type": "points", "count": 3 }],
+    "chain_from": null,
+    "chain_to": ["Aqueduct"],
+    "type": "civil"
+  },
+  {
+    "name": "Baths",
+    "age": 1,
+    "color": "blue",
+    "min_players": 7,
     "cost": [{ "type": "stone", "count": 1 }],
     "produces": [{ "type": "points", "count": 3 }],
     "chain_from": null,
@@ -346,10 +590,32 @@
     "type": "civil"
   },
   {
+    "name": "Theater",
+    "age": 1,
+    "color": "blue",
+    "min_players": 6,
+    "cost": [],
+    "produces": [{ "type": "points", "count": 2 }],
+    "chain_from": null,
+    "chain_to": ["Statue"],
+    "type": "civil"
+  },
+  {
     "name": "Pawn Shop",
     "age": 1,
     "color": "blue",
     "min_players": 4,
+    "cost": [],
+    "produces": [{ "type": "points", "count": 3 }],
+    "chain_from": null,
+    "chain_to": [],
+    "type": "civil"
+  },
+  {
+    "name": "Pawn Shop",
+    "age": 1,
+    "color": "blue",
+    "min_players": 7,
     "cost": [],
     "produces": [{ "type": "points", "count": 3 }],
     "chain_from": null,

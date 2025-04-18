@@ -11,11 +11,13 @@ const evaluateCookie = () => {
     if (!playerID && !gameID) {
       await next();
     }
+
     if (playerID && gameID) {
       if (gameID === playerGameMap.get(playerID)) {
         return ctx.redirect("/waiting_room.html");
       }
     }
+
     return ctx.text("Access Denied!", 403);
   };
 };

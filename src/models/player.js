@@ -75,6 +75,13 @@ class Player {
 
     return data;
   }
+
+  buildCard(cardName) {
+    const card = [...this.hand].find((card) => card.name = cardName);
+
+    this.wonder.build(card);
+    this.updateHand(card);
+  }
 }
 
 export { Player };
