@@ -76,7 +76,7 @@ class Game {
     });
   }
 
-  setUpTheCardDecks() { }
+  setUpTheCardDecks() {}
 
   distributeCards() {
     //create random four deck

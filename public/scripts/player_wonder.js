@@ -1,6 +1,12 @@
+const loadWonderImage = (image) => {
+  const imgTag = document.getElementById("wonder-img");
+  imgTag.src = `img/wonders/${image}`;
+};
+
 const getWonderDetails = async () => {
   const response = await fetch("/player/wonder");
   const { image } = await response.json();
+  console.log(image);
 
   loadWonderImage(image);
 };
