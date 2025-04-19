@@ -8,44 +8,14 @@ const getPlayerDetails = (ctx) => {
   return ctx.json(game.getPlayerInfo(playerID));
 };
 
-const disturbuteCards = (ctx) => {
-  return ctx.json([
-    {
-      name: "Lumber Yard",
-      canBuild: true,
-      canStage: false,
-    },
-    {
-      name: "Stone Pit",
-      canBuild: false,
-      canStage: false,
-    },
-    {
-      name: "Stone Pit",
-      canBuild: false,
-      canStage: false,
-    },
-    {
-      name: "Stone Pit",
-      canBuild: false,
-      canStage: false,
-    },
-    {
-      name: "Stone Pit",
-      canBuild: false,
-      canStage: false,
-    },
-    {
-      name: "Stone Pit",
-      canBuild: false,
-      canStage: false,
-    },
-    {
-      name: "Stone Pit",
-      canBuild: false,
-      canStage: false,
-    },
-  ]);
+const getPlayerHand = (ctx) => {
+  const gameID = ctx.getCookie(ctx, "gameID");
+  const playerID = ctx.getCookie(ctx, "playerID");
+
+  const gameMap = ctx.get("gameMap");
+  const game = gameMap.get(gameID);
+
+  return ctx.json(game.getPlayerHandData(playerID));
 };
 
 const didAllPlayerSelectCard = (ctx) => {
@@ -68,7 +38,7 @@ const discard = (card, ctx) => {
   const player = ctx.get("playerMap").get(playerID);
 
   game.addToDiscarded(card);
-  player.removeFromHand(card);
+  player.updateHand(card); //need to change
   player.addCoins(3);
 
   return ctx.json({ message: "discarded successfully!" });
@@ -78,7 +48,7 @@ const build = (card, ctx) => {
   const { playerID } = ctx.getCookie(ctx);
   const player = ctx.get("playerMap").get(playerID);
 
-  player.buildCard(card.name);
+  player.buildCard(card);
 
   return ctx.json({ message: "builded successfully!" });
 };
@@ -101,8 +71,8 @@ const passHands = (ctx) => {
 export {
   didAllPlayerSelectCard,
   discard,
-  disturbuteCards,
   getPlayerDetails,
+  getPlayerHand,
   passHands,
   performCardActions,
   sendStatus,

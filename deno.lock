@@ -12,6 +12,7 @@
     "jsr:@std/testing@*": "1.0.11",
     "jsr:@std/testing@^1.0.11": "1.0.11",
     "npm:hono@^4.7.7": "4.7.7",
+    "npm:lodash@^4.17.21": "4.17.21",
     "npm:uniqid@^5.4.0": "5.4.0"
   },
   "jsr": {
@@ -55,6 +56,9 @@
     "hono@4.7.7": {
       "integrity": "sha512-2PCpQRbN87Crty8/L/7akZN3UyZIAopSoRxCwRbJgUuV1+MHNFHzYFxZTg4v/03cXUm+jce/qa2VSBZpKBm3Qw=="
     },
+    "lodash@4.17.21": {
+      "integrity": "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg=="
+    },
     "uniqid@5.4.0": {
       "integrity": "sha512-38JRbJ4Fj94VmnC7G/J/5n5SC7Ab46OM5iNtSstB/ko3l1b5g7ALt4qzHFgGciFkyiRNtDXtLNb+VsxtMSE77A=="
     }
@@ -65,6 +69,7 @@
       "jsr:@std/assert@^1.0.12",
       "jsr:@std/testing@^1.0.11",
       "npm:hono@^4.7.7",
+      "npm:lodash@^4.17.21",
       "npm:uniqid@^5.4.0"
     ]
   }

@@ -5,33 +5,42 @@ import ageTwoCards from "../../data/ageTwoCards.json" with { type: "json" };
 import ageThreeCards from "../../data/ageThreeCards.json" with { type: "json" };
 import { Wonder } from "./wonder.js";
 
+const shuffleArray = ([...arr]) => arr.sort(() => Math.random() - 0.5);
+const wonders = [
+  "babylon",
+  "rhodos",
+  "halikarnassos",
+  "alexandria",
+  "ephesos",
+  "gizah",
+  "olympia",
+];
+
 class Game {
   #gameID;
   #players;
   noOfPlayers;
   gameStatus;
   currentAge;
-  wonders = [
-    "babylon",
-    "rhodos",
-    "halikarnassos",
-    "alexandria",
-    "ephesos",
-    "gizah",
-    "olympia",
-  ];
+  wonders;
   discardedDeck;
-  ageOneDeck;
-  ageTwoDeck;
-  ageThreeDeck;
+  decks;
+  shuffleDeck;
 
-  constructor(noOfPlayers, player1) {
+  constructor(noOfPlayers, player1, shuffleDeck = shuffleArray) {
     this.noOfPlayers = noOfPlayers;
     this.#players = [player1];
     this.#gameID = Game.generateUniqueGameID();
     this.gameStatus = "waiting";
     this.currentAge = 0;
     this.discardedDeck = [];
+    this.wonders = shuffleDeck(wonders);
+    this.shuffleDeck = shuffleDeck;
+    this.decks = {
+      1: null,
+      2: null,
+      3: null,
+    };
   }
 
   get isGameFull() {
@@ -84,14 +93,14 @@ class Game {
     });
   }
 
-  segregateCards() {
-    this.ageOneDeck = ageOneCards.filter((card) =>
+  setUpTheCardDecks() {
+    this.decks[1] = ageOneCards.filter((card) =>
       card.min_players <= this.noOfPlayers
     );
-    this.ageTwoDeck = ageTwoCards.filter((card) =>
+    this.decks[2] = ageTwoCards.filter((card) =>
       card.min_players <= this.noOfPlayers
     );
-    this.ageThreeDeck = ageThreeCards.filter((card) =>
+    this.decks[3] = ageThreeCards.filter((card) =>
       card.min_players <= this.noOfPlayers
     );
   }
@@ -102,10 +111,12 @@ class Game {
     });
   }
 
-  setUpTheCardDecks() {}
-
   didAllPlayerSelectCard() {
-    return this.#players.every((player) => player.status === "seleted");
+    const status = this.#players.every((player) => player.status === "seleted");
+    if (status) {
+      this.passHands();
+    }
+    return status;
   }
 
   addToDiscarded(card) {
@@ -134,8 +145,18 @@ class Game {
   }
 
   distributeCards() {
-    //create random four deck
-    //assign the deck to each player
+    const hands = this.makeHands();
+    this.#players.forEach((player) => player.assignHand(hands.pop()));
+  }
+
+  makeHands() {
+    const cardsDeck = this.shuffleDeck(this.decks[this.currentAge]);
+
+    const hands = [];
+    for (let i = 0; i < this.noOfPlayers; i++) {
+      hands.push(cardsDeck.splice(0, 7));
+    }
+    return hands;
   }
 
   initAge() {
@@ -158,6 +179,11 @@ class Game {
     playerData.others = player.getOtherPlayerData();
 
     return playerData;
+  }
+
+  getPlayerHandData(playerID) {
+    const player = this.#players.find((player) => player.playerID === playerID);
+    return player.getHandData();
   }
 }
 

@@ -1,4 +1,5 @@
 import uniqid from "uniqid";
+import _ from "lodash";
 
 class Player {
   #name;
@@ -8,7 +9,6 @@ class Player {
   #coins;
   warTokens;
   hand;
-  oldHand;
   wonder;
   status;
 
@@ -19,8 +19,7 @@ class Player {
     this.leftPlayer = null;
     this.#coins = 0;
     this.warTokens = [];
-    this.hand = new Set();
-    this.oldHand = new Set();
+    this.hand = [];
     this.wonder = null;
     this.status = "waiting";
   }
@@ -61,8 +60,24 @@ class Player {
     this.status = status;
   }
 
-  removeFromHand(card) {
-    this.hand.delete(card);
+  updateHand(card) {
+    console.log({ card, player: this.name });
+
+    console.log(
+      "before: %o",
+      this.hand.map((card) => card.name),
+    );
+
+    const indexOfCard = _.findIndex(
+      this.hand,
+      (handCard) => card === handCard.name,
+    );
+    _.remove(this.hand, (_ele, idx) => idx === indexOfCard);
+
+    console.log(
+      "after: %o",
+      this.hand.map((card) => card.name),
+    );
   }
 
   selectCard() {}
@@ -90,6 +105,18 @@ class Player {
     }
 
     return data;
+  }
+
+  getHandData() {
+    const handData = [];
+    this.hand.forEach((card) => {
+      handData.push({
+        name: card.name,
+        canBuild: true,
+        canStage: false,
+      });
+    });
+    return handData;
   }
 
   buildCard(cardName) {

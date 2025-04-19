@@ -33,7 +33,7 @@ const getPlayerPoints = (coins, tokens) => {
 const fetchImage = (card, index) => {
   const cardName = convert(card);
   const image = document.createElement("img");
-  image.src = `/img/cards/${cardName}.jpeg`;
+  image.src = `/img/cards/${convert(cardName)}.jpeg`;
   image.style = `--index:${index}`;
   return image;
 };
@@ -248,12 +248,6 @@ const polling = async (currentMove, intervalId) => {
       });
 
       notify((await response.json()).message);
-
-      const passHandResponse = await fetch("/game/pass-hand", {
-        method: "POST",
-      });
-
-      notify((await passHandResponse.json()).message);
       renderGamePage();
     }
   };
