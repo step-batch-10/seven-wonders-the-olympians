@@ -5,6 +5,7 @@
 }
 body {
   background: radial-gradient(ellipse at bottom center, #f0ddb7, #ad884c);
+  overflow: hidden;
 }
 main {
   display: flex;
@@ -74,7 +75,25 @@ header,
   width: 100%;
 }
 
+.cards img {
+  position: absolute;
+  z-index: calc(var(--index) * -1);
+  bottom: calc(var(--index) * 50px);
+}
+
+.cards > * {
+  position: relative;
+  z-index: -1;
+  bottom: -150px;
+}
+
 .cards {
+  z-index: -2;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  position: relative;
   height: 100%;
   width: 100%;
 }
@@ -152,6 +171,22 @@ p {
   z-index: calc(var(--index) * -1);
 }
 
+.first-col,
+.second-col {
+  width: 46%;
+  height: 200px;
+}
+
+.first-col > img {
+  height: 200px;
+  width: 100%;
+}
+
+.second-col > img {
+  height: 200px;
+  width: 100%;
+}
+
 .buildedCards {
   width: 100%;
   display: flex;
@@ -206,6 +241,7 @@ main img {
 .other-player-stats > .player-stats-header > * {
   background-color: #9a6a1c;
 }
+<<<<<<< Updated upstream
 
 .other-player-stats > * {
   flex-grow: 1;
@@ -302,4 +338,11 @@ main img {
     rotateZ(var(--rotate));
   transform-origin: top center;
   transition: transform 0.3s ease;
+=======
+.second-col {
+  position: relative;
+}
+.second-col > * {
+  position: absolute;
+>>>>>>> Stashed changes
 }

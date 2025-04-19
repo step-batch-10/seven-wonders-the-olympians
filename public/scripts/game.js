@@ -30,7 +30,8 @@ const getPlayerPoints = (coins, tokens) => {
   return pointsHolder;
 };
 
-const fetchImage = (cardName, index) => {
+const fetchImage = (card, index) => {
+  const cardName = convert(card).toLowerCase()
   const image = document.createElement("img");
   image.src = `/img/cards/${cardName}.jpeg`;
   image.style = `--index:${index}`;
@@ -110,7 +111,7 @@ const getWonderStats = (wonder, resource) => {
 
 const appendNeighbourStats = (playerClone, coins, name, warTokens) => {
   const neighbourPlaceHolder = playerClone.querySelector(
-    ".player-stats-header",
+    ".player-stats-header"
   );
 
   const playerStats = getPlayerStats(name);
@@ -118,6 +119,29 @@ const appendNeighbourStats = (playerClone, coins, name, warTokens) => {
 
   neighbourPlaceHolder.append(playerStats);
   neighbourPlaceHolder.append(playerPoints);
+};
+
+const extractAllCards = (buildings) => {
+  const colourCards = Object.entries(buildings);
+  return colourCards.map(([_, cards]) => cards).flat();
+};
+
+const halfTheCards = (cards) => {
+  const half = Math.floor(cards.length / 2);
+  const firstHalf = cards.slice(0, half);
+  const secondHalf = cards.slice(half);
+
+  return [firstHalf, secondHalf];
+};
+
+const appendPlayerBuildings = (playerClone, buildings) => {
+  const firstColHolder = playerClone.querySelector(".first-col");
+  const secondColHolder = playerClone.querySelector(".second-col");
+  const cards = extractAllCards(buildings);
+  const [firstCol, secondCol] = halfTheCards(cards);
+
+  firstColHolder.append(...firstCol.map(fetchImage));
+  secondColHolder.append(...secondCol.map(fetchImage));
 };
 
 const appendWonderStats = (playerClone, wonder, bonusResource) => {
@@ -128,10 +152,11 @@ const appendWonderStats = (playerClone, wonder, bonusResource) => {
 };
 
 const getNeighbourStats = (player, template) => {
-  const { coins, warTokens, name, wonder, bonusResource } = player;
+  const { coins, warTokens, name, wonder, bonusResource, buildings } = player;
   const playerClone = template.content.cloneNode(true);
 
   appendNeighbourStats(playerClone, coins, name, warTokens.positive);
+  appendPlayerBuildings(playerClone, buildings);
   appendWonderStats(playerClone, wonder, bonusResource);
 
   return playerClone;
@@ -219,7 +244,7 @@ const reqToDiscard = (parentEvent) => {
     const move = { card: parentEvent.cardName, action: "discard" };
     const intervalId = setInterval(
       async () => (await polling(move, intervalId))(),
-      1000,
+      1000
     );
   };
 };
@@ -229,7 +254,7 @@ const reqStage = (parentEvent) => {
     const move = { card: parentEvent.cardName, action: "stage" };
     const intervalId = setInterval(
       async () => (await polling(move, intervalId))(),
-      1000,
+      1000
     );
   };
 };
@@ -239,7 +264,7 @@ const reqBuildCard = (parentEvent) => {
     const move = { card: parentEvent.cardName, action: "build" };
     const intervalId = setInterval(
       async () => (await polling(move, intervalId))(),
-      1000,
+      1000
     );
   };
 };
@@ -311,7 +336,7 @@ const showActions = (event, card) => {
     createDiscard(event.target),
     createStage(event.target, card),
     createBuild(event.target, card),
-    createCancel(event.target),
+    createCancel(event.target)
   );
 
   return actionBox;
