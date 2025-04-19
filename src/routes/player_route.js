@@ -1,6 +1,10 @@
 import { Hono } from "hono";
 import { getPlayerDetails } from "../handlers/game_handler.js";
-import { getPlayerName, getWonderImgName, updatePlayerStatus } from "../handlers/player_handler.js";
+import {
+  getPlayerName,
+  getWonderImgName,
+  updatePlayerStatus,
+} from "../handlers/player_handler.js";
 
 const evaluateCookie = () => {
   return async (ctx, next) => {

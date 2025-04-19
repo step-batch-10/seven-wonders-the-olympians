@@ -1,14 +1,41 @@
 #!/bin/bash
-deno fmt
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+MAGENTA='\033[0;35m'
+NC='\033[0m'
 
-deno lint
+echo -e "${MAGENTA}Pre-push hook...${NC}"
+
+echo -e "${YELLOW}Format checking...${NC}"
+deno fmt --check 2> /dev/null
 if [ $? -ne 0 ]; then
-    echo "Lint check failed."
+    echo -e "${RED}Format checking failed.${NC}"
+    echo -e "Run ${BLUE}deno fmt --check${NC} to see the issues"
+    echo -e "Run ${MAGENTA}deno fmt${NC} for auto formatting"
     exit 1
 fi
+echo -e "${GREEN}Format checking successful, no format issue!${NC}"
 
-deno test -A
+
+echo -e "${YELLOW}Lint checking...${NC}"
+deno lint 2> /dev/null
 if [ $? -ne 0 ]; then
-    echo "Tests failed."
+    echo -e "${RED}Lint checking failed.${NC}"
+    echo -e "Run ${BLUE}deno lint${NC} to see the issues"
     exit 1
 fi
+echo -e "${GREEN}Lint checking successful, no lint issue!${NC}"
+
+
+echo -e "${YELLOW}Testing...${NC}"
+deno test -A > /dev/null 2> /dev/null
+if [ $? -ne 0 ]; then
+    echo -e "${RED}Testing failed.${NC}"
+    exit 1
+fi
+echo -e "${GREEN}All tests passed!${NC}"
+
+echo -e "${MAGENTA}Pushing...${NC}"
+
