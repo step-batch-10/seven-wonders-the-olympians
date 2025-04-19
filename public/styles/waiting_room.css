@@ -5,6 +5,7 @@
   box-sizing: border-box;
   font-family: sans-serif;
 }
+
 body {
   height: 100vh;
   width: 100vw;
@@ -14,21 +15,23 @@ body {
   flex-direction: column;
   background: radial-gradient(#f6da9d, #ad884c);
 }
+
 main {
   width: 30%;
   height: 30%;
-  background-color: #ad884c;
+  background-color: #705519;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   gap: 30px;
+  color: #f6da9d;
   text-transform: capitalize;
 }
 
 .loader {
   border: 5px solid #f6da9d;
-  border-top: 5px solid #ad884c;
+  border-top: 5px solid #705519;
   border-radius: 50%;
   width: 60px;
   height: 60px;
