@@ -31,7 +31,7 @@ const getPlayerPoints = (coins, tokens) => {
 };
 
 const fetchImage = (card, index) => {
-  const cardName = convert(card).toLowerCase();
+  const cardName = convert(card);
   const image = document.createElement("img");
   image.src = `/img/cards/${cardName}.jpeg`;
   image.style = `--index:${index}`;
@@ -154,9 +154,10 @@ const appendWonderStats = (playerClone, wonder, bonusResource) => {
 const getNeighbourStats = (player, template) => {
   const { coins, warTokens, name, wonder, bonusResource, buildings } = player;
   const playerClone = template.content.cloneNode(true);
+  const cards = playerClone.querySelector(".cards")
 
   appendNeighbourStats(playerClone, coins, name, warTokens.positive);
-  appendPlayerBuildings(playerClone, buildings);
+  if (cards) appendPlayerBuildings(playerClone, buildings);
   appendWonderStats(playerClone, wonder, bonusResource);
 
   return playerClone;
@@ -198,7 +199,7 @@ const convert = (name, format) => {
   if (format === "server") {
     return name.replace("_", "");
   }
-  return name.replace(" ", "").toLowerCase();
+  return name.replaceAll(" ", "").toLowerCase();
 };
 
 const createContainer = (card, index, length) => {

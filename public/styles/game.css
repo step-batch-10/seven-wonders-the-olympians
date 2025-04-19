@@ -316,20 +316,10 @@ main img {
   transition: transform 0.3s ease;
 }
 
-<<<<<<< Updated upstream
 .second-col {
   position: relative;
 }
 
 .second-col > * {
   position: absolute;
-=======
-.popup {
-  position: absolute;
-  right: 0;
-  top: 0;
-  padding: 20px;
-  background-color: #9a6a1c;
-  color: #f0ddb7;
->>>>>>> Stashed changes
 }
