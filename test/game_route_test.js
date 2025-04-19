@@ -37,8 +37,6 @@ describe("getPlayerDetails", () => {
   });
 });
 
-
-
 describe("didAllPlayerSelectCard", () => {
   it("should return status of all players selecting card", () => {
     const ctx = {
