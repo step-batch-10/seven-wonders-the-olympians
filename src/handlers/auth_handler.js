@@ -24,6 +24,7 @@ export const registerUser = async (ctx) => {
   } else {
     game = gameMap.get(Array.from(waitingGames)[0]);
     game.addPlayer(player);
+    playerGameMap.set(player.playerID, game.gameID);
     game.isGameFull && waitingGames.clear();
   }
 

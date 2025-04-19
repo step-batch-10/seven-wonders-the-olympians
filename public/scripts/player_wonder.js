@@ -6,8 +6,6 @@ const loadWonderImage = (image) => {
 const getWonderDetails = async () => {
   const response = await fetch("/player/wonder");
   const { image } = await response.json();
-  console.log(image);
-
   loadWonderImage(image);
 };
 

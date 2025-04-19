@@ -61,23 +61,11 @@ class Player {
   }
 
   updateHand(card) {
-    console.log({ card, player: this.name });
-
-    console.log(
-      "before: %o",
-      this.hand.map((card) => card.name),
-    );
-
     const indexOfCard = _.findIndex(
       this.hand,
       (handCard) => card === handCard.name,
     );
     _.remove(this.hand, (_ele, idx) => idx === indexOfCard);
-
-    console.log(
-      "after: %o",
-      this.hand.map((card) => card.name),
-    );
   }
 
   selectCard() {}

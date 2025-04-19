@@ -262,7 +262,6 @@ describe("Testing the Game class", () => {
       g.addPlayer(p3);
       g.addPlayer(p4);
 
-      console.log(g.getPlayerHandData(bobID));
       assertEquals(g.getPlayerHandData(bobID), [
         { name: "West Trading Post", canBuild: true, canStage: false },
         { name: "Marketplace", canBuild: true, canStage: false },
@@ -653,25 +652,27 @@ describe("testing the wonders class", () => {
       type: "civil",
     });
 
-    wonder.stageACard(wonder.build({
-      name: "West Trading Post",
-      age: 1,
-      color: "yellow",
-      min_players: 3,
-      cost: [],
-      produces: [],
-      effect: [
-        {
-          type: "resource",
-          effect_type: "buy",
-          cost: [{ type: "coin", count: 1 }],
-          applies_to: ["left_neighbour"],
-          options: ["clay", "stone", "wood", "ore"],
-        },
-      ],
-      chain_from: null,
-      chain_to: [],
-    }));
+    wonder.stageACard(
+      wonder.build({
+        name: "West Trading Post",
+        age: 1,
+        color: "yellow",
+        min_players: 3,
+        cost: [],
+        produces: [],
+        effect: [
+          {
+            type: "resource",
+            effect_type: "buy",
+            cost: [{ type: "coin", count: 1 }],
+            applies_to: ["left_neighbour"],
+            options: ["clay", "stone", "wood", "ore"],
+          },
+        ],
+        chain_from: null,
+        chain_to: [],
+      }),
+    );
 
     const victoryPoints = wonder.victoryPoints;
     assertEquals(victoryPoints, 8);
