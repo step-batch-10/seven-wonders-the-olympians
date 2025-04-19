@@ -176,11 +176,12 @@ const convert = (name, format) => {
   return name.replace(" ", "").toLowerCase();
 };
 
-const createContainer = (card) => {
+const createContainer = (card, index, length) => {
   const imageUrl = `/img/cards/${convert(card.name)}.jpeg`;
   const imageContainer = document.createElement("div");
   const image = document.createElement("img");
-
+  const offset = Math.ceil(length / 2);
+  imageContainer.style = `--index:${(index + 1) - offset};--middle:${offset}`;
   image.src = imageUrl;
   image.cardName = card.name;
   imageContainer.classList.add("deck");
@@ -325,8 +326,11 @@ const renderDeck = async () => {
   const res = await fetch("/game/cards");
   const cards = await res.json();
   const container = document.querySelector("#cardsContainer");
-  const data = cards.map(createContainer);
-
+  const data = cards.map((card, index) =>
+    createContainer(card, index, cards.length)
+  );
+  const noOfCards = data.length;
+  container.style = `--total:${noOfCards}`;
   container.replaceChildren(...data);
 };
 

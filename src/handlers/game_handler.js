@@ -20,6 +20,31 @@ const disturbuteCards = (ctx) => {
       canBuild: false,
       canStage: false,
     },
+    {
+      name: "Stone Pit",
+      canBuild: false,
+      canStage: false,
+    },
+    {
+      name: "Stone Pit",
+      canBuild: false,
+      canStage: false,
+    },
+    {
+      name: "Stone Pit",
+      canBuild: false,
+      canStage: false,
+    },
+    {
+      name: "Stone Pit",
+      canBuild: false,
+      canStage: false,
+    },
+    {
+      name: "Stone Pit",
+      canBuild: false,
+      canStage: false,
+    },
   ]);
 };
 

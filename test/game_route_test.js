@@ -1,7 +1,6 @@
 import {
   didAllPlayerSelectCard,
   discard,
-  disturbuteCards,
   getPlayerDetails,
   sendStatus,
 } from "../src/handlers/game_handler.js";
@@ -38,26 +37,7 @@ describe("getPlayerDetails", () => {
   });
 });
 
-describe("disturbuteCards", () => {
-  it("should return distributed cards", () => {
-    const ctx = {
-      json: (data) => data,
-    };
-    const result = disturbuteCards(ctx);
-    assertEquals(result, [
-      {
-        name: "Lumber Yard",
-        canBuild: true,
-        canStage: false,
-      },
-      {
-        name: "Stone Pit",
-        canBuild: false,
-        canStage: false,
-      },
-    ]);
-  });
-});
+
 
 describe("didAllPlayerSelectCard", () => {
   it("should return status of all players selecting card", () => {

@@ -57,7 +57,8 @@ header,
   width: 70%;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  gap: 100px;
+  /* justify-content: space-evenly;   */
   align-items: center;
 }
 
@@ -98,6 +99,7 @@ p {
   gap: 5px;
 }
 .deck {
+  /* transition: all 0.1s ease-in-out;   */
   width: 100px;
 }
 
@@ -108,6 +110,9 @@ p {
 
 #cardsContainer {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
   height: 157px;
 }
 
@@ -168,9 +173,9 @@ p {
   top: -58%;
 }
 
-.deck {
-  position: relative;
-}
+/* .deck {
+  position: absolute;
+} */
 .actionsBox {
   position: absolute;
   background-color: white;
@@ -198,7 +203,103 @@ main img {
   background-color: #9a6a1c;
 }
 
-.other-player-stats > .player-stats-header,
-.other-player-stats > * {
+.other-player-stats > .player-stats-header > * {
   background-color: #9a6a1c;
+}
+
+.other-player-stats > * {
+  flex-grow: 1;
+}
+.other-player-stats img {
+  width: 40px;
+  height: 40px;
+}
+
+.other-player-stats {
+  width: 350px;
+  height: 200px;
+}
+
+.other-player-stats {
+  text-transform: capitalize;
+  color: #ddb35b;
+  font-size: 1.5rem;
+}
+
+.other-player-stats :last-child {
+  color: white;
+}
+
+.player-points {
+  font-size: 2rem;
+}
+
+.player-stats-header {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.player-stats-header {
+  display: flex;
+  gap: 5px;
+}
+
+.player-points {
+  background-color: #9a6a1c;
+}
+
+.deck:hover {
+  scale: 1.1;
+  z-index: 5;
+}
+#cardsContainer {
+  position: relative;
+  width: 100%;
+  height: 300px; /* Adjust as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+}
+/* .deck {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-origin: bottom center;
+  transform: translate(-50%, -50%) rotate(calc(var(--index) * 10deg))
+    translateX(calc(var(--index) * 40px));
+  z-index: calc(100 - abs(var(--index)));
+} */
+/* 
+.deck {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(calc(var(--index) * 100px))
+    rotate(calc(var(--index) * 3deg)) translate(-50%, -50%);
+  z-index: calc(100 - abs(var(--index)));
+} */
+
+#cardsContainer {
+  position: relative;
+  width: 100%;
+  height: 320px; /* Adjust based on image height */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.deck {
+  --rotate: calc(var(--index) * 6deg);
+  --offset-x: calc(var(--index) * 80px);
+  --offset-y: calc(
+    var(--index) * var(--index) * 5px
+  ); /* positive to move downward */
+
+  position: absolute;
+  transform: translateX(var(--offset-x)) translateY(var(--offset-y))
+    rotateZ(var(--rotate));
+  transform-origin: top center;
+  transition: transform 0.3s ease;
 }
