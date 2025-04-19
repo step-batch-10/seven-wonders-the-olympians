@@ -392,7 +392,7 @@ const renderGamePage = async () => {
 const renderAge = () => {
   document.querySelector("#age").style.display = "none";
   renderGamePage();
-}
+};
 
 const main = () => {
   setTimeout(renderAge, 2200);

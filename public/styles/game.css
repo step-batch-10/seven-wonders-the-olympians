@@ -322,7 +322,6 @@ main img {
   position: absolute;
 }
 
-<<<<<<< Updated upstream
 .popup {
   position: absolute;
   right: 0;
@@ -332,7 +331,7 @@ main img {
   color: #f0ddb7;
   border: 2px solid #f0ddb7;
   border-radius: 8px;
-=======
+}
 #age {
   background-color: rgba(0, 0, 0, 0.2);
   display: flex;
@@ -351,5 +350,4 @@ main img {
 #age h1 {
   font-family: sans-serif;
   font-size: 20rem;
->>>>>>> Stashed changes
 }
