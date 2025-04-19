@@ -118,6 +118,10 @@ class Game {
       this.#players[index].hand = this.#players[index + 1].hand;
     }
     this.#players.at(-1).hand = firstHand;
+
+    const hands = this.#players.map((player) => player.hand);
+
+    return hands;
   }
 
   #passRight() {
@@ -125,12 +129,15 @@ class Game {
     for (let index = this.noOfPlayers - 1; index > 0; index--) {
       this.#players[index].hand = this.#players[index - 1].hand;
     }
-    
     this.#players[0].hand = lastHand;
+
+    const hands = this.#players.map((player) => player.hand);
+
+    return hands;
   }
 
   passHands() {
-    return this.currentAge === 2 ? this.#passRight() : this.#passLeft();
+    return this.currentAge === 2 ? this.#passRight : this.#passLeft();
   }
 
   distributeCards() {
