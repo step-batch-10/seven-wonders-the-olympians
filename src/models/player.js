@@ -12,7 +12,7 @@ class Player {
   wonder;
   status;
 
-  constructor(userName) {
+  constructor (userName) {
     this.#name = userName;
     this.#playerID = Player.generateUniquePlayerID();
     this.rightPlayer = null;
@@ -24,44 +24,44 @@ class Player {
     this.status = "waiting";
   }
 
-  static generateUniquePlayerID() {
+  static generateUniquePlayerID () {
     return "pid" + uniqid();
   }
 
-  get name() {
+  get name () {
     return this.#name;
   }
-  get coins() {
+  get coins () {
     return this.#coins;
   }
-  get playerID() {
+  get playerID () {
     return this.#playerID;
   }
 
-  get warTokensObj() {
+  get warTokensObj () {
     return this.warTokens.reduce(
       (total, token) => {
         token < 0 ? (total.negative -= token) : (total.positive += token);
         return total;
       },
-      { positive: 0, negative: 0 },
+      {positive: 0, negative: 0},
     );
   }
 
-  assignHand(hand) {
+  assignHand (hand) {
     this.hand = hand;
   }
 
-  addCoins(coins) {
+  addCoins (coins) {
     this.#coins += coins;
   }
 
-  udpateStatus(status) {
+  udpateStatus (status) {
     this.status = status;
   }
 
-  updateHand(card) {
-    console.log({ card, player: this.name });
+  updateHand (card) {
+    console.log({card, player: this.name});
 
     console.log(
       "before: %o",
@@ -80,9 +80,33 @@ class Player {
     );
   }
 
-  selectCard() {}
+  selectCard () {}
 
-  playerData() {
+  haveResources (cost) {
+    const resources = this.wonder.resources;
+    const choices = resources.choices;
+    const choicesTook = [];
+
+    return cost.every(({type, count}) => {
+      const resource = resources[type];
+      let pendingResource = count - resource;
+
+      if(pendingResource <= 0) return true;
+
+      return choices.some((choiceResources, index) => {
+        const availabe = !(choicesTook.includes(index));
+
+        if(availabe && choiceResources.has(resource)) {
+          pendingResource--;
+          choicesTook.push(index);
+        }
+
+        return pendingResource <= 0;
+      });
+    });
+  }
+
+  playerData () {
     const data = {
       name: this.name,
       wonder: this.wonder.name,
@@ -96,10 +120,10 @@ class Player {
     return data;
   }
 
-  getOtherPlayerData() {
+  getOtherPlayerData () {
     const data = [];
     let otherPlayer = this.leftPlayer.leftPlayer;
-    while (otherPlayer.playerID !== this.rightPlayer.playerID) {
+    while(otherPlayer.playerID !== this.rightPlayer.playerID) {
       data.push(otherPlayer.playerData());
       otherPlayer = otherPlayer.leftPlayer;
     }
@@ -107,7 +131,7 @@ class Player {
     return data;
   }
 
-  getHandData() {
+  getHandData () {
     const handData = [];
     this.hand.forEach((card) => {
       handData.push({
@@ -119,7 +143,7 @@ class Player {
     return handData;
   }
 
-  buildCard(cardName) {
+  buildCard (cardName) {
     const card = [...this.hand].find((card) => (card.name = cardName));
 
     this.wonder.build(card);
@@ -127,4 +151,4 @@ class Player {
   }
 }
 
-export { Player };
+export {Player};
