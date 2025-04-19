@@ -7,7 +7,7 @@ class Wonder {
   #militaryStrength;
   #victoryPoints;
 
-  constructor (wonder) {
+  constructor(wonder) {
     this.#wonder = wonder;
     this.#buildings = {
       brown: [],
@@ -18,7 +18,7 @@ class Wonder {
       red: [],
       purple: [],
     };
-    this.#resources = {choices: []};
+    this.#resources = { choices: [] };
     this.#resources[wonder.resource] = 1;
     this.#discounts = {};
     this.#militaryStrength = 0;
@@ -26,39 +26,39 @@ class Wonder {
     this.#staged = [];
   }
 
-  get name () {
+  get name() {
     return this.#wonder.name;
   }
 
-  get bonusResource () {
+  get bonusResource() {
     return this.#wonder.resource;
   }
 
-  get staged () {
+  get staged() {
     return this.#staged;
   }
 
-  get resources () {
+  get resources() {
     return this.#resources;
   }
   b;
-  get militaryStrength () {
+  get militaryStrength() {
     return this.#militaryStrength;
   }
 
-  get victoryPoints () {
+  get victoryPoints() {
     return this.#victoryPoints;
   }
 
-  get discounts () {
+  get discounts() {
     return this.#discounts;
   }
 
-  get img () {
+  get img() {
     return this.#wonder.img;
   }
 
-  get buildings () {
+  get buildings() {
     return Object.fromEntries(
       Object.entries(this.#buildings).map(([colors, cards]) => {
         const cardNames = cards.map((card) => card.name);
@@ -67,29 +67,29 @@ class Wonder {
     );
   }
 
-  isResourceCard (card) {
+  isResourceCard(card) {
     const resources = ["brown", "grey", "green"];
 
     return resources.includes(card.color);
   }
 
-  isDiscountCard (card) {
+  isDiscountCard(card) {
     const isYellowCard = card.color === "yellow";
     const isDiscountCard = card.effect && card.effect[0]?.effect_type === "buy";
 
     return isYellowCard && isDiscountCard;
   }
 
-  isMilitaryStrength (card) {
+  isMilitaryStrength(card) {
     return card.color == "red";
   }
 
-  isVictoryPoints (card) {
+  isVictoryPoints(card) {
     return card.color == "blue";
   }
 
-  addResources (card) {
-    if(card.produces[0].type === "choice") {
+  addResources(card) {
+    if (card.produces[0].type === "choice") {
       const options = card.produces[0].options;
       this.#resources.choices.push(new Set(options));
       return;
@@ -100,14 +100,14 @@ class Wonder {
     this.#resources[resource] = (this.#resources[resource] || 0) + count;
   }
 
-  addDiscounts (card) {
+  addDiscounts(card) {
     const resources = card.effect[0].options;
     const newNeighbours = card.effect[0].applies_to;
 
     resources.forEach((resource) => {
       const neighbours = this.#discounts[resource];
 
-      if(!neighbours) {
+      if (!neighbours) {
         this.#discounts[resource] = [];
       }
 
@@ -117,40 +117,40 @@ class Wonder {
     });
   }
 
-  addVictoryPoints (card) {
+  addVictoryPoints(card) {
     const count = card.produces[0].count;
     this.#victoryPoints += count;
   }
 
-  addMilitaryStrength (card) {
+  addMilitaryStrength(card) {
     const count = card.produces[0].count;
     this.#militaryStrength += count;
   }
 
-  getCardBenifits (card) {
-    if(this.isResourceCard(card)) {
+  getCardBenifits(card) {
+    if (this.isResourceCard(card)) {
       this.addResources(card);
     }
 
-    if(this.isDiscountCard(card)) {
+    if (this.isDiscountCard(card)) {
       this.addDiscounts(card);
     }
 
-    if(this.isVictoryPoints(card)) {
+    if (this.isVictoryPoints(card)) {
       this.addVictoryPoints(card);
     }
 
-    if(this.isMilitaryStrength(card)) {
+    if (this.isMilitaryStrength(card)) {
       this.addMilitaryStrength(card);
     }
   }
 
-  build (card) {
+  build(card) {
     this.#buildings[card.color].push(card);
     this.getCardBenifits(card);
   }
 
-  getNextStage () {
+  getNextStage() {
     const nextStage = {
       0: "stage1",
       1: "stage2",
@@ -160,11 +160,11 @@ class Wonder {
     return nextStage[this.#staged.length];
   }
 
-  stageACard (card) {
+  stageACard(card) {
     const stage = this.getNextStage();
     const benifit = this.#wonder.stages[stage].powers[0];
 
-    if(benifit.type === "points") {
+    if (benifit.type === "points") {
       const count = benifit.value;
       this.#victoryPoints += count;
     }
@@ -173,4 +173,4 @@ class Wonder {
   }
 }
 
-export {Wonder};
+export { Wonder };

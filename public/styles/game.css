@@ -208,9 +208,6 @@ p {
   top: -58%;
 }
 
-/* .deck {
-  position: absolute;
-} */
 .actionsBox {
   position: absolute;
   background-color: white;
@@ -241,7 +238,6 @@ main img {
 .other-player-stats > .player-stats-header > * {
   background-color: #9a6a1c;
 }
-<<<<<<< Updated upstream
 
 .other-player-stats > * {
   flex-grow: 1;
@@ -298,24 +294,6 @@ main img {
   align-items: center;
   gap: 0;
 }
-/* .deck {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform-origin: bottom center;
-  transform: translate(-50%, -50%) rotate(calc(var(--index) * 10deg))
-    translateX(calc(var(--index) * 40px));
-  z-index: calc(100 - abs(var(--index)));
-} */
-/* 
-.deck {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translateX(calc(var(--index) * 100px))
-    rotate(calc(var(--index) * 3deg)) translate(-50%, -50%);
-  z-index: calc(100 - abs(var(--index)));
-} */
 
 #cardsContainer {
   position: relative;
@@ -329,20 +307,19 @@ main img {
 .deck {
   --rotate: calc(var(--index) * 6deg);
   --offset-x: calc(var(--index) * 80px);
-  --offset-y: calc(
-    var(--index) * var(--index) * 5px
-  ); /* positive to move downward */
+  --offset-y: calc(var(--index) * var(--index) * 5px);
 
   position: absolute;
   transform: translateX(var(--offset-x)) translateY(var(--offset-y))
     rotateZ(var(--rotate));
   transform-origin: top center;
   transition: transform 0.3s ease;
-=======
+}
+
 .second-col {
   position: relative;
 }
+
 .second-col > * {
   position: absolute;
->>>>>>> Stashed changes
 }
