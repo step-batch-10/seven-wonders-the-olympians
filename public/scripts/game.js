@@ -1,5 +1,13 @@
 const getPlayerDetails = async () => await (await fetch("/player/info")).json();
 
+const createWaitingWindow = () => {
+  const ele = document.createElement("div");
+  ele.textContent = "waiting for other players....";
+  ele.classList.add("waiting-window");
+  document.querySelector("body").appendChild(ele);
+
+};
+
 const renderWonder = (playerWonder) => {
   const wonderPlaceHolder = document.getElementById("wonder-placeholder");
   const img = document.createElement("img");
@@ -235,7 +243,6 @@ const polling = async (currentMove, intervalId) => {
     method: "PUT",
     body: JSON.stringify({ status: "seleted" }),
   });
-
   return async () => {
     const res = await fetch("/game/all-players-ready");
     const { status } = await res.json();
@@ -248,6 +255,14 @@ const polling = async (currentMove, intervalId) => {
       });
 
       notify((await response.json()).message);
+
+
+      const passHandResponse = await fetch("/game/pass-hand", {
+        method: "POST",
+      });
+
+      notify((await passHandResponse.json()).message);
+      document.querySelector(".waiting-window").remove();
       renderGamePage();
     }
   };
@@ -255,6 +270,9 @@ const polling = async (currentMove, intervalId) => {
 
 const reqToDiscard = (parentEvent) => {
   return () => {
+    removeList();
+
+    createWaitingWindow();
     const move = { card: parentEvent.cardName, action: "discard" };
     const intervalId = setInterval(
       async () => (await polling(move, intervalId))(),
@@ -265,6 +283,7 @@ const reqToDiscard = (parentEvent) => {
 
 const reqStage = (parentEvent) => {
   return () => {
+    // createWaitingWindow();
     const move = { card: parentEvent.cardName, action: "stage" };
     const intervalId = setInterval(
       async () => (await polling(move, intervalId))(),
@@ -292,7 +311,6 @@ const createElements = (elements) => {
 };
 
 const createDiscard = (parentEvent) => {
-  console.log(parentEvent);
   const [stage, content, image] = createElements(["div", "p", "img"]);
 
   image.src = "/img/icons/discard.png";
