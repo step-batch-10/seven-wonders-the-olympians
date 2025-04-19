@@ -5,6 +5,7 @@ const createWaitingWindow = () => {
   ele.textContent = "waiting for other players....";
   ele.classList.add("waiting-window");
   document.querySelector("body").appendChild(ele);
+
 };
 
 const renderWonder = (playerWonder) => {
@@ -254,6 +255,7 @@ const polling = async (currentMove, intervalId) => {
       });
 
       notify((await response.json()).message);
+
 
       const passHandResponse = await fetch("/game/pass-hand", {
         method: "POST",
