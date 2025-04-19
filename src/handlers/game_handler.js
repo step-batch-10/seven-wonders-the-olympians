@@ -93,9 +93,9 @@ const performCardActions = async (ctx) => {
 const passHands = (ctx) => {
   const gameMap = ctx.get("gameMap");
   const game = gameMap.get(ctx.getCookie(ctx, "gameID"));
-  const hands = game.passHands();
+  game.passHands();
 
-  return ctx.json({ pass: `Cards passed Successfully! ${hands}` });
+  return ctx.json({ pass: `Cards passed Successfully!`});
 };
 
 export {

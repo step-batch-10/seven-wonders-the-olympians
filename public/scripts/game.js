@@ -206,8 +206,7 @@ const polling = async (currentMove, intervalId) => {
         headers: { "content-type": "application/json" },
         body: JSON.stringify(currentMove),
       });
-      const res = await fetch("/game/pass-hand", { method: "POST" });
-      alert((await res.json()).pass);
+      const _res = await fetch("/game/pass-hand", { method: "POST" })
 
       renderGamePage();
     }
