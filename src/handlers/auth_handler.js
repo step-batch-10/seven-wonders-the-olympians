@@ -14,12 +14,12 @@ export const registerUser = async (ctx) => {
   const name = await ctx.req.json();
   const player = new Player(name.name);
   let game;
-  playerMap.set(player.playerId, player);
+  playerMap.set(player.playerID, player);
 
   if (waitingGames.size === 0) {
     game = new Game(4, player);
     waitingGames.add(game.gameID);
-    playerGameMap.set(player.playerId, game.gameID);
+    playerGameMap.set(player.playerID, game.gameID);
     gameMap.set(game.gameID, game);
   } else {
     game = gameMap.get(Array.from(waitingGames)[0]);
@@ -27,7 +27,7 @@ export const registerUser = async (ctx) => {
     game.isGameFull && waitingGames.clear();
   }
 
-  ctx.setCookie(ctx, "playerID", player.playerId);
+  ctx.setCookie(ctx, "playerID", player.playerID);
   ctx.setCookie(ctx, "gameID", game.gameID);
 
   return sendRedirect(ctx, "/waiting_room.html");

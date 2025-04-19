@@ -1,10 +1,13 @@
 import uniqid from "uniqid";
 import wondersData from "../../data/wonders.json" with { type: "json" };
+import ageOneCards from "../../data/ageOneCards.json" with { type: "json" };
+import ageTwoCards from "../../data/ageTwoCards.json" with { type: "json" };
+import ageThreeCards from "../../data/ageThreeCards.json" with { type: "json" };
 import { Wonder } from "./wonder.js";
 
 class Game {
-  gameID;
-  players;
+  #gameID;
+  #players;
   noOfPlayers;
   gameStatus;
   currentAge;
@@ -18,18 +21,25 @@ class Game {
     "olympia",
   ];
   discardedDeck;
+  ageOneDeck;
+  ageTwoDeck;
+  ageThreeDeck;
 
   constructor(noOfPlayers, player1) {
     this.noOfPlayers = noOfPlayers;
-    this.players = [player1];
-    this.gameID = Game.generateUniqueGameID();
+    this.#players = [player1];
+    this.#gameID = Game.generateUniqueGameID();
     this.gameStatus = "waiting";
     this.currentAge = 0;
     this.discardedDeck = [];
   }
 
   get isGameFull() {
-    return this.players.length === this.noOfPlayers;
+    return this.#players.length === this.noOfPlayers;
+  }
+
+  get gameID() {
+    return this.#gameID;
   }
 
   static generateUniqueGameID() {
@@ -40,8 +50,8 @@ class Game {
     if (this.gameStatus === "matched") {
       throw new Error("Room is full!");
     }
-    this.players.push(player);
-    if (this.players.length >= this.noOfPlayers) {
+    this.#players.push(player);
+    if (this.#players.length >= this.noOfPlayers) {
       this.gameStatus = "matched";
       this.init();
     }
@@ -57,15 +67,15 @@ class Game {
   }
 
   arrangePlayers() {
-    this.players.forEach((player, idx) => {
-      player.rightPlayer = this.players[(idx + 1) % this.players.length];
+    this.#players.forEach((player, idx) => {
+      player.rightPlayer = this.#players[(idx + 1) % this.#players.length];
       player.leftPlayer =
-        this.players[(idx + this.players.length - 1) % this.players.length];
+        this.#players[(idx + this.#players.length - 1) % this.#players.length];
     });
   }
 
   distributeWonders() {
-    this.players.forEach((player) => {
+    this.#players.forEach((player) => {
       const wonderName = this.wonders.pop();
       const wonderData = wondersData[wonderName];
       const wonder = new Wonder(wonderData);
@@ -74,16 +84,28 @@ class Game {
     });
   }
 
+  segregateCards() {
+    this.ageOneDeck = ageOneCards.filter((card) =>
+      card.min_players <= this.noOfPlayers
+    );
+    this.ageTwoDeck = ageTwoCards.filter((card) =>
+      card.min_players <= this.noOfPlayers
+    );
+    this.ageThreeDeck = ageThreeCards.filter((card) =>
+      card.min_players <= this.noOfPlayers
+    );
+  }
+
   distributeCoins() {
-    this.players.forEach((player) => {
-      player.coins = 3;
+    this.#players.forEach((player) => {
+      player.addCoins(3);
     });
   }
 
   setUpTheCardDecks() {}
 
   didAllPlayerSelectCard() {
-    return this.players.every((player) => player.status === "seleted");
+    return this.#players.every((player) => player.status === "seleted");
   }
 
   addToDiscarded(card) {
@@ -91,25 +113,25 @@ class Game {
   }
 
   #passLeft() {
-    const firstHand = this.players[0].hand;
+    const firstHand = this.#players[0].hand;
     for (let index = 0; index < this.noOfPlayers - 1; index++) {
-      this.players[index].hand = this.players[index + 1].hand;
+      this.#players[index].hand = this.#players[index + 1].hand;
     }
-    this.players.at(-1).hand = firstHand;
+    this.#players.at(-1).hand = firstHand;
 
-    const hands = this.players.map(player => player.hand)
+    const hands = this.#players.map((player) => player.hand);
 
     return hands;
   }
 
   #passRight() {
-    const lastHand = this.players.at(-1).hand;
+    const lastHand = this.#players.at(-1).hand;
     for (let index = this.noOfPlayers - 1; index > 0; index--) {
-      this.players[index].hand = this.players[index - 1].hand;
+      this.#players[index].hand = this.#players[index - 1].hand;
     }
-    this.players[0].hand = lastHand;
+    this.#players[0].hand = lastHand;
 
-    const hands = this.players.map(player => player.hand)
+    const hands = this.#players.map((player) => player.hand);
 
     return hands;
   }
@@ -128,7 +150,6 @@ class Game {
   }
 
   gameData() {
-    // mockdata
     return {
       gameStatus: this.gameStatus,
       currentAge: this.currentAge,
@@ -136,7 +157,7 @@ class Game {
   }
 
   getPlayerInfo(playerID) {
-    const player = this.players.find((player) => player.playerId === playerID);
+    const player = this.#players.find((player) => player.playerID === playerID);
     const playerData = player.playerData();
 
     playerData.leftPlayerData = player.leftPlayer.playerData();

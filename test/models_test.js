@@ -9,7 +9,7 @@ describe("Testing the Player class", () => {
     const p1 = new Player("Alice");
     const p2 = new Player("Bob");
 
-    assertNotEquals(p1.playerId, p2.playerId);
+    assertNotEquals(p1.playerID, p2.playerID);
   });
 
   it("Player name should be consistent", () => {
@@ -64,7 +64,7 @@ describe("Testing the Game class", () => {
       const p3 = new Player("Adam");
       const p4 = new Player("Eve");
 
-      const bobID = p2.playerId;
+      const bobID = p2.playerID;
 
       const g = new Game(4, p1);
       g.addPlayer(p2);
@@ -150,7 +150,7 @@ describe("Testing the Game class", () => {
       const p4 = new Player("Eve");
       const p5 = new Player("Tom");
 
-      const tomID = p5.playerId;
+      const tomID = p5.playerID;
 
       const g = new Game(5, p1);
       g.addPlayer(p2);

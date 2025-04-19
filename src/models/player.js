@@ -1,11 +1,11 @@
 import uniqid from "uniqid";
 
 class Player {
-  name;
-  playerId;
+  #name;
+  #playerID;
   rightPlayer;
   leftPlayer;
-  coins;
+  #coins;
   warTokens;
   hand;
   oldHand;
@@ -13,11 +13,11 @@ class Player {
   status;
 
   constructor(userName) {
-    this.name = userName;
-    this.playerId = Player.generateUniquePlayerID();
+    this.#name = userName;
+    this.#playerID = Player.generateUniquePlayerID();
     this.rightPlayer = null;
     this.leftPlayer = null;
-    this.coins = 0;
+    this.#coins = 0;
     this.warTokens = [];
     this.hand = new Set();
     this.oldHand = new Set();
@@ -27,6 +27,16 @@ class Player {
 
   static generateUniquePlayerID() {
     return "pid" + uniqid();
+  }
+
+  get name() {
+    return this.#name;
+  }
+  get coins() {
+    return this.#coins;
+  }
+  get playerID() {
+    return this.#playerID;
   }
 
   get warTokensObj() {
@@ -44,7 +54,7 @@ class Player {
   }
 
   addCoins(coins) {
-    this.coins += coins;
+    this.#coins += coins;
   }
 
   udpateStatus(status) {
@@ -61,7 +71,7 @@ class Player {
     const data = {
       name: this.name,
       wonder: this.wonder.name,
-      coins: this.coins,
+      coins: this.#coins,
       warTokens: this.warTokensObj,
       stage: this.wonder.staged,
       buildings: this.wonder.buildings,
@@ -74,7 +84,7 @@ class Player {
   getOtherPlayerData() {
     const data = [];
     let otherPlayer = this.leftPlayer.leftPlayer;
-    while (otherPlayer.playerId !== this.rightPlayer.playerId) {
+    while (otherPlayer.playerID !== this.rightPlayer.playerID) {
       data.push(otherPlayer.playerData());
       otherPlayer = otherPlayer.leftPlayer;
     }
@@ -83,7 +93,7 @@ class Player {
   }
 
   buildCard(cardName) {
-    const card = [...this.hand].find((card) => card.name = cardName);
+    const card = [...this.hand].find((card) => (card.name = cardName));
 
     this.wonder.build(card);
     this.updateHand(card);

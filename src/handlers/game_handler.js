@@ -69,7 +69,7 @@ const passHands = (ctx) => {
   const gameMap = ctx.get("gameMap");
   const game = gameMap.get(ctx.getCookie(ctx, "gameID"));
   const hands = game.passHands();
-  
+
   return ctx.json({ pass: `Cards passed Successfully! ${hands}` });
 };
 
@@ -78,7 +78,7 @@ export {
   discard,
   disturbuteCards,
   getPlayerDetails,
+  passHands,
   performCardActions,
   sendStatus,
-  passHands
 };

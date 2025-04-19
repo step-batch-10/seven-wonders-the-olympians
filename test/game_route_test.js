@@ -122,9 +122,7 @@ describe("discard", () => {
     const gameMap = new Map();
     const playerMap = new Map();
     const game = new Game();
-    const player = new Player();
-    player.playerId = "player456";
-    player.coins = 0;
+    const player = new Player("Alice");
     player.updateHand({ name: "Lumber Yard" });
     game.discardedDeck = [];
 
