@@ -9,7 +9,7 @@ const data = async (intervalId) => {
 
   if (data.gameStatus === "matched") {
     clearInterval(intervalId);
-    globalThis.location.href = "/player_wonder.html";
+    globalThis.location.replace("/player_wonder.html");
   }
 };
 

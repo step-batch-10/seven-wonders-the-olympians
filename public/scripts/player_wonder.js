@@ -10,7 +10,7 @@ const getWonderDetails = async () => {
 };
 
 const redirectToGamePage = () => {
-  globalThis.location.href = "/game.html";
+  globalThis.location.replace("/game.html");
 };
 
 const main = () => {
