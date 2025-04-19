@@ -101,7 +101,7 @@ describe("discard", () => {
     const playerMap = new Map();
     const game = new Game();
     const player = new Player("Alice");
-    player.updateHand({ name: "Lumber Yard" });
+    player.removeFromHand({ name: "Lumber Yard" });
     game.discardedDeck = [];
 
     gameMap.set("game123", game);

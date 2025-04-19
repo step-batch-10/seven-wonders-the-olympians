@@ -111,7 +111,7 @@ const getWonderStats = (wonder, resource) => {
 
 const appendNeighbourStats = (playerClone, coins, name, warTokens) => {
   const neighbourPlaceHolder = playerClone.querySelector(
-    ".player-stats-header",
+    ".player-stats-header"
   );
 
   const playerStats = getPlayerStats(name);
@@ -206,7 +206,7 @@ const createContainer = (card, index, length) => {
   const imageContainer = document.createElement("div");
   const image = document.createElement("img");
   const offset = Math.ceil(length / 2);
-  imageContainer.style = `--index:${(index + 1) - offset};--middle:${offset}`;
+  imageContainer.style = `--index:${index + 1 - offset};--middle:${offset}`;
   image.src = imageUrl;
   image.cardName = card.name;
   imageContainer.classList.add("deck");
@@ -216,24 +216,43 @@ const createContainer = (card, index, length) => {
   return imageContainer;
 };
 
+const notify = (msg) => {
+  const popup = document.createElement("span");
+  popup.textContent = msg;
+  popup.classList.add("popup");
+  document.body.appendChild(popup);
+
+  console.log(popup);
+
+  setTimeout(() => {
+    popup.remove();
+  }, 3000);
+};
+
 const polling = async (currentMove, intervalId) => {
-  await fetch("/player/status", {
+  const _statusResponse = await fetch("/player/status", {
     method: "PUT",
     body: JSON.stringify({ status: "seleted" }),
   });
+
   return async () => {
     const res = await fetch("/game/all-players-ready");
     const { status } = await res.json();
     if (status) {
       clearInterval(intervalId);
-      const _response = await fetch("/game/action", {
+      const response = await fetch("/game/action", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify(currentMove),
       });
-      const res = await fetch("/game/pass-hand", { method: "POST" });
-      alert((await res.json()).pass);
 
+      notify((await response.json()).message);
+
+      const passHandResponse = await fetch("/game/pass-hand", {
+        method: "POST",
+      });
+
+      notify((await passHandResponse.json()).message);
       renderGamePage();
     }
   };
@@ -244,7 +263,7 @@ const reqToDiscard = (parentEvent) => {
     const move = { card: parentEvent.cardName, action: "discard" };
     const intervalId = setInterval(
       async () => (await polling(move, intervalId))(),
-      1000,
+      1000
     );
   };
 };
@@ -254,7 +273,7 @@ const reqStage = (parentEvent) => {
     const move = { card: parentEvent.cardName, action: "stage" };
     const intervalId = setInterval(
       async () => (await polling(move, intervalId))(),
-      1000,
+      1000
     );
   };
 };
@@ -264,7 +283,7 @@ const reqBuildCard = (parentEvent) => {
     const move = { card: parentEvent.cardName, action: "build" };
     const intervalId = setInterval(
       async () => (await polling(move, intervalId))(),
-      1000,
+      1000
     );
   };
 };
@@ -336,7 +355,7 @@ const showActions = (event, card) => {
     createDiscard(event.target),
     createStage(event.target, card),
     createBuild(event.target, card),
-    createCancel(event.target),
+    createCancel(event.target)
   );
 
   return actionBox;

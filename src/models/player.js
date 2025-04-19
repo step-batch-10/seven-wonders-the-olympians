@@ -61,7 +61,7 @@ class Player {
     this.status = status;
   }
 
-  updateHand(card) {
+  removeFromHand(card) {
     this.hand.delete(card);
   }
 
