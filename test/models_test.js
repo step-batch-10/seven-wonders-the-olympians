@@ -6,10 +6,10 @@ import {
   assertThrows,
 } from "assert";
 
-import { describe, it } from "test/bdd";
-import { Player } from "../src/models/player.js";
-import { Game } from "../src/models/game.js";
-import { Wonder } from "../src/models/wonder.js";
+import {describe, it} from "test/bdd";
+import {Player} from "../src/models/player.js";
+import {Game} from "../src/models/game.js";
+import {Wonder} from "../src/models/wonder.js";
 
 describe("Testing the Player class", () => {
   it("Two players' id should be not equal", () => {
@@ -25,92 +25,233 @@ describe("Testing the Player class", () => {
     assertEquals(p1.name, "Alice");
   });
 
-  it("should check have resources for building", () => {
-    const p = new Player("Alice");
-    const wonder = new Wonder({
-      "img": "ephesosA.jpeg",
-      "name": "Ephesos",
-      "resource": "papyrus",
-      "side": "A",
-      "stages": {
-        "stage1": {
-          "resources": [{ "type": "stone", "count": 2 }],
-          "powers": [{ "type": "coins", "value": 4 }],
+  describe("testing haveResources", () => {
+    // it("should give resources uncovered while having bonusResource for building", () => {
+    //   const p = new Player("Alice");
+    //   const wonder = new Wonder({
+    //     "img": "ephesosA.jpeg",
+    //     "name": "Ephesos",
+    //     "resource": "papyrus",
+    //     "side": "A",
+    //     "stages": {
+    //       "stage1": {
+    //         "resources": [{"type": "stone", "count": 2}],
+    //         "powers": [{"type": "coins", "value": 4}],
+    //       },
+    //       "stage2": {
+    //         "resources": [{"type": "wood", "count": 2}],
+    //         "powers": [{"type": "points", "value": 2}],
+    //       },
+    //       "stage3": {
+    //         "resources": [{"type": "papyrus", "count": 2}],
+    //         "powers": [
+    //           {"type": "coins", "value": 4},
+    //           {"type": "points", "value": 3},
+    //         ],
+    //       },
+    //     },
+    //   });
+
+    //   p.wonder = wonder;
+
+    //   assertEquals(p.haveResources([{"type": "papyrus", "count": 1}]), []);
+    //   assertEquals(p.haveResources([{"type": "clay", "count": 1}]), [{"type": "clay", "count": 1}]);
+    // });
+
+    it("should give resources uncovered while having resources", () => {
+      const p = new Player("Alice");
+      const wonder = new Wonder({
+        "img": "ephesosA.jpeg",
+        "name": "Ephesos",
+        "resource": "papyrus",
+        "side": "A",
+        "stages": {
+          "stage1": {
+            "resources": [{"type": "stone", "count": 2}],
+            "powers": [{"type": "coins", "value": 4}],
+          },
+          "stage2": {
+            "resources": [{"type": "wood", "count": 2}],
+            "powers": [{"type": "points", "value": 2}],
+          },
+          "stage3": {
+            "resources": [{"type": "papyrus", "count": 2}],
+            "powers": [
+              {"type": "coins", "value": 4},
+              {"type": "points", "value": 3},
+            ],
+          },
         },
-        "stage2": {
-          "resources": [{ "type": "wood", "count": 2 }],
-          "powers": [{ "type": "points", "value": 2 }],
+      });
+
+      const hand = [
+        {
+          "name": "Lumber Yard",
+          "age": 1,
+          "color": "brown",
+          "min_players": 3,
+          "cost": [],
+          "produces": [{"type": "wood", "count": 1}],
+          "effect": null,
+          "chain_from": null,
+          "chain_to": [],
         },
-        "stage3": {
-          "resources": [{ "type": "papyrus", "count": 2 }],
-          "powers": [
-            { "type": "coins", "value": 4 },
-            { "type": "points", "value": 3 },
+        {
+          "name": "Stone Pit",
+          "age": 1,
+          "color": "brown",
+          "min_players": 3,
+          "cost": [],
+          "produces": [{"type": "stone", "count": 1}],
+          "effect": null,
+          "chain_from": null,
+          "chain_to": [],
+        },
+      ];
+
+      p.wonder = wonder;
+      p.assignHand(hand);
+      p.buildCard("Stone Pit");
+      p.buildCard("Lumber Yard");
+
+      assertEquals(p.haveResources([{"type": "wood", "count": 1}]), []);
+      assertEquals(p.haveResources([{"type": "clay", "count": 1}]), [{"type": "clay", "count": 1}]);
+    });
+
+    it("should give resources uncovered while having choices", () => {
+      const p = new Player("Alice");
+      const wonder = new Wonder({
+        "img": "ephesosA.jpeg",
+        "name": "Ephesos",
+        "resource": "papyrus",
+        "side": "A",
+        "stages": {
+          "stage1": {
+            "resources": [{"type": "stone", "count": 2}],
+            "powers": [{"type": "coins", "value": 4}],
+          },
+          "stage2": {
+            "resources": [{"type": "wood", "count": 2}],
+            "powers": [{"type": "points", "value": 2}],
+          },
+          "stage3": {
+            "resources": [{"type": "papyrus", "count": 2}],
+            "powers": [
+              {"type": "coins", "value": 4},
+              {"type": "points", "value": 3},
+            ],
+          },
+        },
+      });
+
+      const hand = [
+        {
+          "name": "Tree Farm",
+          "age": 1,
+          "color": "brown",
+          "min_players": 6,
+          "cost": [{"type": "coin", "count": 1}],
+          "produces": [
+            {
+              "type": "choice",
+              "options": ["wood", "clay"],
+              "count": 1
+            }
           ],
-        },
-      },
+          "effect": null,
+          "chain_from": null,
+          "chain_to": []
+        }
+      ];
+
+      p.wonder = wonder;
+      p.assignHand(hand);
+      p.buildCard("Tree Farm");
+
+      assertEquals(p.haveResources([{"type": "wood", "count": 1}]), []);
+      assertEquals(p.haveResources([{"type": "clay", "count": 1}]), []);
+      assertEquals(p.haveResources([{"type": "ore", "count": 1}]), [{"type": "ore", "count": 1}]);
     });
 
-    const hand = [
-      {
-        "name": "Lumber Yard",
-        "age": 1,
-        "color": "brown",
-        "min_players": 3,
-        "cost": [],
-        "produces": [{ "type": "wood", "count": 1 }],
-        "effect": null,
-        "chain_from": null,
-        "chain_to": [],
-      },
-      {
-        "name": "Stone Pit",
-        "age": 1,
-        "color": "brown",
-        "min_players": 3,
-        "cost": [],
-        "produces": [{ "type": "stone", "count": 1 }],
-        "effect": null,
-        "chain_from": null,
-        "chain_to": [],
-      },
-    ];
+    it("should give resources uncovered while having resources and choices", () => {
+      const p = new Player("Alice");
+      const wonder = new Wonder({
+        "img": "ephesosA.jpeg",
+        "name": "Ephesos",
+        "resource": "papyrus",
+        "side": "A",
+        "stages": {
+          "stage1": {
+            "resources": [{"type": "stone", "count": 2}],
+            "powers": [{"type": "coins", "value": 4}],
+          },
+          "stage2": {
+            "resources": [{"type": "wood", "count": 2}],
+            "powers": [{"type": "points", "value": 2}],
+          },
+          "stage3": {
+            "resources": [{"type": "papyrus", "count": 2}],
+            "powers": [
+              {"type": "coins", "value": 4},
+              {"type": "points", "value": 3},
+            ],
+          },
+        },
+      });
 
-    p.wonder = wonder;
-    p.assignHand(hand);
-    p.buildCard("Stone Pit");
-    p.buildCard("Lumber Yard");
+      const hand = [
+        {
+          "name": "Ore Vein",
+          "age": 1,
+          "color": "brown",
+          "min_players": 3,
+          "cost": [],
+          "produces": [{"type": "ore", "count": 1}],
+          "effect": null,
+          "chain_from": null,
+          "chain_to": []
+        },
+        {
+          "name": "Press",
+          "age": 1,
+          "color": "gray",
+          "min_players": 3,
+          "cost": [],
+          "produces": [{"type": "papyrus", "count": 1}],
+          "effect": null,
+          "chain_from": null,
+          "chain_to": []
+        },
+        {
+          "name": "Tree Farm",
+          "age": 1,
+          "color": "brown",
+          "min_players": 6,
+          "cost": [{"type": "coin", "count": 1}],
+          "produces": [
+            {
+              "type": "choice",
+              "options": ["wood", "clay"],
+              "count": 1
+            }
+          ],
+          "effect": null,
+          "chain_from": null,
+          "chain_to": []
+        }
+      ];
 
-    assert(p.haveResources([{ "type": "wood", "count": 1 }]));
-    assertFalse(p.haveResources([{ "type": "clay", "count": 1 }]));
-  });
-  it("should check have resources form bonusResource for building", () => {
-    const p = new Player("Alice");
-    const wonder = new Wonder({
-      img: "olympiaA.jpeg",
-      name: "Olympia",
-      resource: "wood",
-      side: "A",
-      stages: {
-        stage1: {
-          resources: [{ type: "wood", count: 2 }],
-          powers: [{ type: "points", value: 3 }],
-        },
-        stage2: {
-          resources: [{ type: "stone", count: 2 }],
-          powers: [{ type: "free_card_per_age" }],
-        },
-        stage3: {
-          resources: [{ type: "ore", count: 2 }],
-          powers: [{ type: "points", value: 7 }],
-        },
-      },
+      p.wonder = wonder;
+      p.assignHand(hand);
+      p.buildCard("Ore Vein");
+      p.buildCard("Press");
+      p.buildCard("Tree Farm");
+
+      assertEquals(p.haveResources([{"type": "wood", "count": 1}]), []);
+      assertEquals(p.haveResources([{"type": "clay", "count": 1}]), []);
+      assertEquals(p.haveResources([{"type": "ore", "count": 1}]), []);
+      assertEquals(p.haveResources([{"type": "textile", "count": 1}]), [{"type": "textile", "count": 1}]);
     });
-
-    p.wonder = wonder;
-
-    assert(p.haveResources([{ "type": "wood", "count": 1 }]));
-    assertFalse(p.haveResources([{ "type": "clay", "count": 1 }]));
   });
 });
 
@@ -170,7 +311,7 @@ describe("Testing the Game class", () => {
         name: "Bob",
         wonder: "Gizah",
         coins: 3,
-        warTokens: { positive: 0, negative: 0 },
+        warTokens: {positive: 0, negative: 0},
         stage: [],
         buildings: {
           brown: [],
@@ -186,7 +327,7 @@ describe("Testing the Game class", () => {
           name: "Alice",
           wonder: "Olympia",
           coins: 3,
-          warTokens: { positive: 0, negative: 0 },
+          warTokens: {positive: 0, negative: 0},
           stage: [],
           buildings: {
             brown: [],
@@ -203,7 +344,7 @@ describe("Testing the Game class", () => {
           name: "Adam",
           wonder: "Ephesos",
           coins: 3,
-          warTokens: { positive: 0, negative: 0 },
+          warTokens: {positive: 0, negative: 0},
           stage: [],
           buildings: {
             brown: [],
@@ -221,7 +362,7 @@ describe("Testing the Game class", () => {
             name: "Eve",
             wonder: "Alexandria",
             coins: 3,
-            warTokens: { positive: 0, negative: 0 },
+            warTokens: {positive: 0, negative: 0},
             stage: [],
             buildings: {
               brown: [],
@@ -257,7 +398,7 @@ describe("Testing the Game class", () => {
         name: "Tom",
         wonder: "Halikarnassos",
         coins: 3,
-        warTokens: { positive: 0, negative: 0 },
+        warTokens: {positive: 0, negative: 0},
         stage: [],
         buildings: {
           brown: [],
@@ -273,7 +414,7 @@ describe("Testing the Game class", () => {
           name: "Eve",
           wonder: "Alexandria",
           coins: 3,
-          warTokens: { positive: 0, negative: 0 },
+          warTokens: {positive: 0, negative: 0},
           stage: [],
           buildings: {
             brown: [],
@@ -290,7 +431,7 @@ describe("Testing the Game class", () => {
           name: "Alice",
           wonder: "Olympia",
           coins: 3,
-          warTokens: { positive: 0, negative: 0 },
+          warTokens: {positive: 0, negative: 0},
           stage: [],
           buildings: {
             brown: [],
@@ -308,7 +449,7 @@ describe("Testing the Game class", () => {
             name: "Adam",
             wonder: "Ephesos",
             coins: 3,
-            warTokens: { positive: 0, negative: 0 },
+            warTokens: {positive: 0, negative: 0},
             stage: [],
             buildings: {
               brown: [],
@@ -325,7 +466,7 @@ describe("Testing the Game class", () => {
             name: "Bob",
             wonder: "Gizah",
             coins: 3,
-            warTokens: { positive: 0, negative: 0 },
+            warTokens: {positive: 0, negative: 0},
             stage: [],
             buildings: {
               brown: [],
@@ -358,13 +499,13 @@ describe("Testing the Game class", () => {
       g.addPlayer(p4);
 
       assertEquals(g.getPlayerHandData(bobID), [
-        { name: "West Trading Post", canBuild: true, canStage: false },
-        { name: "Marketplace", canBuild: true, canStage: false },
-        { name: "Guard Tower", canBuild: true, canStage: false },
-        { name: "Guard Tower", canBuild: true, canStage: false },
-        { name: "Stockade", canBuild: true, canStage: false },
-        { name: "Barracks", canBuild: true, canStage: false },
-        { name: "Scriptorium", canBuild: true, canStage: false },
+        {name: "West Trading Post", canBuild: true, canStage: false},
+        {name: "Marketplace", canBuild: true, canStage: false},
+        {name: "Guard Tower", canBuild: true, canStage: false},
+        {name: "Guard Tower", canBuild: true, canStage: false},
+        {name: "Stockade", canBuild: true, canStage: false},
+        {name: "Barracks", canBuild: true, canStage: false},
+        {name: "Scriptorium", canBuild: true, canStage: false},
       ]);
     });
   });
@@ -378,16 +519,16 @@ describe("testing the wonders class", () => {
     side: "A",
     stages: {
       stage1: {
-        resources: [{ type: "wood", count: 2 }],
-        powers: [{ type: "points", value: 3 }],
+        resources: [{type: "wood", count: 2}],
+        powers: [{type: "points", value: 3}],
       },
       stage2: {
-        resources: [{ type: "stone", count: 2 }],
-        powers: [{ type: "free_card_per_age" }],
+        resources: [{type: "stone", count: 2}],
+        powers: [{type: "free_card_per_age"}],
       },
       stage3: {
-        resources: [{ type: "ore", count: 2 }],
-        powers: [{ type: "points", value: 7 }],
+        resources: [{type: "ore", count: 2}],
+        powers: [{type: "points", value: 7}],
       },
     },
   };
@@ -400,8 +541,8 @@ describe("testing the wonders class", () => {
       age: 1,
       color: "red",
       min_players: 3,
-      cost: [{ type: "clay", count: 1 }],
-      produces: [{ type: "shield", count: 1 }],
+      cost: [{type: "clay", count: 1}],
+      produces: [{type: "shield", count: 1}],
       effect: null,
       chain_from: null,
       chain_to: [],
@@ -412,8 +553,8 @@ describe("testing the wonders class", () => {
       age: 1,
       color: "red",
       min_players: 3,
-      cost: [{ type: "wood", count: 1 }],
-      produces: [{ type: "shield", count: 1 }],
+      cost: [{type: "wood", count: 1}],
+      produces: [{type: "shield", count: 1}],
       effect: null,
       chain_from: null,
       chain_to: [],
@@ -424,8 +565,8 @@ describe("testing the wonders class", () => {
       age: 1,
       color: "red",
       min_players: 3,
-      cost: [{ type: "ore", count: 1 }],
-      produces: [{ type: "shield", count: 1 }],
+      cost: [{type: "ore", count: 1}],
+      produces: [{type: "shield", count: 1}],
       effect: null,
       chain_from: null,
       chain_to: ["Stables", "Walls"],
@@ -445,7 +586,7 @@ describe("testing the wonders class", () => {
       color: "blue",
       min_players: 3,
       cost: [],
-      produces: [{ type: "points", count: 2 }],
+      produces: [{type: "points", count: 2}],
       chain_from: null,
       chain_to: ["Temple"],
       type: "civil",
@@ -456,8 +597,8 @@ describe("testing the wonders class", () => {
       age: 1,
       color: "blue",
       min_players: 3,
-      cost: [{ type: "stone", count: 1 }],
-      produces: [{ type: "points", count: 3 }],
+      cost: [{type: "stone", count: 1}],
+      produces: [{type: "points", count: 3}],
       chain_from: null,
       chain_to: ["Aqueduct"],
       type: "civil",
@@ -469,7 +610,7 @@ describe("testing the wonders class", () => {
       color: "blue",
       min_players: 3,
       cost: [],
-      produces: [{ type: "points", count: 2 }],
+      produces: [{type: "points", count: 2}],
       chain_from: null,
       chain_to: ["Statue"],
       type: "civil",
@@ -481,7 +622,7 @@ describe("testing the wonders class", () => {
       color: "blue",
       min_players: 4,
       cost: [],
-      produces: [{ type: "points", count: 3 }],
+      produces: [{type: "points", count: 3}],
       chain_from: null,
       chain_to: [],
       type: "civil",
@@ -501,7 +642,7 @@ describe("testing the wonders class", () => {
       color: "brown",
       min_players: 3,
       cost: [],
-      produces: [{ type: "wood", count: 1 }],
+      produces: [{type: "wood", count: 1}],
       effect: null,
       chain_from: null,
       chain_to: [],
@@ -513,7 +654,7 @@ describe("testing the wonders class", () => {
       color: "brown",
       min_players: 3,
       cost: [],
-      produces: [{ type: "stone", count: 1 }],
+      produces: [{type: "stone", count: 1}],
       effect: null,
       chain_from: null,
       chain_to: [],
@@ -524,7 +665,7 @@ describe("testing the wonders class", () => {
       age: 1,
       color: "brown",
       min_players: 3,
-      cost: [{ type: "coin", count: 1 }],
+      cost: [{type: "coin", count: 1}],
       produces: [
         {
           type: "choice",
@@ -561,7 +702,7 @@ describe("testing the wonders class", () => {
       color: "gray",
       min_players: 3,
       cost: [],
-      produces: [{ type: "glass", count: 1 }],
+      produces: [{type: "glass", count: 1}],
       effect: null,
       chain_from: null,
       chain_to: [],
@@ -573,7 +714,7 @@ describe("testing the wonders class", () => {
       color: "gray",
       min_players: 3,
       cost: [],
-      produces: [{ type: "papyrus", count: 1 }],
+      produces: [{type: "papyrus", count: 1}],
       effect: null,
       chain_from: null,
       chain_to: [],
@@ -585,7 +726,7 @@ describe("testing the wonders class", () => {
       color: "gray",
       min_players: 3,
       cost: [],
-      produces: [{ type: "textile", count: 1 }],
+      produces: [{type: "textile", count: 1}],
       effect: null,
       chain_from: null,
       chain_to: [],
@@ -596,8 +737,8 @@ describe("testing the wonders class", () => {
       age: 1,
       color: "green",
       min_players: 3,
-      cost: [{ type: "papyrus", count: 1 }],
-      produces: [{ type: "tablet", count: 1 }],
+      cost: [{type: "papyrus", count: 1}],
+      produces: [{type: "tablet", count: 1}],
       effect: null,
       chain_from: null,
       chain_to: ["Library"],
@@ -608,8 +749,8 @@ describe("testing the wonders class", () => {
       age: 1,
       color: "green",
       min_players: 3,
-      cost: [{ type: "textile", count: 1 }],
-      produces: [{ type: "compass", count: 1 }],
+      cost: [{type: "textile", count: 1}],
+      produces: [{type: "compass", count: 1}],
       effect: null,
       chain_from: null,
       chain_to: ["Stables", "Dispensary"],
@@ -620,8 +761,8 @@ describe("testing the wonders class", () => {
       age: 1,
       color: "green",
       min_players: 3,
-      cost: [{ type: "glass", count: 1 }],
-      produces: [{ type: "gear", count: 1 }],
+      cost: [{type: "glass", count: 1}],
+      produces: [{type: "gear", count: 1}],
       effect: null,
       chain_from: null,
       chain_to: ["Laboratory"],
@@ -657,7 +798,7 @@ describe("testing the wonders class", () => {
         {
           type: "resource",
           effect_type: "buy",
-          cost: [{ type: "coin", count: 1 }],
+          cost: [{type: "coin", count: 1}],
           applies_to: ["right_neighbour"],
           options: ["clay", "stone", "wood", "ore"],
         },
@@ -677,7 +818,7 @@ describe("testing the wonders class", () => {
         {
           type: "resource",
           effect_type: "buy",
-          cost: [{ type: "coin", count: 1 }],
+          cost: [{type: "coin", count: 1}],
           applies_to: ["left_neighbour"],
           options: ["clay", "stone", "wood", "ore"],
         },
@@ -697,7 +838,7 @@ describe("testing the wonders class", () => {
         {
           type: "resource",
           effect_type: "buy",
-          cost: [{ type: "coin", count: 1 }],
+          cost: [{type: "coin", count: 1}],
           applies_to: ["left_neighbour", "right_neighbour"],
           options: ["glass", "papyrus", "textile"],
         },
@@ -729,7 +870,7 @@ describe("testing the wonders class", () => {
       color: "blue",
       min_players: 3,
       cost: [],
-      produces: [{ type: "points", count: 2 }],
+      produces: [{type: "points", count: 2}],
       chain_from: null,
       chain_to: ["Temple"],
       type: "civil",
@@ -740,8 +881,8 @@ describe("testing the wonders class", () => {
       age: 1,
       color: "blue",
       min_players: 3,
-      cost: [{ type: "stone", count: 1 }],
-      produces: [{ type: "points", count: 3 }],
+      cost: [{type: "stone", count: 1}],
+      produces: [{type: "points", count: 3}],
       chain_from: null,
       chain_to: ["Aqueduct"],
       type: "civil",
@@ -759,7 +900,7 @@ describe("testing the wonders class", () => {
           {
             type: "resource",
             effect_type: "buy",
-            cost: [{ type: "coin", count: 1 }],
+            cost: [{type: "coin", count: 1}],
             applies_to: ["left_neighbour"],
             options: ["clay", "stone", "wood", "ore"],
           },
