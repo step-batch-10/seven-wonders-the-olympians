@@ -1,4 +1,11 @@
-import { assert, assertEquals, assertNotEquals, assertThrows } from "assert";
+import {
+  assert,
+  assertEquals,
+  assertFalse,
+  assertNotEquals,
+  assertThrows,
+} from "assert";
+
 import { describe, it } from "test/bdd";
 import { Player } from "../src/models/player.js";
 import { Game } from "../src/models/game.js";
@@ -16,6 +23,94 @@ describe("Testing the Player class", () => {
     const p1 = new Player("Alice");
 
     assertEquals(p1.name, "Alice");
+  });
+
+  it("should check have resources for building", () => {
+    const p = new Player("Alice");
+    const wonder = new Wonder({
+      "img": "ephesosA.jpeg",
+      "name": "Ephesos",
+      "resource": "papyrus",
+      "side": "A",
+      "stages": {
+        "stage1": {
+          "resources": [{ "type": "stone", "count": 2 }],
+          "powers": [{ "type": "coins", "value": 4 }],
+        },
+        "stage2": {
+          "resources": [{ "type": "wood", "count": 2 }],
+          "powers": [{ "type": "points", "value": 2 }],
+        },
+        "stage3": {
+          "resources": [{ "type": "papyrus", "count": 2 }],
+          "powers": [
+            { "type": "coins", "value": 4 },
+            { "type": "points", "value": 3 },
+          ],
+        },
+      },
+    });
+
+    const hand = [
+      {
+        "name": "Lumber Yard",
+        "age": 1,
+        "color": "brown",
+        "min_players": 3,
+        "cost": [],
+        "produces": [{ "type": "wood", "count": 1 }],
+        "effect": null,
+        "chain_from": null,
+        "chain_to": [],
+      },
+      {
+        "name": "Stone Pit",
+        "age": 1,
+        "color": "brown",
+        "min_players": 3,
+        "cost": [],
+        "produces": [{ "type": "stone", "count": 1 }],
+        "effect": null,
+        "chain_from": null,
+        "chain_to": [],
+      },
+    ];
+
+    p.wonder = wonder;
+    p.assignHand(hand);
+    p.buildCard("Stone Pit");
+    p.buildCard("Lumber Yard");
+
+    assert(p.haveResources([{ "type": "wood", "count": 1 }]));
+    assertFalse(p.haveResources([{ "type": "clay", "count": 1 }]));
+  });
+  it("should check have resources form bonusResource for building", () => {
+    const p = new Player("Alice");
+    const wonder = new Wonder({
+      img: "olympiaA.jpeg",
+      name: "Olympia",
+      resource: "wood",
+      side: "A",
+      stages: {
+        stage1: {
+          resources: [{ type: "wood", count: 2 }],
+          powers: [{ type: "points", value: 3 }],
+        },
+        stage2: {
+          resources: [{ type: "stone", count: 2 }],
+          powers: [{ type: "free_card_per_age" }],
+        },
+        stage3: {
+          resources: [{ type: "ore", count: 2 }],
+          powers: [{ type: "points", value: 7 }],
+        },
+      },
+    });
+
+    p.wonder = wonder;
+
+    assert(p.haveResources([{ "type": "wood", "count": 1 }]));
+    assertFalse(p.haveResources([{ "type": "clay", "count": 1 }]));
   });
 });
 

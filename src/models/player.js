@@ -70,6 +70,30 @@ class Player {
 
   selectCard() {}
 
+  haveResources(cost) {
+    const resources = this.wonder.resources;
+    const choices = resources.choices;
+    const choicesTook = [];
+
+    return cost.every(({ type, count }) => {
+      const resource = resources[type];
+      let pendingResource = count - resource;
+
+      if (pendingResource <= 0) return true;
+
+      return choices.some((choiceResources, index) => {
+        const availabe = !(choicesTook.includes(index));
+
+        if (availabe && choiceResources.has(resource)) {
+          pendingResource--;
+          choicesTook.push(index);
+        }
+
+        return pendingResource <= 0;
+      });
+    });
+  }
+
   playerData() {
     const data = {
       name: this.name,
