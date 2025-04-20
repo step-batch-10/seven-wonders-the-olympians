@@ -12,7 +12,7 @@ class Player {
   wonder;
   status;
 
-  constructor (userName) {
+  constructor(userName) {
     this.#name = userName;
     this.#playerID = Player.generateUniquePlayerID();
     this.rightPlayer = null;
@@ -24,43 +24,43 @@ class Player {
     this.status = "waiting";
   }
 
-  static generateUniquePlayerID () {
+  static generateUniquePlayerID() {
     return "pid" + uniqid();
   }
 
-  get name () {
+  get name() {
     return this.#name;
   }
-  get coins () {
+  get coins() {
     return this.#coins;
   }
-  get playerID () {
+  get playerID() {
     return this.#playerID;
   }
 
-  get warTokensObj () {
+  get warTokensObj() {
     return this.warTokens.reduce(
       (total, token) => {
         token < 0 ? (total.negative -= token) : (total.positive += token);
         return total;
       },
-      {positive: 0, negative: 0},
+      { positive: 0, negative: 0 },
     );
   }
 
-  assignHand (hand) {
+  assignHand(hand) {
     this.hand = hand;
   }
 
-  addCoins (coins) {
+  addCoins(coins) {
     this.#coins += coins;
   }
 
-  udpateStatus (status) {
+  udpateStatus(status) {
     this.status = status;
   }
 
-  updateHand (card) {
+  updateHand(card) {
     const indexOfCard = _.findIndex(
       this.hand,
       (handCard) => card === handCard.name,
@@ -68,49 +68,53 @@ class Player {
     _.remove(this.hand, (_ele, idx) => idx === indexOfCard);
   }
 
-  selectCard () {}
+  selectCard() {}
 
-  coverWithChoices () {
+  coverWithChoices() {
     const usedChoices = new Set();
     const choices = this.wonder.resources.choices;
 
     return (resource, count) => {
-      if(count <= 0) return 0;
+      if (count <= 0) return 0;
 
       let costCovered = 0;
 
-      for(let index = 0; index < choices.length && costCovered < count; index++) {
+      for (
+        let index = 0;
+        index < choices.length && costCovered < count;
+        index++
+      ) {
         const choiceResources = choices[index];
         const available = !(usedChoices.has(index));
         const resourceIncluded = choiceResources.has(resource);
 
-        if(available && resourceIncluded) {
+        if (available && resourceIncluded) {
           costCovered++;
           usedChoices.add(index);
         }
-      };
+      }
 
       return costCovered;
     };
   }
 
-  haveResources ([...cost]) { // getUncoveredResources
+  haveResources([...cost]) { // getUncoveredResources
     const resources = this.wonder.resources;
     const costPending = [];
     const coveredFromChoice = this.coverWithChoices();
 
-    cost.forEach(({type, count}) => {
+    cost.forEach(({ type, count }) => {
       const resourceAvailable = resources[type] || 0;
       let pendingCount = count - resourceAvailable;
       pendingCount -= coveredFromChoice(type, pendingCount);
 
-      if(pendingCount > 0) costPending.push({type, count: pendingCount});
+      if (pendingCount > 0) costPending.push({ type, count: pendingCount });
     });
 
     return costPending;
   }
 
-  playerData () {
+  playerData() {
     const data = {
       name: this.name,
       wonder: this.wonder.name,
@@ -124,10 +128,10 @@ class Player {
     return data;
   }
 
-  getOtherPlayerData () {
+  getOtherPlayerData() {
     const data = [];
     let otherPlayer = this.leftPlayer.leftPlayer;
-    while(otherPlayer.playerID !== this.rightPlayer.playerID) {
+    while (otherPlayer.playerID !== this.rightPlayer.playerID) {
       data.push(otherPlayer.playerData());
       otherPlayer = otherPlayer.leftPlayer;
     }
@@ -135,7 +139,7 @@ class Player {
     return data;
   }
 
-  getHandData () {
+  getHandData() {
     const handData = [];
     this.hand.forEach((card) => {
       handData.push({
@@ -147,7 +151,7 @@ class Player {
     return handData;
   }
 
-  buildCard (cardName) {
+  buildCard(cardName) {
     const card = [...this.hand].find((card) => (card.name === cardName));
 
     this.wonder.build(card);
@@ -155,4 +159,4 @@ class Player {
   }
 }
 
-export {Player};
+export { Player };

@@ -1,10 +1,4 @@
-import {
-  assert,
-  assertEquals,
-  assertFalse,
-  assertNotEquals,
-  assertThrows,
-} from "assert";
+import {assert, assertEquals, assertNotEquals, assertThrows} from "assert";
 
 import {describe, it} from "test/bdd";
 import {Player} from "../src/models/player.js";
@@ -26,37 +20,37 @@ describe("Testing the Player class", () => {
   });
 
   describe("testing haveResources", () => {
-    // it("should give resources uncovered while having bonusResource for building", () => {
-    //   const p = new Player("Alice");
-    //   const wonder = new Wonder({
-    //     "img": "ephesosA.jpeg",
-    //     "name": "Ephesos",
-    //     "resource": "papyrus",
-    //     "side": "A",
-    //     "stages": {
-    //       "stage1": {
-    //         "resources": [{"type": "stone", "count": 2}],
-    //         "powers": [{"type": "coins", "value": 4}],
-    //       },
-    //       "stage2": {
-    //         "resources": [{"type": "wood", "count": 2}],
-    //         "powers": [{"type": "points", "value": 2}],
-    //       },
-    //       "stage3": {
-    //         "resources": [{"type": "papyrus", "count": 2}],
-    //         "powers": [
-    //           {"type": "coins", "value": 4},
-    //           {"type": "points", "value": 3},
-    //         ],
-    //       },
-    //     },
-    //   });
+    it("should give resources uncovered while having bonusResource for building", () => {
+      const p = new Player("Alice");
+      const wonder = new Wonder({
+        "img": "ephesosA.jpeg",
+        "name": "Ephesos",
+        "resource": "papyrus",
+        "side": "A",
+        "stages": {
+          "stage1": {
+            "resources": [{"type": "stone", "count": 2}],
+            "powers": [{"type": "coins", "value": 4}],
+          },
+          "stage2": {
+            "resources": [{"type": "wood", "count": 2}],
+            "powers": [{"type": "points", "value": 2}],
+          },
+          "stage3": {
+            "resources": [{"type": "papyrus", "count": 2}],
+            "powers": [
+              {"type": "coins", "value": 4},
+              {"type": "points", "value": 3},
+            ],
+          },
+        },
+      });
 
-    //   p.wonder = wonder;
+      p.wonder = wonder;
 
-    //   assertEquals(p.haveResources([{"type": "papyrus", "count": 1}]), []);
-    //   assertEquals(p.haveResources([{"type": "clay", "count": 1}]), [{"type": "clay", "count": 1}]);
-    // });
+      assertEquals(p.haveResources([{"type": "papyrus", "count": 1}]), []);
+      assertEquals(p.haveResources([{"type": "clay", "count": 1}]), [{"type": "clay", "count": 1}]);
+    });
 
     it("should give resources uncovered while having resources", () => {
       const p = new Player("Alice");
@@ -115,7 +109,10 @@ describe("Testing the Player class", () => {
       p.buildCard("Lumber Yard");
 
       assertEquals(p.haveResources([{"type": "wood", "count": 1}]), []);
-      assertEquals(p.haveResources([{"type": "clay", "count": 1}]), [{"type": "clay", "count": 1}]);
+      assertEquals(p.haveResources([{"type": "clay", "count": 1}]), [{
+        "type": "clay",
+        "count": 1,
+      }]);
     });
 
     it("should give resources uncovered while having choices", () => {
@@ -155,13 +152,13 @@ describe("Testing the Player class", () => {
             {
               "type": "choice",
               "options": ["wood", "clay"],
-              "count": 1
-            }
+              "count": 1,
+            },
           ],
           "effect": null,
           "chain_from": null,
-          "chain_to": []
-        }
+          "chain_to": [],
+        },
       ];
 
       p.wonder = wonder;
@@ -170,7 +167,10 @@ describe("Testing the Player class", () => {
 
       assertEquals(p.haveResources([{"type": "wood", "count": 1}]), []);
       assertEquals(p.haveResources([{"type": "clay", "count": 1}]), []);
-      assertEquals(p.haveResources([{"type": "ore", "count": 1}]), [{"type": "ore", "count": 1}]);
+      assertEquals(p.haveResources([{"type": "ore", "count": 1}]), [{
+        "type": "ore",
+        "count": 1,
+      }]);
     });
 
     it("should give resources uncovered while having resources and choices", () => {
@@ -209,7 +209,7 @@ describe("Testing the Player class", () => {
           "produces": [{"type": "ore", "count": 1}],
           "effect": null,
           "chain_from": null,
-          "chain_to": []
+          "chain_to": [],
         },
         {
           "name": "Press",
@@ -220,7 +220,7 @@ describe("Testing the Player class", () => {
           "produces": [{"type": "papyrus", "count": 1}],
           "effect": null,
           "chain_from": null,
-          "chain_to": []
+          "chain_to": [],
         },
         {
           "name": "Tree Farm",
@@ -232,13 +232,13 @@ describe("Testing the Player class", () => {
             {
               "type": "choice",
               "options": ["wood", "clay"],
-              "count": 1
-            }
+              "count": 1,
+            },
           ],
           "effect": null,
           "chain_from": null,
-          "chain_to": []
-        }
+          "chain_to": [],
+        },
       ];
 
       p.wonder = wonder;
@@ -250,7 +250,10 @@ describe("Testing the Player class", () => {
       assertEquals(p.haveResources([{"type": "wood", "count": 1}]), []);
       assertEquals(p.haveResources([{"type": "clay", "count": 1}]), []);
       assertEquals(p.haveResources([{"type": "ore", "count": 1}]), []);
-      assertEquals(p.haveResources([{"type": "textile", "count": 1}]), [{"type": "textile", "count": 1}]);
+      assertEquals(p.haveResources([{"type": "textile", "count": 1}]), [{
+        "type": "textile",
+        "count": 1,
+      }]);
     });
   });
 });
