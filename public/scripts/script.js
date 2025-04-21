@@ -1,4 +1,4 @@
-const text = "7 wonders are under construction...";
+const text = "Welcome to 7 wonders...";
 const speed = 70;
 let i = 0;
 

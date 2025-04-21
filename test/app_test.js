@@ -1,7 +1,6 @@
 import { assertEquals } from "assert";
 import { describe, it } from "test/bdd";
 import { createApp } from "../src/app.js";
-
 describe("serve static handler", () => {
   it("should return index.html content", async () => {
     const app = createApp();

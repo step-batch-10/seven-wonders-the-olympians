@@ -136,3 +136,92 @@ describe("Testing player route", () => {
     });
   });
 });
+
+describe("Testing set player action", () => {
+  it("Should set player action", async () => {
+    const app = createApp();
+
+    const res1 = await app.request("/auth/login", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ name: "Alice" }),
+    });
+
+    const gameID = parseCookies(res1).gameID;
+    const aliceID = parseCookies(res1).playerID;
+
+    const cookieHeader = `gameID=${gameID}; playerID=${aliceID}`;
+    const res2 = await app.request("/player/action", {
+      method: "POST",
+      headers: {
+        Cookie: cookieHeader,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ action: "build" }),
+    });
+
+    assertEquals(res2.status, 200);
+    assertEquals(await res2.json(), { message: "successfully selected" });
+  });
+});
+
+describe("Testing get player view status", () => {
+  it("Should get player view status", async () => {
+    const app = createApp();
+
+    const res1 = await app.request("/auth/login", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ name: "Alice" }),
+    });
+
+    const gameID = parseCookies(res1).gameID;
+    const aliceID = parseCookies(res1).playerID;
+
+    const cookieHeader = `gameID=${gameID}; playerID=${aliceID}`;
+    const res2 = await app.request("/player/view", {
+      headers: {
+        Cookie: cookieHeader,
+      },
+    });
+
+    assertEquals(res2.status, 200);
+    assertEquals(await res2.json(), { view: "upto-date" });
+  });
+});
+
+describe("Testing update player view status", () => {
+  it("Should update player view status", async () => {
+    const app = createApp();
+
+    const res1 = await app.request("/auth/login", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ name: "Alice" }),
+    });
+
+    const gameID = parseCookies(res1).gameID;
+    const aliceID = parseCookies(res1).playerID;
+
+    const cookieHeader = `gameID=${gameID}; playerID=${aliceID}`;
+    const res2 = await app.request("/player/view", {
+      method: "PUT",
+      headers: {
+        Cookie: cookieHeader,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ status: "updated" }),
+    });
+
+    assertEquals(res2.status, 200);
+    assertEquals(await res2.json(), {
+      message: "successfully updated player view status",
+    });
+  });
+});

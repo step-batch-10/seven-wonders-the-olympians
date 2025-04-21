@@ -159,9 +159,10 @@ p {
   opacity: 0.4;
 }
 .buildedCards > * {
-  height: 150px;
+  height: 180px;
   width: 130px;
   position: relative;
+  bottom: -20px;
 }
 
 .buildedCards > div > img {
@@ -217,6 +218,7 @@ p {
   z-index: 99;
   width: 150px;
 }
+
 .actionsBox > div {
   display: flex;
   justify-content: space-evenly;
@@ -371,3 +373,12 @@ main img {
 .blur {
   filter: blur(2px);
 }
+
+#player-name {
+  color: #9a6a1c;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+/* .buildedCards > * :hover {
+} */

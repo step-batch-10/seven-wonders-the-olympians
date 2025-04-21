@@ -3,8 +3,8 @@ const getPlayerDetails = (ctx) => {
 
   const gameMap = ctx.get("gameMap");
   const game = gameMap.get(gameID);
-
-  return ctx.json(game.getPlayerInfo(playerID));
+  const info = game.getPlayerInfo(playerID);
+  return ctx.json(info);
 };
 
 const getPlayerHand = (ctx) => {
@@ -36,7 +36,6 @@ const getPlayersStatus = async (ctx, nxt) => {
 
   const game = gameMap.get(gameID);
   const playersStatus = game.getPlayersStatus(playerID);
-
   if (game.didAllPlayerSelectCard()) await nxt();
 
   return ctx.json(playersStatus);

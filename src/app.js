@@ -18,7 +18,7 @@ const injectContext = (gameMap, playerMap, playerGameMap, waitingGames) => {
   };
 };
 
-const resetCookie = () => {
+export const resetCookie = () => {
   return async (ctx, next) => {
     if (ctx.getCookie(ctx, "playerID")) {
       deleteCookie(ctx, "playerID");
