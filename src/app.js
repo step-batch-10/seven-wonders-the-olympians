@@ -4,7 +4,7 @@ import { logger } from "hono/logger";
 import { createAuthRoute } from "./routes/auth_route.js";
 import { createGameRoute } from "./routes/game_route.js";
 import { createPlayerRoute } from "./routes/player_route.js";
-import { getCookie, setCookie } from "hono/cookie";
+import { deleteCookie, getCookie, setCookie } from "hono/cookie";
 
 const injectContext = (gameMap, playerMap, playerGameMap, waitingGames) => {
   return async (ctx, next) => {
@@ -14,7 +14,18 @@ const injectContext = (gameMap, playerMap, playerGameMap, waitingGames) => {
     ctx.set("waitingGames", waitingGames);
     ctx.getCookie = getCookie;
     ctx.setCookie = setCookie;
+    await next();
+  };
+};
 
+const resetCookie = () => {
+  return async (ctx, next) => {
+    if (ctx.getCookie(ctx, "playerID")) {
+      deleteCookie(ctx, "playerID");
+    }
+    if (ctx.getCookie(ctx, "gameID")) {
+      deleteCookie(ctx, "gameID");
+    }
     await next();
   };
 };
@@ -30,6 +41,7 @@ const createApp = () => {
   app
     .use(logger())
     .use(injectContext(gameMap, playerMap, playerGameMap, waitingGames))
+    .get("/", resetCookie())
     .get("/", serveStatic({ path: "public/index.html" }))
     .route("/auth", createAuthRoute())
     .route("/game", createGameRoute())
