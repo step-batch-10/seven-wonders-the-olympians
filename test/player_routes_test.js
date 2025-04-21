@@ -1,6 +1,10 @@
-import { assertEquals } from "assert";
+import { assert, assertEquals, assertFalse } from "assert";
 import { createApp } from "../src/app.js";
-import { describe, it } from "jsr:@std/testing/bdd";
+import { beforeEach, describe, it } from "jsr:@std/testing/bdd";
+import { Player } from "../src/models/player.js";
+import { Game } from "../src/models/game.js";
+import ageOneCards from "../data/ageOneCards.json" with { type: "json" };
+import ageThreeCards from "../data/ageThreeCards.json" with { type: "json" };
 
 function parseCookies(res) {
   const setCookieHeader = res.headers.get("set-cookie");
@@ -223,5 +227,57 @@ describe("Testing update player view status", () => {
     assertEquals(await res2.json(), {
       message: "successfully updated player view status",
     });
+  });
+});
+
+describe("Testing isMilitaryStrength", () => {
+  let p1, p2, p3, p4, g;
+  beforeEach(() => {
+    p1 = new Player("Alice");
+    p2 = new Player("Bob");
+    p3 = new Player("Adam");
+    p4 = new Player("Eve");
+
+    g = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
+    g.addPlayer(p2);
+    g.addPlayer(p3);
+    g.addPlayer(p4);
+  });
+
+  it("isMilitaryStrength with red card should return true", () => {
+    const card = ageOneCards.find((card) => card.name === "Guard Tower");
+    assert(p1.wonder.isMilitaryStrength(card));
+  });
+
+  it("isMilitaryStrength with blue card should return false", () => {
+    const card = ageOneCards.find((card) => card.name === "Pawn Shop");
+    assertFalse(p1.wonder.isMilitaryStrength(card));
+  });
+});
+
+describe("Testing addMilitaryStrength", () => {
+  let p1, p2, p3, p4, g;
+  beforeEach(() => {
+    p1 = new Player("Alice");
+    p2 = new Player("Bob");
+    p3 = new Player("Adam");
+    p4 = new Player("Eve");
+
+    g = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
+    g.addPlayer(p2);
+    g.addPlayer(p3);
+    g.addPlayer(p4);
+  });
+
+  it("addMilitaryStrength should add 1 point when we won a war", () => {
+    const card = ageOneCards.find((card) => card.name === "Guard Tower");
+    p1.wonder.addMilitaryStrength(card);
+    assertEquals(p1.wonder.militaryStrength, 1);
+  });
+
+  it("addMilitaryStrength should add 3 point when we won a war in second age", () => {
+    const card = ageThreeCards.find((card) => card.name === "Arsenal");
+    p1.wonder.addMilitaryStrength(card);
+    assertEquals(p1.wonder.militaryStrength, 3);
   });
 });

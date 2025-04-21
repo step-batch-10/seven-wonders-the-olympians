@@ -10,6 +10,7 @@ const login = async (event) => {
     },
     body: JSON.stringify({ name }),
   });
+
   if (res.redirected) {
     globalThis.top.location.replace(res.url);
   }

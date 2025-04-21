@@ -9,7 +9,7 @@ const evaluateCookie = () => {
     const playerGameMap = ctx.get("playerGameMap");
 
     if (!playerID && !gameID) {
-      await next();
+      return await next();
     }
 
     if (playerID && gameID) {
@@ -25,10 +25,7 @@ const evaluateCookie = () => {
 const createAuthRoute = () => {
   const authApp = new Hono();
 
-  authApp
-    .use(logger())
-    .use(evaluateCookie())
-    .post("/login", registerUser);
+  authApp.use(logger()).use(evaluateCookie()).post("/login", registerUser);
   return authApp;
 };
 
