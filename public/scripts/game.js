@@ -300,7 +300,12 @@ const reqBuildCard = (parentEvent) => {
   };
 };
 
-const removeList = () => {
+const removeList = (event) => {
+  const container = event.target.closest(".hovered");
+  if (container) {
+    container.classList.remove("hovered");
+  }
+  addHover();
   document.querySelector(".actionsBox").remove();
 };
 
@@ -372,8 +377,38 @@ const showActions = (event, card) => {
   return actionBox;
 };
 
+const handleHover = (event) => {
+  event.currentTarget.classList.add("hovered");
+};
+
+const handleHoverLeave = (event) => {
+  event.currentTarget.classList.remove("hovered");
+};
+
+
+const addHover = () => {
+  const parent = document.querySelector("#cardsContainer");
+  Array.from(parent.children).forEach(child => {
+    child.addEventListener("mouseenter", handleHover);
+    child.addEventListener("mouseleave", handleHoverLeave);
+  });
+};
+
+
+const removeHover = () => {
+  const parent = document.querySelector("#cardsContainer");
+  Array.from(parent.children).forEach(child => {
+    child.removeEventListener("mouseenter", handleHover);
+    child.removeEventListener("mouseleave", handleHoverLeave);
+  });
+};
+
 const selectTheCard = (event, card) => {
   if (document.querySelector(".actionsBox")) return;
+  const ele = document.querySelector("#cardsContainer");
+  removeHover(ele);
+  event.target.parentNode.classList.add("hovered");
+  console.log(event.target.parentNode, event.target.parentNode.classList);
   event.target.parentNode.appendChild(showActions(event, card));
 };
 
@@ -387,6 +422,7 @@ const renderDeck = async () => {
   const noOfCards = data.length;
   container.style = `--total:${noOfCards}`;
   container.replaceChildren(...data);
+  addHover();
 };
 
 const renderGamePage = async () => {
@@ -400,11 +436,12 @@ const renderGamePage = async () => {
 };
 
 const renderAge = () => {
-  document.querySelector("#age").style.display = "none";
-  renderGamePage();
+  document.querySelector("main").classList.remove("blur");
+  document.querySelector("#age").style.scale = 0;
 };
 
 const main = () => {
+  renderGamePage();
   setTimeout(renderAge, 2200);
 };
 

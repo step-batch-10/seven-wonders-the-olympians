@@ -11,3 +11,23 @@ function typeWriter() {
 }
 
 document.addEventListener("DOMContentLoaded", typeWriter);
+
+const popOut = () => {
+  document.querySelector("main").style = "filter: blur(5px)";
+  const iframe = document.createElement("iframe");
+  iframe.src = "login.html";
+  iframe.width = "40%";
+  iframe.height = "600";
+  iframe.style.border = "none";
+  const pop = document.querySelector(".popUpWindow");
+  pop.style = "display:flex";
+
+  pop.appendChild(iframe);
+
+};
+
+const main = () => {
+  document.querySelector("button").addEventListener("click", popOut);
+};
+
+globalThis.onload = main;

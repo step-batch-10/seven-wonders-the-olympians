@@ -11,7 +11,7 @@ const login = async (event) => {
     body: JSON.stringify({ name }),
   });
   if (res.redirected) {
-    globalThis.location.replace(res.url);
+    globalThis.top.location.replace(res.url);
   }
 };
 
