@@ -19,6 +19,7 @@ class Wonder {
       red: [],
       purple: [],
     };
+
     this.#resources = { choices: [] };
     this.#resources[wonder.resource] = 1;
     this.#discounts = {};

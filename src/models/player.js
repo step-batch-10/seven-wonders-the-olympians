@@ -102,7 +102,6 @@ class Player {
   }
 
   haveResources(cost) {
-    // getUncoveredResources
     const resources = this.wonder.resources;
     const costPending = [];
     const coveredFromChoice = this.coverWithChoices();

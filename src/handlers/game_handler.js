@@ -13,7 +13,6 @@ const getPlayerHand = (ctx) => {
 
   const gameMap = ctx.get("gameMap");
   const game = gameMap.get(gameID);
-
   return ctx.json(game.getPlayerHandData(playerID));
 };
 

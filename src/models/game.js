@@ -26,6 +26,7 @@ class Game {
   wonders;
   discardedDeck;
   decks;
+  round;
   shuffleDeck;
   #hands;
 
@@ -43,11 +44,13 @@ class Game {
       2: null,
       3: null,
     };
+    this.round = 0;
   }
 
   get players() {
     return this.#players;
   }
+
   get isGameFull() {
     return this.#players.length === this.noOfPlayers;
   }
@@ -135,7 +138,43 @@ class Game {
     this.#players.forEach((player, idx) => player.assignHand(this.#hands[idx]));
   }
 
+  #isLastRound = () => {
+    return this.round === 6;
+  };
+
+  #resetRound() {
+    this.round = 0;
+  }
+
+  #nextRound() {
+    this.round++;
+  }
+
+  endAgeDiscards() {
+    this.#players.forEach((player) => {
+      this.addToDiscarded(player.hand);
+    });
+  }
+
+  militaryConflicts() {
+    this.#players.forEach((player) => {
+      console.log("war tokens--->", player.warTokensObj);
+    });
+  }
+
+  endAge() {
+    this.endAgeDiscards();
+    return this.militaryConflicts();
+  }
+
   passHands() {
+    this.#nextRound();
+    console.log("round-->", this.round);
+
+    if (this.#isLastRound()) {
+      return this.endAge();
+    }
+
     return this.currentAge === 2 ? this.#passRight() : this.#passLeft();
   }
 
@@ -154,6 +193,7 @@ class Game {
   }
 
   initAge() {
+    this.#resetRound();
     this.distributeCards();
   }
 
