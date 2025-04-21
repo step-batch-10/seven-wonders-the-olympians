@@ -150,4 +150,91 @@ describe("Testing auth route", () => {
     assertEquals(parseCookies(res3).gameID, parseCookies(res4).gameID);
     assertNotEquals(parseCookies(res4).gameID, parseCookies(res5).gameID);
   });
+
+  it("Should redirect to waiting.html if having valid game id and player id and try to access auth route", async () => {
+    const app = createApp();
+
+    const res1 = await app.request("/auth/login", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ name: "Alice" }),
+    });
+
+    const { gameID, playerID } = parseCookies(res1);
+
+    const cookieHeader = `gameID=${gameID}; playerID=${playerID}`;
+
+    const res2 = await app.request("/auth/login", {
+      method: "POST",
+      headers: {
+        Cookie: cookieHeader,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ name: "Bob" }),
+    });
+
+    assertEquals(res2.status, 302);
+
+    assertEquals(res2.headers.get("location"), "/waiting_room.html");
+  });
+
+  it("Should access denied if having invalid game id and try to access auth route", async () => {
+    const app = createApp();
+
+    const res1 = await app.request("/auth/login", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ name: "Alice" }),
+    });
+
+    const { playerID } = parseCookies(res1);
+
+    const cookieHeader = `gameID=falseGameID; playerID=${playerID}`;
+
+    const res2 = await app.request("/auth/login", {
+      method: "POST",
+      headers: {
+        Cookie: cookieHeader,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ name: "Bob" }),
+    });
+
+    assertEquals(res2.status, 403);
+
+    assertEquals(await res2.text(), "Access Denied!");
+  });
+
+  it("Should access denied if having invalid player id and try to access auth route", async () => {
+    const app = createApp();
+
+    const res1 = await app.request("/auth/login", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ name: "Alice" }),
+    });
+
+    const { gameID } = parseCookies(res1);
+
+    const cookieHeader = `gameID=${gameID}; playerID=fakePlayerID`;
+
+    const res2 = await app.request("/auth/login", {
+      method: "POST",
+      headers: {
+        Cookie: cookieHeader,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ name: "Bob" }),
+    });
+
+    assertEquals(res2.status, 403);
+
+    assertEquals(await res2.text(), "Access Denied!");
+  });
 });
