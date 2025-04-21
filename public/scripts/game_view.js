@@ -168,6 +168,14 @@ const renderOtherPlayerStats = ({ others }) => {
   otherPlayersContainer.replaceChildren(...stats);
 };
 
+const handleHover = (event) => {
+  event.currentTarget.classList.add("hovered");
+};
+
+const handleHoverLeave = (event) => {
+  event.currentTarget.classList.remove("hovered");
+};
+
 const addHoverForChildren = (parentSelector) => {
   const parent = document.querySelector(parentSelector);
 
@@ -218,8 +226,8 @@ const createBuild = (parentEvent, card) => {
 };
 
 const reqToDiscard = (parentEvent, postPlayerAction) => {
-  return () => {
-    removeList();
+  return (event) => {
+    removeList(event);
 
     createWaitingWindow();
     postPlayerAction({ card: parentEvent.cardName, action: "discard" });

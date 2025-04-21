@@ -332,6 +332,7 @@ main img {
   border-radius: 8px;
 }
 #age {
+  backdrop-filter: blur(4px);
   display: flex;
   height: 100vh;
   width: 100vw;
