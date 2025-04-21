@@ -163,7 +163,7 @@
     ],
     "effect": [
       {
-        "type": "coins",
+        "type": "coin",
         "effect_type": "card",
         "card_color": "brown",
         "count": 1,
@@ -192,7 +192,7 @@
     ],
     "effect": [
       {
-        "type": "coins",
+        "type": "coin",
         "effect_type": "card",
         "card_color": "yellow",
         "count": 1,
@@ -221,7 +221,7 @@
     ],
     "effect": [
       {
-        "type": "coins",
+        "type": "coin",
         "effect_type": "card",
         "card_color": "gray",
         "count": 2,
@@ -250,7 +250,7 @@
     ],
     "effect": [
       {
-        "type": "coins",
+        "type": "coin",
         "effect_type": "stage",
         "count": 3,
         "applies_to": ["self"]
@@ -533,7 +533,7 @@
     ],
     "effect": [
       {
-        "type": "coins",
+        "type": "coin",
         "effect_type": "card",
         "card_color": "brown",
         "count": 1,
@@ -562,7 +562,7 @@
     ],
     "effect": [
       {
-        "type": "coins",
+        "type": "coin",
         "effect_type": "card",
         "card_color": "yellow",
         "count": 1,
@@ -591,7 +591,7 @@
     ],
     "effect": [
       {
-        "type": "coins",
+        "type": "coin",
         "effect_type": "card",
         "card_color": "gray",
         "count": 2,
@@ -620,7 +620,7 @@
     ],
     "effect": [
       {
-        "type": "coins",
+        "type": "coin",
         "effect_type": "stage",
         "count": 3,
         "applies_to": ["self"]
@@ -647,7 +647,7 @@
     ],
     "effect": [
       {
-        "type": "coins",
+        "type": "coin",
         "effect_type": "stage",
         "count": 3,
         "applies_to": ["self"]

@@ -51,14 +51,11 @@
       },
       "stage2": {
         "cost": [{ "type": "wood", "count": 2 }],
-        "powers": [{ "type": "coins", "value": 9 }]
+        "powers": [{ "type": "coin", "value": 9 }]
       },
       "stage3": {
         "cost": [{ "type": "papyrus", "count": 2 }],
-        "powers": [
-          { "type": "coins", "value": 4 },
-          { "type": "points", "value": 7 }
-        ]
+        "powers": [{ "type": "points", "value": 7 }]
       }
     }
   },

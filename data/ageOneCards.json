@@ -177,7 +177,7 @@
     "age": 1,
     "color": "brown",
     "min_players": 6,
-    "cost": [{ "type": "coins", "count": 1 }],
+    "cost": [{ "type": "coin", "count": 1 }],
     "produces": [
       {
         "type": "choice",

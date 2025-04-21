@@ -156,7 +156,7 @@ class Player {
 
   #doesPlayerHaveResources(card, resources) {
     return card.cost.every(({ type, count }) => {
-      if (type === "coins" && this.#coins >= count) return true;
+      if (type === "coin" && this.#coins >= count) return true;
 
       return type in resources && resources[type] >= count;
     });
