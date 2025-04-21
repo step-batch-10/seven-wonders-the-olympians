@@ -385,19 +385,17 @@ const handleHoverLeave = (event) => {
   event.currentTarget.classList.remove("hovered");
 };
 
-
 const addHover = () => {
   const parent = document.querySelector("#cardsContainer");
-  Array.from(parent.children).forEach(child => {
+  Array.from(parent.children).forEach((child) => {
     child.addEventListener("mouseenter", handleHover);
     child.addEventListener("mouseleave", handleHoverLeave);
   });
 };
 
-
 const removeHover = () => {
   const parent = document.querySelector("#cardsContainer");
-  Array.from(parent.children).forEach(child => {
+  Array.from(parent.children).forEach((child) => {
     child.removeEventListener("mouseenter", handleHover);
     child.removeEventListener("mouseleave", handleHoverLeave);
   });

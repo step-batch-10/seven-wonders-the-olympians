@@ -23,7 +23,6 @@ const popOut = () => {
   pop.style = "display:flex";
 
   pop.appendChild(iframe);
-
 };
 
 const main = () => {
