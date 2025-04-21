@@ -17,9 +17,9 @@ const updatePlayerStatus = async (ctx) => {
   const player = playerMap.get(ctx.getCookie(ctx, "playerID"));
 
   const { status } = await ctx.req.json();
-  player.udpateStatus(status);
+  player.updateStatus(status);
 
-  return ctx.json({ message: "sucessfully updated" });
+  return ctx.json({ message: "successfully updated" });
 };
 
 export { getPlayerName, getWonderImgName, updatePlayerStatus };

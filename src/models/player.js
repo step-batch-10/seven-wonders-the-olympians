@@ -43,10 +43,10 @@ class Player {
   get warTokensObj() {
     return this.warTokens.reduce(
       (total, token) => {
-        token < 0 ? (total.negative -= token) : (total.positive += token);
+        token < 0 ? (total.negative += token) : (total.positive += token);
         return total;
       },
-      { positive: 0, negative: 0 },
+      { positive: 0, negative: 0 }
     );
   }
 
@@ -58,14 +58,14 @@ class Player {
     this.#coins += coins;
   }
 
-  udpateStatus(status) {
+  updateStatus(status) {
     this.status = status;
   }
 
   updateHand(card) {
     const indexOfCard = _.findIndex(
       this.hand,
-      (handCard) => card === handCard.name,
+      (handCard) => card === handCard.name
     );
     _.remove(this.hand, (_ele, idx) => idx === indexOfCard);
   }
@@ -134,6 +134,7 @@ class Player {
   getOtherPlayerData() {
     const data = [];
     let otherPlayer = this.leftPlayer.leftPlayer;
+
     while (otherPlayer.playerID !== this.rightPlayer.playerID) {
       data.push(otherPlayer.playerData());
       otherPlayer = otherPlayer.leftPlayer;
@@ -145,13 +146,11 @@ class Player {
   getHandData() {
     const canStage = this.canStage();
 
-    return this.hand.map((card) => {
-      return {
-        name: card.name,
-        canBuild: this.canBuild(card),
-        canStage: canStage,
-      };
-    });
+    return this.hand.map((card) => ({
+      name: card.name,
+      canBuild: this.canBuild(card),
+      canStage: canStage,
+    }));
   }
 
   #doesPlayerHaveResources(card, resources) {

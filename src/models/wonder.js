@@ -68,7 +68,7 @@ class Wonder {
       Object.entries(this.#buildings).map(([colors, cards]) => {
         const cardNames = cards.map((card) => card.name);
         return [colors, cardNames];
-      }),
+      })
     );
   }
 
@@ -116,9 +116,8 @@ class Wonder {
         this.#discounts[resource] = [];
       }
 
-      this.#discounts[resource] = this.#discounts[resource].concat(
-        newNeighbours,
-      );
+      this.#discounts[resource] =
+        this.#discounts[resource].concat(newNeighbours);
     });
   }
 
@@ -132,7 +131,7 @@ class Wonder {
     this.#militaryStrength += count;
   }
 
-  getCardBenifits(card) {
+  getCardBenefits(card) {
     if (this.isResourceCard(card)) {
       this.addResources(card);
     }
@@ -152,7 +151,7 @@ class Wonder {
 
   build(card) {
     this.#buildings[card.color].push(card);
-    this.getCardBenifits(card);
+    this.getCardBenefits(card);
   }
 
   getNextStage() {
@@ -167,10 +166,10 @@ class Wonder {
 
   stageACard(card) {
     const stage = this.getNextStage();
-    const benifit = this.#wonder.stages[stage].powers[0];
+    const benefit = this.#wonder.stages[stage].powers[0];
 
-    if (benifit.type === "points") {
-      const count = benifit.value;
+    if (benefit.type === "points") {
+      const count = benefit.value;
       this.#victoryPoints += count;
     }
 
