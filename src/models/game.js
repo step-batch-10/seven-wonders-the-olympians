@@ -7,13 +7,13 @@ import { Wonder } from "./wonder.js";
 
 const shuffleArray = ([...arr]) => arr.sort(() => Math.random() - 0.5);
 const wonders = [
-  "babylon",
-  "rhodos",
-  "halikarnassos",
-  "alexandria",
-  "ephesos",
-  "gizah",
-  "olympia",
+  "Babylon",
+  "Rhodos",
+  "Halikarnassos",
+  "Alexandria",
+  "Ephesos",
+  "Gizah",
+  "Olympia",
 ];
 
 class Game {
@@ -86,7 +86,7 @@ class Game {
   distributeWonders() {
     this.#players.forEach((player) => {
       const wonderName = this.wonders.pop();
-      const wonderData = wondersData[wonderName];
+      const wonderData = wondersData.find(({ name }) => name === wonderName);
       const wonder = new Wonder(wonderData);
 
       player.wonder = wonder;

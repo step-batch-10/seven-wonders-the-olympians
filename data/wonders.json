@@ -1,5 +1,5 @@
-{
-  "olympia": {
+[
+  {
     "img": "olympiaA.jpeg",
     "name": "Olympia",
     "resource": "wood",
@@ -19,7 +19,7 @@
       }
     }
   },
-  "gizah": {
+  {
     "img": "gizahA.jpeg",
     "name": "Gizah",
     "resource": "stone",
@@ -39,7 +39,7 @@
       }
     }
   },
-  "ephesos": {
+  {
     "img": "ephesosA.jpeg",
     "name": "Ephesos",
     "resource": "papyrus",
@@ -62,7 +62,7 @@
       }
     }
   },
-  "babylon": {
+  {
     "img": "babylonA.jpeg",
     "name": "Babylon",
     "resource": "clay",
@@ -82,7 +82,7 @@
       }
     }
   },
-  "rhodos": {
+  {
     "img": "rhodosA.jpeg",
     "name": "Rhodos",
     "resource": "ore",
@@ -102,7 +102,7 @@
       }
     }
   },
-  "halikarnassos": {
+  {
     "img": "halikarnassosA.jpeg",
     "name": "Halikarnassos",
     "resource": "textile",
@@ -122,7 +122,7 @@
       }
     }
   },
-  "alexandria": {
+  {
     "img": "alexandriaA.jpeg",
     "name": "Alexandria",
     "resource": "glass",
@@ -142,4 +142,4 @@
       }
     }
   }
-}
+]
