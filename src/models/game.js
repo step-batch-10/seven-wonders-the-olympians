@@ -23,8 +23,8 @@ class Game {
   noOfPlayers;
   gameStatus;
   currentAge;
-  wonders;
-  discardedDeck;
+  wonders; 
+  #discardedDeck;
   decks;
   round;
   shuffleDeck;
@@ -36,7 +36,7 @@ class Game {
     this.#gameID = Game.generateUniqueGameID();
     this.gameStatus = "waiting";
     this.currentAge = 0;
-    this.discardedDeck = [];
+    this.#discardedDeck = [];
     this.shuffleDeck = shuffleDeck;
     this.wonders = this.shuffleDeck(wonders);
     this.decks = {
@@ -57,6 +57,10 @@ class Game {
 
   get gameID() {
     return this.#gameID;
+  }
+
+  get discardedDeck() {
+    return this.#discardedDeck;
   }
 
   static generateUniqueGameID() {
@@ -123,7 +127,7 @@ class Game {
   }
 
   addToDiscarded(card) {
-    this.discardedDeck.push(card);
+    this.#discardedDeck.push(card);
   }
 
   #passLeft() {
