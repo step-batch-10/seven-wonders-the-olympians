@@ -202,12 +202,18 @@ class Player {
     return this.canBuild(stageCard);
   }
 
+  deductCoins(card) {
+    const coinCost = card.cost.find(({type}) => type === "coin");
+    if(coinCost) this.#coins -= coinCost.count;
+  }
+
   buildCard(cardName) {
     const card = [...this.hand].find((card) => card.name === cardName);
 
-    //deduct coins if the card cost === coins
+    this.deductCoins(card);
+    this.view = "upto-date"
     this.wonder.build(card);
-    this.updateHand(card);
+    this.updateHand(cardName);
   }
 
   setTempAct(action) {

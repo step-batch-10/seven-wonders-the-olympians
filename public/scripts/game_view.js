@@ -137,10 +137,11 @@ const getNeighbourStats = (player, template) => {
   const { name, coins, warTokens, wonder, bonusResource, buildings } = player;
   const playerClone = template.content.cloneNode(true);
   const header = playerClone.querySelector(".player-stats-header");
+
   header.append(getPlayerStats(name));
   header.append(getPlayerPoints(coins, warTokens.positive));
-  const cards = playerClone.querySelector(".cards");
 
+  const cards = playerClone.querySelector(".cards");
   if (cards) appendPlayerBuildings(playerClone, buildings);
 
   const wonderStats = playerClone.querySelector(".wonder-stats");
@@ -207,20 +208,28 @@ const createCancel = () => {
   return stage;
 };
 
-const reqBuildCard = (parentEvent) => {
-  return () => {
-    const _move = { card: parentEvent.cardName, action: "build" };
+const reqBuildCard = (parentEvent, postPlayerAction) => {
+  return (event) => {
+    removeList(event);
+
+    createWaitingWindow();
+    postPlayerAction({ card: parentEvent.cardName, action: "build" });
   };
 };
 
-const createBuild = (parentEvent, card) => {
+const createBuild = (parentEvent, card, postPlayerAction) => {
   const [stage, content, image] = createElements(["div", "p", "img"]);
 
   image.src = "/img/icons/build.png";
   content.innerText = "Build";
   stage.append(image, content);
 
-  if (card.canBuild) stage.addEventListener("click", reqBuildCard(parentEvent));
+  if (card.canBuild) {
+    stage.addEventListener(
+      "click",
+      reqBuildCard(parentEvent, postPlayerAction)
+    );
+  }
   stage.className = card.canBuild ? "" : "disabled";
   return stage;
 };
@@ -270,8 +279,8 @@ const showActions = (event, card, postPlayerAction) => {
   actionBox.append(
     createDiscard(event.target, postPlayerAction),
     createStage(event.target, card),
-    createBuild(event.target, card),
-    createCancel(event.target),
+    createBuild(event.target, card, postPlayerAction),
+    createCancel(event.target)
   );
 
   return actionBox;
@@ -289,7 +298,7 @@ const removeHover = (parentSelector) => {
 const selectTheCard = (event, card, postPlayerAction) => {
   if (document.querySelector(".actionsBox")) return;
   event.target.parentNode.appendChild(
-    showActions(event, card, postPlayerAction),
+    showActions(event, card, postPlayerAction)
   );
   removeHover("#cardsContainer");
 };
@@ -303,9 +312,8 @@ const createCardsContainer = (card, index, offset, postPlayerAction) => {
   imageContainer.classList.add("deck");
   imageContainer.appendChild(img);
 
-  img.addEventListener(
-    "click",
-    (e) => selectTheCard(e, card, postPlayerAction),
+  img.addEventListener("click", (e) =>
+    selectTheCard(e, card, postPlayerAction)
   );
   return imageContainer;
 };
