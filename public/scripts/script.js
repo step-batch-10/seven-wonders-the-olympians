@@ -22,7 +22,7 @@ const popOut = () => {
   const pop = document.querySelector(".popUpWindow");
   pop.style = "display:flex";
 
-  pop.appendChild(iframe);
+  pop.replaceChildren(iframe);
 };
 
 const main = () => {
