@@ -90,11 +90,11 @@
     "stages": {
       "stage1": {
         "cost": [{ "type": "ore", "count": 3 }],
-        "powers": [{ "type": "military", "value": 2 }]
+        "powers": [{ "type": "points", "value": 3 }]
       },
       "stage2": {
         "cost": [{ "type": "clay", "count": 3 }],
-        "powers": [{ "type": "points", "value": 3 }]
+        "powers": [{ "type": "military", "value": 2 }]
       },
       "stage3": {
         "cost": [{ "type": "ore", "count": 4 }],

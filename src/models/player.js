@@ -21,7 +21,7 @@ class Player {
     this.warTokens = [];
     this.hand = [];
     this.wonder = null;
-    this.status = "waiting";
+    this.status = "waiting"; //doneMove : true || false
   }
 
   static generateUniquePlayerID() {
@@ -31,9 +31,11 @@ class Player {
   get name() {
     return this.#name;
   }
+
   get coins() {
     return this.#coins;
   }
+
   get playerID() {
     return this.#playerID;
   }
@@ -85,7 +87,7 @@ class Player {
         index++
       ) {
         const choiceResources = choices[index];
-        const available = !(usedChoices.has(index));
+        const available = !usedChoices.has(index);
         const resourceIncluded = choiceResources.has(resource);
 
         if (available && resourceIncluded) {
@@ -98,7 +100,8 @@ class Player {
     };
   }
 
-  haveResources([...cost]) { // getUncoveredResources
+  haveResources([...cost]) {
+    // getUncoveredResources
     const resources = this.wonder.resources;
     const costPending = [];
     const coveredFromChoice = this.coverWithChoices();
@@ -140,20 +143,48 @@ class Player {
   }
 
   getHandData() {
-    const handData = [];
-    this.hand.forEach((card) => {
-      handData.push({
+    const canStage = this.canStage();
+
+    return this.hand.map((card) => {
+      return {
         name: card.name,
-        canBuild: true,
-        canStage: false,
-      });
+        canBuild: this.canBuild(card),
+        canStage: canStage,
+      };
     });
-    return handData;
+  }
+
+  #doesPlayerHaveResources(card, resources) {
+    return card.cost.every(({ type, count }) => {
+      if (type === "coins" && this.#coins >= count) return true;
+
+      return type in resources && resources[type] >= count;
+    });
+  }
+
+  canBuild(card) {
+    if (card.cost.length === 0) return true;
+
+    const resources = this.wonder.resources;
+
+    if (this.#doesPlayerHaveResources(card, resources)) return true;
+    // if(neighbours has resource && player can buy resource) return true
+
+    return false;
+  }
+
+  canStage() {
+    const stages = this.wonder.stages;
+    const toStageCount = this.wonder.staged.length + 1;
+    const stageCard = stages[`stage${toStageCount}`];
+
+    return this.canBuild(stageCard);
   }
 
   buildCard(cardName) {
-    const card = [...this.hand].find((card) => (card.name === cardName));
+    const card = [...this.hand].find((card) => card.name === cardName);
 
+    //deduct coins if the card cost === coins
     this.wonder.build(card);
     this.updateHand(card);
   }

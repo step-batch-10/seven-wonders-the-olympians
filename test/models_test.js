@@ -503,15 +503,16 @@ describe("Testing the Game class", () => {
       g.addPlayer(p2);
       g.addPlayer(p3);
       g.addPlayer(p4);
+      console.log(g.getPlayerHandData(bobID));
 
       assertEquals(g.getPlayerHandData(bobID), [
         { name: "West Trading Post", canBuild: true, canStage: false },
         { name: "Marketplace", canBuild: true, canStage: false },
-        { name: "Guard Tower", canBuild: true, canStage: false },
-        { name: "Guard Tower", canBuild: true, canStage: false },
-        { name: "Stockade", canBuild: true, canStage: false },
-        { name: "Barracks", canBuild: true, canStage: false },
-        { name: "Scriptorium", canBuild: true, canStage: false },
+        { name: "Guard Tower", canBuild: false, canStage: false },
+        { name: "Guard Tower", canBuild: false, canStage: false },
+        { name: "Stockade", canBuild: false, canStage: false },
+        { name: "Barracks", canBuild: false, canStage: false },
+        { name: "Scriptorium", canBuild: false, canStage: false },
       ]);
     });
   });

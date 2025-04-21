@@ -6,6 +6,7 @@ class Wonder {
   #discounts;
   #militaryStrength;
   #victoryPoints;
+  #stages;
 
   constructor(wonder) {
     this.#wonder = wonder;
@@ -41,7 +42,7 @@ class Wonder {
   get resources() {
     return this.#resources;
   }
-  b;
+
   get militaryStrength() {
     return this.#militaryStrength;
   }
@@ -56,6 +57,10 @@ class Wonder {
 
   get img() {
     return this.#wonder.img;
+  }
+
+  get stages() {
+    return this.#wonder.stages;
   }
 
   get buildings() {

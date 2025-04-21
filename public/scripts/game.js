@@ -413,10 +413,12 @@ const selectTheCard = (event, card) => {
 const renderDeck = async () => {
   const res = await fetch("/game/cards");
   const cards = await res.json();
+
   const container = document.querySelector("#cardsContainer");
   const data = cards.map((card, index) =>
     createContainer(card, index, cards.length)
   );
+
   const noOfCards = data.length;
   container.style = `--total:${noOfCards}`;
   container.replaceChildren(...data);
