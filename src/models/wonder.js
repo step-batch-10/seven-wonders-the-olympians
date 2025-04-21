@@ -68,7 +68,7 @@ class Wonder {
       Object.entries(this.#buildings).map(([colors, cards]) => {
         const cardNames = cards.map((card) => card.name);
         return [colors, cardNames];
-      })
+      }),
     );
   }
 
@@ -116,8 +116,9 @@ class Wonder {
         this.#discounts[resource] = [];
       }
 
-      this.#discounts[resource] =
-        this.#discounts[resource].concat(newNeighbours);
+      this.#discounts[resource] = this.#discounts[resource].concat(
+        newNeighbours,
+      );
     });
   }
 

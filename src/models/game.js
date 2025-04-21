@@ -60,7 +60,7 @@ class Game {
     if (this.gameStatus === "matched") {
       throw new Error("Room is full!");
     }
-    
+
     this.#players.push(player);
     if (this.#players.length >= this.noOfPlayers) {
       this.gameStatus = "matched";
@@ -96,15 +96,13 @@ class Game {
   }
 
   segregateCards(cards) {
-    return cards.filter((card) =>
-      card.min_players <= this.noOfPlayers
-    );
+    return cards.filter((card) => card.min_players <= this.noOfPlayers);
   }
 
   setUpTheCardDecks() {
-    this.decks[1] = this.segregateCards(ageOneCards)
-    this.decks[2] = this.segregateCards(ageTwoCards)
-    this.decks[3] = this.segregateCards(ageThreeCards)
+    this.decks[1] = this.segregateCards(ageOneCards);
+    this.decks[2] = this.segregateCards(ageTwoCards);
+    this.decks[3] = this.segregateCards(ageThreeCards);
   }
 
   distributeCoins() {
@@ -114,7 +112,9 @@ class Game {
   }
 
   didAllPlayerSelectCard() {
-    const status = this.#players.every((player) => player.status === "selected");
+    const status = this.#players.every((player) =>
+      player.status === "selected"
+    );
 
     if (status) {
       this.passHands();

@@ -118,7 +118,7 @@ const getWonderStats = (wonder, resource) => {
 
 const appendNeighbourStats = (playerClone, coins, name, warTokens) => {
   const neighbourPlaceHolder = playerClone.querySelector(
-    ".player-stats-header"
+    ".player-stats-header",
   );
 
   const playerStats = getPlayerStats(name);
@@ -274,7 +274,7 @@ const reqToDiscard = (parentEvent) => {
     const move = { card: parentEvent.cardName, action: "discard" };
     const intervalId = setInterval(
       async () => (await polling(move, intervalId))(),
-      1000
+      1000,
     );
   };
 };
@@ -285,7 +285,7 @@ const reqStage = (parentEvent) => {
     const move = { card: parentEvent.cardName, action: "stage" };
     const intervalId = setInterval(
       async () => (await polling(move, intervalId))(),
-      1000
+      1000,
     );
   };
 };
@@ -295,7 +295,7 @@ const reqBuildCard = (parentEvent) => {
     const move = { card: parentEvent.cardName, action: "build" };
     const intervalId = setInterval(
       async () => (await polling(move, intervalId))(),
-      1000
+      1000,
     );
   };
 };
@@ -371,7 +371,7 @@ const showActions = (event, card) => {
     createDiscard(event.target),
     createStage(event.target, card),
     createBuild(event.target, card),
-    createCancel(event.target)
+    createCancel(event.target),
   );
 
   return actionBox;

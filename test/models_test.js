@@ -922,7 +922,7 @@ describe("testing the wonders class", () => {
         ],
         chain_from: null,
         chain_to: [],
-      })
+      }),
     );
 
     const victoryPoints = wonder.victoryPoints;

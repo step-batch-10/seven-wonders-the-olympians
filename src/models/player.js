@@ -46,7 +46,7 @@ class Player {
         token < 0 ? (total.negative += token) : (total.positive += token);
         return total;
       },
-      { positive: 0, negative: 0 }
+      { positive: 0, negative: 0 },
     );
   }
 
@@ -65,7 +65,7 @@ class Player {
   updateHand(card) {
     const indexOfCard = _.findIndex(
       this.hand,
-      (handCard) => card === handCard.name
+      (handCard) => card === handCard.name,
     );
     _.remove(this.hand, (_ele, idx) => idx === indexOfCard);
   }
