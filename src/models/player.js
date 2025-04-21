@@ -13,7 +13,7 @@ class Player {
   status;
   tempAct;
 
-  constructor(userName) {
+  constructor (userName) {
     this.#name = userName;
     this.#playerID = Player.generateUniquePlayerID();
     this.rightPlayer = null;
@@ -26,45 +26,45 @@ class Player {
     this.view = "upto-date";
   }
 
-  static generateUniquePlayerID() {
+  static generateUniquePlayerID () {
     return "pid" + uniqid();
   }
 
-  get name() {
+  get name () {
     return this.#name;
   }
 
-  get coins() {
+  get coins () {
     return this.#coins;
   }
 
-  get playerID() {
+  get playerID () {
     return this.#playerID;
   }
 
-  get warTokensObj() {
+  get warTokensObj () {
     return this.warTokens.reduce(
       (total, token) => {
         token < 0 ? (total.negative += token) : (total.positive += token);
         return total;
       },
-      { positive: 0, negative: 0 },
+      {positive: 0, negative: 0},
     );
   }
 
-  assignHand(hand) {
+  assignHand (hand) {
     this.hand = hand;
   }
 
-  addCoins(coins) {
+  addCoins (coins) {
     this.#coins += coins;
   }
 
-  updateStatus(status) {
+  updateStatus (status) {
     this.status = status;
   }
 
-  updateHand(cardName) {
+  updateHand (cardName) {
     const indexOfCard = _.findIndex(
       this.hand,
       (handCard) => cardName === handCard.name,
@@ -73,16 +73,16 @@ class Player {
     _.remove(this.hand, (_ele, idx) => idx === indexOfCard);
   }
 
-  coverWithChoices() {
+  coverWithChoices () {
     const usedChoices = new Set();
     const choices = this.wonder.resources.choices;
 
     return (resource, count) => {
-      if (count <= 0) return 0;
+      if(count <= 0) return 0;
 
       let costCovered = 0;
 
-      for (
+      for(
         let index = 0;
         index < choices.length && costCovered < count;
         index++
@@ -91,7 +91,7 @@ class Player {
         const available = !usedChoices.has(index);
         const resourceIncluded = choiceResources.has(resource);
 
-        if (available && resourceIncluded) {
+        if(available && resourceIncluded) {
           costCovered++;
           usedChoices.add(index);
         }
@@ -101,24 +101,24 @@ class Player {
     };
   }
 
-  haveResources([...cost]) {
+  haveResources (cost) {
     // getUncoveredResources
     const resources = this.wonder.resources;
     const costPending = [];
     const coveredFromChoice = this.coverWithChoices();
 
-    cost.forEach(({ type, count }) => {
+    cost.forEach(({type, count}) => {
       const resourceAvailable = resources[type] || 0;
       let pendingCount = count - resourceAvailable;
       pendingCount -= coveredFromChoice(type, pendingCount);
 
-      if (pendingCount > 0) costPending.push({ type, count: pendingCount });
+      if(pendingCount > 0) costPending.push({type, count: pendingCount});
     });
 
     return costPending;
   }
 
-  playerData() {
+  playerData () {
     const data = {
       name: this.name,
       wonder: this.wonder.name,
@@ -132,11 +132,11 @@ class Player {
     return data;
   }
 
-  getOtherPlayerData() {
+  getOtherPlayerData () {
     const data = [];
     let otherPlayer = this.leftPlayer.leftPlayer;
 
-    while (otherPlayer.playerID !== this.rightPlayer.playerID) {
+    while(otherPlayer.playerID !== this.rightPlayer.playerID) {
       data.push(otherPlayer.playerData());
       otherPlayer = otherPlayer.leftPlayer;
     }
@@ -144,10 +144,10 @@ class Player {
     return data;
   }
 
-  getOtherPlayersStatus() {
+  getOtherPlayersStatus () {
     const playersStatus = [];
     let otherPlayer = this.leftPlayer.leftPlayer;
-    while (otherPlayer.playerID !== this.rightPlayer.playerID) {
+    while(otherPlayer.playerID !== this.rightPlayer.playerID) {
       playersStatus.push(otherPlayer.status);
       otherPlayer = otherPlayer.leftPlayer;
     }
@@ -155,7 +155,7 @@ class Player {
     return playersStatus;
   }
 
-  getHandData() {
+  getHandData () {
     const canStage = this.canStage();
 
     return this.hand.map((card) => ({
@@ -165,26 +165,37 @@ class Player {
     }));
   }
 
-  #doesPlayerHaveResources(card, resources) {
-    return card.cost.every(({ type, count }) => {
-      if (type === "coin" && this.#coins >= count) return true;
+  // #doesPlayerHaveResources (card, resources) {
+  //   return card.cost.every(({type, count}) => {
+  //     if(type === "coins" && this.#coins >= count) return true;
 
-      return type in resources && resources[type] >= count;
-    });
-  }
+  //     return type in resources && resources[type] >= count;
+  //   });
+  // }
 
-  canBuild(card) {
-    if (card.cost.length === 0) return true;
+  canBuild (card) {
+    const cost = card.cost;
 
-    const resources = this.wonder.resources;
+    if(cost.length === 0) return true;
 
-    if (this.#doesPlayerHaveResources(card, resources)) return true;
-    // if(neighbours has resource && player can buy resource) return true
+    if(cost[0]?.type === "coin") {
+      return cost[0].count <= this.#coins;
+    }
+
+    let remainingCost = this.haveResources(cost);
+
+    if(remainingCost.length === 0) return true;
+
+    remainingCost = this.leftPlayer.haveResources(cost);
+    if(remainingCost.lenght === 0) return true; // return money to be deducted
+
+    remainingCost = this.rightPlayer.haveResources(cost);
+    if(remainingCost.lenght === 0) return true;
 
     return false;
   }
 
-  canStage() {
+  canStage () {
     const stages = this.wonder.stages;
     const toStageCount = this.wonder.staged.length + 1;
     const stageCard = stages[`stage${toStageCount}`];
@@ -192,7 +203,7 @@ class Player {
     return this.canBuild(stageCard);
   }
 
-  buildCard(cardName) {
+  buildCard (cardName) {
     const card = [...this.hand].find((card) => card.name === cardName);
 
     //deduct coins if the card cost === coins
@@ -200,18 +211,18 @@ class Player {
     this.updateHand(card);
   }
 
-  setTempAct(action) {
+  setTempAct (action) {
     this.tempAct = action;
   }
 
-  discardCard(cardName) {
+  discardCard (cardName) {
     this.updateHand(cardName);
     this.addCoins(3);
   }
 
-  updateViewStatus(status) {
+  updateViewStatus (status) {
     this.view = status;
   }
 }
 
-export { Player };
+export {Player};
