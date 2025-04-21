@@ -210,7 +210,6 @@ class Player {
   addBenfits(card) {
     const benifits = card.produces.find(({ type }) => type === "coin");
     if (benifits) this.#coins += benifits.count;
-
   }
 
   buildCard(cardName) {
