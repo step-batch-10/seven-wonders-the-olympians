@@ -12,14 +12,40 @@ const getWonderImgName = (ctx) => {
   return ctx.json({ image });
 };
 
-const updatePlayerStatus = async (ctx) => {
+const setPlayerAction = async (ctx) => {
+  const playerMap = ctx.get("playerMap");
+  const player = playerMap.get(ctx.getCookie(ctx, "playerID"));
+
+  const playerAction = await ctx.req.json();
+  player.setTempAct(playerAction);
+  player.updateStatus("selected");
+
+  return ctx.json({ message: "successfully selected" });
+};
+
+const getPlayerViewStatus = (ctx) => {
+  const playerMap = ctx.get("playerMap");
+  const player = playerMap.get(ctx.getCookie(ctx, "playerID"));
+
+  console.log("name", player.name, "view", player.view);
+  return ctx.json({ view: player.view });
+};
+
+const updateViewStatus = async (ctx) => {
   const playerMap = ctx.get("playerMap");
   const player = playerMap.get(ctx.getCookie(ctx, "playerID"));
 
   const { status } = await ctx.req.json();
-  player.updateStatus(status);
 
-  return ctx.json({ message: "successfully updated" });
+  player.updateViewStatus(status);
+
+  return ctx.json({ message: "successfully updated player view status" });
 };
 
-export { getPlayerName, getWonderImgName, updatePlayerStatus };
+export {
+  getPlayerName,
+  getPlayerViewStatus,
+  getWonderImgName,
+  setPlayerAction,
+  updateViewStatus,
+};

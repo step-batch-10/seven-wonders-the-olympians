@@ -2,8 +2,10 @@ import { Hono } from "hono";
 import { getPlayerDetails } from "../handlers/game_handler.js";
 import {
   getPlayerName,
+  getPlayerViewStatus,
   getWonderImgName,
-  updatePlayerStatus,
+  setPlayerAction,
+  updateViewStatus,
 } from "../handlers/player_handler.js";
 
 const evaluateCookie = () => {
@@ -32,8 +34,10 @@ const createPlayerRoute = () => {
     .use(evaluateCookie())
     .get("/name", getPlayerName)
     .get("/wonder", getWonderImgName)
-    .put("/status", updatePlayerStatus)
-    .get("/info", getPlayerDetails);
+    .post("/action", setPlayerAction)
+    .get("/info", getPlayerDetails)
+    .get("/view", getPlayerViewStatus)
+    .put("/view", updateViewStatus);
 
   return app;
 };

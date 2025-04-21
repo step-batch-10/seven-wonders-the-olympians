@@ -3,9 +3,10 @@ import {
   didAllPlayerSelectCard,
   getPlayerDetails,
   getPlayerHand,
-  passHands,
-  performCardActions,
+  getPlayersStatus,
+  performPlayersAction,
   sendStatus,
+  updatePlayersStatus,
 } from "../handlers/game_handler.js";
 
 const createGameRoute = () => {
@@ -14,9 +15,13 @@ const createGameRoute = () => {
   gameApp.get("/status", sendStatus);
   gameApp.get("/info", getPlayerDetails);
   gameApp.get("/cards", getPlayerHand);
-  gameApp.get("/all-players-ready", didAllPlayerSelectCard);
-  gameApp.post("/action", performCardActions);
-  gameApp.post("/pass-hand", passHands);
+  gameApp.get(
+    "/players-status",
+    getPlayersStatus,
+    performPlayersAction,
+    updatePlayersStatus,
+  );
+  gameApp.get("/check-all-selected", didAllPlayerSelectCard);
 
   return gameApp;
 };

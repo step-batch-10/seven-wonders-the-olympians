@@ -11,6 +11,7 @@ class Player {
   hand;
   wonder;
   status;
+  tempAct;
 
   constructor(userName) {
     this.#name = userName;
@@ -21,7 +22,8 @@ class Player {
     this.warTokens = [];
     this.hand = [];
     this.wonder = null;
-    this.status = "waiting"; //doneMove : true || false
+    this.status = "waiting";
+    this.view = "upto-date";
   }
 
   static generateUniquePlayerID() {
@@ -62,11 +64,12 @@ class Player {
     this.status = status;
   }
 
-  updateHand(card) {
+  updateHand(cardName) {
     const indexOfCard = _.findIndex(
       this.hand,
-      (handCard) => card === handCard.name,
+      (handCard) => cardName === handCard.name,
     );
+
     _.remove(this.hand, (_ele, idx) => idx === indexOfCard);
   }
 
@@ -143,6 +146,17 @@ class Player {
     return data;
   }
 
+  getOtherPlayersStatus() {
+    const playersStatus = [];
+    let otherPlayer = this.leftPlayer.leftPlayer;
+    while (otherPlayer.playerID !== this.rightPlayer.playerID) {
+      playersStatus.push(otherPlayer.status);
+      otherPlayer = otherPlayer.leftPlayer;
+    }
+
+    return playersStatus;
+  }
+
   getHandData() {
     const canStage = this.canStage();
 
@@ -186,6 +200,19 @@ class Player {
     //deduct coins if the card cost === coins
     this.wonder.build(card);
     this.updateHand(card);
+  }
+
+  setTempAct(action) {
+    this.tempAct = action;
+  }
+
+  discardCard(cardName) {
+    this.updateHand(cardName);
+    this.addCoins(3);
+  }
+
+  updateViewStatus(status) {
+    this.view = status;
   }
 }
 

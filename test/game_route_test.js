@@ -1,13 +1,11 @@
 import {
   didAllPlayerSelectCard,
-  discard,
   getPlayerDetails,
   sendStatus,
 } from "../src/handlers/game_handler.js";
-import { Game } from "../src/models/game.js";
-import { Player } from "../src/models/player.js";
 import { describe, it } from "jsr:@std/testing/bdd";
 import { assertEquals } from "jsr:@std/assert/equals";
+
 describe("getPlayerDetails", () => {
   it("should return player details", () => {
     const ctx = {
@@ -15,7 +13,7 @@ describe("getPlayerDetails", () => {
       getCookie: (_, name) => {
         if (name === "gameID") return "game123";
         if (name === "playerID") return "player456";
-        return null;
+        return { gameID: "game123", playerID: "player456" };
       },
     };
     const gameMap = new Map();
@@ -56,7 +54,7 @@ describe("didAllPlayerSelectCard", () => {
       return null;
     };
     const result = didAllPlayerSelectCard(ctx);
-    assertEquals(result, { status: true });
+    assertEquals(result, { didAllSelectCard: true });
   });
 });
 
@@ -80,36 +78,5 @@ describe("sendStatus", () => {
     };
     const result = sendStatus(ctx);
     assertEquals(result, { status: "in progress" });
-  });
-});
-
-describe("discard", () => {
-  it("should discard a card and return success message", () => {
-    const ctx = {
-      json: (data) => data,
-      getCookie: (_, name) => {
-        return { name, gameID: "game123", playerID: "player456" };
-      },
-      get: (key) => {
-        if (key === "gameMap") return gameMap;
-        if (key === "playerMap") return playerMap;
-        if (key === "game123") return game;
-        return null;
-      },
-    };
-    const gameMap = new Map();
-    const playerMap = new Map();
-    const game = new Game();
-    const player = new Player("Alice");
-    player.updateHand("Lumber Yard");
-    game.discardedDeck = [];
-
-    gameMap.set("game123", game);
-    playerMap.set("player456", player);
-    const result = discard("Lumber Yard", ctx);
-    assertEquals(result, { message: "discarded successfully!" });
-    assertEquals(player.coins, 3);
-    assertEquals(game.discardedDeck.length, 1);
-    assertEquals(game.discardedDeck[0], "Lumber Yard");
   });
 });

@@ -44,6 +44,9 @@ class Game {
     };
   }
 
+  get players() {
+    return this.#players;
+  }
   get isGameFull() {
     return this.#players.length === this.noOfPlayers;
   }
@@ -112,15 +115,7 @@ class Game {
   }
 
   didAllPlayerSelectCard() {
-    const status = this.#players.every((player) =>
-      player.status === "selected"
-    );
-
-    if (status) {
-      this.passHands();
-    }
-
-    return status;
+    return this.#players.every((player) => player.status === "selected");
   }
 
   addToDiscarded(card) {
@@ -185,9 +180,39 @@ class Game {
     return playerData;
   }
 
+  getPlayersStatus(playerID) {
+    const player = this.#players.find((player) => player.playerID === playerID);
+    const playersStatus = { status: player.status };
+
+    playersStatus.leftPlayerStatus = player.leftPlayer.status;
+    playersStatus.rightPlayerStatus = player.rightPlayer.status;
+    player.others = player.getOtherPlayersStatus();
+
+    return playersStatus;
+  }
+
   getPlayerHandData(playerID) {
     const player = this.#players.find((player) => player.playerID === playerID);
     return player.getHandData();
+  }
+
+  executeTempActs() {
+    this.#players.forEach((player) => {
+      const { action, card } = player.tempAct;
+      if (action === "discard") {
+        player.discardCard(card);
+        this.addToDiscarded(card);
+      } else if (action === "build") {
+        player.buildCard(card);
+      }
+    });
+  }
+
+  updatePlayersStatus() {
+    this.#players.forEach((player) => {
+      player.updateStatus("waiting");
+      player.updateViewStatus("not upto-date");
+    });
   }
 }
 

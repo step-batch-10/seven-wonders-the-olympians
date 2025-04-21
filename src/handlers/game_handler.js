@@ -1,6 +1,5 @@
 const getPlayerDetails = (ctx) => {
-  const gameID = ctx.getCookie(ctx, "gameID");
-  const playerID = ctx.getCookie(ctx, "playerID");
+  const { gameID, playerID } = ctx.getCookie(ctx);
 
   const gameMap = ctx.get("gameMap");
   const game = gameMap.get(gameID);
@@ -23,7 +22,7 @@ const didAllPlayerSelectCard = (ctx) => {
   const game = gameMap.get(ctx.getCookie(ctx, "gameID"));
   const status = game.didAllPlayerSelectCard();
 
-  return ctx.json({ status });
+  return ctx.json({ didAllSelectCard: status });
 };
 
 const sendStatus = (ctx) => {
@@ -32,48 +31,43 @@ const sendStatus = (ctx) => {
   return ctx.json(game.gameData());
 };
 
-const discard = (card, ctx) => {
-  const { gameID, playerID } = ctx.getCookie(ctx);
-  const game = ctx.get("gameMap").get(gameID);
-  const player = ctx.get("playerMap").get(playerID);
-
-  game.addToDiscarded(card);
-  player.updateHand(card); //need to change
-  player.addCoins(3);
-
-  return ctx.json({ message: "discarded successfully!" });
-};
-
-const build = (card, ctx) => {
-  const { playerID } = ctx.getCookie(ctx);
-  const player = ctx.get("playerMap").get(playerID);
-
-  player.buildCard(card);
-
-  return ctx.json({ message: "builded successfully!" });
-};
-
-const performCardActions = async (ctx) => {
-  const actionMap = { discard, build };
-  const { action, card } = await ctx.req.json();
-
-  return actionMap[action](card, ctx);
-};
-
-const passHands = (ctx) => {
+const getPlayersStatus = async (ctx, nxt) => {
   const gameMap = ctx.get("gameMap");
-  const game = gameMap.get(ctx.getCookie(ctx, "gameID"));
+  const { playerID, gameID } = ctx.getCookie(ctx);
+
+  const game = gameMap.get(gameID);
+  const playersStatus = game.getPlayersStatus(playerID);
+
+  if (game.didAllPlayerSelectCard()) await nxt();
+
+  return ctx.json(playersStatus);
+};
+
+const updatePlayersStatus = (ctx) => {
+  const gameMap = ctx.get("gameMap");
+  const { gameID } = ctx.getCookie(ctx);
+
+  const game = gameMap.get(gameID);
+  game.updatePlayersStatus();
+};
+
+const performPlayersAction = async (ctx, nxt) => {
+  const gameMap = ctx.get("gameMap");
+  const { gameID } = ctx.getCookie(ctx);
+
+  const game = gameMap.get(gameID);
+  game.executeTempActs();
   game.passHands();
 
-  return ctx.json({ message: `Cards passed Successfully!` });
+  await nxt();
 };
 
 export {
   didAllPlayerSelectCard,
-  discard,
   getPlayerDetails,
   getPlayerHand,
-  passHands,
-  performCardActions,
+  getPlayersStatus,
+  performPlayersAction,
   sendStatus,
+  updatePlayersStatus,
 };
