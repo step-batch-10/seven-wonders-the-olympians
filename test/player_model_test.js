@@ -387,7 +387,7 @@ describe("Testing the Player class", () => {
           chain_from: null,
           chain_to: ["Library"],
         }),
-        true
+        true,
       );
     });
 
@@ -410,7 +410,7 @@ describe("Testing the Player class", () => {
           chain_from: null,
           chain_to: [],
         }),
-        true
+        true,
       );
     });
 
@@ -433,7 +433,7 @@ describe("Testing the Player class", () => {
           chain_from: null,
           chain_to: [],
         }),
-        false
+        false,
       );
     });
 
@@ -450,7 +450,7 @@ describe("Testing the Player class", () => {
           chain_to: ["Aqueduct"],
           type: "civil",
         }),
-        true
+        true,
       );
     });
 
@@ -467,7 +467,7 @@ describe("Testing the Player class", () => {
           chain_from: null,
           chain_to: ["Stables", "Dispensary"],
         }),
-        false
+        false,
       );
     });
   });

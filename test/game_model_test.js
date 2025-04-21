@@ -51,18 +51,18 @@ describe("Testing the Game class", () => {
     });
 
     it("Should return current players", () => {
-       const p1 = new Player("Alice");
-       const p2 = new Player("Bob");
-       const p3 = new Player("Adam");
-       const p4 = new Player("Eve");
-       const g = new Game(4, p1);
-       g.addPlayer(p2);
-       g.addPlayer(p3);
-       g.addPlayer(p4);
+      const p1 = new Player("Alice");
+      const p2 = new Player("Bob");
+      const p3 = new Player("Adam");
+      const p4 = new Player("Eve");
+      const g = new Game(4, p1);
+      g.addPlayer(p2);
+      g.addPlayer(p3);
+      g.addPlayer(p4);
 
-       const players = g.players;
-       assertEquals(players, [p1, p2, p3, p4]);
-    })
+      const players = g.players;
+      assertEquals(players, [p1, p2, p3, p4]);
+    });
 
     it("Should add a card to discarded card", () => {
       const p1 = new Player("Alice");

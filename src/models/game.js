@@ -23,7 +23,7 @@ class Game {
   noOfPlayers;
   gameStatus;
   currentAge;
-  wonders; 
+  wonders;
   #discardedDeck;
   decks;
   round;
