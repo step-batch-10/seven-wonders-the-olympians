@@ -203,15 +203,15 @@ class Player {
   }
 
   deductCoins(card) {
-    const coinCost = card.cost.find(({type}) => type === "coin");
-    if(coinCost) this.#coins -= coinCost.count;
+    const coinCost = card.cost.find(({ type }) => type === "coin");
+    if (coinCost) this.#coins -= coinCost.count;
   }
 
   buildCard(cardName) {
     const card = [...this.hand].find((card) => card.name === cardName);
 
     this.deductCoins(card);
-    this.view = "upto-date"
+    this.view = "upto-date";
     this.wonder.build(card);
     this.updateHand(cardName);
   }

@@ -227,7 +227,7 @@ const createBuild = (parentEvent, card, postPlayerAction) => {
   if (card.canBuild) {
     stage.addEventListener(
       "click",
-      reqBuildCard(parentEvent, postPlayerAction)
+      reqBuildCard(parentEvent, postPlayerAction),
     );
   }
   stage.className = card.canBuild ? "" : "disabled";
@@ -280,7 +280,7 @@ const showActions = (event, card, postPlayerAction) => {
     createDiscard(event.target, postPlayerAction),
     createStage(event.target, card),
     createBuild(event.target, card, postPlayerAction),
-    createCancel(event.target)
+    createCancel(event.target),
   );
 
   return actionBox;
@@ -298,7 +298,7 @@ const removeHover = (parentSelector) => {
 const selectTheCard = (event, card, postPlayerAction) => {
   if (document.querySelector(".actionsBox")) return;
   event.target.parentNode.appendChild(
-    showActions(event, card, postPlayerAction)
+    showActions(event, card, postPlayerAction),
   );
   removeHover("#cardsContainer");
 };
@@ -312,8 +312,9 @@ const createCardsContainer = (card, index, offset, postPlayerAction) => {
   imageContainer.classList.add("deck");
   imageContainer.appendChild(img);
 
-  img.addEventListener("click", (e) =>
-    selectTheCard(e, card, postPlayerAction)
+  img.addEventListener(
+    "click",
+    (e) => selectTheCard(e, card, postPlayerAction),
   );
   return imageContainer;
 };
