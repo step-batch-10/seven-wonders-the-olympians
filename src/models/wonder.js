@@ -71,7 +71,7 @@ class Wonder {
       }),
     );
   }
-
+  x;
   isResourceCard(card) {
     const resources = ["brown", "grey", "green"];
 

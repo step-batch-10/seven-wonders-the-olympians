@@ -73,8 +73,6 @@ class Player {
     _.remove(this.hand, (_ele, idx) => idx === indexOfCard);
   }
 
-  selectCard() {}
-
   coverWithChoices() {
     const usedChoices = new Set();
     const choices = this.wonder.resources.choices;

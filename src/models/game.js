@@ -27,6 +27,7 @@ class Game {
   discardedDeck;
   decks;
   shuffleDeck;
+  #hands;
 
   constructor(noOfPlayers, player, shuffleDeck = shuffleArray) {
     this.noOfPlayers = noOfPlayers;
@@ -123,20 +124,15 @@ class Game {
   }
 
   #passLeft() {
-    const firstHand = this.#players[0].hand;
-    for (let index = 0; index < this.noOfPlayers - 1; index++) {
-      this.#players[index].hand = this.#players[index + 1].hand;
-    }
-    this.#players.at(-1).hand = firstHand;
+    const firstHand = this.#hands.shift();
+    this.#hands.push(firstHand);
+    this.#players.forEach((player, idx) => player.assignHand(this.#hands[idx]));
   }
 
   #passRight() {
-    const lastHand = this.#players.at(-1).hand;
-    for (let index = this.noOfPlayers - 1; index > 0; index--) {
-      this.#players[index].hand = this.#players[index - 1].hand;
-    }
-
-    this.#players[0].hand = lastHand;
+    const lastHand = this.#hands.pop();
+    this.#hands.unshift(lastHand);
+    this.#players.forEach((player, idx) => player.assignHand(this.#hands[idx]));
   }
 
   passHands() {
@@ -146,16 +142,15 @@ class Game {
   makeHands() {
     const cardsDeck = this.shuffleDeck(this.decks[this.currentAge]);
 
-    const hands = [];
+    this.#hands = [];
     for (let i = 0; i < this.noOfPlayers; i++) {
-      hands.push(cardsDeck.splice(0, 7));
+      this.#hands.push(cardsDeck.splice(0, 7));
     }
-    return hands;
   }
 
   distributeCards() {
-    const hands = this.makeHands();
-    this.#players.forEach((player) => player.assignHand(hands.pop()));
+    this.makeHands();
+    this.#players.forEach((player, idx) => player.assignHand(this.#hands[idx]));
   }
 
   initAge() {

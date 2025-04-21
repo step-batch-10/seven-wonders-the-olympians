@@ -19,14 +19,13 @@ export const registerUser = async (ctx) => {
   if (waitingGames.size === 0) {
     game = new Game(4, player);
     waitingGames.add(game.gameID);
-    playerGameMap.set(player.playerID, game.gameID);
     gameMap.set(game.gameID, game);
   } else {
     game = gameMap.get(Array.from(waitingGames)[0]);
     game.addPlayer(player);
-    playerGameMap.set(player.playerID, game.gameID);
     game.isGameFull && waitingGames.clear();
   }
+  playerGameMap.set(player.playerID, game.gameID);
 
   ctx.setCookie(ctx, "playerID", player.playerID);
   ctx.setCookie(ctx, "gameID", game.gameID);
