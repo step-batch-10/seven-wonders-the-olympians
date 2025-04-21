@@ -30,7 +30,7 @@
         "powers": [{ "type": "points", "value": 3 }]
       },
       "stage2": {
-        "cost": [{ "type": "stone", "count": 3 }],
+        "cost": [{ "type": "wood", "count": 3 }],
         "powers": [{ "type": "points", "value": 5 }]
       },
       "stage3": {
@@ -47,17 +47,17 @@
     "stages": {
       "stage1": {
         "cost": [{ "type": "stone", "count": 2 }],
-        "powers": [{ "type": "coins", "value": 4 }]
+        "powers": [{ "type": "points", "value": 3 }]
       },
       "stage2": {
         "cost": [{ "type": "wood", "count": 2 }],
-        "powers": [{ "type": "points", "value": 2 }]
+        "powers": [{ "type": "coins", "value": 9 }]
       },
       "stage3": {
         "cost": [{ "type": "papyrus", "count": 2 }],
         "powers": [
           { "type": "coins", "value": 4 },
-          { "type": "points", "value": 3 }
+          { "type": "points", "value": 7 }
         ]
       }
     }
@@ -90,7 +90,7 @@
     "stages": {
       "stage1": {
         "cost": [{ "type": "ore", "count": 3 }],
-        "powers": [{ "type": "points", "value": 3 }]
+        "powers": [{ "type": "military", "value": 2 }]
       },
       "stage2": {
         "cost": [{ "type": "clay", "count": 3 }],
@@ -109,11 +109,11 @@
     "side": "A",
     "stages": {
       "stage1": {
-        "cost": [{ "type": "stone", "count": 2 }],
+        "cost": [{ "type": "clay", "count": 2 }],
         "powers": [{ "type": "points", "value": 3 }]
       },
       "stage2": {
-        "cost": [{ "type": "ore", "count": 3 }],
+        "cost": [{ "type": "wood", "count": 3 }],
         "powers": [{ "type": "play_discarded_card" }]
       },
       "stage3": {
@@ -133,11 +133,11 @@
         "powers": [{ "type": "points", "value": 3 }]
       },
       "stage2": {
-        "cost": [{ "type": "glass", "count": 2 }],
+        "cost": [{ "type": "wood", "count": 2 }],
         "powers": [{ "type": "wild_resource" }]
       },
       "stage3": {
-        "cost": [{ "type": "ore", "count": 3 }],
+        "cost": [{ "type": "glass", "count": 2 }],
         "powers": [{ "type": "points", "value": 7 }]
       }
     }
