@@ -186,10 +186,10 @@ class Player {
     if (remainingCost.length === 0) return true;
 
     remainingCost = this.leftPlayer.haveResources(cost);
-    if (remainingCost.lenght === 0) return true; // return money to be deducted
+    if (remainingCost.length === 0) return true; // return money to be deducted
 
     remainingCost = this.rightPlayer.haveResources(cost);
-    if (remainingCost.lenght === 0) return true;
+    if (remainingCost.length === 0) return true;
 
     return false;
   }
@@ -207,11 +207,19 @@ class Player {
     if (coinCost) this.#coins -= coinCost.count;
   }
 
+  addBenfits(card) {
+    const benifits = card.produces.find(({ type }) => type === "coin");
+    if (benifits) this.#coins += benifits.count;
+
+  }
+
   buildCard(cardName) {
     const card = [...this.hand].find((card) => card.name === cardName);
 
     this.deductCoins(card);
+    this.addBenfits(card);
     this.view = "upto-date";
+
     this.wonder.build(card);
     this.updateHand(cardName);
   }
