@@ -126,7 +126,6 @@ const halfTheCards = (cards) => {
 const appendPlayerBuildings = (clone, buildings) => {
   const allCards = extractAllCards(buildings);
   const [left, right] = halfTheCards(allCards);
-
   const firstCol = clone.querySelector(".first-col");
   const secondCol = clone.querySelector(".second-col");
 
@@ -194,7 +193,9 @@ const addHoverForChildren = (parentSelector) => {
 const removeList = (event) => {
   const container = event.target.closest(".hovered");
 
-  if (container)  container.classList.remove("hovered");
+  if (container) {
+    container.classList.remove("hovered");
+  }
 
   addHoverForChildren("#cardsContainer");
   document.querySelector(".actionsBox").remove();
