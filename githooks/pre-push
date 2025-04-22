@@ -8,9 +8,19 @@ NC='\033[0m'
 
 echo -e "${MAGENTA}Pre-push hook...${NC}"
 
-echo -e "Running ${YELLOW}'git stash'...${NC}"
+unstaged_changes=$(git diff --name-only)
 
-git stash
+untracked_files=$(git ls-files --others --exclude-standard)
+
+if [[ -n "$unstaged_changes" || -n "$untracked_files" ]]; then
+    echo -e "${RED}Push rejected due to a dirty working tree.${NC}"
+    [[ -n "$unstaged_changes" ]] && echo -e "${YELLOW}Unstaged changes:${NC}\n$unstaged_changes"
+    [[ -n "$untracked_files" ]] && echo -e "${YELLOW}Untracked files:${NC}\n$untracked_files"
+    echo -e "${BLUE}Please commit or stash changes before pushing.${NC}"
+    exit 1
+fi
+
+echo -e "${GREEN}Working tree is clean.${NC}"
 
 echo -e "${YELLOW}Format checking...${NC}"
 deno fmt --check 2> /dev/null
