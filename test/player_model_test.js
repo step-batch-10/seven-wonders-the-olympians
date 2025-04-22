@@ -472,8 +472,46 @@ describe("Testing the Player class", () => {
     });
   });
 
-  describe("Testing get war conflicts tokens", () => {
+  it("Testing get war conflicts tokens", () => {
     const p = new Player("Alice");
-    p.warTokens = [3, 3];
+
+    assertEquals(p.warTokensObj, { negative: 0, positive: 0 });
+    p.warTokens = [3, -3];
+    assertEquals(p.warTokensObj, { negative: -3, positive: 3 });
+  });
+
+  it("should add coins if the card has coin benfits", () => {
+    const p = new Player("Alice");
+    p.addBenfits({
+      produces: [{ type: "coin", count: 5 }, { type: "points" }],
+    });
+    assertEquals(p.coins, 5);
+  });
+
+  it("should add coins if card is discarded", () => {
+    const p = new Player("Akash");
+    const discardCards = [];
+
+    p.updateHand = (card) => {
+      discardCards.push(card);
+    };
+    p.discardCard("Heaven");
+
+    assertEquals(p.coins, 3);
+    assertEquals(...discardCards, "Heaven");
+  });
+  it("testing otherPlayerStatus", () => {
+    const p1 = new Player("Alice");
+    const p2 = new Player("Bob");
+    const p3 = new Player("Clare");
+    const p4 = new Player("Akash");
+    p1.leftPlayer = p2;
+    p4.status = "waiting";
+
+    p2.leftPlayer = p3;
+    p3.leftPlayer = p4;
+    p1.rightPlayer = p4;
+
+    assertEquals(...p1.getOtherPlayersStatus(), "waiting");
   });
 });
