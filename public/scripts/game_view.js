@@ -193,9 +193,7 @@ const addHoverForChildren = (parentSelector) => {
 const removeList = (event) => {
   const container = event.target.closest(".hovered");
 
-  if (container) {
-    container.classList.remove("hovered");
-  }
+  if (container) container.classList.remove("hovered");
 
   addHoverForChildren("#cardsContainer");
   document.querySelector(".actionsBox").remove();
