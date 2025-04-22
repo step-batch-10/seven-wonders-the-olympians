@@ -62,16 +62,29 @@ const fetchImage = (card, index) => {
   const image = document.createElement("img");
   image.src = `/img/cards/${convert(card)}.jpeg`;
   image.style = `--index:${index}`;
+
   return image;
 };
 
 const renderBuildings = ([colour, cards]) => {
   const container = document.querySelector(`.${colour}`);
   container.classList.add(colour);
-  container.append(...cards.map(fetchImage));
+  container.replaceChildren(...cards.map(fetchImage));
 };
 
-const renderCards = (cards) => Object.entries(cards).forEach(renderBuildings);
+const withoutResource = ([color]) => {
+  const resourceColors = new Set(["brown", "gray"]);
+  return !resourceColors.has(color);
+};
+
+const renderCards = (cards) => {
+  const brownCards = cards["brown"];
+  const grayCards = cards["gray"];
+  cards["resources"] = brownCards.concat(grayCards);
+
+  const builds = Object.entries(cards).filter(withoutResource);
+  return builds.forEach(renderBuildings);
+};
 
 const getPlayerStats = (name) => {
   const [div, nameP, statusP] = createElements(["div", "p", "p"]);
@@ -115,22 +128,28 @@ const getWonderStats = (wonder, resource) => [
   getStageHolder(),
 ];
 
-const extractAllCards = (buildings) =>
-  Object.entries(buildings).flatMap(([_, cards]) => cards);
+const getColourCards = (builds, arr, color) => {
+  arr.push(builds[color]);
+  return arr;
+};
 
-const halfTheCards = (cards) => {
-  const mid = Math.floor(cards.length / 2);
-  return [cards.slice(0, mid), cards.slice(mid)];
+const seperateSources = (builds) => {
+  const colors = new Set(["brown", "gray", "yellow"]);
+  const others = Object.keys(builds).filter((color) => !colors.has(color));
+
+  const left = [...colors].reduce(getColourCards.bind(null, builds), []);
+  const right = [...others].reduce(getColourCards.bind(null, builds), []);
+
+  return [left.flat(), right.flat()];
 };
 
 const appendPlayerBuildings = (clone, buildings) => {
-  const allCards = extractAllCards(buildings);
-  const [left, right] = halfTheCards(allCards);
+  const [left, right] = seperateSources(buildings);
   const firstCol = clone.querySelector(".first-col");
   const secondCol = clone.querySelector(".second-col");
 
-  firstCol.append(...left.map(fetchImage));
-  secondCol.append(...right.map(fetchImage));
+  firstCol.append(...left.map((card, i) => fetchImage(card, i)));
+  secondCol.append(...right.map((card, i) => fetchImage(card, i)));
 };
 
 const getNeighbourStats = (player, template) => {
