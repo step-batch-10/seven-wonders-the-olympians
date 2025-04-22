@@ -380,5 +380,6 @@ main img {
   font-size: 1.5rem;
 }
 
-/* .buildedCards > * :hover {
-} */
+.buildedCards img :hover {
+  transform: translateY(-140px);
+}
