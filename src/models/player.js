@@ -55,6 +55,10 @@ class Player {
     this.#status = status;
   }
 
+  get tempAct() {
+    return this.#tempAct
+  }
+
   addWarTokens(token) {
     this.#warTokens.push(token);
   }
