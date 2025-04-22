@@ -169,6 +169,10 @@ const renderOtherPlayerStats = ({ others }) => {
   otherPlayersContainer.replaceChildren(...stats);
 };
 
+const cardHover = (event) => {
+  event.currentTarget.parentNode.classList.add("hovered");
+};
+
 const handleHover = (event) => {
   event.currentTarget.classList.add("hovered");
 };
@@ -295,12 +299,18 @@ const removeHover = (parentSelector) => {
   });
 };
 
+const clearPerviousThings = () => {
+  document.querySelector(".actionsBox").remove();
+  document.querySelector(".hovered").classList.remove("hovered");
+};
+
 const selectTheCard = (event, card, postPlayerAction) => {
-  if (document.querySelector(".actionsBox")) return;
+  if (document.querySelector(".actionsBox")) clearPerviousThings();
   event.target.parentNode.appendChild(
     showActions(event, card, postPlayerAction),
   );
   removeHover("#cardsContainer");
+  cardHover(event);
 };
 
 const createCardsContainer = (card, index, offset, postPlayerAction) => {
