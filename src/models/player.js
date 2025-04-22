@@ -15,7 +15,7 @@ class Player {
   #view;
   #currentTrades;
 
-  constructor (userName) {
+  constructor(userName) {
     this.#name = userName;
     this.#playerID = Player.generateUniquePlayerID();
     this.#rightPlayer = null;
@@ -29,42 +29,42 @@ class Player {
     this.#currentTrades = {};
   }
 
-  static generateUniquePlayerID () {
+  static generateUniquePlayerID() {
     return "pid" + uniqid();
   }
 
-  get name () {
+  get name() {
     return this.#name;
   }
 
-  get coins () {
+  get coins() {
     return this.#coins;
   }
 
-  get playerID () {
+  get playerID() {
     return this.#playerID;
   }
 
-  set playerID (playerId) {
+  set playerID(playerId) {
     this.#playerID = playerId;
   }
 
-  get view () {
+  get view() {
     return this.#view;
   }
 
-  get status () {
+  get status() {
     return this.#status;
   }
-  set status (status) {
+  set status(status) {
     this.#status = status;
   }
 
-  get tempAct () {
+  get tempAct() {
     return this.#tempAct;
   }
 
-  addWarTokens (token) {
+  addWarTokens(token) {
     this.#warTokens.push(token);
   }
 
@@ -78,31 +78,31 @@ class Player {
   //   );
   // }
 
-  get leftPlayer () {
+  get leftPlayer() {
     return this.#leftPlayer;
   }
 
-  set leftPlayer (player) {
+  set leftPlayer(player) {
     this.#leftPlayer = player;
   }
 
-  get rightPlayer () {
+  get rightPlayer() {
     return this.#rightPlayer;
   }
 
-  set rightPlayer (player) {
+  set rightPlayer(player) {
     this.#rightPlayer = player;
   }
 
-  get wonder () {
+  get wonder() {
     return this.#wonder;
   }
 
-  set wonder (wonder) {
+  set wonder(wonder) {
     this.#wonder = wonder;
   }
 
-  calculateWarPoints () {
+  calculateWarPoints() {
     const playerShields = this.wonder.militaryStrength;
     const leftShields = this.leftPlayer.wonder.militaryStrength;
     const rightShields = this.rightPlayer.wonder.militaryStrength;
@@ -113,19 +113,19 @@ class Player {
     };
   }
 
-  assignHand (hand) {
+  assignHand(hand) {
     this.#hand = hand;
   }
 
-  addCoins (coins) {
+  addCoins(coins) {
     this.#coins += coins;
   }
 
-  updateStatus (status) {
+  updateStatus(status) {
     this.#status = status;
   }
 
-  updateHand (cardName) {
+  updateHand(cardName) {
     const indexOfCard = _.findIndex(
       this.#hand,
       (handCard) => cardName === handCard.name,
@@ -134,7 +134,7 @@ class Player {
     _.remove(this.#hand, (_ele, idx) => idx === indexOfCard);
   }
 
-  playerData () {
+  playerData() {
     const data = {
       name: this.name,
       wonder: this.#wonder.name,
@@ -148,11 +148,11 @@ class Player {
     return data;
   }
 
-  getOtherPlayerData () {
+  getOtherPlayerData() {
     const data = [];
     let otherPlayer = this.#leftPlayer.leftPlayer;
 
-    while(otherPlayer.playerID !== this.#rightPlayer.playerID) {
+    while (otherPlayer.playerID !== this.#rightPlayer.playerID) {
       data.push(otherPlayer.playerData());
       otherPlayer = otherPlayer.leftPlayer;
     }
@@ -160,10 +160,10 @@ class Player {
     return data;
   }
 
-  getOtherPlayersStatus () {
+  getOtherPlayersStatus() {
     const playersStatus = [];
     let otherPlayer = this.#leftPlayer.leftPlayer;
-    while(otherPlayer.playerID !== this.#rightPlayer.playerID) {
+    while (otherPlayer.playerID !== this.#rightPlayer.playerID) {
       playersStatus.push(otherPlayer.status);
       otherPlayer = otherPlayer.leftPlayer;
     }
@@ -171,7 +171,7 @@ class Player {
     return playersStatus;
   }
 
-  #makeBuildDes (canBuild, msg) {
+  #makeBuildDes(canBuild, msg) {
     return {
       canBuild,
       buildDetails: {
@@ -182,24 +182,24 @@ class Player {
     };
   }
 
-  resourcesGot (cost, costPending) {
+  resourcesGot(cost, costPending) {
     const costPendingMap = _.keyBy(costPending, "type");
-    return cost.map(({type, count}) => {
+    return cost.map(({ type, count }) => {
       const coveredCount = count - costPendingMap[type].count;
-      return {type, count: coveredCount};
+      return { type, count: coveredCount };
     });
   }
 
-  coverWithChoices () {
+  coverWithChoices() {
     const usedChoices = new Set();
     const choices = this.wonder.resources.choices;
 
     return (resource, count) => {
-      if(count <= 0) return 0;
+      if (count <= 0) return 0;
 
       let costCovered = 0;
 
-      for(
+      for (
         let index = 0;
         index < choices.length && costCovered < count;
         index++
@@ -208,7 +208,7 @@ class Player {
         const available = !usedChoices.has(index);
         const resourceIncluded = choiceResources.has(resource);
 
-        if(available && resourceIncluded) {
+        if (available && resourceIncluded) {
           costCovered++;
           usedChoices.add(index);
         }
@@ -218,42 +218,47 @@ class Player {
     };
   }
 
-  haveResources (cost) {
+  haveResources(cost) {
     const resources = this.wonder.resources;
     const costPending = [];
     const coveredFromChoice = this.coverWithChoices();
 
-    cost.forEach(({type, count}) => {
+    cost.forEach(({ type, count }) => {
       const resourceAvailable = resources[type] || 0;
       let pendingCount = count - resourceAvailable;
       pendingCount -= coveredFromChoice(type, pendingCount);
 
-      if(pendingCount > 0) costPending.push({type, count: pendingCount});
+      if (pendingCount > 0) costPending.push({ type, count: pendingCount });
     });
 
     return costPending;
   }
 
-  tradeDetails (cost, costPending, payableCoin = 2) {
+  tradeDetails(cost, costPending, payableCoin = 2) {
     const resourcesGot = this.resourcesGot(cost, costPending);
 
-    return resourcesGot.map(({type, count}) =>
-      ({type, count, rate: (count * payableCoin)}));
+    return resourcesGot.map(({ type, count }) => ({
+      type,
+      count,
+      rate: (count * payableCoin),
+    }));
   }
 
-  totalCost (neighbor) {
-    return neighbor.reduce(({rate}, total) => rate + total, 0);
+  totalCost(neighbor) {
+    return neighbor.reduce(({ rate }, total) => rate + total, 0);
   }
 
-  canTrade ({leftPlayer, rightPlayer}, cost) {
+  canTrade({ leftPlayer, rightPlayer }, cost) {
     const coins = this.#coins;
     let coinsNeeded = 0;
     const leftPlayerMap = _.keyBy(leftPlayer, "type");
     const rightPlayerMap = _.keyBy(rightPlayer, "type");
 
-    const costsCovered = cost.every(({type, count}) => {
-      coinsNeeded += (leftPlayerMap[type]?.cost || 0) + (rightPlayerMap[type]?.cost || 0);
-      const itemCount = (leftPlayerMap[type]?.count || 0) + (rightPlayerMap[type]?.count || 0);
+    const costsCovered = cost.every(({ type, count }) => {
+      coinsNeeded += (leftPlayerMap[type]?.cost || 0) +
+        (rightPlayerMap[type]?.cost || 0);
+      const itemCount = (leftPlayerMap[type]?.count || 0) +
+        (rightPlayerMap[type]?.count || 0);
 
       return itemCount >= count && coinsNeeded <= coins;
     });
@@ -261,7 +266,7 @@ class Player {
     return costsCovered;
   }
 
-  resourcesFromNeighbour (cost) {
+  resourcesFromNeighbour(cost) {
     const trade = {};
 
     const leftPlayerPendings = this.leftPlayer.haveResources(cost);
@@ -272,36 +277,34 @@ class Player {
 
     const canBuy = this.canTrade(trade, cost);
 
-    return {canBuy, trade};
-
+    return { canBuy, trade };
   }
 
-  canBuild (card) {
-    console.log({card});
+  canBuild(card) {
+    console.log({ card });
     const cost = card.cost;
 
-    if(!(cost.length)) return {canBuy: true};
+    if (!(cost.length)) return { canBuy: true };
 
-    if(cost[0]?.type === "coin") {
+    if (cost[0]?.type === "coin") {
       const canBuy = cost[0].count <= this.#coins;
 
-      return {canBuy};
+      return { canBuy };
     }
 
     const costPending = this.haveResources(cost);
 
-    if(!(costPending.length)) return {canBuy: true};
+    if (!(costPending.length)) return { canBuy: true };
 
     return this.resourcesFromNeighbour(costPending);
-
   }
 
-  canStage () {
+  canStage() {
     const stage = this.wonder.getNextStage();
     return this.canBuild(stage.cost);
   }
 
-  validateTrades () {
+  validateTrades() {
     this.#hand.forEach((card) => {
       this.#currentTrades[card.name] = this.canBuild(card.cost);
     });
@@ -309,33 +312,33 @@ class Player {
     this.#currentTrades.stage = this.canStage();
   }
 
-  deductCoins (card) {
-    const coinCost = card.cost.find(({type}) => type === "coin");
-    if(coinCost) this.#coins -= coinCost.count;
+  deductCoins(card) {
+    const coinCost = card.cost.find(({ type }) => type === "coin");
+    if (coinCost) this.#coins -= coinCost.count;
   }
 
-  addBenefits (card) {
-    const benefits = card.produces.find(({type}) => type === "coin");
-    if(benefits) this.#coins += benefits.count;
+  addBenefits(card) {
+    const benefits = card.produces.find(({ type }) => type === "coin");
+    if (benefits) this.#coins += benefits.count;
   }
-  #hasNoCost (cost) {
+  #hasNoCost(cost) {
     return cost.length === 0;
   }
 
-  #isCostTypecoin (cost) {
+  #isCostTypecoin(cost) {
     return cost.length === 1 && cost[0]?.type === "coin";
   }
 
-  #playerHasResources (tradeCost) {
+  #playerHasResources(tradeCost) {
     return tradeCost.length === 0;
   }
 
-  #buildDetails (cost) {
-    if(this.#hasNoCost(cost)) {
+  #buildDetails(cost) {
+    if (this.#hasNoCost(cost)) {
       return this.#makeBuildDes(true, "no resources required");
     }
 
-    if(this.#isCostTypecoin(cost)) {
+    if (this.#isCostTypecoin(cost)) {
       console.log("Entered the 2nd if");
       console.log(cost, this.#coins);
 
@@ -345,21 +348,21 @@ class Player {
 
     const playerTradeCost = this.haveResources(cost);
 
-    if(this.#playerHasResources(playerTradeCost)) {
+    if (this.#playerHasResources(playerTradeCost)) {
       return this.#makeBuildDes(true, "had enough resources");
     }
 
-    return {canBuild: false, buildDetails: {}};
+    return { canBuild: false, buildDetails: {} };
   }
 
-  #getBuildDetails (card) {
+  #getBuildDetails(card) {
     const cost = card.cost;
 
     return this.#buildDetails(cost);
   }
 
-  #addActionDetails (card) {
-    const {canBuild, buildDetails} = this.#getBuildDetails(card);
+  #addActionDetails(card) {
+    const { canBuild, buildDetails } = this.#getBuildDetails(card);
 
     return {
       name: card.name,
@@ -372,11 +375,11 @@ class Player {
     };
   }
 
-  getHandData () {
+  getHandData() {
     return this.#hand.map((card) => this.#addActionDetails(card));
   }
 
-  buildCard (cardName) {
+  buildCard(cardName) {
     const card = [...this.#hand].find((card) => card.name === cardName);
 
     this.deductCoins(card);
@@ -387,18 +390,18 @@ class Player {
     this.updateHand(cardName);
   }
 
-  setTempAct (action) {
+  setTempAct(action) {
     this.#tempAct = action;
   }
 
-  discardCard (cardName) {
+  discardCard(cardName) {
     this.updateHand(cardName);
     this.addCoins(3);
   }
 
-  updateViewStatus (status) {
+  updateViewStatus(status) {
     this.#view = status;
   }
 }
 
-export {Player};
+export { Player };

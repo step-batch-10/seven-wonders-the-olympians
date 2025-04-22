@@ -1,9 +1,9 @@
 import uniqid from "uniqid";
-import wondersData from "../../data/wonders.json" with {type: "json"};
-import ageOneCards from "../../data/ageOneCards.json" with {type: "json"};
-import ageTwoCards from "../../data/ageTwoCards.json" with {type: "json"};
-import ageThreeCards from "../../data/ageThreeCards.json" with {type: "json"};
-import {Wonder} from "./wonder.js";
+import wondersData from "../../data/wonders.json" with { type: "json" };
+import ageOneCards from "../../data/ageOneCards.json" with { type: "json" };
+import ageTwoCards from "../../data/ageTwoCards.json" with { type: "json" };
+import ageThreeCards from "../../data/ageThreeCards.json" with { type: "json" };
+import { Wonder } from "./wonder.js";
 
 const shuffleArray = ([...arr]) => arr.sort(() => Math.random() - 0.5);
 
@@ -30,7 +30,7 @@ class Game {
   shuffleDeck;
   #hands;
 
-  constructor (noOfPlayers, player, shuffleDeck = shuffleArray) {
+  constructor(noOfPlayers, player, shuffleDeck = shuffleArray) {
     this.#noOfPlayers = noOfPlayers;
     this.#players = [player];
     this.#gameID = Game.generateUniqueGameID();
@@ -47,51 +47,51 @@ class Game {
     this.round = 0;
   }
 
-  get players () {
+  get players() {
     return this.#players;
   }
 
-  get isGameFull () {
+  get isGameFull() {
     return this.#players.length === this.#noOfPlayers;
   }
 
-  get gameID () {
+  get gameID() {
     return this.#gameID;
   }
 
-  get discardedDeck () {
+  get discardedDeck() {
     return this.#discardedDeck;
   }
 
-  set currentAge (currentAge) {
+  set currentAge(currentAge) {
     this.#currentAge = currentAge;
   }
 
-  set round (round) {
+  set round(round) {
     this.#round = round;
   }
 
-  get round () {
+  get round() {
     return this.#round;
   }
 
-  static generateUniqueGameID () {
+  static generateUniqueGameID() {
     return "gid" + uniqid();
   }
 
-  addPlayer (player) {
-    if(this.gameStatus === "matched") {
+  addPlayer(player) {
+    if (this.gameStatus === "matched") {
       throw new Error("Room is full!");
     }
 
     this.#players.push(player);
-    if(this.#players.length >= this.#noOfPlayers) {
+    if (this.#players.length >= this.#noOfPlayers) {
       this.#gameStatus = "matched";
       this.init();
     }
   }
 
-  init () {
+  init() {
     this.#currentAge = 1;
     this.arrangePlayers();
     this.distributeWonders();
@@ -100,7 +100,7 @@ class Game {
     this.initAge();
   }
 
-  arrangePlayers () {
+  arrangePlayers() {
     this.#players.forEach((player, idx) => {
       player.rightPlayer = this.#players[(idx + 1) % this.#players.length];
       player.leftPlayer =
@@ -108,47 +108,47 @@ class Game {
     });
   }
 
-  distributeWonders () {
+  distributeWonders() {
     this.#players.forEach((player) => {
       const wonderName = this.#wonders.pop();
-      const wonderData = wondersData.find(({name}) => name === wonderName);
+      const wonderData = wondersData.find(({ name }) => name === wonderName);
       const wonder = new Wonder(wonderData);
 
       player.wonder = wonder;
     });
   }
 
-  segregateCards (cards) {
+  segregateCards(cards) {
     return cards.filter((card) => card.min_players <= this.#noOfPlayers);
   }
 
-  setUpTheCardDecks () {
+  setUpTheCardDecks() {
     this.#decks[1] = this.segregateCards(ageOneCards);
     this.#decks[2] = this.segregateCards(ageTwoCards);
     this.#decks[3] = this.segregateCards(ageThreeCards);
   }
 
-  distributeCoins () {
+  distributeCoins() {
     this.#players.forEach((player) => {
       player.addCoins(3);
     });
   }
 
-  didAllPlayerSelectCard () {
+  didAllPlayerSelectCard() {
     return this.#players.every((player) => player.status === "selected");
   }
 
-  addToDiscarded (card) {
+  addToDiscarded(card) {
     this.#discardedDeck.push(card);
   }
 
-  #passLeft () {
+  #passLeft() {
     const firstHand = this.#hands.shift();
     this.#hands.push(firstHand);
     this.#players.forEach((player, idx) => player.assignHand(this.#hands[idx]));
   }
 
-  #passRight () {
+  #passRight() {
     const lastHand = this.#hands.pop();
     this.#hands.unshift(lastHand);
     this.#players.forEach((player, idx) => player.assignHand(this.#hands[idx]));
@@ -158,21 +158,21 @@ class Game {
     return this.#round === 6;
   };
 
-  resetRound () {
+  resetRound() {
     this.#round = 0;
   }
 
-  nextRound () {
+  nextRound() {
     this.#round++;
   }
 
-  endAgeDiscards () {
+  endAgeDiscards() {
     this.#players.forEach((player) => {
       this.addToDiscarded(player.hand);
     });
   }
 
-  militaryConflicts () {
+  militaryConflicts() {
     this.#players.forEach((player) => {
       const warPoints = player.calculateWarPoints();
       console.log("player --->", player.name);
@@ -181,49 +181,49 @@ class Game {
     });
   }
 
-  endAge () {
+  endAge() {
     this.endAgeDiscards();
     return this.militaryConflicts();
   }
 
-  passHands () {
+  passHands() {
     this.nextRound();
     console.log("round-->", this.#round);
 
-    if(this.isLastRound()) {
+    if (this.isLastRound()) {
       return this.endAge();
     }
 
     return this.#currentAge === 2 ? this.#passRight() : this.#passLeft();
   }
 
-  makeHands () {
+  makeHands() {
     const cardsDeck = this.shuffleDeck(this.#decks[this.#currentAge]);
 
     this.#hands = [];
-    for(let i = 0; i < this.#noOfPlayers; i++) {
+    for (let i = 0; i < this.#noOfPlayers; i++) {
       this.#hands.push(cardsDeck.splice(0, 7));
     }
   }
 
-  distributeCards () {
+  distributeCards() {
     this.makeHands();
     this.#players.forEach((player, idx) => player.assignHand(this.#hands[idx]));
   }
 
-  initAge () {
+  initAge() {
     this.resetRound();
     this.distributeCards();
   }
 
-  gameData () {
+  gameData() {
     return {
       gameStatus: this.#gameStatus,
       currentAge: this.#currentAge,
     };
   }
 
-  getPlayerInfo (playerID) {
+  getPlayerInfo(playerID) {
     const player = this.#players.find((player) => player.playerID === playerID);
     const playerData = player.playerData();
 
@@ -234,9 +234,9 @@ class Game {
     return playerData;
   }
 
-  getPlayersStatus (playerID) {
+  getPlayersStatus(playerID) {
     const player = this.#players.find((player) => player.playerID === playerID);
-    const playersStatus = {status: player.status};
+    const playersStatus = { status: player.status };
 
     playersStatus.leftPlayerStatus = player.leftPlayer.status;
     playersStatus.rightPlayerStatus = player.rightPlayer.status;
@@ -245,26 +245,26 @@ class Game {
     return playersStatus;
   }
 
-  getPlayerHandData (playerID) {
+  getPlayerHandData(playerID) {
     const player = this.#players.find((player) => player.playerID === playerID);
     console.log("Commig here"); //debug
 
     return player.getHandData();
   }
 
-  executeTempActs () {
+  executeTempActs() {
     this.#players.forEach((player) => {
-      const {action, card} = player.tempAct;
-      if(action === "discard") {
+      const { action, card } = player.tempAct;
+      if (action === "discard") {
         player.discardCard(card);
         this.addToDiscarded(card);
-      } else if(action === "build") {
+      } else if (action === "build") {
         player.buildCard(card);
       }
     });
   }
 
-  updatePlayersStatus () {
+  updatePlayersStatus() {
     this.#players.forEach((player) => {
       player.updateStatus("waiting");
       player.updateViewStatus("not upto-date");
@@ -272,4 +272,4 @@ class Game {
   }
 }
 
-export {Game};
+export { Game };

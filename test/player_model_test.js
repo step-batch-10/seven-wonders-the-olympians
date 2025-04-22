@@ -1,7 +1,7 @@
-import {assert, assertEquals, assertFalse, assertNotEquals} from "assert";
-import {describe, it} from "test/bdd";
-import {Player} from "../src/models/player.js";
-import {Wonder} from "../src/models/wonder.js";
+import { assert, assertEquals, assertFalse, assertNotEquals } from "assert";
+import { describe, it } from "test/bdd";
+import { Player } from "../src/models/player.js";
+import { Wonder } from "../src/models/wonder.js";
 
 describe("Testing the Player class", () => {
   describe("Player class miscellaneous tests", () => {
@@ -40,18 +40,18 @@ describe("Testing the Player class", () => {
         side: "A",
         stages: {
           stage1: {
-            resources: [{type: "stone", count: 2}],
-            powers: [{type: "coins", value: 4}],
+            resources: [{ type: "stone", count: 2 }],
+            powers: [{ type: "coins", value: 4 }],
           },
           stage2: {
-            resources: [{type: "wood", count: 2}],
-            powers: [{type: "points", value: 2}],
+            resources: [{ type: "wood", count: 2 }],
+            powers: [{ type: "points", value: 2 }],
           },
           stage3: {
-            resources: [{type: "papyrus", count: 2}],
+            resources: [{ type: "papyrus", count: 2 }],
             powers: [
-              {type: "coins", value: 4},
-              {type: "points", value: 3},
+              { type: "coins", value: 4 },
+              { type: "points", value: 3 },
             ],
           },
         },
@@ -59,8 +59,8 @@ describe("Testing the Player class", () => {
 
       p.wonder = wonder;
 
-      assertEquals(p.haveResources([{type: "papyrus", count: 1}]), []);
-      assertEquals(p.haveResources([{type: "clay", count: 1}]), [
+      assertEquals(p.haveResources([{ type: "papyrus", count: 1 }]), []);
+      assertEquals(p.haveResources([{ type: "clay", count: 1 }]), [
         {
           type: "clay",
           count: 1,
@@ -77,18 +77,18 @@ describe("Testing the Player class", () => {
         side: "A",
         stages: {
           stage1: {
-            resources: [{type: "stone", count: 2}],
-            powers: [{type: "coins", value: 4}],
+            resources: [{ type: "stone", count: 2 }],
+            powers: [{ type: "coins", value: 4 }],
           },
           stage2: {
-            resources: [{type: "wood", count: 2}],
-            powers: [{type: "points", value: 2}],
+            resources: [{ type: "wood", count: 2 }],
+            powers: [{ type: "points", value: 2 }],
           },
           stage3: {
-            resources: [{type: "papyrus", count: 2}],
+            resources: [{ type: "papyrus", count: 2 }],
             powers: [
-              {type: "coins", value: 4},
-              {type: "points", value: 3},
+              { type: "coins", value: 4 },
+              { type: "points", value: 3 },
             ],
           },
         },
@@ -101,7 +101,7 @@ describe("Testing the Player class", () => {
           color: "brown",
           min_players: 3,
           cost: [],
-          produces: [{type: "wood", count: 1}],
+          produces: [{ type: "wood", count: 1 }],
           effect: null,
           chain_from: null,
           chain_to: [],
@@ -112,7 +112,7 @@ describe("Testing the Player class", () => {
           color: "brown",
           min_players: 3,
           cost: [],
-          produces: [{type: "stone", count: 1}],
+          produces: [{ type: "stone", count: 1 }],
           effect: null,
           chain_from: null,
           chain_to: [],
@@ -124,8 +124,8 @@ describe("Testing the Player class", () => {
       p.buildCard("Stone Pit");
       p.buildCard("Lumber Yard");
 
-      assertEquals(p.haveResources([{type: "wood", count: 1}]), []);
-      assertEquals(p.haveResources([{type: "clay", count: 1}]), [
+      assertEquals(p.haveResources([{ type: "wood", count: 1 }]), []);
+      assertEquals(p.haveResources([{ type: "clay", count: 1 }]), [
         {
           type: "clay",
           count: 1,
@@ -142,18 +142,18 @@ describe("Testing the Player class", () => {
         side: "A",
         stages: {
           stage1: {
-            resources: [{type: "stone", count: 2}],
-            powers: [{type: "coins", value: 4}],
+            resources: [{ type: "stone", count: 2 }],
+            powers: [{ type: "coins", value: 4 }],
           },
           stage2: {
-            resources: [{type: "wood", count: 2}],
-            powers: [{type: "points", value: 2}],
+            resources: [{ type: "wood", count: 2 }],
+            powers: [{ type: "points", value: 2 }],
           },
           stage3: {
-            resources: [{type: "papyrus", count: 2}],
+            resources: [{ type: "papyrus", count: 2 }],
             powers: [
-              {type: "coins", value: 4},
-              {type: "points", value: 3},
+              { type: "coins", value: 4 },
+              { type: "points", value: 3 },
             ],
           },
         },
@@ -165,7 +165,7 @@ describe("Testing the Player class", () => {
           age: 1,
           color: "brown",
           min_players: 6,
-          cost: [{type: "coin", count: 1}],
+          cost: [{ type: "coin", count: 1 }],
           produces: [
             {
               type: "choice",
@@ -183,9 +183,9 @@ describe("Testing the Player class", () => {
       p.assignHand(hand);
       p.buildCard("Tree Farm");
 
-      assertEquals(p.haveResources([{type: "wood", count: 1}]), []);
-      assertEquals(p.haveResources([{type: "clay", count: 1}]), []);
-      assertEquals(p.haveResources([{type: "ore", count: 1}]), [
+      assertEquals(p.haveResources([{ type: "wood", count: 1 }]), []);
+      assertEquals(p.haveResources([{ type: "clay", count: 1 }]), []);
+      assertEquals(p.haveResources([{ type: "ore", count: 1 }]), [
         {
           type: "ore",
           count: 1,
@@ -202,18 +202,18 @@ describe("Testing the Player class", () => {
         side: "A",
         stages: {
           stage1: {
-            resources: [{type: "stone", count: 2}],
-            powers: [{type: "coins", value: 4}],
+            resources: [{ type: "stone", count: 2 }],
+            powers: [{ type: "coins", value: 4 }],
           },
           stage2: {
-            resources: [{type: "wood", count: 2}],
-            powers: [{type: "points", value: 2}],
+            resources: [{ type: "wood", count: 2 }],
+            powers: [{ type: "points", value: 2 }],
           },
           stage3: {
-            resources: [{type: "papyrus", count: 2}],
+            resources: [{ type: "papyrus", count: 2 }],
             powers: [
-              {type: "coins", value: 4},
-              {type: "points", value: 3},
+              { type: "coins", value: 4 },
+              { type: "points", value: 3 },
             ],
           },
         },
@@ -226,7 +226,7 @@ describe("Testing the Player class", () => {
           color: "brown",
           min_players: 3,
           cost: [],
-          produces: [{type: "ore", count: 1}],
+          produces: [{ type: "ore", count: 1 }],
           effect: null,
           chain_from: null,
           chain_to: [],
@@ -237,7 +237,7 @@ describe("Testing the Player class", () => {
           color: "gray",
           min_players: 3,
           cost: [],
-          produces: [{type: "papyrus", count: 1}],
+          produces: [{ type: "papyrus", count: 1 }],
           effect: null,
           chain_from: null,
           chain_to: [],
@@ -247,7 +247,7 @@ describe("Testing the Player class", () => {
           age: 1,
           color: "brown",
           min_players: 6,
-          cost: [{type: "coin", count: 1}],
+          cost: [{ type: "coin", count: 1 }],
           produces: [
             {
               type: "choice",
@@ -267,10 +267,10 @@ describe("Testing the Player class", () => {
       p.buildCard("Press");
       p.buildCard("Tree Farm");
 
-      assertEquals(p.haveResources([{type: "wood", count: 1}]), []);
-      assertEquals(p.haveResources([{type: "clay", count: 1}]), []);
-      assertEquals(p.haveResources([{type: "ore", count: 1}]), []);
-      assertEquals(p.haveResources([{type: "textile", count: 1}]), [
+      assertEquals(p.haveResources([{ type: "wood", count: 1 }]), []);
+      assertEquals(p.haveResources([{ type: "clay", count: 1 }]), []);
+      assertEquals(p.haveResources([{ type: "ore", count: 1 }]), []);
+      assertEquals(p.haveResources([{ type: "textile", count: 1 }]), [
         {
           type: "textile",
           count: 1,
@@ -290,18 +290,18 @@ describe("Testing the Player class", () => {
       side: "A",
       stages: {
         stage1: {
-          cost: [{type: "stone", count: 2}],
-          powers: [{type: "coins", value: 4}],
+          cost: [{ type: "stone", count: 2 }],
+          powers: [{ type: "coins", value: 4 }],
         },
         stage2: {
-          cost: [{type: "wood", count: 2}],
-          powers: [{type: "points", value: 2}],
+          cost: [{ type: "wood", count: 2 }],
+          powers: [{ type: "points", value: 2 }],
         },
         stage3: {
-          cost: [{type: "papyrus", count: 2}],
+          cost: [{ type: "papyrus", count: 2 }],
           powers: [
-            {type: "coins", value: 4},
-            {type: "points", value: 3},
+            { type: "coins", value: 4 },
+            { type: "points", value: 3 },
           ],
         },
       },
@@ -314,7 +314,7 @@ describe("Testing the Player class", () => {
         color: "brown",
         min_players: 3,
         cost: [],
-        produces: [{type: "ore", count: 1}],
+        produces: [{ type: "ore", count: 1 }],
         effect: null,
         chain_from: null,
         chain_to: [],
@@ -325,7 +325,7 @@ describe("Testing the Player class", () => {
         color: "gray",
         min_players: 3,
         cost: [],
-        produces: [{type: "papyrus", count: 1}],
+        produces: [{ type: "papyrus", count: 1 }],
         effect: null,
         chain_from: null,
         chain_to: [],
@@ -335,7 +335,7 @@ describe("Testing the Player class", () => {
         age: 1,
         color: "brown",
         min_players: 6,
-        cost: [{type: "coin", count: 1}],
+        cost: [{ type: "coin", count: 1 }],
         produces: [
           {
             type: "choice",
@@ -353,7 +353,7 @@ describe("Testing the Player class", () => {
         color: "brown",
         min_players: 3,
         cost: [],
-        produces: [{type: "stone", count: 1}],
+        produces: [{ type: "stone", count: 1 }],
         effect: null,
         chain_from: null,
         chain_to: [],
@@ -381,8 +381,8 @@ describe("Testing the Player class", () => {
           age: 1,
           color: "green",
           min_players: 4,
-          cost: [{type: "papyrus", count: 1}],
-          produces: [{type: "tablet", count: 1}],
+          cost: [{ type: "papyrus", count: 1 }],
+          produces: [{ type: "tablet", count: 1 }],
           effect: null,
           chain_from: null,
           chain_to: ["Library"],
@@ -398,7 +398,7 @@ describe("Testing the Player class", () => {
           age: 1,
           color: "brown",
           min_players: 4,
-          cost: [{type: "coin", count: 1}],
+          cost: [{ type: "coin", count: 1 }],
           produces: [
             {
               type: "choice",
@@ -421,7 +421,7 @@ describe("Testing the Player class", () => {
           age: 1,
           color: "brown",
           min_players: 4,
-          cost: [{type: "coin", count: 4}],
+          cost: [{ type: "coin", count: 4 }],
           produces: [
             {
               type: "choice",
@@ -444,8 +444,8 @@ describe("Testing the Player class", () => {
           age: 1,
           color: "blue",
           min_players: 3,
-          cost: [{type: "stone", count: 1}],
-          produces: [{type: "points", count: 3}],
+          cost: [{ type: "stone", count: 1 }],
+          produces: [{ type: "points", count: 3 }],
           chain_from: null,
           chain_to: ["Aqueduct"],
           type: "civil",
@@ -461,8 +461,8 @@ describe("Testing the Player class", () => {
           age: 1,
           color: "green",
           min_players: 5,
-          cost: [{type: "textile", count: 1}],
-          produces: [{type: "compass", count: 1}],
+          cost: [{ type: "textile", count: 1 }],
+          produces: [{ type: "compass", count: 1 }],
           effect: null,
           chain_from: null,
           chain_to: ["Stables", "Dispensary"],
@@ -475,7 +475,7 @@ describe("Testing the Player class", () => {
   it("should add coins if the card has coin benefits", () => {
     const p = new Player("Alice");
     p.addBenefits({
-      produces: [{type: "coin", count: 5}, {type: "points"}],
+      produces: [{ type: "coin", count: 5 }, { type: "points" }],
     });
     assertEquals(p.coins, 5);
   });
@@ -517,7 +517,7 @@ describe("Testing the Player class", () => {
           color: "brown",
           min_players: 3,
           cost: [],
-          produces: [{type: "wood", count: 1}],
+          produces: [{ type: "wood", count: 1 }],
           effect: null,
           chain_from: null,
           chain_to: [],
@@ -544,7 +544,7 @@ describe("Testing the Player class", () => {
           age: 1,
           color: "brown",
           min_players: 4,
-          cost: [{type: "coin", count: 1}],
+          cost: [{ type: "coin", count: 1 }],
           produces: [
             {
               type: "choice",
@@ -579,8 +579,8 @@ describe("Testing the Player class", () => {
           age: 1,
           color: "red",
           min_players: 3,
-          cost: [{type: "clay", count: 1}],
-          produces: [{type: "shield", count: 1}],
+          cost: [{ type: "clay", count: 1 }],
+          produces: [{ type: "shield", count: 1 }],
           effect: null,
           chain_from: null,
           chain_to: [],
@@ -593,18 +593,18 @@ describe("Testing the Player class", () => {
         side: "A",
         stages: {
           stage1: {
-            resources: [{type: "stone", count: 2}],
-            powers: [{type: "coins", value: 4}],
+            resources: [{ type: "stone", count: 2 }],
+            powers: [{ type: "coins", value: 4 }],
           },
           stage2: {
-            resources: [{type: "wood", count: 2}],
-            powers: [{type: "points", value: 2}],
+            resources: [{ type: "wood", count: 2 }],
+            powers: [{ type: "points", value: 2 }],
           },
           stage3: {
-            resources: [{type: "papyrus", count: 2}],
+            resources: [{ type: "papyrus", count: 2 }],
             powers: [
-              {type: "coins", value: 4},
-              {type: "points", value: 3},
+              { type: "coins", value: 4 },
+              { type: "points", value: 3 },
             ],
           },
         },
@@ -629,8 +629,8 @@ describe("Testing the Player class", () => {
         age: 1,
         color: "green",
         min_players: 3,
-        cost: [{type: "papyrus", count: 1}],
-        produces: [{type: "tablet", count: 1}],
+        cost: [{ type: "papyrus", count: 1 }],
+        produces: [{ type: "tablet", count: 1 }],
         effect: null,
         chain_from: null,
         chain_to: ["Library"],
@@ -643,18 +643,18 @@ describe("Testing the Player class", () => {
       side: "A",
       stages: {
         stage1: {
-          resources: [{type: "stone", count: 2}],
-          powers: [{type: "coins", value: 4}],
+          resources: [{ type: "stone", count: 2 }],
+          powers: [{ type: "coins", value: 4 }],
         },
         stage2: {
-          resources: [{type: "wood", count: 2}],
-          powers: [{type: "points", value: 2}],
+          resources: [{ type: "wood", count: 2 }],
+          powers: [{ type: "points", value: 2 }],
         },
         stage3: {
-          resources: [{type: "papyrus", count: 2}],
+          resources: [{ type: "papyrus", count: 2 }],
           powers: [
-            {type: "coins", value: 4},
-            {type: "points", value: 3},
+            { type: "coins", value: 4 },
+            { type: "points", value: 3 },
           ],
         },
       },
