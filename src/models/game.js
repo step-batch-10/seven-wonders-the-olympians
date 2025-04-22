@@ -67,6 +67,14 @@ class Game {
     this.#currentAge = currentAge;
   }
 
+  set round(round) {
+    this.#round = round;
+  }
+
+  get round() {
+    return this.#round;
+  }
+
   static generateUniqueGameID() {
     return "gid" + uniqid();
   }
@@ -146,15 +154,15 @@ class Game {
     this.#players.forEach((player, idx) => player.assignHand(this.#hands[idx]));
   }
 
-  #isLastRound = () => {
+  isLastRound = () => {
     return this.#round === 6;
   };
 
-  #resetRound() {
+  resetRound() {
     this.#round = 0;
   }
 
-  #nextRound() {
+  nextRound() {
     this.#round++;
   }
 
@@ -166,12 +174,10 @@ class Game {
 
   militaryConflicts() {
     this.#players.forEach((player) => {
-      console.log("\n", "-".repeat(30), "\n");
+      const warPoints = player.calculateWarPoints();
       console.log("player --->", player.name);
-      player.militaryConflictsPoints = player.calculateWarPoints();
-      console.log("war points --->", player.militaryConflictsPoints);
+      console.log("war points --->", player.wonder.militaryStrength, warPoints);
       console.log("\n", "-".repeat(30), "\n");
-      // console.log(player.wonder.militaryStrength)
     });
   }
 
@@ -181,10 +187,10 @@ class Game {
   }
 
   passHands() {
-    this.#nextRound();
+    this.nextRound();
     console.log("round-->", this.#round);
 
-    if (this.#isLastRound()) {
+    if (this.isLastRound()) {
       return this.endAge();
     }
 
@@ -206,7 +212,7 @@ class Game {
   }
 
   initAge() {
-    this.#resetRound();
+    this.resetRound();
     this.distributeCards();
   }
 

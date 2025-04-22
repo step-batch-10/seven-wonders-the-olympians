@@ -43,6 +43,10 @@ class Player {
     return this.#playerID;
   }
 
+  set playerID(playerId) {
+    this.#playerID = playerId;
+  }
+
   get view() {
     return this.#view;
   }
@@ -50,7 +54,6 @@ class Player {
   get status() {
     return this.#status;
   }
-
   set status(status) {
     this.#status = status;
   }
@@ -63,15 +66,15 @@ class Player {
     this.#warTokens.push(token);
   }
 
-  get warTokensObj() {
-    return this.#warTokens.reduce(
-      (total, token) => {
-        token < 0 ? (total.negative += token) : (total.positive += token);
-        return total;
-      },
-      { positive: 0, negative: 0 },
-    );
-  }
+  // get warTokensObj() {
+  //   return this.#warTokens.reduce(
+  //     (total, token) => {
+  //       token < 0 ? (total.negative += token) : (total.positive += token);
+  //       return total;
+  //     },
+  //     { positive: 0, negative: 0 }
+  //   );
+  // }
 
   get leftPlayer() {
     return this.#leftPlayer;
@@ -98,9 +101,9 @@ class Player {
   }
 
   calculateWarPoints() {
-    const playerShields = this.#wonder.buildings.red.length;
-    const leftShields = this.#leftPlayer.wonder.buildings.red.length;
-    const rightShields = this.#rightPlayer.wonder.buildings.red.length;
+    const playerShields = this.wonder.militaryStrength;
+    const leftShields = this.leftPlayer.wonder.militaryStrength;
+    const rightShields = this.rightPlayer.wonder.militaryStrength;
 
     return {
       positive: (playerShields > leftShields) + (playerShields > rightShields),
@@ -178,7 +181,7 @@ class Player {
       name: this.name,
       wonder: this.#wonder.name,
       coins: this.#coins,
-      warTokens: this.warTokensObj,
+      warTokens: this.calculateWarPoints(),
       stage: this.#wonder.staged,
       buildings: this.#wonder.buildings,
       bonusResource: this.#wonder.bonusResource,

@@ -1,5 +1,11 @@
-import { assert, assertEquals, assertNotEquals, assertThrows } from "assert";
-import { describe, it } from "test/bdd";
+import {
+  assert,
+  assertEquals,
+  assertFalse,
+  assertNotEquals,
+  assertThrows,
+} from "assert";
+import { beforeEach, describe, it } from "test/bdd";
 import { Player } from "../src/models/player.js";
 import { Game } from "../src/models/game.js";
 
@@ -15,78 +21,72 @@ describe("Testing the Game class", () => {
   };
 
   describe("Testing game consistency", () => {
+    let p1, p2, p3, p4, p5, g1;
+
+    beforeEach(() => {
+      p1 = new Player("Alice");
+      p2 = new Player("Bob");
+      p3 = new Player("Adam");
+      p4 = new Player("Eve");
+      p5 = new Player("Tom");
+      g1 = new Game(4, p1);
+    });
+
     it("Two Games' id should be not equal", () => {
-      const p1 = new Player("Alice");
-      const p2 = new Player("Bob");
-      const g1 = new Game(4, p1);
       const g2 = new Game(5, p2);
       assertNotEquals(g1.gameID, g2.gameID);
     });
 
     it("Should permit to join upto the given number of players", () => {
-      const p1 = new Player("Alice");
-      const p2 = new Player("Bob");
-      const p3 = new Player("Adam");
-      const p4 = new Player("Eve");
-      const g = new Game(4, p1);
-      g.addPlayer(p2);
-      g.addPlayer(p3);
-      g.addPlayer(p4);
-      assert(g.isGameFull);
+      g1.addPlayer(p2);
+      g1.addPlayer(p3);
+      g1.addPlayer(p4);
+      assert(g1.isGameFull);
     });
 
     it("Should permit to join upto the given number of players", () => {
-      const p1 = new Player("Alice");
-      const p2 = new Player("Bob");
-      const p3 = new Player("Adam");
-      const p4 = new Player("Eve");
-      const p5 = new Player("Tom");
-      const g = new Game(4, p1);
-      g.addPlayer(p2);
-      g.addPlayer(p3);
-      g.addPlayer(p4);
+      g1.addPlayer(p2);
+      g1.addPlayer(p3);
+      g1.addPlayer(p4);
       assertThrows(() => {
-        g.addPlayer(p5);
+        g1.addPlayer(p5);
       }, "Room is full!");
     });
 
     it("Should return current players", () => {
-      const p1 = new Player("Alice");
-      const p2 = new Player("Bob");
-      const p3 = new Player("Adam");
-      const p4 = new Player("Eve");
-      const g = new Game(4, p1);
-      g.addPlayer(p2);
-      g.addPlayer(p3);
-      g.addPlayer(p4);
+      g1.addPlayer(p2);
+      g1.addPlayer(p3);
+      g1.addPlayer(p4);
 
-      const players = g.players;
+      const players = g1.players;
       assertEquals(players, [p1, p2, p3, p4]);
     });
 
     it("Should add a card to discarded card", () => {
-      const p1 = new Player("Alice");
-      const g = new Game(4, p1);
-      g.addToDiscarded("eg_card");
-      assertEquals(g.discardedDeck, ["eg_card"]);
+      g1.addToDiscarded("eg_card");
+      assertEquals(g1.discardedDeck, ["eg_card"]);
     });
   });
 
   describe("Testing the getPlayerData", () => {
+    let p1, p2, p3, p4, p5, g1;
+
+    beforeEach(() => {
+      p1 = new Player("Alice");
+      p2 = new Player("Bob");
+      p3 = new Player("Adam");
+      p4 = new Player("Eve");
+      p5 = new Player("Tom");
+      g1 = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
+    });
+
     it("Should give proper player data with 4 players", () => {
-      const p1 = new Player("Alice");
-      const p2 = new Player("Bob");
-      const p3 = new Player("Adam");
-      const p4 = new Player("Eve");
-
       const bobID = p2.playerID;
+      g1.addPlayer(p2);
+      g1.addPlayer(p3);
+      g1.addPlayer(p4);
 
-      const g = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
-      g.addPlayer(p2);
-      g.addPlayer(p3);
-      g.addPlayer(p4);
-
-      assertEquals(g.getPlayerInfo(bobID), {
+      assertEquals(g1.getPlayerInfo(bobID), {
         name: "Bob",
         wonder: "Gizah",
         coins: 3,
@@ -159,12 +159,6 @@ describe("Testing the Game class", () => {
     });
 
     it("Should give proper player data with 5 players", () => {
-      const p1 = new Player("Alice");
-      const p2 = new Player("Bob");
-      const p3 = new Player("Adam");
-      const p4 = new Player("Eve");
-      const p5 = new Player("Tom");
-
       const tomID = p5.playerID;
 
       const g = new Game(5, p1, ([...arr]) => arr.sort(() => 0));
@@ -264,21 +258,27 @@ describe("Testing the Game class", () => {
   });
 
   describe("Testing the getPlayerHandData", () => {
+    let p1, p2, p3, p4, g1;
+
+    beforeEach(() => {
+      p1 = new Player("Alice");
+      p2 = new Player("Bob");
+      p3 = new Player("Adam");
+      p4 = new Player("Eve");
+
+      g1 = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
+    });
+
     it("Should give proper player hand data with 4 players", () => {
-      const p1 = new Player("Alice");
-      const p2 = new Player("Bob");
-      const p3 = new Player("Adam");
-      const p4 = new Player("Eve");
       const bobID = p2.playerID;
 
-      const g = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
-      g.addPlayer(p2);
-      g.addPlayer(p3);
-      g.addPlayer(p4);
+      g1.addPlayer(p2);
+      g1.addPlayer(p3);
+      g1.addPlayer(p4);
 
-      console.log(getCardsName(g.getPlayerHandData(bobID)));
+      console.log(getCardsName(g1.getPlayerHandData(bobID)));
 
-      assertEquals(getCardsName(g.getPlayerHandData(bobID)), [
+      assertEquals(getCardsName(g1.getPlayerHandData(bobID)), [
         "Clay Pit",
         "Timber Yard",
         "Glassworks",
@@ -290,20 +290,14 @@ describe("Testing the Game class", () => {
     });
 
     it("Should give proper player hand data for multiple player with 4 players", () => {
-      const p1 = new Player("Alice");
-      const p2 = new Player("Bob");
-      const p3 = new Player("Adam");
-      const p4 = new Player("Eve");
-
       const aliceID = p1.playerID;
       const bobID = p2.playerID;
 
-      const g = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
-      g.addPlayer(p2);
-      g.addPlayer(p3);
-      g.addPlayer(p4);
+      g1.addPlayer(p2);
+      g1.addPlayer(p3);
+      g1.addPlayer(p4);
 
-      assertEquals(getCardsName(g.getPlayerHandData(aliceID)), [
+      assertEquals(getCardsName(g1.getPlayerHandData(aliceID)), [
         "Lumber Yard",
         "Lumber Yard",
         "Stone Pit",
@@ -313,7 +307,7 @@ describe("Testing the Game class", () => {
         "Excavation",
       ]);
 
-      assertEquals(getCardsName(g.getPlayerHandData(bobID)), [
+      assertEquals(getCardsName(g1.getPlayerHandData(bobID)), [
         "Clay Pit",
         "Timber Yard",
         "Glassworks",
@@ -326,24 +320,29 @@ describe("Testing the Game class", () => {
   });
 
   describe("Testing update hand, that after a round remove a card form the hand", () => {
-    it("Should remove a from the hand according to the card name", () => {
-      const p1 = new Player("Alice");
-      const p2 = new Player("Bob");
-      const p3 = new Player("Adam");
-      const p4 = new Player("Eve");
+    let p1, p2, p3, p4, g1;
 
+    beforeEach(() => {
+      p1 = new Player("Alice");
+      p2 = new Player("Bob");
+      p3 = new Player("Adam");
+      p4 = new Player("Eve");
+
+      g1 = new Game(4, p1);
+    });
+
+    it("Should remove a from the hand according to the card name", () => {
       const bobID = p2.playerID;
 
-      const g = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
-      g.addPlayer(p2);
-      g.addPlayer(p3);
-      g.addPlayer(p4);
+      g1.addPlayer(p2);
+      g1.addPlayer(p3);
+      g1.addPlayer(p4);
 
-      const beforeUpdateBobsHand = g.getPlayerHandData(bobID);
+      const beforeUpdateBobsHand = g1.getPlayerHandData(bobID);
       console.log("Card removing", beforeUpdateBobsHand[0].name);
 
       p2.updateHand(beforeUpdateBobsHand[0].name);
-      const afterUpdateBobsHand = g.getPlayerHandData(bobID);
+      const afterUpdateBobsHand = g1.getPlayerHandData(bobID);
 
       beforeUpdateBobsHand.shift();
       assertEquals(beforeUpdateBobsHand, afterUpdateBobsHand);
@@ -351,51 +350,50 @@ describe("Testing the Game class", () => {
   });
 
   describe("Testing pass hands", () => {
+    let p1, p2, p3, p4, g1;
+
+    beforeEach(() => {
+      p1 = new Player("Alice");
+      p2 = new Player("Bob");
+      p3 = new Player("Adam");
+      p4 = new Player("Eve");
+
+      g1 = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
+    });
+
     describe("Testing if the passing hand works", () => {
       it("Should change player's hand after passing", () => {
-        const p1 = new Player("Alice");
-        const p2 = new Player("Bob");
-        const p3 = new Player("Adam");
-        const p4 = new Player("Eve");
-
         const bobID = p2.playerID;
 
-        const g = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
-        g.addPlayer(p2);
-        g.addPlayer(p3);
-        g.addPlayer(p4);
+        g1.addPlayer(p2);
+        g1.addPlayer(p3);
+        g1.addPlayer(p4);
 
-        const beforePassingBobsHand = g.getPlayerHandData(bobID);
-        g.passHands();
-        const afterPassingBobsHand = g.getPlayerHandData(bobID);
+        const beforePassingBobsHand = g1.getPlayerHandData(bobID);
+        g1.passHands();
+        const afterPassingBobsHand = g1.getPlayerHandData(bobID);
         testIfHandsAreNotSame(beforePassingBobsHand, afterPassingBobsHand);
       });
 
       it("Should change all player's hand after passing", () => {
-        const p1 = new Player("Alice");
-        const p2 = new Player("Bob");
-        const p3 = new Player("Adam");
-        const p4 = new Player("Eve");
-
         const aliceID = p1.playerID;
         const bobID = p2.playerID;
         const adamID = p3.playerID;
         const eveID = p4.playerID;
 
-        const g = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
-        g.addPlayer(p2);
-        g.addPlayer(p3);
-        g.addPlayer(p4);
+        g1.addPlayer(p2);
+        g1.addPlayer(p3);
+        g1.addPlayer(p4);
 
-        const beforePassingAlicesHand = g.getPlayerHandData(aliceID);
-        const beforePassingBobsHand = g.getPlayerHandData(bobID);
-        const beforePassingAdamsHand = g.getPlayerHandData(adamID);
-        const beforePassingEvesHand = g.getPlayerHandData(eveID);
-        g.passHands();
-        const afterPassingAlicesHand = g.getPlayerHandData(aliceID);
-        const afterPassingBobsHand = g.getPlayerHandData(bobID);
-        const afterPassingAdamsHand = g.getPlayerHandData(adamID);
-        const afterPassingEvesHand = g.getPlayerHandData(eveID);
+        const beforePassingAlicesHand = g1.getPlayerHandData(aliceID);
+        const beforePassingBobsHand = g1.getPlayerHandData(bobID);
+        const beforePassingAdamsHand = g1.getPlayerHandData(adamID);
+        const beforePassingEvesHand = g1.getPlayerHandData(eveID);
+        g1.passHands();
+        const afterPassingAlicesHand = g1.getPlayerHandData(aliceID);
+        const afterPassingBobsHand = g1.getPlayerHandData(bobID);
+        const afterPassingAdamsHand = g1.getPlayerHandData(adamID);
+        const afterPassingEvesHand = g1.getPlayerHandData(eveID);
 
         console.log(getCardsName(beforePassingAlicesHand));
 
@@ -407,52 +405,51 @@ describe("Testing the Game class", () => {
     });
 
     describe("Testing if the passing hand works for age one, i.e. pass to left", () => {
-      it("Should pass player's hand to the left neighbor", () => {
-        const p1 = new Player("Alice");
-        const p2 = new Player("Bob");
-        const p3 = new Player("Adam");
-        const p4 = new Player("Eve");
+      let p1, p2, p3, p4, g1;
 
+      beforeEach(() => {
+        p1 = new Player("Alice");
+        p2 = new Player("Bob");
+        p3 = new Player("Adam");
+        p4 = new Player("Eve");
+
+        g1 = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
+      });
+
+      it("Should pass player's hand to the left neighbor", () => {
         const aliceID = p1.playerID;
         const bobID = p2.playerID;
 
-        const g = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
-        g.addPlayer(p2);
-        g.addPlayer(p3);
-        g.addPlayer(p4);
+        g1.addPlayer(p2);
+        g1.addPlayer(p3);
+        g1.addPlayer(p4);
 
-        const beforePassingBobsHand = g.getPlayerHandData(bobID);
-        g.passHands();
-        const afterPassingAlicesHand = g.getPlayerHandData(aliceID);
+        const beforePassingBobsHand = g1.getPlayerHandData(bobID);
+        g1.passHands();
+        const afterPassingAlicesHand = g1.getPlayerHandData(aliceID);
 
         assertEquals(beforePassingBobsHand, afterPassingAlicesHand);
       });
 
       it("Should pass all player's hand to their left neighbor as it's age 1", () => {
-        const p1 = new Player("Alice");
-        const p2 = new Player("Bob");
-        const p3 = new Player("Adam");
-        const p4 = new Player("Eve");
-
         const aliceID = p1.playerID;
         const bobID = p2.playerID;
         const adamID = p3.playerID;
         const eveID = p4.playerID;
 
-        const g = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
-        g.addPlayer(p2);
-        g.addPlayer(p3);
-        g.addPlayer(p4);
+        g1.addPlayer(p2);
+        g1.addPlayer(p3);
+        g1.addPlayer(p4);
 
-        const beforePassingAlicesHand = g.getPlayerHandData(aliceID);
-        const beforePassingBobsHand = g.getPlayerHandData(bobID);
-        const beforePassingAdamsHand = g.getPlayerHandData(adamID);
-        const beforePassingEvesHand = g.getPlayerHandData(eveID);
-        g.passHands();
-        const afterPassingAlicesHand = g.getPlayerHandData(aliceID);
-        const afterPassingBobsHand = g.getPlayerHandData(bobID);
-        const afterPassingAdamsHand = g.getPlayerHandData(adamID);
-        const afterPassingEvesHand = g.getPlayerHandData(eveID);
+        const beforePassingAlicesHand = g1.getPlayerHandData(aliceID);
+        const beforePassingBobsHand = g1.getPlayerHandData(bobID);
+        const beforePassingAdamsHand = g1.getPlayerHandData(adamID);
+        const beforePassingEvesHand = g1.getPlayerHandData(eveID);
+        g1.passHands();
+        const afterPassingAlicesHand = g1.getPlayerHandData(aliceID);
+        const afterPassingBobsHand = g1.getPlayerHandData(bobID);
+        const afterPassingAdamsHand = g1.getPlayerHandData(adamID);
+        const afterPassingEvesHand = g1.getPlayerHandData(eveID);
 
         testIfHandsAreSame(beforePassingBobsHand, afterPassingAlicesHand);
         testIfHandsAreSame(beforePassingAdamsHand, afterPassingBobsHand);
@@ -482,7 +479,6 @@ describe("Testing the Game class", () => {
         g.passHands();
         const afterPassingBobsHand = g.getPlayerHandData(bobID);
 
-        // assertEquals(beforePassingAlicesHand, afterPassingBobsHand);
         testIfHandsAreSame(beforePassingAlicesHand, afterPassingBobsHand);
       });
 
@@ -519,6 +515,165 @@ describe("Testing the Game class", () => {
         testIfHandsAreSame(beforePassingEvesHand, afterPassingAlicesHand);
         testIfHandsAreSame(beforePassingAlicesHand, afterPassingBobsHand);
       });
+    });
+  });
+});
+
+describe("testing isLastRound", () => {
+  let p1, p2, p3, p4, g;
+  beforeEach(() => {
+    p1 = new Player("Alice");
+    p2 = new Player("Bob");
+    p3 = new Player("Adam");
+    p4 = new Player("Eve");
+
+    g = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
+    g.addPlayer(p2);
+    g.addPlayer(p3);
+    g.addPlayer(p4);
+  });
+
+  it("isLastRound should return false for 2nd Round", () => {
+    g.round = 2;
+    assertFalse(g.isLastRound());
+  });
+
+  it("isLastRound should return false for 2nd Round", () => {
+    g.round = 6;
+    assert(g.isLastRound());
+  });
+});
+
+describe("testing resetRound", () => {
+  let p1, p2, p3, p4, g;
+  beforeEach(() => {
+    p1 = new Player("Alice");
+    p2 = new Player("Bob");
+    p3 = new Player("Adam");
+    p4 = new Player("Eve");
+
+    g = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
+    g.addPlayer(p2);
+    g.addPlayer(p3);
+    g.addPlayer(p4);
+  });
+
+  it("resetRound should reset round to 0", () => {
+    g.round = 6;
+    g.resetRound();
+    assertEquals(g.round, 0);
+  });
+});
+
+describe("testing nextRound", () => {
+  let p1, p2, p3, p4, g;
+  beforeEach(() => {
+    p1 = new Player("Alice");
+    p2 = new Player("Bob");
+    p3 = new Player("Adam");
+    p4 = new Player("Eve");
+
+    g = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
+    g.addPlayer(p2);
+    g.addPlayer(p3);
+    g.addPlayer(p4);
+  });
+
+  it("nextRound should return next round", () => {
+    g.round = 4;
+    g.nextRound();
+    assertEquals(g.round, 5);
+  });
+});
+
+describe("Testing didAllPlayersSelected", () => {
+  let p1, p2, p3, p4, g;
+  beforeEach(() => {
+    p1 = new Player("Alice");
+    p2 = new Player("Bob");
+    p3 = new Player("Adam");
+    p4 = new Player("Eve");
+
+    g = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
+    g.addPlayer(p2);
+    g.addPlayer(p3);
+    g.addPlayer(p4);
+  });
+
+  it("didAllPlayersSelected should return false because not all players are selected action", () => {
+    p1.status = "waiting";
+    p2.status = "waiting";
+    p3.status = "waiting";
+    p4.status = "selected";
+
+    assertFalse(g.didAllPlayerSelectCard());
+  });
+
+  it("didAllPlayersSelected should return true because all players are selected action", () => {
+    p1.status = "selected";
+    p2.status = "selected";
+    p3.status = "selected";
+    p4.status = "selected";
+
+    assert(g.didAllPlayerSelectCard());
+  });
+});
+
+describe("Testing gameData()", () => {
+  let p1, p2, p3, p4, g;
+  beforeEach(() => {
+    p1 = new Player("Alice");
+    p2 = new Player("Bob");
+    p3 = new Player("Adam");
+    p4 = new Player("Eve");
+
+    g = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
+    g.addPlayer(p2);
+  });
+
+  it("should return gameData with status as waiting if there are not much players", () => {
+    assertEquals(g.gameData(), { gameStatus: "waiting", currentAge: 0 });
+  });
+
+  it("should return gameData with status as matched if there is a match", () => {
+    g.addPlayer(p3);
+    g.addPlayer(p4);
+    assertEquals(g.gameData(), { gameStatus: "matched", currentAge: 1 });
+  });
+});
+
+describe("Testing getPlayersStatus", () => {
+  let p1, p2, p3, p4, g;
+  beforeEach(() => {
+    p1 = new Player("Alice");
+    p2 = new Player("Bob");
+    p3 = new Player("Adam");
+    p4 = new Player("Eve");
+
+    g = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
+    g.addPlayer(p2);
+    g.addPlayer(p3);
+    g.addPlayer(p4);
+    p1.playerID = "123";
+  });
+
+  it("should return gameStatus of current and neighbour players as waiting", () => {
+    assertEquals(g.getPlayersStatus("123"), {
+      leftPlayerStatus: "waiting",
+      rightPlayerStatus: "waiting",
+      status: "waiting",
+    });
+  });
+
+  it("should return gameStatus of current and neighbour players as selected", () => {
+    p1.status = "selected";
+    p2.status = "selected";
+    p3.status = "selected";
+    p4.status = "selected";
+    assertEquals(g.getPlayersStatus("123"), {
+      leftPlayerStatus: "selected",
+      rightPlayerStatus: "selected",
+      status: "selected",
     });
   });
 });

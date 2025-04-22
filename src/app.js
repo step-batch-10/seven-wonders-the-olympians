@@ -19,14 +19,14 @@ const injectContext = (gameMap, playerMap, playerGameMap, waitingGames) => {
 };
 
 export const resetCookie = () => {
-  return async (ctx, next) => {
+  return (ctx) => {
     if (ctx.getCookie(ctx, "playerID")) {
       deleteCookie(ctx, "playerID");
     }
     if (ctx.getCookie(ctx, "gameID")) {
       deleteCookie(ctx, "gameID");
     }
-    await next();
+    return ctx.text("Logged out. Cleared cookies");
   };
 };
 
@@ -41,7 +41,7 @@ const createApp = () => {
   app
     .use(logger())
     .use(injectContext(gameMap, playerMap, playerGameMap, waitingGames))
-    .get("/", resetCookie())
+    .get("/logout", resetCookie())
     .get("/", serveStatic({ path: "public/index.html" }))
     .route("/auth", createAuthRoute())
     .route("/game", createGameRoute())
