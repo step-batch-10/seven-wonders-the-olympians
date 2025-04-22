@@ -17,8 +17,9 @@ body {
 }
 
 main {
+  min-height: 35vh;
   width: 30%;
-  height: 30%;
+  /* height: 30%; */
   background-color: #705519;
   display: flex;
   align-items: center;
@@ -34,7 +35,7 @@ main {
   border-top: 5px solid #705519;
   border-radius: 50%;
   width: 60px;
-  height: 60px;
+  min-height: 60px;
   animation: spin 1s linear infinite;
 }
 
