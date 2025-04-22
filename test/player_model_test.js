@@ -1,4 +1,4 @@
-import { assertEquals, assertNotEquals } from "assert";
+import { assert, assertEquals, assertFalse, assertNotEquals } from "assert";
 import { describe, it } from "test/bdd";
 import { Player } from "../src/models/player.js";
 import { Wonder } from "../src/models/wonder.js";
@@ -514,5 +514,172 @@ describe("Testing the Player class", () => {
     p1.rightPlayer = p4;
 
     assertEquals(...p1.getOtherPlayersStatus(), "waiting");
+  });
+
+  describe("testing actionDetails", () => {
+    it("should return the action details for the card that is free", () => {
+      const p = new Player("Alice");
+      const hand = [
+        {
+          name: "Lumber Yard",
+          age: 1,
+          color: "brown",
+          min_players: 3,
+          cost: [],
+          produces: [{ type: "wood", count: 1 }],
+          effect: null,
+          chain_from: null,
+          chain_to: [],
+        },
+      ];
+
+      p.assignHand(hand);
+      const [refinedCard1] = p.getHandData();
+
+      assert(refinedCard1.canBuild);
+      assertEquals(refinedCard1.name, "Lumber Yard");
+      assertEquals(refinedCard1.buildDetails, {
+        msg: "no resources required",
+        noOfResources: 0,
+        resourcesReq: 0,
+      });
+    });
+
+    it("should return the action details for the card that has cost type coin and player has enough coins", () => {
+      const p = new Player("Alice");
+      const hand = [
+        {
+          name: "Excavation",
+          age: 1,
+          color: "brown",
+          min_players: 4,
+          cost: [{ type: "coin", count: 1 }],
+          produces: [
+            {
+              type: "choice",
+              options: ["stone", "clay"],
+              count: 1,
+            },
+          ],
+          effect: null,
+          chain_from: null,
+          chain_to: [],
+        },
+      ];
+
+      p.assignHand(hand);
+      p.addCoins(3);
+      const [refinedCard1] = p.getHandData();
+
+      assert(refinedCard1.canBuild);
+      assertEquals(refinedCard1.name, "Excavation");
+      assertEquals(refinedCard1.buildDetails, {
+        msg: "pay bank",
+        noOfResources: 0,
+        resourcesReq: 0,
+      });
+    });
+
+    it("should return the action details for the card when there is no possibility to build", () => {
+      const p = new Player("Alice");
+      const hand = [
+        {
+          name: "Guard Tower",
+          age: 1,
+          color: "red",
+          min_players: 3,
+          cost: [{ type: "clay", count: 1 }],
+          produces: [{ type: "shield", count: 1 }],
+          effect: null,
+          chain_from: null,
+          chain_to: [],
+        },
+      ];
+      const wonder = new Wonder({
+        img: "ephesosA.jpeg",
+        name: "Ephesos",
+        resource: "papyrus",
+        side: "A",
+        stages: {
+          stage1: {
+            resources: [{ type: "stone", count: 2 }],
+            powers: [{ type: "coins", value: 4 }],
+          },
+          stage2: {
+            resources: [{ type: "wood", count: 2 }],
+            powers: [{ type: "points", value: 2 }],
+          },
+          stage3: {
+            resources: [{ type: "papyrus", count: 2 }],
+            powers: [
+              { type: "coins", value: 4 },
+              { type: "points", value: 3 },
+            ],
+          },
+        },
+      });
+
+      p.wonder = wonder;
+      p.assignHand(hand);
+      const [refinedCard1] = p.getHandData();
+
+      assertFalse(refinedCard1.canBuild);
+      assert(refinedCard1.canDiscard);
+      assertEquals(refinedCard1.name, "Guard Tower");
+      assertEquals(refinedCard1.buildDetails, {});
+    });
+  });
+
+  it("should return the action details for the card where they have enough resources", () => {
+    const p = new Player("Alice");
+    const hand = [
+      {
+        name: "Scriptorium",
+        age: 1,
+        color: "green",
+        min_players: 3,
+        cost: [{ type: "papyrus", count: 1 }],
+        produces: [{ type: "tablet", count: 1 }],
+        effect: null,
+        chain_from: null,
+        chain_to: ["Library"],
+      },
+    ];
+    const wonder = new Wonder({
+      img: "ephesosA.jpeg",
+      name: "Ephesos",
+      resource: "papyrus",
+      side: "A",
+      stages: {
+        stage1: {
+          resources: [{ type: "stone", count: 2 }],
+          powers: [{ type: "coins", value: 4 }],
+        },
+        stage2: {
+          resources: [{ type: "wood", count: 2 }],
+          powers: [{ type: "points", value: 2 }],
+        },
+        stage3: {
+          resources: [{ type: "papyrus", count: 2 }],
+          powers: [
+            { type: "coins", value: 4 },
+            { type: "points", value: 3 },
+          ],
+        },
+      },
+    });
+
+    p.wonder = wonder;
+    p.assignHand(hand);
+    const [refinedCard1] = p.getHandData();
+
+    assert(refinedCard1.canBuild);
+    assert(refinedCard1.canDiscard);
+    assertEquals(refinedCard1.name, "Scriptorium");
+    assertEquals(refinedCard1.buildDetails, {
+      msg: "had enough resources",
+      noOfResources: 0,
+      resourcesReq: 0,
+    });
   });
 });

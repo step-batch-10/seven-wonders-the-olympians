@@ -210,14 +210,73 @@ class Player {
     return playersStatus;
   }
 
-  getHandData() {
-    const canStage = this.canStage();
+  #makeBuildDes(canBuild, msg) {
+    return {
+      canBuild,
+      buildDetails: {
+        noOfResources: 0,
+        resourcesReq: 0,
+        msg,
+      },
+    };
+  }
 
-    return this.#hand.map((card) => ({
+  #hasNoCost(cost) {
+    return cost.length === 0;
+  }
+
+  #isCostTypecoin(cost) {
+    return cost.length === 1 && cost[0]?.type === "coin";
+  }
+
+  #playerHasResources(tradeCost) {
+    return tradeCost.length === 0;
+  }
+
+  #buildDetails(cost) {
+    if (this.#hasNoCost(cost)) {
+      return this.#makeBuildDes(true, "no resources required");
+    }
+
+    if (this.#isCostTypecoin(cost)) {
+      console.log("Entered the 2nd if");
+      console.log(cost, this.#coins);
+
+      const canBuild = cost[0].count <= this.#coins;
+      return this.#makeBuildDes(canBuild, "pay bank");
+    }
+
+    const playerTradeCost = this.haveResources(cost);
+
+    if (this.#playerHasResources(playerTradeCost)) {
+      return this.#makeBuildDes(true, "had enough resources");
+    }
+
+    return { canBuild: false, buildDetails: {} };
+  }
+
+  #getBuildDetails(card) {
+    const cost = card.cost;
+
+    return this.#buildDetails(cost);
+  }
+
+  #addActionDetails(card) {
+    const { canBuild, buildDetails } = this.#getBuildDetails(card);
+
+    return {
       name: card.name,
-      canBuild: this.canBuild(card),
-      canStage: canStage,
-    }));
+      canBuild,
+      canStage: false,
+      buildDetails,
+      canTrade: false,
+      tradeDetails: {},
+      canDiscard: true,
+    };
+  }
+
+  getHandData() {
+    return this.#hand.map((card) => this.#addActionDetails(card));
   }
 
   canBuild(card) {
