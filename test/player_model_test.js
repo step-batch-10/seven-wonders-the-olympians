@@ -471,4 +471,9 @@ describe("Testing the Player class", () => {
       );
     });
   });
+
+  describe("Testing get war conflicts tokens", () => {
+    const p = new Player("Alice");
+    p.warTokens = [3, 3];
+  });
 });

@@ -8,6 +8,10 @@ NC='\033[0m'
 
 echo -e "${MAGENTA}Pre-push hook...${NC}"
 
+echo -e "Running ${YELLOW}'git stash'...${NC}"
+
+git stash
+
 echo -e "${YELLOW}Format checking...${NC}"
 deno fmt --check 2> /dev/null
 if [ $? -ne 0 ]; then
