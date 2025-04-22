@@ -20,26 +20,26 @@ const wonders = [
 class Game {
   #gameID;
   #players;
-  noOfPlayers;
-  gameStatus;
-  currentAge;
-  wonders;
+  #noOfPlayers;
+  #gameStatus;
+  #currentAge;
+  #wonders;
   #discardedDeck;
-  decks;
-  round;
+  #decks;
+  #round;
   shuffleDeck;
   #hands;
 
   constructor(noOfPlayers, player, shuffleDeck = shuffleArray) {
-    this.noOfPlayers = noOfPlayers;
+    this.#noOfPlayers = noOfPlayers;
     this.#players = [player];
     this.#gameID = Game.generateUniqueGameID();
-    this.gameStatus = "waiting";
-    this.currentAge = 0;
+    this.#gameStatus = "waiting";
+    this.#currentAge = 0;
     this.#discardedDeck = [];
     this.shuffleDeck = shuffleDeck;
-    this.wonders = this.shuffleDeck(wonders);
-    this.decks = {
+    this.#wonders = this.shuffleDeck(wonders);
+    this.#decks = {
       1: null,
       2: null,
       3: null,
@@ -52,7 +52,7 @@ class Game {
   }
 
   get isGameFull() {
-    return this.#players.length === this.noOfPlayers;
+    return this.#players.length === this.#noOfPlayers;
   }
 
   get gameID() {
@@ -61,6 +61,10 @@ class Game {
 
   get discardedDeck() {
     return this.#discardedDeck;
+  }
+
+  set currentAge(currentAge) {
+    this.#currentAge = currentAge;
   }
 
   static generateUniqueGameID() {
@@ -73,14 +77,14 @@ class Game {
     }
 
     this.#players.push(player);
-    if (this.#players.length >= this.noOfPlayers) {
-      this.gameStatus = "matched";
+    if (this.#players.length >= this.#noOfPlayers) {
+      this.#gameStatus = "matched";
       this.init();
     }
   }
 
   init() {
-    this.currentAge = 1;
+    this.#currentAge = 1;
     this.arrangePlayers();
     this.distributeWonders();
     this.distributeCoins();
@@ -98,7 +102,7 @@ class Game {
 
   distributeWonders() {
     this.#players.forEach((player) => {
-      const wonderName = this.wonders.pop();
+      const wonderName = this.#wonders.pop();
       const wonderData = wondersData.find(({ name }) => name === wonderName);
       const wonder = new Wonder(wonderData);
 
@@ -107,13 +111,13 @@ class Game {
   }
 
   segregateCards(cards) {
-    return cards.filter((card) => card.min_players <= this.noOfPlayers);
+    return cards.filter((card) => card.min_players <= this.#noOfPlayers);
   }
 
   setUpTheCardDecks() {
-    this.decks[1] = this.segregateCards(ageOneCards);
-    this.decks[2] = this.segregateCards(ageTwoCards);
-    this.decks[3] = this.segregateCards(ageThreeCards);
+    this.#decks[1] = this.segregateCards(ageOneCards);
+    this.#decks[2] = this.segregateCards(ageTwoCards);
+    this.#decks[3] = this.segregateCards(ageThreeCards);
   }
 
   distributeCoins() {
@@ -143,15 +147,15 @@ class Game {
   }
 
   #isLastRound = () => {
-    return this.round === 6;
+    return this.#round === 6;
   };
 
   #resetRound() {
-    this.round = 0;
+    this.#round = 0;
   }
 
   #nextRound() {
-    this.round++;
+    this.#round++;
   }
 
   endAgeDiscards() {
@@ -162,7 +166,12 @@ class Game {
 
   militaryConflicts() {
     this.#players.forEach((player) => {
-      console.log("war tokens--->", player.warTokensObj);
+      console.log("\n", "-".repeat(30), "\n");
+      console.log("player --->", player.name);
+      player.militaryConflictsPoints = player.calculateWarPoints();
+      console.log("war points --->", player.militaryConflictsPoints);
+      console.log("\n", "-".repeat(30), "\n");
+      // console.log(player.wonder.militaryStrength)
     });
   }
 
@@ -173,20 +182,20 @@ class Game {
 
   passHands() {
     this.#nextRound();
-    console.log("round-->", this.round);
+    console.log("round-->", this.#round);
 
     if (this.#isLastRound()) {
       return this.endAge();
     }
 
-    return this.currentAge === 2 ? this.#passRight() : this.#passLeft();
+    return this.#currentAge === 2 ? this.#passRight() : this.#passLeft();
   }
 
   makeHands() {
-    const cardsDeck = this.shuffleDeck(this.decks[this.currentAge]);
+    const cardsDeck = this.shuffleDeck(this.#decks[this.#currentAge]);
 
     this.#hands = [];
-    for (let i = 0; i < this.noOfPlayers; i++) {
+    for (let i = 0; i < this.#noOfPlayers; i++) {
       this.#hands.push(cardsDeck.splice(0, 7));
     }
   }
@@ -203,8 +212,8 @@ class Game {
 
   gameData() {
     return {
-      gameStatus: this.gameStatus,
-      currentAge: this.currentAge,
+      gameStatus: this.#gameStatus,
+      currentAge: this.#currentAge,
     };
   }
 

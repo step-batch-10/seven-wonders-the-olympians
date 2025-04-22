@@ -64,6 +64,10 @@ class Wonder {
     return this.#wonder.stages;
   }
 
+  get wonder() {
+    return this.#wonder;
+  }
+
   get buildings() {
     return Object.fromEntries(
       Object.entries(this.#buildings).map(([colors, cards]) => {
@@ -131,6 +135,7 @@ class Wonder {
   addMilitaryStrength(card) {
     const count = card.produces[0].count;
     this.#militaryStrength += count;
+    //also need to add the staging military strength
   }
 
   getCardBenefits(card) {

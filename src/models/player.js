@@ -4,26 +4,27 @@ import _ from "lodash";
 class Player {
   #name;
   #playerID;
-  rightPlayer;
-  leftPlayer;
+  #rightPlayer;
+  #leftPlayer;
   #coins;
-  warTokens;
-  hand;
-  wonder;
-  status;
-  tempAct;
+  #warTokens;
+  #hand;
+  #wonder;
+  #status;
+  #tempAct;
+  #view;
 
   constructor(userName) {
     this.#name = userName;
     this.#playerID = Player.generateUniquePlayerID();
-    this.rightPlayer = null;
-    this.leftPlayer = null;
+    this.#rightPlayer = null;
+    this.#leftPlayer = null;
     this.#coins = 0;
-    this.warTokens = [];
-    this.hand = [];
-    this.wonder = null;
-    this.status = "waiting";
-    this.view = "upto-date";
+    this.#warTokens = [];
+    this.#hand = [];
+    this.#wonder = null;
+    this.#status = "waiting";
+    this.#view = "upto-date";
   }
 
   static generateUniquePlayerID() {
@@ -42,8 +43,12 @@ class Player {
     return this.#playerID;
   }
 
+  get view() {
+    return this.#view;
+  }
+
   get warTokensObj() {
-    return this.warTokens.reduce(
+    return this.#warTokens.reduce(
       (total, token) => {
         token < 0 ? (total.negative += token) : (total.positive += token);
         return total;
@@ -52,8 +57,43 @@ class Player {
     );
   }
 
+  get leftPlayer() {
+    return this.#leftPlayer;
+  }
+
+  set leftPlayer(player) {
+    this.#leftPlayer = player;
+  }
+
+  get rightPlayer() {
+    return this.#rightPlayer;
+  }
+
+  set rightPlayer(player) {
+    this.#rightPlayer = player;
+  }
+
+  get wonder() {
+    return this.#wonder;
+  }
+
+  set wonder(wonder) {
+    this.#wonder = wonder;
+  }
+
+  calculateWarPoints() {
+    const playerShields = this.#wonder.buildings.red.length;
+    const leftShields = this.#leftPlayer.wonder.buildings.red.length;
+    const rightShields = this.#rightPlayer.wonder.buildings.red.length;
+
+    return {
+      positive: (playerShields > leftShields) + (playerShields > rightShields),
+      negative: (playerShields < leftShields) + (playerShields < rightShields),
+    };
+  }
+
   assignHand(hand) {
-    this.hand = hand;
+    this.#hand = hand;
   }
 
   addCoins(coins) {
@@ -61,21 +101,21 @@ class Player {
   }
 
   updateStatus(status) {
-    this.status = status;
+    this.#status = status;
   }
 
   updateHand(cardName) {
     const indexOfCard = _.findIndex(
-      this.hand,
+      this.#hand,
       (handCard) => cardName === handCard.name,
     );
 
-    _.remove(this.hand, (_ele, idx) => idx === indexOfCard);
+    _.remove(this.#hand, (_ele, idx) => idx === indexOfCard);
   }
 
   coverWithChoices() {
     const usedChoices = new Set();
-    const choices = this.wonder.resources.choices;
+    const choices = this.#wonder.resources.choices;
 
     return (resource, count) => {
       if (count <= 0) return 0;
@@ -102,7 +142,7 @@ class Player {
   }
 
   haveResources(cost) {
-    const resources = this.wonder.resources;
+    const resources = this.#wonder.resources;
     const costPending = [];
     const coveredFromChoice = this.coverWithChoices();
 
@@ -120,12 +160,12 @@ class Player {
   playerData() {
     const data = {
       name: this.name,
-      wonder: this.wonder.name,
+      wonder: this.#wonder.name,
       coins: this.#coins,
       warTokens: this.warTokensObj,
-      stage: this.wonder.staged,
-      buildings: this.wonder.buildings,
-      bonusResource: this.wonder.bonusResource,
+      stage: this.#wonder.staged,
+      buildings: this.#wonder.buildings,
+      bonusResource: this.#wonder.bonusResource,
     };
 
     return data;
@@ -133,9 +173,9 @@ class Player {
 
   getOtherPlayerData() {
     const data = [];
-    let otherPlayer = this.leftPlayer.leftPlayer;
+    let otherPlayer = this.#leftPlayer.leftPlayer;
 
-    while (otherPlayer.playerID !== this.rightPlayer.playerID) {
+    while (otherPlayer.playerID !== this.#rightPlayer.playerID) {
       data.push(otherPlayer.playerData());
       otherPlayer = otherPlayer.leftPlayer;
     }
@@ -145,8 +185,8 @@ class Player {
 
   getOtherPlayersStatus() {
     const playersStatus = [];
-    let otherPlayer = this.leftPlayer.leftPlayer;
-    while (otherPlayer.playerID !== this.rightPlayer.playerID) {
+    let otherPlayer = this.#leftPlayer.leftPlayer;
+    while (otherPlayer.playerID !== this.#rightPlayer.playerID) {
       playersStatus.push(otherPlayer.status);
       otherPlayer = otherPlayer.leftPlayer;
     }
@@ -157,20 +197,12 @@ class Player {
   getHandData() {
     const canStage = this.canStage();
 
-    return this.hand.map((card) => ({
+    return this.#hand.map((card) => ({
       name: card.name,
       canBuild: this.canBuild(card),
       canStage: canStage,
     }));
   }
-
-  // #doesPlayerHaveResources (card, resources) {
-  //   return card.cost.every(({type, count}) => {
-  //     if(type === "coins" && this.#coins >= count) return true;
-
-  //     return type in resources && resources[type] >= count;
-  //   });
-  // }
 
   canBuild(card) {
     const cost = card.cost;
@@ -188,15 +220,15 @@ class Player {
     remainingCost = this.leftPlayer.haveResources(cost);
     if (remainingCost.length === 0) return true; // return money to be deducted
 
-    remainingCost = this.rightPlayer.haveResources(cost);
+    remainingCost = this.#rightPlayer.haveResources(cost);
     if (remainingCost.length === 0) return true;
 
     return false;
   }
 
   canStage() {
-    const stages = this.wonder.stages;
-    const toStageCount = this.wonder.staged.length + 1;
+    const stages = this.#wonder.stages;
+    const toStageCount = this.#wonder.staged.length + 1;
     const stageCard = stages[`stage${toStageCount}`];
 
     return this.canBuild(stageCard);
@@ -207,24 +239,24 @@ class Player {
     if (coinCost) this.#coins -= coinCost.count;
   }
 
-  addBenfits(card) {
-    const benifits = card.produces.find(({ type }) => type === "coin");
-    if (benifits) this.#coins += benifits.count;
+  addBenefits(card) {
+    const benefits = card.produces.find(({ type }) => type === "coin");
+    if (benefits) this.#coins += benefits.count;
   }
 
   buildCard(cardName) {
-    const card = [...this.hand].find((card) => card.name === cardName);
+    const card = [...this.#hand].find((card) => card.name === cardName);
 
     this.deductCoins(card);
-    this.addBenfits(card);
-    this.view = "upto-date";
+    this.addBenefits(card);
+    this.#view = "upto-date";
 
-    this.wonder.build(card);
+    this.#wonder.build(card);
     this.updateHand(cardName);
   }
 
   setTempAct(action) {
-    this.tempAct = action;
+    this.#tempAct = action;
   }
 
   discardCard(cardName) {
@@ -233,7 +265,7 @@ class Player {
   }
 
   updateViewStatus(status) {
-    this.view = status;
+    this.#view = status;
   }
 }
 

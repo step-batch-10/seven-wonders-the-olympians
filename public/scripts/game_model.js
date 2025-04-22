@@ -25,6 +25,7 @@ const updatePlayerView = async () => {
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ status: "upto-date" }),
   });
+
   return await response.json();
 };
 
