@@ -56,7 +56,7 @@ class Player {
   }
 
   get tempAct() {
-    return this.#tempAct
+    return this.#tempAct;
   }
 
   addWarTokens(token) {
