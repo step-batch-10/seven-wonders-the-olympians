@@ -1,6 +1,7 @@
 import { assert, assertEquals, assertFalse, assertNotEquals } from "assert";
-import { describe, it } from "test/bdd";
+import { beforeEach, describe, it } from "test/bdd";
 import { Player } from "../src/models/player.js";
+import { Game } from "../src/models/game.js";
 import { Wonder } from "../src/models/wonder.js";
 
 describe("Testing the Player class", () => {
@@ -671,6 +672,66 @@ describe("Testing the Player class", () => {
       msg: "had enough resources",
       noOfResources: 0,
       resourcesReq: 0,
+    });
+  });
+
+  describe("Testing Military conflicts", () => {
+    let p1, p2, p3, p4, g;
+    beforeEach(() => {
+      p1 = new Player("Alice");
+      p2 = new Player("Bob");
+      p3 = new Player("Adam");
+      p4 = new Player("Eve");
+
+      g = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
+      g.addPlayer(p2);
+      g.addPlayer(p3);
+      g.addPlayer(p4);
+    });
+
+    it("Should return total conflict value", () => {
+      const p = new Player("Alice");
+      p.addWarTokens(1);
+      p.addWarTokens(3);
+      p.addWarTokens(5);
+      p.addWarTokens(-1);
+
+      assertEquals(p.warTokensObj, { positive: 9, negative: -1 });
+    });
+
+    it("Should return war conflict points", () => {
+      p1.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 3 }],
+      });
+      p2.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 3 }],
+      });
+      p3.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 0 }],
+      });
+      p4.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 2 }],
+      });
+
+      assertEquals(p1.calculateWarPoints(3), {
+        leftConflict: { opponentName: "Eve", result: "won", tokens: 5 },
+        rightConflict: { opponentName: "Bob", result: "draw", tokens: 0 },
+      });
+
+      assertEquals(p2.calculateWarPoints(2), {
+        leftConflict: { opponentName: "Alice", result: "draw", tokens: 0 },
+        rightConflict: { opponentName: "Adam", result: "won", tokens: 3 },
+      });
+
+      assertEquals(p3.calculateWarPoints(1), {
+        leftConflict: { opponentName: "Bob", result: "lose", tokens: -1 },
+        rightConflict: { opponentName: "Eve", result: "lose", tokens: -1 },
+      });
+
+      assertEquals(p4.calculateWarPoints(3), {
+        leftConflict: { opponentName: "Adam", result: "won", tokens: 5 },
+        rightConflict: { opponentName: "Alice", result: "lose", tokens: -1 },
+      });
     });
   });
 });

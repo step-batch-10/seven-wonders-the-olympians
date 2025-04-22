@@ -1,5 +1,4 @@
 import { Hono } from "hono";
-import { getPlayerDetails } from "../handlers/game_handler.js";
 import {
   getPlayerName,
   getPlayerViewStatus,
@@ -35,7 +34,6 @@ const createPlayerRoute = () => {
     .get("/name", getPlayerName)
     .get("/wonder", getWonderImgName)
     .post("/action", setPlayerAction)
-    .get("/info", getPlayerDetails)
     .get("/view", getPlayerViewStatus)
     .put("/view", updateViewStatus);
 

@@ -67,6 +67,10 @@ class Game {
     this.#currentAge = currentAge;
   }
 
+  get currentAge() {
+    return this.#currentAge;
+  }
+
   set round(round) {
     this.#round = round;
   }
@@ -166,6 +170,10 @@ class Game {
     this.#round++;
   }
 
+  nextAge() {
+    this.#currentAge++;
+  }
+
   endAgeDiscards() {
     this.#players.forEach((player) => {
       this.addToDiscarded(player.hand);
@@ -174,7 +182,7 @@ class Game {
 
   militaryConflicts() {
     this.#players.forEach((player) => {
-      const warPoints = player.calculateWarPoints();
+      const warPoints = player.calculateWarPoints(this.currentAge);
       console.log("player --->", player.name);
       console.log("war points --->", player.wonder.militaryStrength, warPoints);
       console.log("\n", "-".repeat(30), "\n");
@@ -183,18 +191,22 @@ class Game {
 
   endAge() {
     this.endAgeDiscards();
-    return this.militaryConflicts();
+    this.militaryConflicts();
+    if (this.#currentAge === 3) {
+      this.endGame();
+    }
+    this.nextAge();
+    this.initAge();
   }
 
   passHands() {
     this.nextRound();
-    console.log("round-->", this.#round);
 
     if (this.isLastRound()) {
       return this.endAge();
     }
 
-    return this.#currentAge === 2 ? this.#passRight() : this.#passLeft();
+    this.#currentAge === 2 ? this.#passRight() : this.#passLeft();
   }
 
   makeHands() {
@@ -270,6 +282,8 @@ class Game {
       player.updateViewStatus("not upto-date");
     });
   }
+
+  endGame() {}
 }
 
 export { Game };

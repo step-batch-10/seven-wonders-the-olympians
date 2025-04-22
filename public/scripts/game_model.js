@@ -1,5 +1,5 @@
 const fetchPlayersDetails = async () =>
-  await (await fetch("/player/info")).json();
+  await (await fetch("/game/info")).json();
 
 const fetchDeck = async () => await (await fetch("/game/cards")).json();
 

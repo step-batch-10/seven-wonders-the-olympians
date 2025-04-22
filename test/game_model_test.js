@@ -676,4 +676,163 @@ describe("Testing getPlayersStatus", () => {
       status: "selected",
     });
   });
+
+  describe("Testing Military conflicts", () => {
+    let p1, p2, p3, p4, g;
+    beforeEach(() => {
+      p1 = new Player("Alice");
+      p2 = new Player("Bob");
+      p3 = new Player("Adam");
+      p4 = new Player("Eve");
+
+      g = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
+      g.addPlayer(p2);
+      g.addPlayer(p3);
+      g.addPlayer(p4);
+    });
+
+    it("Should return war conflict points according to age 1", () => {
+      p1.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 3 }],
+      });
+      p2.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 3 }],
+      });
+      p3.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 0 }],
+      });
+      p4.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 2 }],
+      });
+
+      g.militaryConflicts();
+
+      assertEquals(p1.warTokensObj, { positive: 1, negative: 0 });
+      assertEquals(p2.warTokensObj, { positive: 1, negative: 0 });
+      assertEquals(p3.warTokensObj, { positive: 0, negative: -2 });
+      assertEquals(p4.warTokensObj, { positive: 1, negative: -1 });
+    });
+
+    it("Should return war conflict points according to age 2", () => {
+      p1.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 3 }],
+      });
+      p2.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 3 }],
+      });
+      p3.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 0 }],
+      });
+      p4.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 2 }],
+      });
+
+      g.currentAge = 2;
+      g.militaryConflicts();
+
+      assertEquals(p1.warTokensObj, { positive: 3, negative: 0 });
+      assertEquals(p2.warTokensObj, { positive: 3, negative: 0 });
+      assertEquals(p3.warTokensObj, { positive: 0, negative: -2 });
+      assertEquals(p4.warTokensObj, { positive: 3, negative: -1 });
+    });
+
+    it("Should return war conflict points according to age 3", () => {
+      p1.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 3 }],
+      });
+      p2.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 3 }],
+      });
+      p3.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 0 }],
+      });
+      p4.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 2 }],
+      });
+
+      g.currentAge = 3;
+      g.militaryConflicts();
+
+      assertEquals(p1.warTokensObj, { positive: 5, negative: 0 });
+      assertEquals(p2.warTokensObj, { positive: 5, negative: 0 });
+      assertEquals(p3.warTokensObj, { positive: 0, negative: -2 });
+      assertEquals(p4.warTokensObj, { positive: 5, negative: -1 });
+    });
+
+    it("Should return war conflict points according to progressive age", () => {
+      p1.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 3 }],
+      });
+      p2.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 3 }],
+      });
+      p3.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 0 }],
+      });
+      p4.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 2 }],
+      });
+
+      g.militaryConflicts();
+      g.currentAge = 2;
+
+      g.militaryConflicts();
+      g.currentAge = 3;
+
+      g.militaryConflicts();
+
+      assertEquals(p1.warTokensObj, { positive: 9, negative: 0 });
+      assertEquals(p2.warTokensObj, { positive: 9, negative: 0 });
+      assertEquals(p3.warTokensObj, { positive: 0, negative: -6 });
+      assertEquals(p4.warTokensObj, { positive: 9, negative: -3 });
+    });
+
+    it("Should return war conflict points according to all age and progressive game", () => {
+      p1.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 3 }],
+      });
+      p2.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 3 }],
+      });
+      p3.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 0 }],
+      });
+      p4.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 2 }],
+      });
+
+      g.militaryConflicts();
+      g.currentAge = 2;
+
+      p1.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 3 }],
+      });
+      p1.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 2 }],
+      });
+      p3.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 2 }],
+      });
+
+      g.militaryConflicts();
+      g.currentAge = 3;
+
+      p1.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 3 }],
+      });
+      p2.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 3 }],
+      });
+      p2.wonder.addMilitaryStrength({
+        produces: [{ type: "shield", count: 3 }],
+      });
+
+      g.militaryConflicts();
+
+      assertEquals(p1.warTokensObj, { positive: 17, negative: 0 });
+      assertEquals(p2.warTokensObj, { positive: 9, negative: -2 });
+      assertEquals(p3.warTokensObj, { positive: 0, negative: -4 });
+      assertEquals(p4.warTokensObj, { positive: 1, negative: -3 });
+    });
+  });
 });

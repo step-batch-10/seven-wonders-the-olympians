@@ -68,15 +68,15 @@ class Player {
     this.#warTokens.push(token);
   }
 
-  // get warTokensObj() {
-  //   return this.#warTokens.reduce(
-  //     (total, token) => {
-  //       token < 0 ? (total.negative += token) : (total.positive += token);
-  //       return total;
-  //     },
-  //     { positive: 0, negative: 0 }
-  //   );
-  // }
+  get warTokensObj() {
+    return this.#warTokens.reduce(
+      (total, token) => {
+        token < 0 ? (total.negative += token) : (total.positive += token);
+        return total;
+      },
+      { positive: 0, negative: 0 },
+    );
+  }
 
   get leftPlayer() {
     return this.#leftPlayer;
@@ -102,14 +102,30 @@ class Player {
     this.#wonder = wonder;
   }
 
-  calculateWarPoints() {
+  conflict(neighbour, age) {
+    const winningToken = 2 * age - 1;
+
     const playerShields = this.wonder.militaryStrength;
-    const leftShields = this.leftPlayer.wonder.militaryStrength;
-    const rightShields = this.rightPlayer.wonder.militaryStrength;
+    const neighbourShields = neighbour.wonder.militaryStrength;
+
+    const delta = playerShields - neighbourShields;
+
+    const result = delta > 0 ? "won" : delta < 0 ? "lose" : "draw";
+    const tokens = delta > 0 ? winningToken : delta < 0 ? -1 : 0;
+
+    this.addWarTokens(tokens);
 
     return {
-      positive: (playerShields > leftShields) + (playerShields > rightShields),
-      negative: (playerShields < leftShields) + (playerShields < rightShields),
+      opponentName: neighbour.name,
+      result,
+      tokens,
+    };
+  }
+
+  calculateWarPoints(age) {
+    return {
+      leftConflict: this.conflict(this.#leftPlayer, age),
+      rightConflict: this.conflict(this.#rightPlayer, age),
     };
   }
 
@@ -139,7 +155,7 @@ class Player {
       name: this.name,
       wonder: this.#wonder.name,
       coins: this.#coins,
-      warTokens: this.calculateWarPoints(),
+      warTokens: this.warTokensObj,
       stage: this.#wonder.staged,
       buildings: this.#wonder.buildings,
       bonusResource: this.#wonder.bonusResource,
