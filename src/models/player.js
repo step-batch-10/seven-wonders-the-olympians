@@ -47,6 +47,18 @@ class Player {
     return this.#view;
   }
 
+  get status() {
+    return this.#status;
+  }
+
+  set status(status) {
+    this.#status = status;
+  }
+
+  addWarTokens(token) {
+    this.#warTokens.push(token);
+  }
+
   get warTokensObj() {
     return this.#warTokens.reduce(
       (total, token) => {

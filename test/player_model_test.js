@@ -476,13 +476,14 @@ describe("Testing the Player class", () => {
     const p = new Player("Alice");
 
     assertEquals(p.warTokensObj, { negative: 0, positive: 0 });
-    p.warTokens = [3, -3];
-    assertEquals(p.warTokensObj, { negative: -3, positive: 3 });
+    p.addWarTokens(3);
+    p.addWarTokens(-1);
+    assertEquals(p.warTokensObj, { negative: -1, positive: 3 });
   });
 
-  it("should add coins if the card has coin benfits", () => {
+  it("should add coins if the card has coin benefits", () => {
     const p = new Player("Alice");
-    p.addBenfits({
+    p.addBenefits({
       produces: [{ type: "coin", count: 5 }, { type: "points" }],
     });
     assertEquals(p.coins, 5);
