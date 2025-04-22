@@ -22,11 +22,9 @@ const renderUpdatedGame = async () => {
 
 const pollForPlayerStatus = () => {
   setInterval(async () => {
-    const playersStatus = await api.getPlayersStatus();
-    console.log(playersStatus);
-    const { view } = await api.getPlayersViewStatus();
+    const {view} = await api.getPlayersViewStatus();
 
-    if (view === "not upto-date") renderUpdatedGame();
+    if(view === "not upto-date") renderUpdatedGame();
   }, 2000);
 };
 
