@@ -238,17 +238,22 @@ const reqBuildCard = (card, postPlayerAction) => {
   };
 };
 
-const hoverMessage = (message) => {
-  const element = document.createElement("div");
-  element.classList.add("hover-message");
-  element.textContent = message;
+const createHoverMessage = (message) => {
+  return (event) => {
+    const hoverMessage = document.createElement("div");
+    hoverMessage.textContent = message;
+    hoverMessage.classList.add("hover-message");
+    hoverMessage.id = "build-message";
 
-  return element;
+    event.target.closest(".deck").appendChild(hoverMessage);
+  };
 };
 
-// const displayHoverMsg = () => {
-//   const hoverMessage = document.querySelector("");
-// };
+const removeHoverMessage = () => {
+  const buildMessageEle = document.querySelector("#build-message");
+
+  if (buildMessageEle) buildMessageEle.remove();
+};
 
 const createBuild = (card, postPlayerAction) => {
   const [stage, content, image] = createElements(["div", "p", "img"]);
@@ -257,16 +262,17 @@ const createBuild = (card, postPlayerAction) => {
   content.innerText = "Build";
   stage.append(image, content);
 
-  if (!card.canBuild) {
+  if (!("buildDetails" in card.actionDetails)) {
     stage.classList.add("disabled");
     return stage;
   }
 
-  stage.append(hoverMessage(card.buildDetails.msg));
+  stage.addEventListener(
+    "mouseenter",
+    createHoverMessage(card.actionDetails.buildDetails),
+  );
+  stage.addEventListener("mouseleave", removeHoverMessage);
   stage.addEventListener("click", reqBuildCard(card, postPlayerAction));
-  // stage.addEventListener("mouseenter", showHoverMessage);
-  // stage.addEventListener("mouseleave", hideHoverMessage);
-
   return stage;
 };
 
@@ -307,7 +313,7 @@ const createStage = (card) => {
   content.innerText = "Stage";
   stage.append(image, content);
 
-  if (!card.canStage) {
+  if (!(card.canStage)) {
     stage.classList.add("disabled");
     return stage;
   }
@@ -316,7 +322,7 @@ const createStage = (card) => {
   return stage;
 };
 
-const enableActions = (card, postPlayerAction) => {
+const showActions = (card, postPlayerAction) => {
   const actionBox = document.createElement("div");
   actionBox.classList.add("actionsBox");
 
@@ -347,7 +353,7 @@ const clearPerviousThings = () => {
 const selectCard = (event, card, postPlayerAction) => {
   if (document.querySelector(".actionsBox")) clearPerviousThings();
 
-  event.target.parentNode.append(enableActions(card, postPlayerAction));
+  event.target.parentNode.append(showActions(card, postPlayerAction));
 
   removeHover("#cardsContainer");
   cardHover(event);

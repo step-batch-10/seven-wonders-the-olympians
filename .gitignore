@@ -1,5 +1,6 @@
 .vscode
 .DS_Store
 coverage
+spikes
 public/.DS_Store
 scratchdeno.qa.json
