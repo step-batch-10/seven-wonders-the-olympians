@@ -42,7 +42,7 @@ const getPlayerPoints = (coins, tokens) => {
   const tokensEl = document.createElement("p");
 
   coinsEl.textContent = `💲 ${coins}`;
-  tokensEl.textContent = `⚔️ ${tokens}`;
+  tokensEl.textContent = `⚔️ ${tokens.positive} / ${tokens.negative}`;
   container.append(coinsEl, tokensEl);
   return container;
 };
@@ -53,7 +53,7 @@ const renderPlayerInfo = ({ wonder, name, coins, warTokens, buildings }) => {
   renderCards(buildings);
 
   const header = document.querySelector(".property");
-  header.replaceChildren(getPlayerPoints(coins, warTokens.positive));
+  header.replaceChildren(getPlayerPoints(coins, warTokens));
 };
 
 const convert = (name) => name.replaceAll(" ", "").toLowerCase();
@@ -158,7 +158,7 @@ const getNeighbourStats = (player, template) => {
   const header = playerClone.querySelector(".player-stats-header");
 
   header.append(getPlayerStats(name));
-  header.append(getPlayerPoints(coins, warTokens.positive));
+  header.append(getPlayerPoints(coins, warTokens));
 
   const cards = playerClone.querySelector(".cards");
   if (cards) appendPlayerBuildings(playerClone, buildings);
@@ -450,7 +450,7 @@ const createConflict = (conflict, player) => {
 
   const person = createPersonBlock(
     player,
-    `img/wonders/${wonderName}A.jpeg`,
+    `img/wonders/${wonderName.toLowerCase()}A.jpeg`,
     "img/miltiry-conflits/shield.png",
     `img/miltiry-conflits/victory${tokens}.png`,
     militaryShields,
@@ -460,7 +460,7 @@ const createConflict = (conflict, player) => {
   const playerStatus = createEl("div", { className: `playerStatus` });
 
   const drawText = createEl("p", {
-    text: `your are ${result} with ${opponentName}  ${direction}`,
+    text: `you're ${result} with ${opponentName}  ${direction}`,
   });
 
   playerStatus.append(drawText);
@@ -501,7 +501,7 @@ const renderGameUI = async ({
     right,
     rightPlayerStatus,
   );
-  await sleep(5000);
+  await sleep(6000);
   parent.style.display = "none";
 };
 
@@ -519,7 +519,7 @@ const renderMilitaryConflicts = async (conflicts) => {
   ele.style.display = "flex";
   ele.replaceChildren(...conflictAnimation());
   ele.style.display = "flex";
-  await sleep(2000);
+  await sleep(3000);
   ele.style.display = "none";
   await renderGameUI(conflicts);
 };
