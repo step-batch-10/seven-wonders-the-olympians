@@ -88,9 +88,12 @@ class Wonder {
     return this.#buildingsSet;
   }
 
+  alreadyBuilt(cardName) {
+    return this.#buildingsSet.has(cardName);
+  }
+
   isResourceCard(card) {
     const resources = ["brown", "grey", "green"];
-
     return resources.includes(card.color);
   }
 

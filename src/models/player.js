@@ -371,10 +371,18 @@ class Player {
     return canTrade ? this.#addTradeDetails(trade, {}) : null;
   }
 
+  #alreadyHave(card) {
+    if (this.#wonder.alreadyBuilt(card.name)) {
+      return {};
+    }
+    return null;
+  }
+
   #getActionDetails(card) {
     const cost = card.cost;
 
     return (
+      this.#alreadyHave(card) ||
       this.#isCardFree(cost) ||
       this.#canAffordCoinCost(cost) ||
       this.#hasEnoughResources(cost) ||
