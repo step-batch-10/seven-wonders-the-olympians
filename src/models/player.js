@@ -78,7 +78,7 @@ class Player {
         token < 0 ? (total.negative += token) : (total.positive += token);
         return total;
       },
-      { positive: 0, negative: 0 }
+      { positive: 0, negative: 0 },
     );
   }
 
@@ -151,7 +151,7 @@ class Player {
   updateHand(cardName) {
     const indexOfCard = _.findIndex(
       this.#hand,
-      (handCard) => cardName === handCard.name
+      (handCard) => cardName === handCard.name,
     );
 
     _.remove(this.#hand, (_ele, idx) => idx === indexOfCard);
@@ -271,10 +271,10 @@ class Player {
     const rightPlayerMap = _.keyBy(rightPlayer, "type");
 
     const costsCovered = cost.every(({ type, count }) => {
-      coinsNeeded +=
-        (leftPlayerMap[type]?.cost || 0) + (rightPlayerMap[type]?.cost || 0);
-      const itemCount =
-        (leftPlayerMap[type]?.count || 0) + (rightPlayerMap[type]?.count || 0);
+      coinsNeeded += (leftPlayerMap[type]?.cost || 0) +
+        (rightPlayerMap[type]?.cost || 0);
+      const itemCount = (leftPlayerMap[type]?.count || 0) +
+        (rightPlayerMap[type]?.count || 0);
 
       return itemCount >= count && coinsNeeded <= coins;
     });

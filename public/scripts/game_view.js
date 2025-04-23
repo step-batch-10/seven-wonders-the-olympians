@@ -324,7 +324,7 @@ const enableActions = (card, postPlayerAction) => {
     createDiscard(card, postPlayerAction),
     createStage(card),
     createBuild(card, postPlayerAction),
-    createCancel()
+    createCancel(),
   );
 
   return actionBox;

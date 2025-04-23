@@ -303,7 +303,7 @@ describe("Testing the Player class", () => {
       assertEquals(refinedCard1.name, "Lumber Yard");
       assertEquals(
         refinedCard1.actionDetails.buildDetails,
-        "no resources required"
+        "no resources required",
       );
     });
 
@@ -394,7 +394,7 @@ describe("Testing the Player class", () => {
 
         assertEquals(refinedCard1.name, "Guard Tower");
         assertEquals(refinedCard1.buildDetails, {});
-      }
+      },
     );
   });
 
@@ -447,7 +447,7 @@ describe("Testing the Player class", () => {
       assert(refinedCard1.canDiscard);
       assertEquals(refinedCard1.name, "Guard Tower");
       assertEquals(refinedCard1.buildDetails, {});
-    }
+    },
   );
 });
 
