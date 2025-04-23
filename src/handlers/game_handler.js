@@ -7,13 +7,18 @@ const getPlayerDetails = (ctx) => {
   return ctx.json(info);
 };
 
+const debug = (args) => {
+  return args;
+};
+
 const getPlayerHand = (ctx) => {
   const gameID = ctx.getCookie(ctx, "gameID");
   const playerID = ctx.getCookie(ctx, "playerID");
 
   const gameMap = ctx.get("gameMap");
   const game = gameMap.get(gameID);
-  return ctx.json(game.getPlayerHandData(playerID));
+
+  return ctx.json(debug(game.getPlayerHandData(playerID)));
 };
 
 const didAllPlayerSelectCard = (ctx) => {

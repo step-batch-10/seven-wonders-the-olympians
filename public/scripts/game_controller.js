@@ -30,11 +30,12 @@ const pollForPlayerStatus = () => {
     if (view === "not upto-date") {
       const { isLastRound, hand } = await api.fetchDeck();
       if (isLastRound) {
-        document.querySelector(".waiting-window").remove();
+        document.querySelector(".waiting-window")?.remove();
         await uiView.renderMilitaryConflicts(
           await api.fetchMilitaryConflicts(),
         );
-        return gameManager();
+        await uiView.renderAge(await api.fetchAge());
+        return;
       }
       return renderUpdatedGame(hand);
     }

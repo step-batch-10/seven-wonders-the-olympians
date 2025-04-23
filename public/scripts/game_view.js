@@ -17,7 +17,7 @@ const createWaitingWindow = () => {
 
 const removeWaitingWindow = () => {
   const waitingWindow = document.querySelector(".waiting-window");
-  if (waitingWindow) waitingWindow.remove();
+  if (waitingWindow) waitingWindow?.remove();
 };
 
 const renderWonder = (wonder) => {
@@ -473,7 +473,7 @@ const renderGameUI = async ({
   leftConflict,
   rightConflict,
 }) => {
-  const parent = document.querySelector(".conflictContainier");
+  const parent = document.querySelector(".conflictContainer");
   parent.style.display = "flex";
   const conflict = document.querySelector(".conflict");
   conflict.style.display = "flex";
@@ -501,7 +501,7 @@ const renderGameUI = async ({
     right,
     rightPlayerStatus,
   );
-  await sleep(2000);
+  await sleep(5000);
   parent.style.display = "none";
 };
 
