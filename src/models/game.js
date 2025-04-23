@@ -191,12 +191,9 @@ class Game {
 
   endAge() {
     this.endAgeDiscards();
-    // this.militaryConflicts();
     if (this.#currentAge === 3) {
       this.endGame();
     }
-    this.nextAge();
-    this.initAge();
   }
 
   passHands() {
@@ -281,6 +278,10 @@ class Game {
       player.updateStatus("waiting");
       player.updateViewStatus("not upto-date");
     });
+  }
+
+  doesEveryOneDoneWithWar() {
+    return this.players.every((player) => player.doneWithConflict);
   }
 
   endGame() {}

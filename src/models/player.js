@@ -14,6 +14,7 @@ class Player {
   #tempAct;
   #view;
   #currentTrades;
+  #doneWithConflict;
 
   constructor(userName) {
     this.#name = userName;
@@ -27,10 +28,19 @@ class Player {
     this.#status = "waiting";
     this.#view = "upto-date";
     this.#currentTrades = {};
+    this.#doneWithConflict = false;
   }
 
   static generateUniquePlayerID() {
     return "pid" + uniqid();
+  }
+
+  toggleDoneWithConflict() {
+    this.#doneWithConflict = !this.#doneWithConflict;
+  }
+
+  get doneWithConflict() {
+    return this.#doneWithConflict;
   }
 
   get name() {
@@ -134,6 +144,7 @@ class Player {
   }
 
   calculateWarPoints(age) {
+    this.toggleDoneWithConflict();
     return {
       militaryShields: this.wonder.militaryStrength,
       leftConflict: this.conflict(this.#leftPlayer, age, "<---"),
