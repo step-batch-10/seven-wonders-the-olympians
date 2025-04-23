@@ -149,7 +149,7 @@ class Wonder {
   }
 
   addFutureBenifits(card) {
-    if (!(card.chain_to.length)) return;
+    if (!card.chain_to.length) return;
 
     card.chain_to.map((chain) => this.#futureBenifits.add(chain));
   }

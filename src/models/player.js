@@ -202,9 +202,7 @@ class Player {
   }
 
   haveResources(cost) {
-    // console.log("wonderr", this.#wonder);
     const resources = this.#wonder.resources;
-    console.log("seeee resources got", this.#wonder.resources);
 
     const costPending = [];
     const coveredFromChoice = this.coverWithChoices();
@@ -301,7 +299,7 @@ class Player {
   resourcesGot(cost, costPending) {
     const costPendingMap = _.keyBy(costPending, "type");
     return cost.map(({ type, count }) => {
-      const coveredCount = count - costPendingMap[type]?.count;
+      const coveredCount = count - (costPendingMap[type]?.count || 0);
       return { type, count: coveredCount };
     });
   }
@@ -335,8 +333,8 @@ class Player {
     return actionDetails;
   }
 
-  #addTradeDetails(tradeDetails, actionDetails) {
-    actionDetails.tradeDetails = tradeDetails;
+  #addTradeDetails(trade, actionDetails) {
+    actionDetails.tradeDetails = trade;
 
     return actionDetails;
   }
@@ -361,14 +359,16 @@ class Player {
       : null;
   }
 
-  // #HasFutureCard(card) {
-  //   return false;
-  // }
+  #hasFutureCard(card) {
+    return this.#wonder.futureBenifits.has(card.name)
+      ? this.#addBuildDetails("future free card", {})
+      : null;
+  }
 
   #trade(cost) {
-    const { canTrade, tradeDetails } = this.resourcesFromNeighbour(cost);
+    const { canTrade, trade } = this.resourcesFromNeighbour(cost);
 
-    return canTrade ? this.#addTradeDetails(tradeDetails, {}) : null;
+    return canTrade ? this.#addTradeDetails(trade, {}) : null;
   }
 
   #getActionDetails(card) {
@@ -378,7 +378,7 @@ class Player {
       this.#isCardFree(cost) ||
       this.#canAffordCoinCost(cost) ||
       this.#hasEnoughResources(cost) ||
-      // this.#HasFutureCard(card) ||
+      this.#hasFutureCard(card) ||
       this.#trade(cost) ||
       {}
     );
