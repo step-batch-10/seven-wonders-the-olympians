@@ -268,7 +268,8 @@ const createBuild = (card, postPlayerAction) => {
     createHoverMessage(card.actionDetails.buildDetails),
   );
   stage.addEventListener("mouseleave", removeHoverMessage);
-  stage.addEventListener("click", reqBuildCard(card, postPlayerAction));
+  const listerner = "tradeDetails" in card ? someFn : reqBuildCard;
+  stage.addEventListener("click", listerner(card, postPlayerAction));
   return stage;
 };
 
@@ -395,8 +396,9 @@ const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const renderAge = async ({ age }) => {
   const el = document.querySelector("#age");
+  el.style.display = "flex";
   el.replaceChildren(...createAgeElements(age));
-  await sleep(2000);
+  await sleep(1000);
   el.style.display = "none";
 };
 
@@ -513,11 +515,12 @@ const conflictAnimation = () => {
 
 const renderMilitaryConflicts = async (conflicts) => {
   const ele = document.querySelector("#age");
+  ele.style.display = "flex";
   ele.replaceChildren(...conflictAnimation());
   ele.style.display = "flex";
   await sleep(2000);
   ele.style.display = "none";
-  renderGameUI(conflicts);
+  await renderGameUI(conflicts);
 };
 
 export {

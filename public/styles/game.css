@@ -418,7 +418,6 @@ main img {
 .img {
   width: 375px;
   height: 150px;
-  background-color: red;
 }
 .conflict > * {
   display: flex;

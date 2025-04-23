@@ -191,7 +191,7 @@ class Game {
 
   endAge() {
     this.endAgeDiscards();
-    if (this.#currentAge === 3) {
+    if (this.#currentAge > 3) {
       this.endGame();
     }
   }
