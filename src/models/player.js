@@ -346,7 +346,9 @@ class Player {
   }
 
   #canAffordCoinCost(cost) {
-    return cost.length === 1 && cost[0]?.type === "coin"
+    const isCoin = cost.length === 1 && cost[0]?.type === "coin";
+
+    return isCoin && cost[0]?.count <= this.#coins
       ? this.#addBuildDetails("pay bank", {})
       : null;
   }
@@ -367,6 +369,7 @@ class Player {
 
   #trade(cost) {
     const { canTrade, trade } = this.resourcesFromNeighbour(cost);
+    console.log("this is trade", canTrade);
 
     return canTrade ? this.#addTradeDetails(trade, {}) : null;
   }
