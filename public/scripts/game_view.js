@@ -229,78 +229,102 @@ const createCancel = () => {
   return stage;
 };
 
-const reqBuildCard = (parentEvent, postPlayerAction) => {
+const reqBuildCard = (card, postPlayerAction) => {
   return (event) => {
     removeList(event);
 
     createWaitingWindow();
-    postPlayerAction({ card: parentEvent.cardName, action: "build" });
+    postPlayerAction({ card: card.name, action: "build" });
   };
 };
 
-const createBuild = (parentEvent, card, postPlayerAction) => {
+const hoverMessage = (message) => {
+  const element = document.createElement("div");
+  element.classList.add("hover-message");
+  element.textContent = message;
+
+  return element;
+};
+
+// const displayHoverMsg = () => {
+//   const hoverMessage = document.querySelector("");
+// };
+
+const createBuild = (card, postPlayerAction) => {
   const [stage, content, image] = createElements(["div", "p", "img"]);
 
   image.src = "/img/icons/build.png";
   content.innerText = "Build";
   stage.append(image, content);
 
-  if (card.canBuild) {
-    stage.addEventListener(
-      "click",
-      reqBuildCard(parentEvent, postPlayerAction),
-    );
+  if (!card.canBuild) {
+    stage.classList.add("disabled");
+    return stage;
   }
-  stage.className = card.canBuild ? "" : "disabled";
+
+  stage.append(hoverMessage(card.buildDetails.msg));
+  stage.addEventListener("click", reqBuildCard(card, postPlayerAction));
+  // stage.addEventListener("mouseenter", showHoverMessage);
+  // stage.addEventListener("mouseleave", hideHoverMessage);
+
   return stage;
 };
 
-const reqToDiscard = (parentEvent, postPlayerAction) => {
+const reqToDiscard = (card, postPlayerAction) => {
   return (event) => {
     removeList(event);
     createWaitingWindow();
-    postPlayerAction({ card: parentEvent.cardName, action: "discard" });
+    postPlayerAction({ card: card.name, action: "discard" });
   };
 };
 
-const createDiscard = (parentEvent, postPlayerAction) => {
+const createDiscard = (card, postPlayerAction) => {
   const [stage, content, image] = createElements(["div", "p", "img"]);
 
   image.src = "/img/icons/discard.png";
   content.innerText = "Discard";
-
   stage.append(image, content);
-  stage.addEventListener("click", reqToDiscard(parentEvent, postPlayerAction));
 
+  if (!card.canDiscard) {
+    stage.classList.add("disabled");
+    return stage;
+  }
+
+  stage.addEventListener("click", reqToDiscard(card, postPlayerAction));
   return stage;
 };
 
-const reqStage = (parentEvent) => {
+const reqStage = (card) => {
   return () => {
-    const _move = { card: parentEvent.cardName, action: "stage" };
+    const _move = { card: card.name, action: "stage" };
   };
 };
 
-const createStage = (parentEvent, card) => {
+const createStage = (card) => {
   const [stage, content, image] = createElements(["div", "p", "img"]);
-  image.src = "/img/icons/stage.png";
 
+  image.src = "/img/icons/stage.png";
   content.innerText = "Stage";
   stage.append(image, content);
-  if (card.canStage) stage.addEventListener("click", reqStage(parentEvent));
-  stage.className = card.canStage ? "" : "disabled";
+
+  if (!card.canStage) {
+    stage.classList.add("disabled");
+    return stage;
+  }
+
+  stage.addEventListener("click", reqStage(card));
   return stage;
 };
 
-const showActions = (event, card, postPlayerAction) => {
+const enableActions = (card, postPlayerAction) => {
   const actionBox = document.createElement("div");
   actionBox.classList.add("actionsBox");
 
   actionBox.append(
-    createDiscard(event.target, postPlayerAction),
-    createStage(event.target, card),
-    createBuild(event.target, card, postPlayerAction),
-    createCancel(event.target),
+    createDiscard(card, postPlayerAction),
+    createStage(card),
+    createBuild(card, postPlayerAction),
+    createCancel()
   );
 
   return actionBox;
@@ -320,11 +344,11 @@ const clearPerviousThings = () => {
   document.querySelector(".hovered").classList.remove("hovered");
 };
 
-const selectTheCard = (event, card, postPlayerAction) => {
+const selectCard = (event, card, postPlayerAction) => {
   if (document.querySelector(".actionsBox")) clearPerviousThings();
-  event.target.parentNode.appendChild(
-    showActions(event, card, postPlayerAction),
-  );
+
+  event.target.parentNode.append(enableActions(card, postPlayerAction));
+
   removeHover("#cardsContainer");
   cardHover(event);
 };
@@ -333,15 +357,12 @@ const createCardsContainer = (card, index, offset, postPlayerAction) => {
   const imageContainer = document.createElement("div");
   const img = document.createElement("img");
   img.src = `/img/cards/${convert(card.name)}.jpeg`;
-  img.cardName = card.name;
   imageContainer.style = `--index:${index + 1 - offset}; --middle:${offset}`;
   imageContainer.classList.add("deck");
   imageContainer.appendChild(img);
 
-  img.addEventListener(
-    "click",
-    (e) => selectTheCard(e, card, postPlayerAction),
-  );
+  img.addEventListener("click", (e) => selectCard(e, card, postPlayerAction));
+
   return imageContainer;
 };
 

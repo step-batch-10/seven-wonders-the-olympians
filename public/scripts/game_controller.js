@@ -41,7 +41,6 @@ const main = async () => {
   view.renderAge(await api.fetchAge());
   renderGame();
   pollForPlayerStatus();
-  removeAgeDiv();
 };
 
 globalThis.onload = main;

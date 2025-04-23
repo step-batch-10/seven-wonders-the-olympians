@@ -78,7 +78,7 @@ class Player {
         token < 0 ? (total.negative += token) : (total.positive += token);
         return total;
       },
-      { positive: 0, negative: 0 },
+      { positive: 0, negative: 0 }
     );
   }
 
@@ -151,10 +151,57 @@ class Player {
   updateHand(cardName) {
     const indexOfCard = _.findIndex(
       this.#hand,
-      (handCard) => cardName === handCard.name,
+      (handCard) => cardName === handCard.name
     );
 
     _.remove(this.#hand, (_ele, idx) => idx === indexOfCard);
+  }
+
+  coverWithChoices() {
+    const usedChoices = new Set();
+    const choices = this.#wonder.resources.choices;
+
+    return (resource, count) => {
+      if (count <= 0) return 0;
+
+      let costCovered = 0;
+
+      for (
+        let index = 0;
+        index < choices.length && costCovered < count;
+        index++
+      ) {
+        const choiceResources = choices[index];
+        const available = !usedChoices.has(index);
+        const resourceIncluded = choiceResources.has(resource);
+
+        if (available && resourceIncluded) {
+          costCovered++;
+          usedChoices.add(index);
+        }
+      }
+
+      return costCovered;
+    };
+  }
+
+  haveResources(cost) {
+    // console.log("wonderr", this.#wonder);
+    const resources = this.#wonder.resources;
+    console.log("seeee resources got", this.#wonder.resources);
+
+    const costPending = [];
+    const coveredFromChoice = this.coverWithChoices();
+
+    cost.forEach(({ type, count }) => {
+      const resourceAvailable = resources[type] || 0;
+      let pendingCount = count - resourceAvailable;
+      pendingCount -= coveredFromChoice(type, pendingCount);
+
+      if (pendingCount > 0) costPending.push({ type, count: pendingCount });
+    });
+
+    return costPending;
   }
 
   playerData() {
@@ -194,135 +241,6 @@ class Player {
     return playersStatus;
   }
 
-  #makeBuildDes(canBuild, msg) {
-    return {
-      canBuild,
-      buildDetails: {
-        noOfResources: 0,
-        resourcesReq: 0,
-        msg,
-      },
-    };
-  }
-
-  resourcesGot(cost, costPending) {
-    const costPendingMap = _.keyBy(costPending, "type");
-    return cost.map(({ type, count }) => {
-      const coveredCount = count - costPendingMap[type].count;
-      return { type, count: coveredCount };
-    });
-  }
-
-  coverWithChoices() {
-    const usedChoices = new Set();
-    const choices = this.wonder.resources.choices;
-
-    return (resource, count) => {
-      if (count <= 0) return 0;
-
-      let costCovered = 0;
-
-      for (
-        let index = 0;
-        index < choices.length && costCovered < count;
-        index++
-      ) {
-        const choiceResources = choices[index];
-        const available = !usedChoices.has(index);
-        const resourceIncluded = choiceResources.has(resource);
-
-        if (available && resourceIncluded) {
-          costCovered++;
-          usedChoices.add(index);
-        }
-      }
-
-      return costCovered;
-    };
-  }
-
-  haveResources(cost) {
-    const resources = this.wonder.resources;
-    const costPending = [];
-    const coveredFromChoice = this.coverWithChoices();
-
-    cost.forEach(({ type, count }) => {
-      const resourceAvailable = resources[type] || 0;
-      let pendingCount = count - resourceAvailable;
-      pendingCount -= coveredFromChoice(type, pendingCount);
-
-      if (pendingCount > 0) costPending.push({ type, count: pendingCount });
-    });
-
-    return costPending;
-  }
-
-  tradeDetails(cost, costPending, payableCoin = 2) {
-    const resourcesGot = this.resourcesGot(cost, costPending);
-
-    return resourcesGot.map(({ type, count }) => ({
-      type,
-      count,
-      rate: count * payableCoin,
-    }));
-  }
-
-  totalCost(neighbor) {
-    return neighbor.reduce(({ rate }, total) => rate + total, 0);
-  }
-
-  canTrade({ leftPlayer, rightPlayer }, cost) {
-    const coins = this.#coins;
-    let coinsNeeded = 0;
-    const leftPlayerMap = _.keyBy(leftPlayer, "type");
-    const rightPlayerMap = _.keyBy(rightPlayer, "type");
-
-    const costsCovered = cost.every(({ type, count }) => {
-      coinsNeeded += (leftPlayerMap[type]?.cost || 0) +
-        (rightPlayerMap[type]?.cost || 0);
-      const itemCount = (leftPlayerMap[type]?.count || 0) +
-        (rightPlayerMap[type]?.count || 0);
-
-      return itemCount >= count && coinsNeeded <= coins;
-    });
-
-    return costsCovered;
-  }
-
-  resourcesFromNeighbour(cost) {
-    const trade = {};
-
-    const leftPlayerPendings = this.leftPlayer.haveResources(cost);
-    trade.leftPlayer = this.tradeDetails(cost, leftPlayerPendings);
-
-    const rightPlayerPendings = this.rightPlayer.haveResources(cost);
-    trade.rightPlayer = this.tradeDetails(cost, rightPlayerPendings);
-
-    const canBuy = this.canTrade(trade, cost);
-
-    return { canBuy, trade };
-  }
-
-  canBuild(card) {
-    console.log({ card });
-    const cost = card.cost;
-
-    if (!cost.length) return { canBuy: true };
-    if (this.wonder.buildingsSet.has(card.name)) return { canBuy: false };
-
-    if (cost[0]?.type === "coin") {
-      const canBuy = cost[0].count <= this.#coins;
-
-      return { canBuy };
-    }
-
-    const costPending = this.haveResources(cost);
-
-    if (!costPending.length) return { canBuy: true };
-
-    return this.resourcesFromNeighbour(costPending);
-  }
-
   canStage() {
     const stage = this.wonder.getNextStage();
     return this.canBuild(stage.cost);
@@ -346,57 +264,117 @@ class Player {
     if (benefits) this.#coins += benefits.count;
   }
 
-  #hasNoCost(cost) {
-    return cost.length === 0;
+  canTrade({ leftPlayer, rightPlayer }, cost) {
+    const coins = this.#coins;
+    let coinsNeeded = 0;
+    const leftPlayerMap = _.keyBy(leftPlayer, "type");
+    const rightPlayerMap = _.keyBy(rightPlayer, "type");
+
+    const costsCovered = cost.every(({ type, count }) => {
+      coinsNeeded +=
+        (leftPlayerMap[type]?.cost || 0) + (rightPlayerMap[type]?.cost || 0);
+      const itemCount =
+        (leftPlayerMap[type]?.count || 0) + (rightPlayerMap[type]?.count || 0);
+
+      return itemCount >= count && coinsNeeded <= coins;
+    });
+
+    return costsCovered;
   }
 
-  #isCostTypeCoin(cost) {
-    return cost.length === 1 && cost[0]?.type === "coin";
+  resourcesGot(cost, costPending) {
+    const costPendingMap = _.keyBy(costPending, "type");
+    return cost.map(({ type, count }) => {
+      const coveredCount = count - costPendingMap[type]?.count;
+      return { type, count: coveredCount };
+    });
   }
 
-  #playerHasResources(tradeCost) {
-    return tradeCost.length === 0;
+  tradeDetails(cost, costPending, payableCoin = 2) {
+    const resourcesGot = this.resourcesGot(cost, costPending);
+
+    return resourcesGot.map(({ type, count }) => ({
+      type,
+      count,
+      rate: count * payableCoin,
+    }));
   }
 
-  #buildDetails(cost) {
-    if (this.#hasNoCost(cost)) {
-      return this.#makeBuildDes(true, "no resources required");
-    }
+  resourcesFromNeighbour(cost) {
+    const trade = {};
+    const leftPlayerPendings = this.#leftPlayer.haveResources(cost);
+    trade.leftPlayer = this.tradeDetails(cost, leftPlayerPendings);
 
-    if (this.#isCostTypeCoin(cost)) {
-      console.log("Entered the 2nd if");
-      console.log(cost, this.#coins);
+    const rightPlayerPendings = this.#rightPlayer.haveResources(cost);
+    trade.rightPlayer = this.tradeDetails(cost, rightPlayerPendings);
 
-      const canBuild = cost[0].count <= this.#coins;
-      return this.#makeBuildDes(canBuild, "pay bank");
-    }
+    const canTrade = this.canTrade(trade, cost);
 
-    const playerTradeCost = this.haveResources(cost);
-
-    if (this.#playerHasResources(playerTradeCost)) {
-      return this.#makeBuildDes(true, "had enough resources");
-    }
-
-    return { canBuild: false, buildDetails: {} };
+    return { canTrade, trade };
   }
 
-  #getBuildDetails(card) {
+  #addBuildDetails(msg, actionDetails) {
+    actionDetails.buildDetails = msg;
+
+    return actionDetails;
+  }
+
+  #addTradeDetails(tradeDetails, actionDetails) {
+    actionDetails.tradeDetails = tradeDetails;
+
+    return actionDetails;
+  }
+
+  #isCardFree(cost) {
+    return cost.length === 0
+      ? this.#addBuildDetails("no resources required", {})
+      : null;
+  }
+
+  #canAffordCoinCost(cost) {
+    return cost.length === 1 && cost[0]?.type === "coin"
+      ? this.#addBuildDetails("pay bank", {})
+      : null;
+  }
+
+  #hasEnoughResources(cost) {
+    const tradeCost = this.haveResources(cost);
+
+    return tradeCost.length === 0
+      ? this.#addBuildDetails("had enough resources", {})
+      : null;
+  }
+
+  // #HasFutureCard(card) {
+  //   return false;
+  // }
+
+  #trade(cost) {
+    const { canTrade, tradeDetails } = this.resourcesFromNeighbour(cost);
+
+    return canTrade ? this.#addTradeDetails(tradeDetails, {}) : null;
+  }
+
+  #getActionDetails(card) {
     const cost = card.cost;
 
-    return this.#buildDetails(cost);
+    return (
+      this.#isCardFree(cost) ||
+      this.#canAffordCoinCost(cost) ||
+      this.#hasEnoughResources(cost) ||
+      // this.#HasFutureCard(card) ||
+      this.#trade(cost) ||
+      {}
+    );
   }
 
   #addActionDetails(card) {
-    const { canBuild, buildDetails } = this.#getBuildDetails(card);
+    const actionDetails = this.#getActionDetails(card);
 
     return {
       name: card.name,
-      canBuild,
+      actionDetails,
       canStage: false,
-      buildDetails,
-      canTrade: false,
-      tradeDetails: {},
-      canDiscard: true,
     };
   }
 
