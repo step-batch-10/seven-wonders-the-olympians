@@ -8,8 +8,9 @@ const renderGame = async () => {
   view.renderNeighbours(data);
   view.renderOtherPlayerStats(data);
 
-  const cards = await api.fetchDeck();
-  view.renderDeck(cards, api.postPlayerAction);
+  const { hand } = await api.fetchDeck();
+  console.log("bro", hand);
+  view.renderDeck(hand, api.postPlayerAction);
 };
 
 const renderUpdatedGame = async () => {
