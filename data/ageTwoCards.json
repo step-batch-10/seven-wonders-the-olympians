@@ -79,7 +79,7 @@
   {
     "name": "Glassworks",
     "age": 2,
-    "color": "gray",
+    "color": "grey",
     "min_players": 3,
     "cost": [],
     "produces": [{ "type": "glass", "count": 1 }],
@@ -90,7 +90,7 @@
   {
     "name": "Press",
     "age": 2,
-    "color": "gray",
+    "color": "grey",
     "min_players": 3,
     "cost": [],
     "produces": [{ "type": "papyrus", "count": 1 }],
@@ -101,7 +101,7 @@
   {
     "name": "Loom",
     "age": 2,
-    "color": "gray",
+    "color": "grey",
     "min_players": 3,
     "cost": [],
     "produces": [{ "type": "textile", "count": 1 }],
@@ -269,7 +269,7 @@
     "effect": {
       "type": "coin",
       "effect_type": "card",
-      "card_color": "gray",
+      "card_color": "grey",
       "count": 2,
       "applies_to": ["self", "left_neighbor", "right_neighbor"]
     },
@@ -361,7 +361,7 @@
   {
     "name": "Glassworks",
     "age": 2,
-    "color": "gray",
+    "color": "grey",
     "min_players": 5,
     "cost": [],
     "produces": [{ "type": "glass", "count": 1 }],
@@ -372,7 +372,7 @@
   {
     "name": "Press",
     "age": 2,
-    "color": "gray",
+    "color": "grey",
     "min_players": 5,
     "cost": [],
     "produces": [{ "type": "papyrus", "count": 1 }],
@@ -383,7 +383,7 @@
   {
     "name": "Loom",
     "age": 2,
-    "color": "gray",
+    "color": "grey",
     "min_players": 5,
     "cost": [],
     "produces": [{ "type": "textile", "count": 1 }],
@@ -601,7 +601,7 @@
     "effect": {
       "type": "coin",
       "effect_type": "card",
-      "card_color": "gray",
+      "card_color": "grey",
       "count": 2,
       "applies_to": ["self", "left_neighbor", "right_neighbor"]
     },

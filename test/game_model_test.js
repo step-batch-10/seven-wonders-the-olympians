@@ -5,9 +5,9 @@ import {
   assertNotEquals,
   assertThrows,
 } from "assert";
-import { beforeEach, describe, it } from "test/bdd";
-import { Player } from "../src/models/player.js";
-import { Game } from "../src/models/game.js";
+import {beforeEach, describe, it} from "test/bdd";
+import {Player} from "../src/models/player.js";
+import {Game} from "../src/models/game.js";
 
 describe("Testing the Game class", () => {
   const getCardsName = (hand) => hand.map((card) => card.name);
@@ -90,11 +90,11 @@ describe("Testing the Game class", () => {
         name: "Bob",
         wonder: "Gizah",
         coins: 3,
-        warTokens: { positive: 0, negative: 0 },
+        warTokens: {positive: 0, negative: 0},
         stage: [],
         buildings: {
           brown: [],
-          gray: [],
+          grey: [],
           green: [],
           yellow: [],
           blue: [],
@@ -106,11 +106,11 @@ describe("Testing the Game class", () => {
           name: "Alice",
           wonder: "Olympia",
           coins: 3,
-          warTokens: { positive: 0, negative: 0 },
+          warTokens: {positive: 0, negative: 0},
           stage: [],
           buildings: {
             brown: [],
-            gray: [],
+            grey: [],
             green: [],
             yellow: [],
             blue: [],
@@ -123,11 +123,11 @@ describe("Testing the Game class", () => {
           name: "Adam",
           wonder: "Ephesos",
           coins: 3,
-          warTokens: { positive: 0, negative: 0 },
+          warTokens: {positive: 0, negative: 0},
           stage: [],
           buildings: {
             brown: [],
-            gray: [],
+            grey: [],
             green: [],
             yellow: [],
             blue: [],
@@ -141,11 +141,11 @@ describe("Testing the Game class", () => {
             name: "Eve",
             wonder: "Alexandria",
             coins: 3,
-            warTokens: { positive: 0, negative: 0 },
+            warTokens: {positive: 0, negative: 0},
             stage: [],
             buildings: {
               brown: [],
-              gray: [],
+              grey: [],
               green: [],
               yellow: [],
               blue: [],
@@ -171,11 +171,11 @@ describe("Testing the Game class", () => {
         name: "Tom",
         wonder: "Halikarnassos",
         coins: 3,
-        warTokens: { positive: 0, negative: 0 },
+        warTokens: {positive: 0, negative: 0},
         stage: [],
         buildings: {
           brown: [],
-          gray: [],
+          grey: [],
           green: [],
           yellow: [],
           blue: [],
@@ -187,11 +187,11 @@ describe("Testing the Game class", () => {
           name: "Eve",
           wonder: "Alexandria",
           coins: 3,
-          warTokens: { positive: 0, negative: 0 },
+          warTokens: {positive: 0, negative: 0},
           stage: [],
           buildings: {
             brown: [],
-            gray: [],
+            grey: [],
             green: [],
             yellow: [],
             blue: [],
@@ -204,11 +204,11 @@ describe("Testing the Game class", () => {
           name: "Alice",
           wonder: "Olympia",
           coins: 3,
-          warTokens: { positive: 0, negative: 0 },
+          warTokens: {positive: 0, negative: 0},
           stage: [],
           buildings: {
             brown: [],
-            gray: [],
+            grey: [],
             green: [],
             yellow: [],
             blue: [],
@@ -222,11 +222,11 @@ describe("Testing the Game class", () => {
             name: "Adam",
             wonder: "Ephesos",
             coins: 3,
-            warTokens: { positive: 0, negative: 0 },
+            warTokens: {positive: 0, negative: 0},
             stage: [],
             buildings: {
               brown: [],
-              gray: [],
+              grey: [],
               green: [],
               yellow: [],
               blue: [],
@@ -239,11 +239,11 @@ describe("Testing the Game class", () => {
             name: "Bob",
             wonder: "Gizah",
             coins: 3,
-            warTokens: { positive: 0, negative: 0 },
+            warTokens: {positive: 0, negative: 0},
             stage: [],
             buildings: {
               brown: [],
-              gray: [],
+              grey: [],
               green: [],
               yellow: [],
               blue: [],
@@ -632,13 +632,13 @@ describe("Testing gameData()", () => {
   });
 
   it("should return gameData with status as waiting if there are not much players", () => {
-    assertEquals(g.gameData(), { gameStatus: "waiting", currentAge: 0 });
+    assertEquals(g.gameData(), {gameStatus: "waiting", currentAge: 0});
   });
 
   it("should return gameData with status as matched if there is a match", () => {
     g.addPlayer(p3);
     g.addPlayer(p4);
-    assertEquals(g.gameData(), { gameStatus: "matched", currentAge: 1 });
+    assertEquals(g.gameData(), {gameStatus: "matched", currentAge: 1});
   });
 });
 
@@ -693,84 +693,84 @@ describe("Testing getPlayersStatus", () => {
 
     it("Should return war conflict points according to age 1", () => {
       p1.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 3 }],
+        produces: [{type: "shield", count: 3}],
       });
       p2.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 3 }],
+        produces: [{type: "shield", count: 3}],
       });
       p3.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 0 }],
+        produces: [{type: "shield", count: 0}],
       });
       p4.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 2 }],
+        produces: [{type: "shield", count: 2}],
       });
 
       g.militaryConflicts();
 
-      assertEquals(p1.warTokensObj, { positive: 1, negative: 0 });
-      assertEquals(p2.warTokensObj, { positive: 1, negative: 0 });
-      assertEquals(p3.warTokensObj, { positive: 0, negative: -2 });
-      assertEquals(p4.warTokensObj, { positive: 1, negative: -1 });
+      assertEquals(p1.warTokensObj, {positive: 1, negative: 0});
+      assertEquals(p2.warTokensObj, {positive: 1, negative: 0});
+      assertEquals(p3.warTokensObj, {positive: 0, negative: -2});
+      assertEquals(p4.warTokensObj, {positive: 1, negative: -1});
     });
 
     it("Should return war conflict points according to age 2", () => {
       p1.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 3 }],
+        produces: [{type: "shield", count: 3}],
       });
       p2.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 3 }],
+        produces: [{type: "shield", count: 3}],
       });
       p3.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 0 }],
+        produces: [{type: "shield", count: 0}],
       });
       p4.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 2 }],
+        produces: [{type: "shield", count: 2}],
       });
 
       g.currentAge = 2;
       g.militaryConflicts();
 
-      assertEquals(p1.warTokensObj, { positive: 3, negative: 0 });
-      assertEquals(p2.warTokensObj, { positive: 3, negative: 0 });
-      assertEquals(p3.warTokensObj, { positive: 0, negative: -2 });
-      assertEquals(p4.warTokensObj, { positive: 3, negative: -1 });
+      assertEquals(p1.warTokensObj, {positive: 3, negative: 0});
+      assertEquals(p2.warTokensObj, {positive: 3, negative: 0});
+      assertEquals(p3.warTokensObj, {positive: 0, negative: -2});
+      assertEquals(p4.warTokensObj, {positive: 3, negative: -1});
     });
 
     it("Should return war conflict points according to age 3", () => {
       p1.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 3 }],
+        produces: [{type: "shield", count: 3}],
       });
       p2.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 3 }],
+        produces: [{type: "shield", count: 3}],
       });
       p3.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 0 }],
+        produces: [{type: "shield", count: 0}],
       });
       p4.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 2 }],
+        produces: [{type: "shield", count: 2}],
       });
 
       g.currentAge = 3;
       g.militaryConflicts();
 
-      assertEquals(p1.warTokensObj, { positive: 5, negative: 0 });
-      assertEquals(p2.warTokensObj, { positive: 5, negative: 0 });
-      assertEquals(p3.warTokensObj, { positive: 0, negative: -2 });
-      assertEquals(p4.warTokensObj, { positive: 5, negative: -1 });
+      assertEquals(p1.warTokensObj, {positive: 5, negative: 0});
+      assertEquals(p2.warTokensObj, {positive: 5, negative: 0});
+      assertEquals(p3.warTokensObj, {positive: 0, negative: -2});
+      assertEquals(p4.warTokensObj, {positive: 5, negative: -1});
     });
 
     it("Should return war conflict points according to progressive age", () => {
       p1.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 3 }],
+        produces: [{type: "shield", count: 3}],
       });
       p2.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 3 }],
+        produces: [{type: "shield", count: 3}],
       });
       p3.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 0 }],
+        produces: [{type: "shield", count: 0}],
       });
       p4.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 2 }],
+        produces: [{type: "shield", count: 2}],
       });
 
       g.militaryConflicts();
@@ -781,58 +781,58 @@ describe("Testing getPlayersStatus", () => {
 
       g.militaryConflicts();
 
-      assertEquals(p1.warTokensObj, { positive: 9, negative: 0 });
-      assertEquals(p2.warTokensObj, { positive: 9, negative: 0 });
-      assertEquals(p3.warTokensObj, { positive: 0, negative: -6 });
-      assertEquals(p4.warTokensObj, { positive: 9, negative: -3 });
+      assertEquals(p1.warTokensObj, {positive: 9, negative: 0});
+      assertEquals(p2.warTokensObj, {positive: 9, negative: 0});
+      assertEquals(p3.warTokensObj, {positive: 0, negative: -6});
+      assertEquals(p4.warTokensObj, {positive: 9, negative: -3});
     });
 
     it("Should return war conflict points according to all age and progressive game", () => {
       p1.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 3 }],
+        produces: [{type: "shield", count: 3}],
       });
       p2.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 3 }],
+        produces: [{type: "shield", count: 3}],
       });
       p3.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 0 }],
+        produces: [{type: "shield", count: 0}],
       });
       p4.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 2 }],
+        produces: [{type: "shield", count: 2}],
       });
 
       g.militaryConflicts();
       g.currentAge = 2;
 
       p1.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 3 }],
+        produces: [{type: "shield", count: 3}],
       });
       p1.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 2 }],
+        produces: [{type: "shield", count: 2}],
       });
       p3.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 2 }],
+        produces: [{type: "shield", count: 2}],
       });
 
       g.militaryConflicts();
       g.currentAge = 3;
 
       p1.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 3 }],
+        produces: [{type: "shield", count: 3}],
       });
       p2.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 3 }],
+        produces: [{type: "shield", count: 3}],
       });
       p2.wonder.addMilitaryStrength({
-        produces: [{ type: "shield", count: 3 }],
+        produces: [{type: "shield", count: 3}],
       });
 
       g.militaryConflicts();
 
-      assertEquals(p1.warTokensObj, { positive: 17, negative: 0 });
-      assertEquals(p2.warTokensObj, { positive: 9, negative: -2 });
-      assertEquals(p3.warTokensObj, { positive: 0, negative: -4 });
-      assertEquals(p4.warTokensObj, { positive: 1, negative: -3 });
+      assertEquals(p1.warTokensObj, {positive: 17, negative: 0});
+      assertEquals(p2.warTokensObj, {positive: 9, negative: -2});
+      assertEquals(p3.warTokensObj, {positive: 0, negative: -4});
+      assertEquals(p4.warTokensObj, {positive: 1, negative: -3});
     });
   });
 });

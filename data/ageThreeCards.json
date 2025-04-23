@@ -223,14 +223,14 @@
       {
         "type": "coin",
         "effect_type": "card",
-        "card_color": "gray",
+        "card_color": "grey",
         "count": 2,
         "applies_to": ["self"]
       },
       {
         "type": "points",
         "effect_type": "card",
-        "card_color": "gray",
+        "card_color": "grey",
         "count": 2,
         "applies_to": ["self"]
       }
@@ -593,14 +593,14 @@
       {
         "type": "coin",
         "effect_type": "card",
-        "card_color": "gray",
+        "card_color": "grey",
         "count": 2,
         "applies_to": ["self"]
       },
       {
         "type": "points",
         "effect_type": "card",
-        "card_color": "gray",
+        "card_color": "grey",
         "count": 2,
         "applies_to": ["self"]
       }
