@@ -276,9 +276,9 @@ describe("Testing the Game class", () => {
       g1.addPlayer(p3);
       g1.addPlayer(p4);
 
-      console.log(getCardsName(g1.getPlayerHandData(bobID)));
+      console.log(getCardsName(g1.getPlayerHandData(bobID).hand));
 
-      assertEquals(getCardsName(g1.getPlayerHandData(bobID)), [
+      assertEquals(getCardsName(g1.getPlayerHandData(bobID).hand), [
         "Clay Pit",
         "Timber Yard",
         "Glassworks",
@@ -297,7 +297,7 @@ describe("Testing the Game class", () => {
       g1.addPlayer(p3);
       g1.addPlayer(p4);
 
-      assertEquals(getCardsName(g1.getPlayerHandData(aliceID)), [
+      assertEquals(getCardsName(g1.getPlayerHandData(aliceID).hand), [
         "Lumber Yard",
         "Lumber Yard",
         "Stone Pit",
@@ -307,7 +307,7 @@ describe("Testing the Game class", () => {
         "Excavation",
       ]);
 
-      assertEquals(getCardsName(g1.getPlayerHandData(bobID)), [
+      assertEquals(getCardsName(g1.getPlayerHandData(bobID).hand), [
         "Clay Pit",
         "Timber Yard",
         "Glassworks",
@@ -338,11 +338,11 @@ describe("Testing the Game class", () => {
       g1.addPlayer(p3);
       g1.addPlayer(p4);
 
-      const beforeUpdateBobsHand = g1.getPlayerHandData(bobID);
+      const beforeUpdateBobsHand = g1.getPlayerHandData(bobID).hand;
       console.log("Card removing", beforeUpdateBobsHand[0].name);
 
       p2.updateHand(beforeUpdateBobsHand[0].name);
-      const afterUpdateBobsHand = g1.getPlayerHandData(bobID);
+      const afterUpdateBobsHand = g1.getPlayerHandData(bobID).hand;
 
       beforeUpdateBobsHand.shift();
       assertEquals(beforeUpdateBobsHand, afterUpdateBobsHand);
@@ -369,9 +369,9 @@ describe("Testing the Game class", () => {
         g1.addPlayer(p3);
         g1.addPlayer(p4);
 
-        const beforePassingBobsHand = g1.getPlayerHandData(bobID);
+        const beforePassingBobsHand = g1.getPlayerHandData(bobID).hand;
         g1.passHands();
-        const afterPassingBobsHand = g1.getPlayerHandData(bobID);
+        const afterPassingBobsHand = g1.getPlayerHandData(bobID).hand;
         testIfHandsAreNotSame(beforePassingBobsHand, afterPassingBobsHand);
       });
 
@@ -385,15 +385,15 @@ describe("Testing the Game class", () => {
         g1.addPlayer(p3);
         g1.addPlayer(p4);
 
-        const beforePassingAlicesHand = g1.getPlayerHandData(aliceID);
-        const beforePassingBobsHand = g1.getPlayerHandData(bobID);
-        const beforePassingAdamsHand = g1.getPlayerHandData(adamID);
-        const beforePassingEvesHand = g1.getPlayerHandData(eveID);
+        const beforePassingAlicesHand = g1.getPlayerHandData(aliceID).hand;
+        const beforePassingBobsHand = g1.getPlayerHandData(bobID).hand;
+        const beforePassingAdamsHand = g1.getPlayerHandData(adamID).hand;
+        const beforePassingEvesHand = g1.getPlayerHandData(eveID).hand;
         g1.passHands();
-        const afterPassingAlicesHand = g1.getPlayerHandData(aliceID);
-        const afterPassingBobsHand = g1.getPlayerHandData(bobID);
-        const afterPassingAdamsHand = g1.getPlayerHandData(adamID);
-        const afterPassingEvesHand = g1.getPlayerHandData(eveID);
+        const afterPassingAlicesHand = g1.getPlayerHandData(aliceID).hand;
+        const afterPassingBobsHand = g1.getPlayerHandData(bobID).hand;
+        const afterPassingAdamsHand = g1.getPlayerHandData(adamID).hand;
+        const afterPassingEvesHand = g1.getPlayerHandData(eveID).hand;
 
         console.log(getCardsName(beforePassingAlicesHand));
 
@@ -424,9 +424,9 @@ describe("Testing the Game class", () => {
         g1.addPlayer(p3);
         g1.addPlayer(p4);
 
-        const beforePassingBobsHand = g1.getPlayerHandData(bobID);
+        const beforePassingBobsHand = g1.getPlayerHandData(bobID).hand;
         g1.passHands();
-        const afterPassingAlicesHand = g1.getPlayerHandData(aliceID);
+        const afterPassingAlicesHand = g1.getPlayerHandData(aliceID).hand;
 
         assertEquals(beforePassingBobsHand, afterPassingAlicesHand);
       });
@@ -441,15 +441,15 @@ describe("Testing the Game class", () => {
         g1.addPlayer(p3);
         g1.addPlayer(p4);
 
-        const beforePassingAlicesHand = g1.getPlayerHandData(aliceID);
-        const beforePassingBobsHand = g1.getPlayerHandData(bobID);
-        const beforePassingAdamsHand = g1.getPlayerHandData(adamID);
-        const beforePassingEvesHand = g1.getPlayerHandData(eveID);
+        const beforePassingAlicesHand = g1.getPlayerHandData(aliceID).hand;
+        const beforePassingBobsHand = g1.getPlayerHandData(bobID).hand;
+        const beforePassingAdamsHand = g1.getPlayerHandData(adamID).hand;
+        const beforePassingEvesHand = g1.getPlayerHandData(eveID).hand;
         g1.passHands();
-        const afterPassingAlicesHand = g1.getPlayerHandData(aliceID);
-        const afterPassingBobsHand = g1.getPlayerHandData(bobID);
-        const afterPassingAdamsHand = g1.getPlayerHandData(adamID);
-        const afterPassingEvesHand = g1.getPlayerHandData(eveID);
+        const afterPassingAlicesHand = g1.getPlayerHandData(aliceID).hand;
+        const afterPassingBobsHand = g1.getPlayerHandData(bobID).hand;
+        const afterPassingAdamsHand = g1.getPlayerHandData(adamID).hand;
+        const afterPassingEvesHand = g1.getPlayerHandData(eveID).hand;
 
         testIfHandsAreSame(beforePassingBobsHand, afterPassingAlicesHand);
         testIfHandsAreSame(beforePassingAdamsHand, afterPassingBobsHand);
@@ -475,9 +475,9 @@ describe("Testing the Game class", () => {
 
         g.currentAge = 2;
 
-        const beforePassingAlicesHand = g.getPlayerHandData(aliceID);
+        const beforePassingAlicesHand = g.getPlayerHandData(aliceID).hand;
         g.passHands();
-        const afterPassingBobsHand = g.getPlayerHandData(bobID);
+        const afterPassingBobsHand = g.getPlayerHandData(bobID).hand;
 
         testIfHandsAreSame(beforePassingAlicesHand, afterPassingBobsHand);
       });
@@ -500,15 +500,15 @@ describe("Testing the Game class", () => {
 
         g.currentAge = 2;
 
-        const beforePassingAlicesHand = g.getPlayerHandData(aliceID);
-        const beforePassingBobsHand = g.getPlayerHandData(bobID);
-        const beforePassingAdamsHand = g.getPlayerHandData(adamID);
-        const beforePassingEvesHand = g.getPlayerHandData(eveID);
+        const beforePassingAlicesHand = g.getPlayerHandData(aliceID).hand;
+        const beforePassingBobsHand = g.getPlayerHandData(bobID).hand;
+        const beforePassingAdamsHand = g.getPlayerHandData(adamID).hand;
+        const beforePassingEvesHand = g.getPlayerHandData(eveID).hand;
         g.passHands();
-        const afterPassingAlicesHand = g.getPlayerHandData(aliceID);
-        const afterPassingBobsHand = g.getPlayerHandData(bobID);
-        const afterPassingAdamsHand = g.getPlayerHandData(adamID);
-        const afterPassingEvesHand = g.getPlayerHandData(eveID);
+        const afterPassingAlicesHand = g.getPlayerHandData(aliceID).hand;
+        const afterPassingBobsHand = g.getPlayerHandData(bobID).hand;
+        const afterPassingAdamsHand = g.getPlayerHandData(adamID).hand;
+        const afterPassingEvesHand = g.getPlayerHandData(eveID).hand;
 
         testIfHandsAreSame(beforePassingBobsHand, afterPassingAdamsHand);
         testIfHandsAreSame(beforePassingAdamsHand, afterPassingEvesHand);

@@ -191,7 +191,7 @@ class Game {
 
   endAge() {
     this.endAgeDiscards();
-    this.militaryConflicts();
+    // this.militaryConflicts();
     if (this.#currentAge === 3) {
       this.endGame();
     }
@@ -259,9 +259,9 @@ class Game {
 
   getPlayerHandData(playerID) {
     const player = this.#players.find((player) => player.playerID === playerID);
-    console.log("Commig here"); //debug
+    const hand = player.getHandData();
 
-    return player.getHandData();
+    return { isLastRound: this.isLastRound, hand };
   }
 
   executeTempActs() {

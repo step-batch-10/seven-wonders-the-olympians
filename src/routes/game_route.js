@@ -8,6 +8,7 @@ import {
   performPlayersAction,
   sendStatus,
   updatePlayersStatus,
+  warHandler,
 } from "../handlers/game_handler.js";
 
 const createGameRoute = () => {
@@ -24,6 +25,7 @@ const createGameRoute = () => {
   );
   gameApp.get("/check-all-selected", didAllPlayerSelectCard);
   gameApp.get("/age", fetchAge);
+  gameApp.get("/military-conflicts", warHandler);
   return gameApp;
 };
 

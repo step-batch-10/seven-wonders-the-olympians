@@ -350,7 +350,7 @@ class Player {
     return cost.length === 0;
   }
 
-  #isCostTypecoin(cost) {
+  #isCostTypeCoin(cost) {
     return cost.length === 1 && cost[0]?.type === "coin";
   }
 
@@ -363,7 +363,7 @@ class Player {
       return this.#makeBuildDes(true, "no resources required");
     }
 
-    if (this.#isCostTypecoin(cost)) {
+    if (this.#isCostTypeCoin(cost)) {
       console.log("Entered the 2nd if");
       console.log(cost, this.#coins);
 

@@ -68,6 +68,17 @@ const fetchAge = (ctx) => {
   console.log(game.currentAge);
   return ctx.json({ age: game.currentAge });
 };
+
+const warHandler = (ctx) => {
+  const gameMap = ctx.get("gameMap");
+  const playerMap = ctx.get("playerMap");
+  const { playerID, gameID } = ctx.getCookie(ctx);
+  const game = gameMap.get(gameID);
+  const player = playerMap.get(playerID);
+
+  return ctx.json(player.calculateWarPoints(game.currentAge));
+};
+
 export {
   didAllPlayerSelectCard,
   fetchAge,
@@ -77,4 +88,5 @@ export {
   performPlayersAction,
   sendStatus,
   updatePlayersStatus,
+  warHandler,
 };
