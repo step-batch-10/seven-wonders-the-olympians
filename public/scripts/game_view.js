@@ -209,13 +209,9 @@ const addHoverForChildren = (parentSelector) => {
   });
 };
 
-const removeList = (event) => {
-  const container = event.target.closest(".hovered");
-
-  if (container) container.classList.remove("hovered");
-
+const removeList = () => {
   addHoverForChildren("#cardsContainer");
-  document.querySelector(".actionsBox").remove();
+  clearPerviousThings();
 };
 
 const createCancel = () => {
@@ -346,6 +342,7 @@ const removeHover = (parentSelector) => {
 };
 
 const clearPerviousThings = () => {
+  document.querySelector("#build-message")?.remove();
   document.querySelector(".actionsBox").remove();
   document.querySelector(".hovered").classList.remove("hovered");
 };
