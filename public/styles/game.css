@@ -377,6 +377,9 @@ main img {
   filter: blur(2px);
 }
 
+.conflict {
+  display: none;
+}
 #player-name {
   color: #9a6a1c;
   font-weight: 700;
@@ -393,4 +396,72 @@ main img {
   border-radius: 4px;
   align-self: flex-end;
   flex-shrink: 0;
+}
+
+.conflictContainier {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.conflict-Border {
+  border: 3px solid #9a6a1c;
+}
+.conflict {
+  background-color: #ddb35b;
+  width: 550px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+.img {
+  width: 375px;
+  height: 150px;
+  background-color: red;
+}
+.conflict > * {
+  display: flex;
+  justify-content: center;
+}
+.top {
+  justify-content: center;
+  align-items: center;
+}
+hr {
+  height: 2px;
+  background-color: #9a6a1c;
+  width: 100%;
+}
+.small {
+  width: 50px;
+  height: 50px;
+}
+.leftPerson,
+.rightPerson {
+  gap: 10px;
+}
+.points {
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.shield {
+  height: 20px;
+  width: 20px;
+}
+#othershield {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.conflictContainier {
+  backdrop-filter: blur(4px);
+  position: absolute;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: none;
 }

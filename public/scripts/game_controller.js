@@ -8,8 +8,13 @@ const renderGame = async () => {
   view.renderNeighbours(data);
   view.renderOtherPlayerStats(data);
 
-  const { hand } = await api.fetchDeck();
-  console.log("bro", hand);
+  const { isLastRound, hand } = await api.fetchDeck();
+
+  if (isLastRound) {
+    view.renderMilitaryConflicts(await api.fetchMilitaryConflicts());
+    return main();
+  }
+
   view.renderDeck(hand, api.postPlayerAction);
 };
 
@@ -34,7 +39,7 @@ const pollForPlayerStatus = () => {
 };
 
 const main = async () => {
-  view.renderAge(await api.fetchAge());
+  await view.renderAge(await api.fetchAge());
   renderGame();
   pollForPlayerStatus();
 };

@@ -382,17 +382,142 @@ const renderDeck = (cards, postPlayerAction) => {
   addHoverForChildren("#cardsContainer");
 };
 
-const renderAge = ({ age }) => {
-  const el = document.querySelector("#age");
+const createAgeElements = (age) => {
   const h1 = document.createElement("h1");
   h1.textContent = "Age";
   const image = document.createElement("img");
   image.src = `img/ages/age${age}.png`;
-  console.log("ana");
-  el.replaceChildren(h1, image);
-  setTimeout(() => {
-    el.style.display = "none";
-  }, 2000);
+
+  return [h1, image];
+};
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const renderAge = async ({ age }) => {
+  const el = document.querySelector("#age");
+  el.replaceChildren(...createAgeElements(age));
+  await sleep(2000);
+  el.style.display = "none";
+};
+
+const createEl = (tag, options = {}) => {
+  const el = document.createElement(tag);
+  if (options.className) el.className = options.className;
+  if (options.id) el.id = options.id;
+  if (options.text) el.textContent = options.text;
+  if (options.attrs) {
+    for (const attr in options.attrs) {
+      el.setAttribute(attr, options.attrs[attr]);
+    }
+  }
+  return el;
+};
+
+const createImg = (src, className = "", alt = "") =>
+  createEl("img", { className, attrs: { src, alt } });
+
+const createShieldBlock = (shieldSrc, count) => {
+  const wrapper = createEl("div", { id: "othershield" });
+  wrapper.append(
+    createImg(shieldSrc, "shield"),
+    createEl("p", { text: count }),
+  );
+  return wrapper;
+};
+
+const createPersonBlock = (
+  wrapperClass,
+  imgSrc,
+  shieldSrc,
+  victorySrc,
+  shields,
+) => {
+  const person = createEl("div", { className: wrapperClass });
+  const personImg = createImg(imgSrc, "img");
+
+  const points = createEl("div", { className: "points" });
+  points.append(createShieldBlock(shieldSrc, `${shields}`));
+  points.append(createImg(victorySrc, "small"));
+
+  person.append(personImg, points);
+  return person;
+};
+
+const createConflict = (conflict, player) => {
+  const { opponentName, result, tokens, militaryShields, wonderName } =
+    conflict;
+
+  const person = createPersonBlock(
+    player,
+    `img/wonders/${wonderName}A.jpeg`,
+    "img/miltiry-conflits/shield.png",
+    `img/miltiry-conflits/victory${tokens}.png`,
+    militaryShields,
+  );
+
+  const direction = player === "leftPlayer" ? "<---" : "--->";
+  const playerStatus = createEl("div", { className: `playerStatus` });
+
+  const drawText = createEl("p", {
+    text: `your are ${result} with ${opponentName}  ${direction}`,
+  });
+
+  playerStatus.append(drawText);
+
+  return [person, playerStatus];
+};
+
+const renderGameUI = async (
+  { militaryShields, leftConflict, rightConflict },
+) => {
+  const parent = document.querySelector(".conflictContainier");
+  parent.style.display = "flex";
+  const conflict = document.querySelector(".conflict");
+  conflict.style.display = "flex";
+  conflict.innerHTML = "";
+  conflict.classList.add("conflict-Border");
+
+  const top = createEl("div", { className: "top" });
+  top.append(
+    createImg("img/miltiry-conflits/shield.png", "shield"),
+    createEl("p", { text: `${militaryShields}` }),
+  );
+
+  const [left, leftPlayerStatus] = createConflict(leftConflict, "leftPlayer");
+  const [right, rightPlayerStatus] = createConflict(
+    rightConflict,
+    "rightPlayer",
+  );
+
+  const hr = document.createElement("hr");
+  conflict.replaceChildren(
+    top,
+    left,
+    leftPlayerStatus,
+    hr,
+    right,
+    rightPlayerStatus,
+  );
+  await sleep(2000);
+  parent.style.display = "none";
+};
+
+const conflictAnimation = () => {
+  const imag1 = document.createElement("img");
+  imag1.src = "/img/miltiry-conflits/person1.png";
+  const imag2 = document.createElement("img");
+  imag2.src = "/img/miltiry-conflits/person2.png";
+
+  return [imag1, imag2];
+};
+
+const renderMilitaryConflicts = async (conflicts) => {
+  const ele = document.querySelector("#age");
+  ele.replaceChildren(...conflictAnimation());
+  ele.style.display = "flex";
+  await sleep(2000);
+  ele.style.display = "none";
+  renderGameUI(conflicts);
 };
 
 export {
@@ -402,6 +527,7 @@ export {
   removeWaitingWindow,
   renderAge,
   renderDeck,
+  renderMilitaryConflicts,
   renderNeighbours,
   renderOtherPlayerStats,
   renderPlayerInfo,

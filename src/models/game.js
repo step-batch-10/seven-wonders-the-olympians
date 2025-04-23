@@ -261,7 +261,7 @@ class Game {
     const player = this.#players.find((player) => player.playerID === playerID);
     const hand = player.getHandData();
 
-    return { isLastRound: this.isLastRound, hand };
+    return { isLastRound: this.isLastRound(), hand };
   }
 
   executeTempActs() {
