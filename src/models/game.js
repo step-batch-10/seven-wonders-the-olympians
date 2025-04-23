@@ -257,7 +257,7 @@ class Game {
   getPlayerHandData(playerID) {
     const player = this.#players.find((player) => player.playerID === playerID);
     const hand = player.getHandData();
-
+    console.log("last round,,", this.isLastRound(), this.round);
     return { isLastRound: this.isLastRound(), hand };
   }
 

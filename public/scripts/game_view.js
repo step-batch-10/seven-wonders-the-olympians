@@ -310,7 +310,7 @@ const createStage = (card) => {
   content.innerText = "Stage";
   stage.append(image, content);
 
-  if (!(card.canStage)) {
+  if (!card.canStage) {
     stage.classList.add("disabled");
     return stage;
   }
@@ -373,7 +373,6 @@ const createCardsContainer = (card, index, offset, postPlayerAction) => {
 const renderDeck = (cards, postPlayerAction) => {
   const container = document.querySelector("#cardsContainer");
   const offset = Math.ceil(cards.length / 2);
-
   const cardEls = cards.map((card, i) =>
     createCardsContainer(card, i, offset, postPlayerAction)
   );
@@ -469,9 +468,11 @@ const createConflict = (conflict, player) => {
   return [person, playerStatus];
 };
 
-const renderGameUI = async (
-  { militaryShields, leftConflict, rightConflict },
-) => {
+const renderGameUI = async ({
+  militaryShields,
+  leftConflict,
+  rightConflict,
+}) => {
   const parent = document.querySelector(".conflictContainier");
   parent.style.display = "flex";
   const conflict = document.querySelector(".conflict");
