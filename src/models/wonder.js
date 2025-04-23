@@ -1,6 +1,7 @@
 class Wonder {
   #wonder;
   #buildings;
+  #buildingsSet;
   #resources;
   #staged;
   #discounts;
@@ -19,7 +20,7 @@ class Wonder {
       red: [],
       purple: [],
     };
-
+    this.#buildingsSet = new Set();
     this.#resources = { choices: [] };
     this.#resources[wonder.resource] = 1;
     this.#discounts = {};
@@ -75,6 +76,10 @@ class Wonder {
         return [colors, cardNames];
       }),
     );
+  }
+
+  get buildingsSet() {
+    return this.#buildingsSet;
   }
 
   isResourceCard(card) {
@@ -135,7 +140,6 @@ class Wonder {
   addMilitaryStrength(card) {
     const count = card.produces[0].count;
     this.#militaryStrength += count;
-    //also need to add the staging military strength
   }
 
   getCardBenefits(card) {
@@ -158,6 +162,7 @@ class Wonder {
 
   build(card) {
     this.#buildings[card.color].push(card);
+    this.#buildingsSet.add(card.name);
     this.getCardBenefits(card);
   }
 

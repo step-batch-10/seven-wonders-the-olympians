@@ -714,23 +714,75 @@ describe("Testing the Player class", () => {
       });
 
       assertEquals(p1.calculateWarPoints(3), {
-        leftConflict: { opponentName: "Eve", result: "won", tokens: 5 },
-        rightConflict: { opponentName: "Bob", result: "draw", tokens: 0 },
+        militaryShields: 3,
+        leftConflict: {
+          opponentName: "Eve",
+          militaryShields: 2,
+          wonderName: "Alexandria",
+          result: "won",
+          tokens: 5,
+        },
+        rightConflict: {
+          opponentName: "Bob",
+          militaryShields: 3,
+          wonderName: "Gizah",
+          result: "draw",
+          tokens: 0,
+        },
       });
 
       assertEquals(p2.calculateWarPoints(2), {
-        leftConflict: { opponentName: "Alice", result: "draw", tokens: 0 },
-        rightConflict: { opponentName: "Adam", result: "won", tokens: 3 },
+        militaryShields: 3,
+        leftConflict: {
+          opponentName: "Alice",
+          militaryShields: 3,
+          wonderName: "Olympia",
+          result: "draw",
+          tokens: 0,
+        },
+        rightConflict: {
+          opponentName: "Adam",
+          militaryShields: 0,
+          wonderName: "Ephesos",
+          result: "won",
+          tokens: 3,
+        },
       });
 
       assertEquals(p3.calculateWarPoints(1), {
-        leftConflict: { opponentName: "Bob", result: "lose", tokens: -1 },
-        rightConflict: { opponentName: "Eve", result: "lose", tokens: -1 },
+        militaryShields: 0,
+        leftConflict: {
+          opponentName: "Bob",
+          militaryShields: 3,
+          wonderName: "Gizah",
+          result: "lose",
+          tokens: -1,
+        },
+        rightConflict: {
+          opponentName: "Eve",
+          militaryShields: 2,
+          wonderName: "Alexandria",
+          result: "lose",
+          tokens: -1,
+        },
       });
 
       assertEquals(p4.calculateWarPoints(3), {
-        leftConflict: { opponentName: "Adam", result: "won", tokens: 5 },
-        rightConflict: { opponentName: "Alice", result: "lose", tokens: -1 },
+        militaryShields: 2,
+        leftConflict: {
+          opponentName: "Adam",
+          militaryShields: 0,
+          wonderName: "Ephesos",
+          result: "won",
+          tokens: 5,
+        },
+        rightConflict: {
+          opponentName: "Alice",
+          militaryShields: 3,
+          wonderName: "Olympia",
+          result: "lose",
+          tokens: -1,
+        },
       });
     });
   });

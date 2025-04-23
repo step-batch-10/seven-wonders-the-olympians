@@ -64,6 +64,10 @@ class Player {
     return this.#tempAct;
   }
 
+  set tempAct(action) {
+    this.#tempAct = action;
+  }
+
   addWarTokens(token) {
     this.#warTokens.push(token);
   }
@@ -117,6 +121,8 @@ class Player {
 
     return {
       opponentName: neighbour.name,
+      militaryShields: neighbourShields,
+      wonderName: neighbour.wonder.name,
       result,
       tokens,
     };
@@ -124,6 +130,7 @@ class Player {
 
   calculateWarPoints(age) {
     return {
+      militaryShields: this.wonder.militaryStrength,
       leftConflict: this.conflict(this.#leftPlayer, age),
       rightConflict: this.conflict(this.#rightPlayer, age),
     };
@@ -256,7 +263,7 @@ class Player {
     return resourcesGot.map(({ type, count }) => ({
       type,
       count,
-      rate: (count * payableCoin),
+      rate: count * payableCoin,
     }));
   }
 
@@ -300,7 +307,8 @@ class Player {
     console.log({ card });
     const cost = card.cost;
 
-    if (!(cost.length)) return { canBuy: true };
+    if (!cost.length) return { canBuy: true };
+    if (this.wonder.buildingsSet.has(card.name)) return { canBuy: false };
 
     if (cost[0]?.type === "coin") {
       const canBuy = cost[0].count <= this.#coins;
@@ -310,7 +318,7 @@ class Player {
 
     const costPending = this.haveResources(cost);
 
-    if (!(costPending.length)) return { canBuy: true };
+    if (!costPending.length) return { canBuy: true };
 
     return this.resourcesFromNeighbour(costPending);
   }
@@ -337,6 +345,7 @@ class Player {
     const benefits = card.produces.find(({ type }) => type === "coin");
     if (benefits) this.#coins += benefits.count;
   }
+
   #hasNoCost(cost) {
     return cost.length === 0;
   }
@@ -404,10 +413,6 @@ class Player {
 
     this.#wonder.build(card);
     this.updateHand(cardName);
-  }
-
-  setTempAct(action) {
-    this.#tempAct = action;
   }
 
   discardCard(cardName) {

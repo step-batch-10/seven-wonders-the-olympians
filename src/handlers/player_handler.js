@@ -17,7 +17,7 @@ const setPlayerAction = async (ctx) => {
   const player = playerMap.get(ctx.getCookie(ctx, "playerID"));
 
   const playerAction = await ctx.req.json();
-  player.setTempAct(playerAction);
+  player.tempAct = playerAction;
   player.updateStatus("selected");
 
   return ctx.json({ message: "successfully selected" });
