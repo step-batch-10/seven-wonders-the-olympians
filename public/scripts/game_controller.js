@@ -1,29 +1,22 @@
 import * as api from "./game_model.js";
-import * as view from "./game_view.js";
+import * as uiView from "./game_view.js";
 
-const renderGame = async () => {
+const renderGame = async (hand) => {
   const data = await api.fetchPlayersDetails();
 
-  view.renderPlayerInfo(data);
-  view.renderNeighbours(data);
-  view.renderOtherPlayerStats(data);
+  uiView.renderPlayerInfo(data);
+  uiView.renderNeighbours(data);
+  uiView.renderOtherPlayerStats(data);
 
-  const { isLastRound, hand } = await api.fetchDeck();
-
-  if (isLastRound) {
-    await view.renderMilitaryConflicts(await api.fetchMilitaryConflicts());
-    return main();
-  }
-
-  view.renderDeck(hand, api.postPlayerAction);
+  uiView.renderDeck(hand, api.postPlayerAction);
 };
 
-const renderUpdatedGame = async () => {
+const renderUpdatedGame = async (hand) => {
   const updateViewResponse = await api.updatePlayerView();
 
-  view.notify(updateViewResponse.message);
-  view.removeWaitingWindow();
-  renderGame();
+  uiView.notify(updateViewResponse.message);
+  uiView.removeWaitingWindow();
+  renderGame(hand);
 };
 
 const pollForPlayerStatus = () => {
@@ -34,13 +27,28 @@ const pollForPlayerStatus = () => {
     const { view } = await api.getPlayersViewStatus();
     console.log(view);
 
-    if (view === "not upto-date") renderUpdatedGame();
-  }, 2000);
+    if (view === "not upto-date") {
+      const { isLastRound, hand } = await api.fetchDeck();
+      if (isLastRound) {
+        document.querySelector(".waiting-window").remove();
+        await uiView.renderMilitaryConflicts(
+          await api.fetchMilitaryConflicts(),
+        );
+        return gameManager();
+      }
+      return renderUpdatedGame(hand);
+    }
+  }, 1500);
+};
+
+const gameManager = async () => {
+  const { _, hand } = await api.fetchDeck();
+  await uiView.renderAge(await api.fetchAge());
+  renderGame(hand);
 };
 
 const main = async () => {
-  await view.renderAge(await api.fetchAge());
-  renderGame();
+  await gameManager();
   pollForPlayerStatus();
 };
 
