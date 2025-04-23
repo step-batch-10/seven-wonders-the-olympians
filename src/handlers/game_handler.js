@@ -87,6 +87,7 @@ const warHandler = (ctx) => {
   if (game.doesEveryOneDoneWithWar()) {
     game.initAge();
   }
+
   return ctx.json(player.calculateWarPoints(game.currentAge));
 };
 

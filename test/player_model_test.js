@@ -308,8 +308,6 @@ describe("Testing the Player class", () => {
       p1.wonder.buildingsSet.add("Lumber Yard");
       const [refinedCard1] = p1.getHandData();
 
-      console.log(refinedCard1);
-
       assertEquals(refinedCard1.actionDetails, {});
     });
 
@@ -591,7 +589,6 @@ describe("Testing the Player class", () => {
       p.assignHand(hand2);
 
       const actual = _.keyBy(p.getHandData(), "name")["Library"];
-      console.log("actual>>>", actual);
 
       assertEquals(actual.actionDetails.buildDetails, "future free card");
     });

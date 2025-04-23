@@ -276,8 +276,6 @@ describe("Testing the Game class", () => {
       g1.addPlayer(p3);
       g1.addPlayer(p4);
 
-      console.log(getCardsName(g1.getPlayerHandData(bobID).hand));
-
       assertEquals(getCardsName(g1.getPlayerHandData(bobID).hand), [
         "Clay Pit",
         "Timber Yard",
@@ -339,7 +337,6 @@ describe("Testing the Game class", () => {
       g1.addPlayer(p4);
 
       const beforeUpdateBobsHand = g1.getPlayerHandData(bobID).hand;
-      console.log("Card removing", beforeUpdateBobsHand[0].name);
 
       p2.updateHand(beforeUpdateBobsHand[0].name);
       const afterUpdateBobsHand = g1.getPlayerHandData(bobID).hand;
@@ -394,8 +391,6 @@ describe("Testing the Game class", () => {
         const afterPassingBobsHand = g1.getPlayerHandData(bobID).hand;
         const afterPassingAdamsHand = g1.getPlayerHandData(adamID).hand;
         const afterPassingEvesHand = g1.getPlayerHandData(eveID).hand;
-
-        console.log(getCardsName(beforePassingAlicesHand));
 
         testIfHandsAreNotSame(beforePassingAlicesHand, afterPassingAlicesHand);
         testIfHandsAreNotSame(beforePassingBobsHand, afterPassingBobsHand);
@@ -776,10 +771,16 @@ describe("Testing getPlayersStatus", () => {
       g.militaryConflicts();
       g.currentAge = 2;
 
+      [p1, p2, p3, p4].forEach((p) => p.toggleDoneWithConflict());
+
       g.militaryConflicts();
       g.currentAge = 3;
 
+      [p1, p2, p3, p4].forEach((p) => p.toggleDoneWithConflict());
+
       g.militaryConflicts();
+
+      [p1, p2, p3, p4].forEach((p) => p.toggleDoneWithConflict());
 
       assertEquals(p1.warTokensObj, { positive: 9, negative: 0 });
       assertEquals(p2.warTokensObj, { positive: 9, negative: 0 });
@@ -804,6 +805,8 @@ describe("Testing getPlayersStatus", () => {
       g.militaryConflicts();
       g.currentAge = 2;
 
+      [p1, p2, p3, p4].forEach((p) => p.toggleDoneWithConflict());
+
       p1.wonder.addMilitaryStrength({
         produces: [{ type: "shield", count: 3 }],
       });
@@ -816,6 +819,8 @@ describe("Testing getPlayersStatus", () => {
 
       g.militaryConflicts();
       g.currentAge = 3;
+
+      [p1, p2, p3, p4].forEach((p) => p.toggleDoneWithConflict());
 
       p1.wonder.addMilitaryStrength({
         produces: [{ type: "shield", count: 3 }],

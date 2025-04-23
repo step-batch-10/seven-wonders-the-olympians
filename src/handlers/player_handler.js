@@ -27,7 +27,6 @@ const getPlayerViewStatus = (ctx) => {
   const playerMap = ctx.get("playerMap");
   const player = playerMap.get(ctx.getCookie(ctx, "playerID"));
 
-  console.log("name", player.name, "view", player.view);
   return ctx.json({ view: player.view });
 };
 

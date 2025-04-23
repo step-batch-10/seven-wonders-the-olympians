@@ -131,7 +131,7 @@ class Player {
     const result = delta > 0 ? "won" : delta < 0 ? "lose" : "draw";
     const tokens = delta > 0 ? winningToken : delta < 0 ? -1 : 0;
 
-    this.addWarTokens(tokens);
+    this.doneWithConflict || this.addWarTokens(tokens);
 
     return {
       opponentName: neighbour.name,
@@ -144,12 +144,14 @@ class Player {
   }
 
   calculateWarPoints(age) {
-    this.toggleDoneWithConflict();
-    return {
+    const conflictData = {
       militaryShields: this.wonder.militaryStrength,
       leftConflict: this.conflict(this.#leftPlayer, age, "<---"),
       rightConflict: this.conflict(this.#rightPlayer, age, "--->"),
     };
+    this.#doneWithConflict = true;
+
+    return conflictData;
   }
 
   assignHand(hand) {
@@ -369,8 +371,6 @@ class Player {
 
   #trade(cost) {
     const { canTrade, trade } = this.resourcesFromNeighbour(cost);
-    console.log("this is trade", canTrade);
-
     return canTrade ? this.#addTradeDetails(trade, {}) : null;
   }
 
