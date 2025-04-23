@@ -284,6 +284,10 @@ class Game {
     return this.players.every((player) => player.doneWithConflict);
   }
 
+  doesNoOneDoneWithWar() {
+    return this.players.every((player) => !player.doneWithConflict);
+  }
+
   endGame() {}
 }
 
