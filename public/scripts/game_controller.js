@@ -8,13 +8,8 @@ const renderGame = async () => {
   view.renderNeighbours(data);
   view.renderOtherPlayerStats(data);
 
-  const { isLastRound, hand } = await api.fetchDeck();
-
-  if (isLastRound) {
-    return view.renderMilitaryConflicts(api.fetchMilitaryConflicts());
-  }
-
-  view.renderDeck(hand, api.postPlayerAction);
+  const cards = await api.fetchDeck();
+  view.renderDeck(cards, api.postPlayerAction);
 };
 
 const renderUpdatedGame = async () => {
