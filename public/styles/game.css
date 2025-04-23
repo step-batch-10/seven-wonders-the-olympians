@@ -1,5 +1,6 @@
 * {
   margin: 0;
+  padding: 0;
   border: 0;
   box-sizing: border-box;
 }
@@ -44,6 +45,7 @@ header,
 #player-wonder {
   height: 250px;
   width: 600px;
+  z-index: 999;
 }
 
 #left-neighbour,
@@ -159,6 +161,7 @@ p {
 .disabled {
   opacity: 0.4;
 }
+
 .buildedCards > * {
   height: 180px;
   width: 130px;
@@ -168,10 +171,10 @@ p {
 
 .buildedCards > div > img {
   position: absolute;
-  height: 100%;
   width: 100%;
-  transform: translateY(calc(var(--index) * -38px));
-  z-index: calc(var(--index) * -1);
+  transform: translateY(calc(var(--index) * -42px));
+  z-index: calc(var(--z-index));
+  transition: 0.1s linear;
 }
 
 .first-col,
@@ -386,8 +389,8 @@ main img {
   font-size: 1.5rem;
 }
 
-.buildedCards img :hover {
-  transform: translateY(-140px);
+.buildedCards img:hover {
+  transform: translateY(calc(var(--index) * -42px - 156px));
 }
 
 .hover-message {

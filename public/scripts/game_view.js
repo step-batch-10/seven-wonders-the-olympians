@@ -61,7 +61,7 @@ const convert = (name) => name.replaceAll(" ", "").toLowerCase();
 const fetchImage = (card, index) => {
   const image = document.createElement("img");
   image.src = `/img/cards/${convert(card)}.jpeg`;
-  image.style = `--index:${index}`;
+  image.style = `--index:${index}; --z-index:${900 - index}`;
 
   return image;
 };
