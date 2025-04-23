@@ -375,6 +375,7 @@ class Player {
       name: card.name,
       actionDetails,
       canStage: false,
+      canDiscard: true,
     };
   }
 
