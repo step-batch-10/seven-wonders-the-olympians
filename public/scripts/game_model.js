@@ -3,6 +3,8 @@ const fetchPlayersDetails = async () =>
 
 const fetchDeck = async () => await (await fetch("/game/cards")).json();
 
+const fetchAge = async () => await (await fetch("/game/age")).json();
+
 const postPlayerAction = async (move) => {
   const response = await fetch("/player/action", {
     body: JSON.stringify(move),
@@ -30,6 +32,7 @@ const updatePlayerView = async () => {
 };
 
 export {
+  fetchAge,
   fetchDeck,
   fetchPlayersDetails,
   getPlayersStatus,

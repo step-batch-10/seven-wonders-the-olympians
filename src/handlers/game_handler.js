@@ -60,8 +60,17 @@ const performPlayersAction = async (ctx, nxt) => {
   await nxt();
 };
 
+const fetchAge = (ctx) => {
+  const gameMap = ctx.get("gameMap");
+  const { gameID } = ctx.getCookie(ctx);
+
+  const game = gameMap.get(gameID);
+  console.log(game.currentAge);
+  return ctx.json({ age: game.currentAge });
+};
 export {
   didAllPlayerSelectCard,
+  fetchAge,
   getPlayerDetails,
   getPlayerHand,
   getPlayersStatus,

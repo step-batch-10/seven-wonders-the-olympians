@@ -32,15 +32,8 @@ const pollForPlayerStatus = () => {
   }, 2000);
 };
 
-const removeAgeDiv = () => {
-  const age = document.querySelector("#age");
-
-  setTimeout(() => {
-    age.style.display = "none";
-  }, 2000);
-};
-
-const main = () => {
+const main = async () => {
+  view.renderAge(await api.fetchAge());
   renderGame();
   pollForPlayerStatus();
   removeAgeDiv();

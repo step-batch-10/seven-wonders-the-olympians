@@ -258,7 +258,6 @@ const createBuild = (parentEvent, card, postPlayerAction) => {
 const reqToDiscard = (parentEvent, postPlayerAction) => {
   return (event) => {
     removeList(event);
-
     createWaitingWindow();
     postPlayerAction({ card: parentEvent.cardName, action: "discard" });
   };
@@ -359,8 +358,14 @@ const renderDeck = (cards, postPlayerAction) => {
   addHoverForChildren("#cardsContainer");
 };
 
-const renderAge = () => {
+const renderAge = ({ age }) => {
   const el = document.querySelector("#age");
+  const h1 = document.createElement("h1");
+  h1.textContent = "Age";
+  const image = document.createElement("img");
+  image.src = `img/ages/age${age}.png`;
+  console.log("ana");
+  el.replaceChildren(h1, image);
   setTimeout(() => {
     el.style.display = "none";
   }, 2000);

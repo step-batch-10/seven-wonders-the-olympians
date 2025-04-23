@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import {
   didAllPlayerSelectCard,
+  fetchAge,
   getPlayerDetails,
   getPlayerHand,
   getPlayersStatus,
@@ -22,7 +23,7 @@ const createGameRoute = () => {
     updatePlayersStatus,
   );
   gameApp.get("/check-all-selected", didAllPlayerSelectCard);
-
+  gameApp.get("/age", fetchAge);
   return gameApp;
 };
 
