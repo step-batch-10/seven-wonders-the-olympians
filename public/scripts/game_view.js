@@ -17,7 +17,7 @@ const createWaitingWindow = () => {
 
 const removeWaitingWindow = () => {
   const waitingWindow = document.querySelector(".waiting-window");
-  if(waitingWindow) waitingWindow.remove();
+  if (waitingWindow) waitingWindow.remove();
 };
 
 const renderWonder = (wonder) => {
@@ -47,7 +47,7 @@ const getPlayerPoints = (coins, tokens) => {
   return container;
 };
 
-const renderPlayerInfo = ({wonder, name, coins, warTokens, buildings}) => {
+const renderPlayerInfo = ({ wonder, name, coins, warTokens, buildings }) => {
   renderWonder(wonder);
   renderPlayerName(name);
   renderCards(buildings);
@@ -153,7 +153,7 @@ const appendPlayerBuildings = (clone, buildings) => {
 };
 
 const getNeighbourStats = (player, template) => {
-  const {name, coins, warTokens, wonder, bonusResource, buildings} = player;
+  const { name, coins, warTokens, wonder, bonusResource, buildings } = player;
   const playerClone = template.content.cloneNode(true);
   const header = playerClone.querySelector(".player-stats-header");
 
@@ -161,7 +161,7 @@ const getNeighbourStats = (player, template) => {
   header.append(getPlayerPoints(coins, warTokens.positive));
 
   const cards = playerClone.querySelector(".cards");
-  if(cards) appendPlayerBuildings(playerClone, buildings);
+  if (cards) appendPlayerBuildings(playerClone, buildings);
 
   const wonderStats = playerClone.querySelector(".wonder-stats");
   wonderStats.append(...getWonderStats(wonder, bonusResource));
@@ -169,7 +169,7 @@ const getNeighbourStats = (player, template) => {
   return playerClone;
 };
 
-const renderNeighbours = ({leftPlayerData, rightPlayerData}) => {
+const renderNeighbours = ({ leftPlayerData, rightPlayerData }) => {
   const template = document.getElementById("neighbour-template");
   const left = getNeighbourStats(leftPlayerData, template);
   const right = getNeighbourStats(rightPlayerData, template);
@@ -178,7 +178,7 @@ const renderNeighbours = ({leftPlayerData, rightPlayerData}) => {
   document.getElementById("right-neighbour").replaceChildren(right);
 };
 
-const renderOtherPlayerStats = ({others}) => {
+const renderOtherPlayerStats = ({ others }) => {
   const otherPlayersContainer = document.getElementById("other-players");
   const playerTemplate = document.getElementById("other-players-template");
 
@@ -212,7 +212,7 @@ const addHoverForChildren = (parentSelector) => {
 const removeList = (event) => {
   const container = event.target.closest(".hovered");
 
-  if(container) container.classList.remove("hovered");
+  if (container) container.classList.remove("hovered");
 
   addHoverForChildren("#cardsContainer");
   document.querySelector(".actionsBox").remove();
@@ -234,7 +234,7 @@ const reqBuildCard = (parentEvent, postPlayerAction) => {
     removeList(event);
 
     createWaitingWindow();
-    postPlayerAction({card: parentEvent.cardName, action: "build"});
+    postPlayerAction({ card: parentEvent.cardName, action: "build" });
   };
 };
 
@@ -245,7 +245,7 @@ const createBuild = (parentEvent, card, postPlayerAction) => {
   content.innerText = "Build";
   stage.append(image, content);
 
-  if(card.canBuild) {
+  if (card.canBuild) {
     stage.addEventListener(
       "click",
       reqBuildCard(parentEvent, postPlayerAction),
@@ -259,7 +259,7 @@ const reqToDiscard = (parentEvent, postPlayerAction) => {
   return (event) => {
     removeList(event);
     createWaitingWindow();
-    postPlayerAction({card: parentEvent.cardName, action: "discard"});
+    postPlayerAction({ card: parentEvent.cardName, action: "discard" });
   };
 };
 
@@ -277,7 +277,7 @@ const createDiscard = (parentEvent, postPlayerAction) => {
 
 const reqStage = (parentEvent) => {
   return () => {
-    const _move = {card: parentEvent.cardName, action: "stage"};
+    const _move = { card: parentEvent.cardName, action: "stage" };
   };
 };
 
@@ -287,7 +287,7 @@ const createStage = (parentEvent, card) => {
 
   content.innerText = "Stage";
   stage.append(image, content);
-  if(card.canStage) stage.addEventListener("click", reqStage(parentEvent));
+  if (card.canStage) stage.addEventListener("click", reqStage(parentEvent));
   stage.className = card.canStage ? "" : "disabled";
   return stage;
 };
@@ -321,7 +321,7 @@ const clearPerviousThings = () => {
 };
 
 const selectTheCard = (event, card, postPlayerAction) => {
-  if(document.querySelector(".actionsBox")) clearPerviousThings();
+  if (document.querySelector(".actionsBox")) clearPerviousThings();
   event.target.parentNode.appendChild(
     showActions(event, card, postPlayerAction),
   );
@@ -358,7 +358,7 @@ const renderDeck = (cards, postPlayerAction) => {
   addHoverForChildren("#cardsContainer");
 };
 
-const renderAge = ({age}) => {
+const renderAge = ({ age }) => {
   const el = document.querySelector("#age");
   const h1 = document.createElement("h1");
   h1.textContent = "Age";
