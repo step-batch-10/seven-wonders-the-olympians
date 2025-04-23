@@ -51,6 +51,7 @@ header,
 #left-neighbour,
 #right-neighbour {
   width: 15%;
+  z-index: 999;
 }
 
 #three-players {
@@ -81,8 +82,13 @@ header,
 
 .cards img {
   position: absolute;
-  z-index: calc(var(--index) * -1);
+  z-index: calc(var(--z-index));
   bottom: calc(var(--index) * 50px);
+  transition: 0.1s linear;
+}
+
+.cards img:hover {
+  transform: translateY(-150px);
 }
 
 .cards > * {
@@ -106,6 +112,7 @@ header,
   height: 10%;
   width: 100%;
   align-self: flex-end;
+  z-index: 999;
 }
 
 .png {
@@ -242,6 +249,7 @@ main img {
 
 .other-player-stats > .player-stats-header > * {
   background-color: #9a6a1c;
+  z-index: 999;
 }
 
 .other-player-stats > * {
