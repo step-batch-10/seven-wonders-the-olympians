@@ -106,7 +106,11 @@ class Player {
     this.#wonder = wonder;
   }
 
-  conflict(neighbour, age) {
+  static conflictMsg(opponentName, result, direction) {
+    return `You ${result} against ${opponentName} ${direction}`;
+  }
+
+  conflict(neighbour, age, direction) {
     const winningToken = 2 * age - 1;
 
     const playerShields = this.wonder.militaryStrength;
@@ -125,14 +129,15 @@ class Player {
       wonderName: neighbour.wonder.name,
       result,
       tokens,
+      msg: Player.conflictMsg(neighbour.name, result, direction),
     };
   }
 
   calculateWarPoints(age) {
     return {
       militaryShields: this.wonder.militaryStrength,
-      leftConflict: this.conflict(this.#leftPlayer, age),
-      rightConflict: this.conflict(this.#rightPlayer, age),
+      leftConflict: this.conflict(this.#leftPlayer, age, "<---"),
+      rightConflict: this.conflict(this.#rightPlayer, age, "--->"),
     };
   }
 

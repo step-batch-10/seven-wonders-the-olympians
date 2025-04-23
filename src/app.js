@@ -26,7 +26,13 @@ export const resetCookie = () => {
     if (ctx.getCookie(ctx, "gameID")) {
       deleteCookie(ctx, "gameID");
     }
-    return ctx.text("Logged out. Cleared cookies");
+
+    return ctx.html(`
+  <div style="font-family: sans-serif; padding: 2rem; text-align: center;">
+    <h1>👋 Logged out. Cookies cleared!</h1>
+    <a href="/" style="color: blue; text-decoration: underline;">Go to login page</a>
+  </div>
+`);
   };
 };
 

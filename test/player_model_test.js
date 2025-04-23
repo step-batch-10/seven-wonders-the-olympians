@@ -522,6 +522,16 @@ describe("Testing Military conflicts", () => {
     assertEquals(p.warTokensObj, { positive: 9, negative: -1 });
   });
 
+  it("Should return total conflict value", () => {
+    const p = new Player("Alice");
+    p.addWarTokens(1);
+    p.addWarTokens(3);
+    p.addWarTokens(5);
+    p.addWarTokens(-1);
+
+    assertEquals(p.warTokensObj, { positive: 9, negative: -1 });
+  });
+
   it("Should return war conflict points", () => {
     p1.wonder.addMilitaryStrength({
       produces: [{ type: "shield", count: 3 }],
@@ -544,6 +554,7 @@ describe("Testing Military conflicts", () => {
         wonderName: "Alexandria",
         result: "won",
         tokens: 5,
+        msg: "You won against Eve <---",
       },
       rightConflict: {
         opponentName: "Bob",
@@ -551,6 +562,7 @@ describe("Testing Military conflicts", () => {
         wonderName: "Gizah",
         result: "draw",
         tokens: 0,
+        msg: "You draw against Bob --->",
       },
     });
 
@@ -562,6 +574,7 @@ describe("Testing Military conflicts", () => {
         wonderName: "Olympia",
         result: "draw",
         tokens: 0,
+        msg: "You draw against Alice <---",
       },
       rightConflict: {
         opponentName: "Adam",
@@ -569,6 +582,7 @@ describe("Testing Military conflicts", () => {
         wonderName: "Ephesos",
         result: "won",
         tokens: 3,
+        msg: "You won against Adam --->",
       },
     });
 
@@ -580,6 +594,7 @@ describe("Testing Military conflicts", () => {
         wonderName: "Gizah",
         result: "lose",
         tokens: -1,
+        msg: "You lose against Bob <---",
       },
       rightConflict: {
         opponentName: "Eve",
@@ -587,6 +602,7 @@ describe("Testing Military conflicts", () => {
         wonderName: "Alexandria",
         result: "lose",
         tokens: -1,
+        msg: "You lose against Eve --->",
       },
     });
 
@@ -598,6 +614,7 @@ describe("Testing Military conflicts", () => {
         wonderName: "Ephesos",
         result: "won",
         tokens: 5,
+        msg: "You won against Adam <---",
       },
       rightConflict: {
         opponentName: "Alice",
@@ -605,6 +622,7 @@ describe("Testing Military conflicts", () => {
         wonderName: "Olympia",
         result: "lose",
         tokens: -1,
+        msg: "You lose against Alice --->",
       },
     });
   });
