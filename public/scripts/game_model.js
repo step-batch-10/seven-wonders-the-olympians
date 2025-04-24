@@ -35,6 +35,12 @@ export class SevenWonders {
 
     return await this.toJson(res);
   };
+
+  resetPlayerAction = async () => {
+    const response = await fetch("/player/action/reset", { method: "PATCH" });
+
+    return await response.json();
+  };
 }
 
 // const fetchPlayersDetails = async () =>

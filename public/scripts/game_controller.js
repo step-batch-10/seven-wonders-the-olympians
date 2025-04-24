@@ -7,7 +7,11 @@ const renderGame = async (sevenWonders, hand) => {
   uiView.renderPlayerInfo(data);
   uiView.renderNeighbours(data);
   uiView.renderOtherPlayerStats(data);
-  uiView.renderDeck(hand, sevenWonders.postPlayerAction);
+  uiView.renderDeck(
+    hand,
+    sevenWonders.postPlayerAction,
+    sevenWonders.resetPlayerAction,
+  );
 };
 
 const renderUpdatedGame = async (sevenWonders, hand) => {

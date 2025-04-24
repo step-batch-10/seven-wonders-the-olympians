@@ -232,11 +232,50 @@ const createCancel = () => {
   return stage;
 };
 
-const reqBuildCard = (card, postPlayerAction) => {
-  return (event) => {
-    removeList(event);
+const nothing = () => {};
 
-    createWaitingWindow();
+const removeOtherActionsInteractions = () => {
+  document.querySelector("#build-message")?.remove();
+  document.querySelector(".actionsBox").remove();
+
+  const cards = document.querySelectorAll(".deck");
+
+  Array.from(cards).forEach((card) => {
+    card.removeEventListener("mouseenter", handleHover);
+    card.removeEventListener("mouseleave", handleHoverLeave);
+    card.querySelector("img").onclick = nothing;
+  });
+};
+
+const reselectCard = (resetPlayerAction) => {
+  return async (event) => {
+    event.target.closest(".deck").classList.remove("hovered");
+    event.target.remove();
+    addHoverForChildren("#cardsContainer");
+
+    notify((await resetPlayerAction()).message);
+  };
+};
+
+const addReselectOption = (event, resetPlayerAction) => {
+  const img = createImg("/img/icons/reselect.png", "reselect-icon");
+  img.addEventListener("click", reselectCard(resetPlayerAction));
+  const card = event.target.closest(".deck");
+  card.appendChild(img);
+  card.classList.add("img.reselect-state");
+  const cardImg = card.querySelector(".card-image");
+  console.log(cardImg.onClickHandler);
+  console.log(cardImg.onClickHandler);
+  console.log("this is the card img eleent", cardImg);
+  cardImg.onclick = eval(cardImg.onClickHandler);
+  console.log(cardImg.onclick);
+};
+
+const reqBuildCard = (card, postPlayerAction, resetPlayerAction) => {
+  return (event) => {
+    addReselectOption(event, resetPlayerAction);
+    removeOtherActionsInteractions(event);
+
     postPlayerAction({ card: card.name, action: "build" });
   };
 };
@@ -257,7 +296,26 @@ const removeHoverMessage = () => {
   buildMessageEle?.remove();
 };
 
-const createBuild = (card, postPlayerAction) => {
+const addBuildOptEvtListener = (
+  card,
+  stage,
+  postPlayerAction,
+  resetPlayerAction,
+) => {
+  stage.addEventListener(
+    "mouseenter",
+    createHoverMessage(card.actionDetails.buildDetails),
+  );
+  stage.addEventListener("mouseleave", removeHoverMessage);
+  stage.addEventListener(
+    "click",
+    reqBuildCard(card, postPlayerAction, resetPlayerAction),
+  );
+
+  return stage;
+};
+
+const createBuild = (card, postPlayerAction, resetPlayerAction) => {
   const [stage, content, image] = createElements(["div", "p", "img"]);
 
   image.src = "/img/icons/build.png";
@@ -269,15 +327,12 @@ const createBuild = (card, postPlayerAction) => {
     return stage;
   }
 
-  stage.addEventListener(
-    "mouseenter",
-    createHoverMessage(card.actionDetails.buildDetails),
+  return addBuildOptEvtListener(
+    card,
+    stage,
+    postPlayerAction,
+    resetPlayerAction,
   );
-  stage.addEventListener("mouseleave", removeHoverMessage);
-  const listerner = "tradeDetails" in card ? someFn : reqBuildCard;
-  stage.addEventListener("click", listerner(card, postPlayerAction));
-
-  return stage;
 };
 
 const reqToDiscard = (card, postPlayerAction) => {
@@ -328,17 +383,18 @@ const createStage = (card, postPlayerAction) => {
   return stage;
 };
 
-const showActions = (card, postPlayerAction) => {
+const showActions = (card, postPlayerAction, resetPlayerAction) => {
   const actionBox = document.createElement("div");
   actionBox.classList.add("actionsBox");
 
   actionBox.append(
     createDiscard(card, postPlayerAction),
-    createStage(card, postPlayerAction),
-    createBuild(card, postPlayerAction),
+    createStage(card),
+    createBuild(card, postPlayerAction, resetPlayerAction),
     createCancel(),
   );
 
+  removeHover("#cardsContainer");
   return actionBox;
 };
 
@@ -351,33 +407,53 @@ const removeHover = (parentSelector) => {
   });
 };
 
-const selectCard = (event, card, postPlayerAction) => {
-  if (document.querySelector(".actionsBox")) clearPerviousThings();
+const createSelectCardHandler = (card, postPlayerAction, resetPlayerAction) => {
+  return (event) => {
+    if (document.querySelector(".actionsBox")) clearPerviousThings();
 
-  event.target.parentNode.append(showActions(card, postPlayerAction));
+    event.target.parentNode.append(
+      showActions(card, postPlayerAction, resetPlayerAction),
+    );
 
-  removeHover("#cardsContainer");
-  cardHover(event);
+    removeHover("#cardsContainer");
+    cardHover(event);
+  };
 };
 
-const createCardsContainer = (card, index, offset, postPlayerAction) => {
-  const imageContainer = document.createElement("div");
+const createCardsContainer = (
+  card,
+  index,
+  offset,
+  postPlayerAction,
+  resetPlayerAction,
+) => {
+  const onClickHandler = createSelectCardHandler(
+    card,
+    postPlayerAction,
+    resetPlayerAction,
+  );
+  // const img = createEl("img", { className: "card-image", attrs: { src: `/img/cards/${convert(card.name)}.jpeg`, onClickHandler } });
   const img = document.createElement("img");
   img.src = `/img/cards/${convert(card.name)}.jpeg`;
+  img.onClickHandler = onClickHandler;
+  img.classList.add("card-image");
+  img.onclick = onClickHandler;
+
+  console.log(img, img.onclick, "onclickHanler", img.onClickHandler);
+  // const imageContainer = createEl("div", { className: "deck", attrs: { style: `--index:${index + 1 - offset}; --middle:${offset}` } });
+  const imageContainer = document.createElement("div");
   imageContainer.style = `--index:${index + 1 - offset}; --middle:${offset}`;
   imageContainer.classList.add("deck");
   imageContainer.appendChild(img);
 
-  img.addEventListener("click", (e) => selectCard(e, card, postPlayerAction));
-
   return imageContainer;
 };
 
-const renderDeck = (cards, postPlayerAction) => {
+const renderDeck = (cards, postPlayerAction, resetPlayerAction) => {
   const container = document.querySelector("#cardsContainer");
   const offset = Math.ceil(cards.length / 2);
   const cardEls = cards.map((card, i) =>
-    createCardsContainer(card, i, offset, postPlayerAction)
+    createCardsContainer(card, i, offset, postPlayerAction, resetPlayerAction)
   );
 
   container.style = `--total:${cards.length}`;
