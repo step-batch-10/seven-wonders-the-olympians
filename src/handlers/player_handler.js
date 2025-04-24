@@ -26,7 +26,7 @@ const setPlayerAction = async (ctx) => {
 const getPlayerViewStatus = (ctx) => {
   const playerMap = ctx.get("playerMap");
   const player = playerMap.get(ctx.getCookie(ctx, "playerID"));
-  console.log({ isUptoDate: player.view });
+  console.log({ isUptoDate: player.isUptoDate });
   return ctx.json({ isUptoDate: player.isUptoDate });
 };
 

@@ -258,7 +258,7 @@ class Game {
     player.buildCard(card);
   }
 
-  #discardCard(card, player) {
+  #discardCard(card, player) {    
     player.discardCard(card);
     this.addToDiscarded(card);
   }
@@ -267,16 +267,24 @@ class Game {
     player.stageCard(card);
   }
 
+  performAction(player) {
+    const { action, card } = player.tempAct;
+    switch (action) {
+      case "discard":
+        this.#discardCard(card, player);
+        break;
+      case "build":
+        this.#buildCard(card, player);
+        break;
+      case "stage":
+        this.#stageCard(card, player);
+        break;
+    }
+  }
+
   executeTempActs() {
     this.#players.forEach((player) => {
-      const { action, card } = player.tempAct;
-      const actions = {
-        discard: this.#discardCard,
-        build: this.#buildCard,
-        stage: this.#stageCard,
-      };
-
-      actions[action](card, player);
+      this.performAction(player)
     });
   }
 
