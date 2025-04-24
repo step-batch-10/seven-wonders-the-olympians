@@ -396,7 +396,7 @@ describe("testing the wonders class", () => {
       type: "civil",
     });
 
-    wonder.stageACard(
+    wonder.stage(
       wonder.build({
         name: "West Trading Post",
         age: 1,

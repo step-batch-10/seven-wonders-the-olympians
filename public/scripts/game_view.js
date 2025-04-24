@@ -304,13 +304,15 @@ const createDiscard = (card, postPlayerAction) => {
   return stage;
 };
 
-const reqStage = (card) => {
-  return () => {
-    const _move = { card: card.name, action: "stage" };
+const reqToStage = (card, postPlayerAction) => {
+  return (event) => {
+    removeList(event);
+    createWaitingWindow();
+    postPlayerAction({ card: card.name, action: "stage" });
   };
 };
 
-const createStage = (card) => {
+const createStage = (card, postPlayerAction) => {
   const [stage, content, image] = createElements(["div", "p", "img"]);
 
   image.src = "/img/icons/stage.png";
@@ -322,7 +324,7 @@ const createStage = (card) => {
     return stage;
   }
 
-  stage.addEventListener("click", reqStage(card));
+  stage.addEventListener("click", reqToStage(card, postPlayerAction));
   return stage;
 };
 
@@ -332,7 +334,7 @@ const showActions = (card, postPlayerAction) => {
 
   actionBox.append(
     createDiscard(card, postPlayerAction),
-    createStage(card),
+    createStage(card, postPlayerAction),
     createBuild(card, postPlayerAction),
     createCancel(),
   );

@@ -457,6 +457,13 @@ class Player {
     this.updateHand(cardName);
   }
 
+  stageCard(cardName) {
+    const card = [...this.#hand].find((card) => card.name === cardName);
+
+    this.#wonder.stage(card);
+    this.updateHand(cardName);
+  }
+
   discardCard(cardName) {
     this.updateHand(cardName);
     this.addCoins(3);

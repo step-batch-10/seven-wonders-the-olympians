@@ -189,7 +189,7 @@ class Wonder {
     return nextStage[this.#staged.length];
   }
 
-  stageACard(card) {
+  stage(card) {
     const stage = this.getNextStage();
     const benefit = this.#wonder.stages[stage].powers[0];
 

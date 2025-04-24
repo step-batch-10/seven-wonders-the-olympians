@@ -254,15 +254,29 @@ class Game {
     return { isLastRound: this.isLastRound(), hand };
   }
 
+  #buildCard(card, player) {
+    player.buildCard(card);
+  }
+
+  #discardCard(card, player) {
+    player.discardCard(card);
+    this.addToDiscarded(card);
+  }
+
+  #stageCard(card, player) {
+    player.stageCard(card);
+  }
+
   executeTempActs() {
     this.#players.forEach((player) => {
       const { action, card } = player.tempAct;
-      if (action === "discard") {
-        player.discardCard(card);
-        this.addToDiscarded(card);
-      } else if (action === "build") {
-        player.buildCard(card);
-      }
+      const actions = {
+        discard: this.#discardCard,
+        build: this.#buildCard,
+        stage: this.#stageCard,
+      };
+
+      actions[action](card, player);
     });
   }
 

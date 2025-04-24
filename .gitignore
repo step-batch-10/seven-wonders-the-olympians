@@ -4,3 +4,4 @@ coverage
 spikes
 public/.DS_Store
 scratchdeno.qa.json
+src/models/card.js
