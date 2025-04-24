@@ -11,8 +11,9 @@ export const registerUser = async (ctx) => {
   const gameMap = ctx.get("gameMap");
   const playerMap = ctx.get("playerMap");
 
-  const name = await ctx.req.json();
-  const player = new Player(name.name);
+  const name = (await ctx.req.formData()).get("name");
+
+  const player = new Player(name);
   let game;
   playerMap.set(player.playerID, player);
 

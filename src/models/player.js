@@ -18,6 +18,7 @@ class Player {
 
   constructor(userName) {
     this.#name = userName;
+
     this.#playerID = Player.generateUniquePlayerID();
     this.#rightPlayer = null;
     this.#leftPlayer = null;
@@ -364,7 +365,7 @@ class Player {
   }
 
   #hasFutureCard(card) {
-    return this.#wonder.futureBenifits.has(card.name)
+    return this.#wonder.futureBenefits.has(card.name)
       ? this.#addBuildDetails("future free card", {})
       : null;
   }

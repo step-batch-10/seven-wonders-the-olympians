@@ -70,7 +70,6 @@ const fetchAge = (ctx) => {
   const { gameID } = ctx.getCookie(ctx);
 
   const game = gameMap.get(gameID);
-  console.log(game.currentAge);
   return ctx.json({ age: game.currentAge });
 };
 

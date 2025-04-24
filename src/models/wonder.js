@@ -7,7 +7,7 @@ class Wonder {
   #discounts;
   #militaryStrength;
   #victoryPoints;
-  #futureBenifits;
+  #futureBenefits;
   #stages;
 
   constructor(wonder) {
@@ -28,7 +28,7 @@ class Wonder {
     this.#militaryStrength = 0;
     this.#victoryPoints = 0;
     this.#staged = [];
-    this.#futureBenifits = new Set();
+    this.#futureBenefits = new Set();
   }
 
   get name() {
@@ -59,8 +59,8 @@ class Wonder {
     return this.#discounts;
   }
 
-  get futureBenifits() {
-    return this.#futureBenifits;
+  get futureBenefits() {
+    return this.#futureBenefits;
   }
 
   get img() {
@@ -154,7 +154,7 @@ class Wonder {
   addFutureBenifits(card) {
     if (!card.chain_to.length) return;
 
-    card.chain_to.map((chain) => this.#futureBenifits.add(chain));
+    card.chain_to.map((chain) => this.#futureBenefits.add(chain));
   }
 
   getCardBenefits(card) {

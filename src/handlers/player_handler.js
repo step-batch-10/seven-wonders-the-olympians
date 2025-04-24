@@ -1,7 +1,6 @@
 const getPlayerName = (ctx) => {
   const playerMap = ctx.get("playerMap");
   const name = playerMap.get(ctx.getCookie(ctx, "playerID")).name;
-
   return ctx.text(name);
 };
 

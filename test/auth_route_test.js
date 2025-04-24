@@ -1,6 +1,6 @@
 import { assertEquals, assertNotEquals } from "assert";
 import { createApp } from "../src/app.js";
-import { describe, it } from "jsr:@std/testing/bdd";
+import { beforeEach, describe, it } from "jsr:@std/testing/bdd";
 
 function parseCookies(res) {
   const setCookieHeader = res.headers.get("set-cookie");
@@ -19,50 +19,52 @@ function parseCookies(res) {
 }
 
 describe("Testing auth route", () => {
-  it("Should add first two players in the same game", async () => {
-    const app = createApp();
+  let app, aliceFormData, bobFormData, adamFormData, eveFormData, tomFormData;
 
+  beforeEach(() => {
+    app = createApp();
+
+    aliceFormData = new FormData();
+    aliceFormData.set("name", "Alice");
+
+    bobFormData = new FormData();
+    bobFormData.set("name", "Bob");
+
+    adamFormData = new FormData();
+    adamFormData.set("name", "Adam");
+
+    eveFormData = new FormData();
+    eveFormData.set("name", "Eve");
+
+    tomFormData = new FormData();
+    tomFormData.set("name", "Tom");
+  });
+
+  it("Should add first two players in the same game", async () => {
     const res1 = await app.request("/auth/login", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ name: "Alice" }),
+      body: aliceFormData,
     });
     const res2 = await app.request("/auth/login", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ name: "Bob" }),
+      body: bobFormData,
     });
 
     assertEquals(parseCookies(res1).gameID, parseCookies(res2).gameID);
   });
 
-  it("Should add first four players in the same game", async () => {
-    const app = createApp();
-
+  it("Should add first three players in the same game", async () => {
     const res1 = await app.request("/auth/login", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ name: "Alice" }),
+      body: aliceFormData,
     });
     const res2 = await app.request("/auth/login", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ name: "Bob" }),
+      body: bobFormData,
     });
     const res3 = await app.request("/auth/login", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ name: "Adam" }),
+      body: adamFormData,
     });
 
     assertEquals(parseCookies(res1).gameID, parseCookies(res2).gameID);
@@ -70,35 +72,21 @@ describe("Testing auth route", () => {
   });
 
   it("Should add first four players in the same game", async () => {
-    const app = createApp();
-
     const res1 = await app.request("/auth/login", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ name: "Alice" }),
+      body: aliceFormData,
     });
     const res2 = await app.request("/auth/login", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ name: "Bob" }),
+      body: bobFormData,
     });
     const res3 = await app.request("/auth/login", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ name: "Adam" }),
+      body: adamFormData,
     });
     const res4 = await app.request("/auth/login", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ name: "Eve" }),
+      body: eveFormData,
     });
 
     assertEquals(parseCookies(res1).gameID, parseCookies(res2).gameID);
@@ -107,42 +95,25 @@ describe("Testing auth route", () => {
   });
 
   it("Should add fifth player to a different game rather than the first four player", async () => {
-    const app = createApp();
-
     const res1 = await app.request("/auth/login", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ name: "Alice" }),
+      body: aliceFormData,
     });
     const res2 = await app.request("/auth/login", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ name: "Bob" }),
+      body: bobFormData,
     });
     const res3 = await app.request("/auth/login", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ name: "Adam" }),
+      body: adamFormData,
     });
     const res4 = await app.request("/auth/login", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ name: "Eve" }),
+      body: eveFormData,
     });
     const res5 = await app.request("/auth/login", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ name: "Tom" }),
+      body: tomFormData,
     });
 
     assertEquals(parseCookies(res1).gameID, parseCookies(res2).gameID);
@@ -156,10 +127,7 @@ describe("Testing auth route", () => {
 
     const res1 = await app.request("/auth/login", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ name: "Alice" }),
+      body: aliceFormData,
     });
 
     const { gameID, playerID } = parseCookies(res1);
@@ -170,13 +138,11 @@ describe("Testing auth route", () => {
       method: "POST",
       headers: {
         Cookie: cookieHeader,
-        "content-type": "application/json",
       },
-      body: JSON.stringify({ name: "Bob" }),
+      body: bobFormData,
     });
 
     assertEquals(res2.status, 302);
-
     assertEquals(res2.headers.get("location"), "/waiting_room.html");
   });
 
@@ -185,10 +151,7 @@ describe("Testing auth route", () => {
 
     const res1 = await app.request("/auth/login", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ name: "Alice" }),
+      body: aliceFormData,
     });
 
     const { playerID } = parseCookies(res1);
@@ -199,9 +162,8 @@ describe("Testing auth route", () => {
       method: "POST",
       headers: {
         Cookie: cookieHeader,
-        "content-type": "application/json",
       },
-      body: JSON.stringify({ name: "Bob" }),
+      body: bobFormData,
     });
 
     assertEquals(res2.status, 403);
@@ -214,10 +176,7 @@ describe("Testing auth route", () => {
 
     const res1 = await app.request("/auth/login", {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({ name: "Alice" }),
+      body: aliceFormData,
     });
 
     const { gameID } = parseCookies(res1);
@@ -228,9 +187,8 @@ describe("Testing auth route", () => {
       method: "POST",
       headers: {
         Cookie: cookieHeader,
-        "content-type": "application/json",
       },
-      body: JSON.stringify({ name: "Bob" }),
+      body: bobFormData,
     });
 
     assertEquals(res2.status, 403);

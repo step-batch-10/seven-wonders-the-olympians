@@ -447,7 +447,7 @@ describe("testing the wonders class", () => {
       "chain_to": ["Stables", "Walls"],
     });
 
-    const futureBenefits = wonder.futureBenifits;
+    const futureBenefits = wonder.futureBenefits;
     const result = new Set(["Stables", "Dispensary", "Aqueduct", "Walls"]);
 
     assertEquals(futureBenefits, result);
