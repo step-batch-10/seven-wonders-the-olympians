@@ -271,7 +271,7 @@ const createBuild = (card, postPlayerAction) => {
 
   stage.addEventListener(
     "mouseenter",
-    createHoverMessage(card.actionDetails.buildDetails)
+    createHoverMessage(card.actionDetails.buildDetails),
   );
   stage.addEventListener("mouseleave", removeHoverMessage);
   const listerner = "tradeDetails" in card ? someFn : reqBuildCard;
@@ -336,7 +336,7 @@ const showActions = (card, postPlayerAction) => {
     createDiscard(card, postPlayerAction),
     createStage(card, postPlayerAction),
     createBuild(card, postPlayerAction),
-    createCancel()
+    createCancel(),
   );
 
   return actionBox;
@@ -425,7 +425,7 @@ const createShieldBlock = (shieldSrc, count) => {
   const wrapper = createEl("div", { className: "othershield" });
   wrapper.append(
     createImg(shieldSrc, "shield"),
-    createEl("p", { text: count })
+    createEl("p", { text: count }),
   );
   return wrapper;
 };
@@ -435,7 +435,7 @@ const createPersonBlock = (
   imgSrc,
   shieldSrc,
   victorySrc,
-  shields
+  shields,
 ) => {
   const person = createEl("div", { className: wrapperClass });
   const personImg = createImg(imgSrc, "img");
@@ -457,7 +457,7 @@ const createConflict = (conflict, player) => {
     `img/wonders/${wonderName.toLowerCase()}A.jpeg`,
     "img/miltiry-conflits/shield.png",
     `img/miltiry-conflits/victory${tokens}.png`,
-    militaryShields
+    militaryShields,
   );
 
   const direction = player === "leftPlayer" ? "<---" : "--->";
@@ -476,7 +476,7 @@ const createUserShield = (militaryShields) => {
   const ele = createEl("div", { className: "top" });
   ele.append(
     createImg("img/miltiry-conflits/shield.png", "shield"),
-    createEl("p", { text: `${militaryShields}` })
+    createEl("p", { text: `${militaryShields}` }),
   );
 
   return ele;
@@ -505,7 +505,7 @@ const renderConflictsResults = async ({
   const [left, leftPlayerStatus] = createConflict(leftConflict, "leftPlayer");
   const [right, rightPlayerStatus] = createConflict(
     rightConflict,
-    "rightPlayer"
+    "rightPlayer",
   );
 
   const hr = document.createElement("hr");
@@ -515,7 +515,7 @@ const renderConflictsResults = async ({
     leftPlayerStatus,
     hr,
     right,
-    rightPlayerStatus
+    rightPlayerStatus,
   );
 
   console.log(parent);

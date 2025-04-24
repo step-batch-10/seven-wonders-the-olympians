@@ -258,7 +258,7 @@ class Game {
     player.buildCard(card);
   }
 
-  #discardCard(card, player) {    
+  #discardCard(card, player) {
     player.discardCard(card);
     this.addToDiscarded(card);
   }
@@ -284,7 +284,7 @@ class Game {
 
   executeTempActs() {
     this.#players.forEach((player) => {
-      this.performAction(player)
+      this.performAction(player);
     });
   }
 
