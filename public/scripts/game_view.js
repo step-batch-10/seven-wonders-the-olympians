@@ -92,6 +92,7 @@ const getPlayerStats = (name) => {
   nameP.textContent = name;
   statusP.textContent = "⏳";
   div.append(nameP, statusP);
+
   return div;
 };
 
@@ -209,6 +210,12 @@ const addHoverForChildren = (parentSelector) => {
   });
 };
 
+const clearPerviousThings = () => {
+  document.querySelector("#build-message")?.remove();
+  document.querySelector(".actionsBox").remove();
+  document.querySelector(".hovered").classList.remove("hovered");
+};
+
 const removeList = () => {
   addHoverForChildren("#cardsContainer");
   clearPerviousThings();
@@ -269,6 +276,7 @@ const createBuild = (card, postPlayerAction) => {
   stage.addEventListener("mouseleave", removeHoverMessage);
   const listerner = "tradeDetails" in card ? someFn : reqBuildCard;
   stage.addEventListener("click", listerner(card, postPlayerAction));
+
   return stage;
 };
 
@@ -339,12 +347,6 @@ const removeHover = (parentSelector) => {
     child.removeEventListener("mouseenter", handleHover);
     child.removeEventListener("mouseleave", handleHoverLeave);
   });
-};
-
-const clearPerviousThings = () => {
-  document.querySelector("#build-message")?.remove();
-  document.querySelector(".actionsBox").remove();
-  document.querySelector(".hovered").classList.remove("hovered");
 };
 
 const selectCard = (event, card, postPlayerAction) => {
@@ -460,12 +462,31 @@ const createConflict = (conflict, player) => {
   const playerStatus = createEl("div", { className: `playerStatus` });
 
   const drawText = createEl("p", {
-    text: `you're ${result} with ${opponentName}  ${direction}`,
+    text: `you ${result} with ${opponentName}  ${direction}`,
   });
 
   playerStatus.append(drawText);
 
   return [person, playerStatus];
+};
+
+const createUserShield = (militaryShields) => {
+  const ele = createEl("div", { className: "top" });
+  ele.append(
+    createImg("img/miltiry-conflits/shield.png", "shield"),
+    createEl("p", { text: `${militaryShields}` }),
+  );
+
+  return ele;
+};
+
+const createConflictContainer = () => {
+  const conflict = document.querySelector(".conflict");
+  conflict.style.display = "flex";
+  conflict.innerHTML = "";
+  conflict.classList.add("conflict-Border");
+
+  return conflict;
 };
 
 const renderConflictsResults = async ({
@@ -475,16 +496,8 @@ const renderConflictsResults = async ({
 }) => {
   const parent = document.querySelector(".conflictContainer");
   parent.style.display = "flex";
-  const conflict = document.querySelector(".conflict");
-  conflict.style.display = "flex";
-  conflict.innerHTML = "";
-  conflict.classList.add("conflict-Border");
-
-  const top = createEl("div", { className: "top" });
-  top.append(
-    createImg("img/miltiry-conflits/shield.png", "shield"),
-    createEl("p", { text: `${militaryShields}` }),
-  );
+  const conflict = createConflictContainer();
+  const top = createUserShield(militaryShields);
 
   const [left, leftPlayerStatus] = createConflict(leftConflict, "leftPlayer");
   const [right, rightPlayerStatus] = createConflict(

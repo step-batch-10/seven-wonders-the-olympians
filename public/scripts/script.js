@@ -14,12 +14,18 @@ function typeWriter() {
 document.addEventListener("DOMContentLoaded", typeWriter);
 
 const closePop = () => {
+  const sound = new Audio("audio/close-options.mp4");
+  sound.currentTime = 0;
+  sound.play();
   const pop = document.querySelector(".popUpWindow");
   pop.style.transform = "scale(0)";
   // pop.style = "display:none";
 };
 
 const popOut = () => {
+  const sound = new Audio("audio/options.mp4");
+  sound.currentTime = 0;
+  sound.play();
   const pop = document.querySelector(".popUpWindow");
   pop.style = "display:flex";
 
