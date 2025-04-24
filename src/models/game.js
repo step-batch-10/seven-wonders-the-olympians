@@ -3,6 +3,7 @@ import wondersData from "../../data/wonders.json" with { type: "json" };
 import ageOneCards from "../../data/ageOneCards.json" with { type: "json" };
 import ageTwoCards from "../../data/ageTwoCards.json" with { type: "json" };
 import ageThreeCards from "../../data/ageThreeCards.json" with { type: "json" };
+import guildCards from "../../data/guildCards.json" with { type: "json" };
 import { Wonder } from "./wonder.js";
 
 const shuffleArray = ([...arr]) => arr.sort(() => Math.random() - 0.5);
@@ -130,10 +131,16 @@ class Game {
     return cards.filter((card) => card.min_players <= this.#noOfPlayers);
   }
 
+  segregateGuildCards(guildCards) {
+    return this.shuffleDeck(guildCards).slice(0, this.#noOfPlayers + 2);
+  }
+
   setUpTheCardDecks() {
     this.#decks[1] = this.segregateCards(ageOneCards);
     this.#decks[2] = this.segregateCards(ageTwoCards);
-    this.#decks[3] = this.segregateCards(ageThreeCards);
+    this.#decks[3] = this.segregateCards(ageThreeCards).concat(
+      this.segregateGuildCards(guildCards),
+    );
   }
 
   distributeCoins() {
