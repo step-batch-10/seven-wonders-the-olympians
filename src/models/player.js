@@ -472,6 +472,10 @@ class Player {
   updateViewStatus(status) {
     this.#isUptoDate = status;
   }
+
+  resetTempAct() {
+    this.#tempAct = null;
+  }
 }
 
 export { Player };

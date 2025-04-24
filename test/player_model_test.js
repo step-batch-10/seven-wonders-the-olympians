@@ -1161,3 +1161,15 @@ describe("Testing Military conflicts", () => {
     });
   });
 });
+
+describe("Testing resetPlayerAction", () => {
+  it("should reset the player's tempAct", () => {
+    const player = new Player("ALice");
+
+    player.tempAct = { action: "build", card: "Gaurd Tower" };
+    assertEquals(player.tempAct, { action: "build", card: "Gaurd Tower" });
+
+    player.resetTempAct();
+    assertEquals(player.tempAct, null);
+  });
+});

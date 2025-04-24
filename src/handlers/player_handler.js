@@ -41,10 +41,21 @@ const updateViewStatus = async (ctx) => {
   return ctx.json({ message: "successfully updated player view status" });
 };
 
+const resetPlayerAction = (ctx) => {
+  const playerMap = ctx.get("playerMap");
+  const player = playerMap.get(ctx.getCookie(ctx, "playerID"));
+
+  player.resetTempAct();
+  player.updateStatus("waiting");
+
+  return ctx.json({ message: "now player can reselect a card" });
+};
+
 export {
   getPlayerName,
   getPlayerViewStatus,
   getWonderImgName,
+  resetPlayerAction,
   setPlayerAction,
   updateViewStatus,
 };

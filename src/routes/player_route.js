@@ -3,6 +3,7 @@ import {
   getPlayerName,
   getPlayerViewStatus,
   getWonderImgName,
+  resetPlayerAction,
   setPlayerAction,
   updateViewStatus,
 } from "../handlers/player_handler.js";
@@ -35,7 +36,8 @@ const createPlayerRoute = () => {
     .get("/wonder", getWonderImgName)
     .post("/action", setPlayerAction)
     .get("/view", getPlayerViewStatus)
-    .put("/view", updateViewStatus);
+    .put("/view", updateViewStatus)
+    .patch("/action/reset", resetPlayerAction);
 
   return app;
 };

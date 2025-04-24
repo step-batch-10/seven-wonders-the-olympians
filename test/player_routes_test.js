@@ -283,3 +283,47 @@ describe("Testing addMilitaryStrength", () => {
     assertEquals(p1.wonder.militaryStrength, 3);
   });
 });
+
+describe("Testing resetPlayerAction", () => {
+  it("Should reset player action", async () => {
+    const app = createApp();
+
+    const aliceFormData = new FormData();
+    aliceFormData.set("username", "Alice");
+
+    const res1 = await app.request("/auth/login", {
+      method: "POST",
+      body: aliceFormData,
+    });
+
+    const gameID = parseCookies(res1).gameID;
+    const aliceID = parseCookies(res1).playerID;
+
+    const cookieHeader = `gameID=${gameID}; playerID=${aliceID}`;
+    const res2 = await app.request("/player/action", {
+      method: "POST",
+      headers: {
+        Cookie: cookieHeader,
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({ action: "discard", card: "Lumber Yard" }),
+    });
+
+    assertEquals(res2.status, 200);
+    assertEquals(await res2.json(), {
+      message: "successfully selected",
+    });
+
+    const res3 = await app.request("/player/action/reset", {
+      method: "PATCH",
+      headers: {
+        Cookie: cookieHeader,
+        "content-type": "application/json",
+      },
+    });
+
+    assertEquals(await res3.json(), {
+      message: "now player can reselect a card",
+    });
+  });
+});
