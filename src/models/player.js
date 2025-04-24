@@ -16,7 +16,7 @@ class Player {
   #currentTrades;
   #doneWithConflict;
 
-  constructor (userName) {
+  constructor(userName) {
     this.#name = userName;
     this.#playerID = Player.generateUniquePlayerID();
     this.#rightPlayer = null;
@@ -31,92 +31,92 @@ class Player {
     this.#doneWithConflict = false;
   }
 
-  static generateUniquePlayerID () {
+  static generateUniquePlayerID() {
     return "pid" + uniqid();
   }
 
-  toggleDoneWithConflict () {
+  toggleDoneWithConflict() {
     this.#doneWithConflict = !this.#doneWithConflict;
   }
 
-  get doneWithConflict () {
+  get doneWithConflict() {
     return this.#doneWithConflict;
   }
 
-  get name () {
+  get name() {
     return this.#name;
   }
 
-  get coins () {
+  get coins() {
     return this.#coins;
   }
 
-  get playerID () {
+  get playerID() {
     return this.#playerID;
   }
 
-  set playerID (playerId) {
+  set playerID(playerId) {
     this.#playerID = playerId;
   }
 
-  get view () {
+  get view() {
     return this.#view;
   }
 
-  get status () {
+  get status() {
     return this.#status;
   }
-  set status (status) {
+  set status(status) {
     this.#status = status;
   }
 
-  get tempAct () {
+  get tempAct() {
     return this.#tempAct;
   }
 
-  set tempAct (action) {
+  set tempAct(action) {
     this.#tempAct = action;
   }
 
-  addWarTokens (token) {
+  addWarTokens(token) {
     this.#warTokens.push(token);
   }
 
-  get warTokensObj () {
+  get warTokensObj() {
     return this.#warTokens.reduce(
       (total, token) => {
         token < 0 ? (total.negative += token) : (total.positive += token);
         return total;
       },
-      {positive: 0, negative: 0},
+      { positive: 0, negative: 0 },
     );
   }
 
-  get leftPlayer () {
+  get leftPlayer() {
     return this.#leftPlayer;
   }
 
-  set leftPlayer (player) {
+  set leftPlayer(player) {
     this.#leftPlayer = player;
   }
 
-  get rightPlayer () {
+  get rightPlayer() {
     return this.#rightPlayer;
   }
 
-  set rightPlayer (player) {
+  set rightPlayer(player) {
     this.#rightPlayer = player;
   }
 
-  get wonder () {
+  get wonder() {
     return this.#wonder;
   }
 
-  set wonder (wonder) {
+  set wonder(wonder) {
     this.#wonder = wonder;
   }
 
-  conflict (neighbour, age) {
+  conflict(neighbour, age) {
     const winningToken = 2 * age - 1;
 
     const playerShields = this.wonder.militaryStrength;
@@ -126,7 +126,7 @@ class Player {
 
     let result, tokens;
 
-    switch(true) {
+    switch (true) {
       case delta > 0:
         [result, tokens] = ["won", winningToken];
         break;
@@ -149,7 +149,7 @@ class Player {
     };
   }
 
-  calculateWarPoints (age) {
+  calculateWarPoints(age) {
     const conflictData = {
       militaryShields: this.wonder.militaryStrength,
       leftConflict: this.conflict(this.#leftPlayer, age, "<---"),
@@ -160,19 +160,19 @@ class Player {
     return conflictData;
   }
 
-  assignHand (hand) {
+  assignHand(hand) {
     this.#hand = hand;
   }
 
-  addCoins (coins) {
+  addCoins(coins) {
     this.#coins += coins;
   }
 
-  updateStatus (status) {
+  updateStatus(status) {
     this.#status = status;
   }
 
-  updateHand (cardName) {
+  updateHand(cardName) {
     const indexOfCard = _.findIndex(
       this.#hand,
       (handCard) => cardName === handCard.name,
@@ -181,16 +181,16 @@ class Player {
     _.remove(this.#hand, (_ele, idx) => idx === indexOfCard);
   }
 
-  coverWithChoices () {
+  coverWithChoices() {
     const usedChoices = new Set();
     const choices = this.#wonder.resources.choices;
 
     return (resource, count) => {
-      if(count <= 0) return 0;
+      if (count <= 0) return 0;
 
       let costCovered = 0;
 
-      for(
+      for (
         let index = 0;
         index < choices.length && costCovered < count;
         index++
@@ -199,7 +199,7 @@ class Player {
         const available = !usedChoices.has(index);
         const resourceIncluded = choiceResources.has(resource);
 
-        if(available && resourceIncluded) {
+        if (available && resourceIncluded) {
           costCovered++;
           usedChoices.add(index);
         }
@@ -209,24 +209,24 @@ class Player {
     };
   }
 
-  haveResources (cost) {
+  haveResources(cost) {
     const resources = this.#wonder.resources;
 
     const costPending = [];
     const coveredFromChoice = this.coverWithChoices();
 
-    cost.forEach(({type, count}) => {
+    cost.forEach(({ type, count }) => {
       const resourceAvailable = resources[type] || 0;
       let pendingCount = count - resourceAvailable;
       pendingCount -= coveredFromChoice(type, pendingCount);
 
-      if(pendingCount > 0) costPending.push({type, count: pendingCount});
+      if (pendingCount > 0) costPending.push({ type, count: pendingCount });
     });
 
     return costPending;
   }
 
-  playerData () {
+  playerData() {
     const data = {
       name: this.name,
       wonder: this.#wonder.name,
@@ -240,11 +240,11 @@ class Player {
     return data;
   }
 
-  getOtherPlayerData () {
+  getOtherPlayerData() {
     const data = [];
     let otherPlayer = this.#leftPlayer.leftPlayer;
 
-    while(otherPlayer.playerID !== this.#rightPlayer.playerID) {
+    while (otherPlayer.playerID !== this.#rightPlayer.playerID) {
       data.push(otherPlayer.playerData());
       otherPlayer = otherPlayer.leftPlayer;
     }
@@ -252,10 +252,10 @@ class Player {
     return data;
   }
 
-  getOtherPlayersStatus () {
+  getOtherPlayersStatus() {
     const playersStatus = [];
     let otherPlayer = this.#leftPlayer.leftPlayer;
-    while(otherPlayer.playerID !== this.#rightPlayer.playerID) {
+    while (otherPlayer.playerID !== this.#rightPlayer.playerID) {
       playersStatus.push(otherPlayer.status);
       otherPlayer = otherPlayer.leftPlayer;
     }
@@ -276,40 +276,45 @@ class Player {
   //   this.#currentTrades.stage = this.canStage();
   // }
 
-  deductCoins (card) {
-    const coinCost = card.cost.find(({type}) => type === "coin");
-    if(coinCost) this.#coins -= coinCost.count;
+  deductCoins(card) {
+    const coinCost = card.cost.find(({ type }) => type === "coin");
+    if (coinCost) this.#coins -= coinCost.count;
   }
 
-  addBenefits (card) {
-    const benefits = card.produces.find(({type}) => type === "coin"); // card.effect also
-    if(benefits) this.#coins += benefits.count;
+  addBenefits(card) {
+    const benefits = card.produces.find(({ type }) => type === "coin"); // card.effect also
+    if (benefits) this.#coins += benefits.count;
   }
 
-  minimumCost (trade1, trade2, type, count) {
+  minimumCost(trade1, trade2, type, count) {
     const trade1Count = trade1[type]?.count || 0;
     const trade2Count = trade2[type]?.count || 0;
     const trade1Rate = trade1[type]?.rate;
     const trade2Rate = trade2[type]?.rate;
 
-    return trade1Rate < trade2Rate ?
-      trade1Rate * trade1Count + ((count - trade1Count) * trade2Rate) :
-      trade2Rate * trade2Count + ((count - trade2Count) * trade1Rate);
+    return trade1Rate < trade2Rate
+      ? trade1Rate * trade1Count + ((count - trade1Count) * trade2Rate)
+      : trade2Rate * trade2Count + ((count - trade2Count) * trade1Rate);
   }
 
-  canTrade ({leftPlayer, rightPlayer}, cost) {
+  canTrade({ leftPlayer, rightPlayer }, cost) {
     const coins = this.#coins;
 
     let coinsNeeded = 0;
     const leftPlayerMap = _.keyBy(leftPlayer, "type");
     const rightPlayerMap = _.keyBy(rightPlayer, "type");
 
-    const costsCovered = cost.every(({type, count}) => {
+    const costsCovered = cost.every(({ type, count }) => {
       const leftPlayerCount = leftPlayerMap[type]?.count || 0;
       const rightPlayerCount = rightPlayerMap[type]?.count || 0;
       const itemCount = leftPlayerCount + rightPlayerCount;
 
-      coinsNeeded += this.minimumCost(leftPlayerMap, rightPlayerMap, type, count);
+      coinsNeeded += this.minimumCost(
+        leftPlayerMap,
+        rightPlayerMap,
+        type,
+        count,
+      );
 
       return itemCount >= count && coinsNeeded <= coins;
     });
@@ -317,18 +322,18 @@ class Player {
     return costsCovered;
   }
 
-  resourcesGot (cost, costPending) {
+  resourcesGot(cost, costPending) {
     const costPendingMap = _.keyBy(costPending, "type");
-    return cost.map(({type, count}) => {
+    return cost.map(({ type, count }) => {
       const coveredCount = count - (costPendingMap[type]?.count || 0);
-      return {type, count: coveredCount};
+      return { type, count: coveredCount };
     });
   }
 
-  tradeDetails (cost, costPending, discount) {
+  tradeDetails(cost, costPending, discount) {
     const resourcesGot = this.resourcesGot(cost, costPending);
 
-    return resourcesGot.map(({type, count}) => {
+    return resourcesGot.map(({ type, count }) => {
       const rate = discount.has(type) ? 1 : 2;
       return {
         type,
@@ -338,40 +343,48 @@ class Player {
     });
   }
 
-  resourcesFromneighbour (cost) {
+  resourcesFromneighbour(cost) {
     const trade = {};
     const discounts = this.#wonder.discounts;
 
     const leftPlayerPendings = this.#leftPlayer.haveResources(cost);
-    trade.leftPlayer = this.tradeDetails(cost, leftPlayerPendings, discounts["left_neighbour"]);
+    trade.leftPlayer = this.tradeDetails(
+      cost,
+      leftPlayerPendings,
+      discounts["left_neighbour"],
+    );
 
     const rightPlayerPendings = this.#rightPlayer.haveResources(cost);
-    trade.rightPlayer = this.tradeDetails(cost, rightPlayerPendings, discounts["right_neighbour"]);
+    trade.rightPlayer = this.tradeDetails(
+      cost,
+      rightPlayerPendings,
+      discounts["right_neighbour"],
+    );
 
     const canTrade = this.canTrade(trade, cost);
 
-    return {canTrade, trade};
+    return { canTrade, trade };
   }
 
-  #addBuildDetails (msg, actionDetails) {
+  #addBuildDetails(msg, actionDetails) {
     actionDetails.buildDetails = msg;
 
     return actionDetails;
   }
 
-  #addTradeDetails (trade, actionDetails) {
+  #addTradeDetails(trade, actionDetails) {
     actionDetails.tradeDetails = trade;
 
     return actionDetails;
   }
 
-  #isCardFree (cost) {
+  #isCardFree(cost) {
     return cost.length === 0
       ? this.#addBuildDetails("no resources required", {})
       : null;
   }
 
-  #canAffordCoinCost (cost) {
+  #canAffordCoinCost(cost) {
     const isCoin = cost.length === 1 && cost[0]?.type === "coin";
 
     return isCoin && (cost[0]?.count <= this.#coins)
@@ -379,31 +392,31 @@ class Player {
       : null;
   }
 
-  #hasEnoughResources (tradeCost) {
+  #hasEnoughResources(tradeCost) {
     return tradeCost.length === 0
       ? this.#addBuildDetails("had enough resources", {})
       : null;
   }
 
-  #hasFutureCard (card) {
+  #hasFutureCard(card) {
     return this.#wonder.futureBenefits.has(card.name)
       ? this.#addBuildDetails("future free card", {})
       : null;
   }
 
-  #trade (cost) {
-    const {canTrade, trade} = this.resourcesFromneighbour(cost);
+  #trade(cost) {
+    const { canTrade, trade } = this.resourcesFromneighbour(cost);
     return canTrade ? this.#addTradeDetails(trade, {}) : null;
   }
 
-  #alreadyHave (card) {
-    if(this.#wonder.alreadyBuilt(card.name)) {
+  #alreadyHave(card) {
+    if (this.#wonder.alreadyBuilt(card.name)) {
       return {};
     }
     return null;
   }
 
-  #getActionDetails (card) {
+  #getActionDetails(card) {
     const cost = card.cost;
     const tradeCost = this.haveResources(cost);
 
@@ -418,7 +431,7 @@ class Player {
     );
   }
 
-  #addActionDetails (card) {
+  #addActionDetails(card) {
     const actionDetails = this.#getActionDetails(card);
 
     return {
@@ -429,11 +442,11 @@ class Player {
     };
   }
 
-  getHandData () {
+  getHandData() {
     return this.#hand.map((card) => this.#addActionDetails(card));
   }
 
-  buildCard (cardName) {
+  buildCard(cardName) {
     const card = [...this.#hand].find((card) => card.name === cardName);
 
     this.deductCoins(card);
@@ -444,14 +457,14 @@ class Player {
     this.updateHand(cardName);
   }
 
-  discardCard (cardName) {
+  discardCard(cardName) {
     this.updateHand(cardName);
     this.addCoins(3);
   }
 
-  updateViewStatus (status) {
+  updateViewStatus(status) {
     this.#view = status;
   }
 }
 
-export {Player};
+export { Player };
