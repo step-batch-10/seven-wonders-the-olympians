@@ -774,7 +774,6 @@ describe("Testing Military conflicts", () => {
         wonderName: "Alexandria",
         result: "won",
         tokens: 5,
-        msg: "You won against Eve <---",
       },
       rightConflict: {
         opponentName: "Bob",
@@ -782,7 +781,6 @@ describe("Testing Military conflicts", () => {
         wonderName: "Gizah",
         result: "draw",
         tokens: 0,
-        msg: "You draw against Bob --->",
       },
     });
 
@@ -794,7 +792,6 @@ describe("Testing Military conflicts", () => {
         wonderName: "Olympia",
         result: "draw",
         tokens: 0,
-        msg: "You draw against Alice <---",
       },
       rightConflict: {
         opponentName: "Adam",
@@ -802,7 +799,6 @@ describe("Testing Military conflicts", () => {
         wonderName: "Ephesos",
         result: "won",
         tokens: 3,
-        msg: "You won against Adam --->",
       },
     });
 
@@ -814,7 +810,6 @@ describe("Testing Military conflicts", () => {
         wonderName: "Gizah",
         result: "lose",
         tokens: -1,
-        msg: "You lose against Bob <---",
       },
       rightConflict: {
         opponentName: "Eve",
@@ -822,7 +817,6 @@ describe("Testing Military conflicts", () => {
         wonderName: "Alexandria",
         result: "lose",
         tokens: -1,
-        msg: "You lose against Eve --->",
       },
     });
 
@@ -834,7 +828,6 @@ describe("Testing Military conflicts", () => {
         wonderName: "Ephesos",
         result: "won",
         tokens: 5,
-        msg: "You won against Adam <---",
       },
       rightConflict: {
         opponentName: "Alice",
@@ -842,7 +835,6 @@ describe("Testing Military conflicts", () => {
         wonderName: "Olympia",
         result: "lose",
         tokens: -1,
-        msg: "You lose against Alice --->",
       },
     });
   });

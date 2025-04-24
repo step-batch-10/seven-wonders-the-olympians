@@ -117,11 +117,7 @@ class Player {
     this.#wonder = wonder;
   }
 
-  static conflictMsg(opponentName, result, direction) {
-    return `You ${result} against ${opponentName} ${direction}`;
-  }
-
-  conflict(neighbour, age, direction) {
+  conflict(neighbour, age) {
     const winningToken = 2 * age - 1;
 
     const playerShields = this.wonder.militaryStrength;
@@ -129,8 +125,19 @@ class Player {
 
     const delta = playerShields - neighbourShields;
 
-    const result = delta > 0 ? "won" : delta < 0 ? "lose" : "draw";
-    const tokens = delta > 0 ? winningToken : delta < 0 ? -1 : 0;
+    let result, tokens;
+
+    switch (true) {
+      case delta > 0:
+        [result, tokens] = ["won", winningToken];
+        break;
+      case delta < 0:
+        [result, tokens] = ["lose", -1];
+        break;
+      case delta === 0:
+        [result, tokens] = ["draw", 0];
+        break;
+    }
 
     this.doneWithConflict || this.addWarTokens(tokens);
 
@@ -140,7 +147,6 @@ class Player {
       wonderName: neighbour.wonder.name,
       result,
       tokens,
-      msg: Player.conflictMsg(neighbour.name, result, direction),
     };
   }
 
