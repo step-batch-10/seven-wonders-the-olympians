@@ -300,7 +300,7 @@ describe("Testing the Player class", () => {
 
       assertEquals(
         refinedCard1.actionDetails.buildDetails,
-        "no resources required"
+        "no resources required",
       );
     });
 
@@ -524,7 +524,7 @@ describe("Testing the Player class", () => {
       assertEquals(refinedCard1.name, "Scriptorium");
       assertEquals(
         refinedCard1.actionDetails.buildDetails,
-        "had enough resources"
+        "had enough resources",
       );
     });
 
