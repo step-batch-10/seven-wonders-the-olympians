@@ -35,7 +35,7 @@ describe("Testing player route", () => {
       const app = createApp();
 
       const aliceFormData = new FormData();
-      aliceFormData.set("name", "Alice");
+      aliceFormData.set("username", "Alice");
 
       const res1 = await app.request("/auth/login", {
         method: "POST",
@@ -62,7 +62,7 @@ describe("Testing player route", () => {
       const app = createApp();
 
       const aliceFormData = new FormData();
-      aliceFormData.set("name", "Alice");
+      aliceFormData.set("username", "Alice");
 
       await app.request("/auth/login", {
         method: "POST",
@@ -70,7 +70,7 @@ describe("Testing player route", () => {
       });
 
       const bobFormData = new FormData();
-      bobFormData.set("name", "Bob");
+      bobFormData.set("username", "Bob");
 
       const res1 = await app.request("/auth/login", {
         method: "POST",
@@ -97,21 +97,21 @@ describe("Testing player route", () => {
       const app = createApp();
 
       const formData = new FormData();
-      formData.set("name", "Alice");
+      formData.set("username", "Alice");
 
       await app.request("/auth/login", {
         method: "POST",
         body: formData,
       });
 
-      formData.set("name", "Bob");
+      formData.set("username", "Bob");
 
       await app.request("/auth/login", {
         method: "POST",
         body: formData,
       });
 
-      formData.set("name", "Adam");
+      formData.set("username", "Adam");
 
       await app.request("/auth/login", {
         method: "POST",
@@ -119,7 +119,7 @@ describe("Testing player route", () => {
       });
 
       const eveFormData = new FormData();
-      eveFormData.set("name", "Eve");
+      eveFormData.set("username", "Eve");
 
       const res1 = await app.request("/auth/login", {
         method: "POST",
@@ -147,7 +147,7 @@ describe("Testing set player action", () => {
     const app = createApp();
 
     const aliceFormData = new FormData();
-    aliceFormData.set("name", "Alice");
+    aliceFormData.set("username", "Alice");
 
     const res1 = await app.request("/auth/login", {
       method: "POST",
@@ -178,7 +178,7 @@ describe("Testing get player view status", () => {
     const app = createApp();
 
     const aliceFormData = new FormData();
-    aliceFormData.set("name", "Alice");
+    aliceFormData.set("username", "Alice");
 
     const res1 = await app.request("/auth/login", {
       method: "POST",
@@ -205,7 +205,7 @@ describe("Testing update player view status", () => {
     const app = createApp();
 
     const aliceFormData = new FormData();
-    aliceFormData.set("name", "Alice");
+    aliceFormData.set("username", "Alice");
 
     const res1 = await app.request("/auth/login", {
       method: "POST",

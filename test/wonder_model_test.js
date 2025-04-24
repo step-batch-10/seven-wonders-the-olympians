@@ -412,39 +412,39 @@ describe("testing the wonders class", () => {
     const wonder = new Wonder(olympia);
 
     wonder.build({
-      "name": "Apothecary",
-      "age": 1,
-      "color": "green",
-      "min_players": 3,
-      "cost": [{ "type": "textile", "count": 1 }],
-      "produces": [{ "type": "compass", "count": 1 }],
-      "effect": null,
-      "chain_from": null,
-      "chain_to": ["Stables", "Dispensary"],
+      name: "Apothecary",
+      age: 1,
+      color: "green",
+      min_players: 3,
+      cost: [{ type: "textile", count: 1 }],
+      produces: [{ type: "compass", count: 1 }],
+      effect: null,
+      chain_from: null,
+      chain_to: ["Stables", "Dispensary"],
     });
 
     wonder.build({
-      "name": "Baths",
-      "age": 1,
-      "color": "blue",
-      "min_players": 7,
-      "cost": [{ "type": "stone", "count": 1 }],
-      "produces": [{ "type": "points", "count": 3 }],
-      "chain_from": null,
-      "chain_to": ["Aqueduct"],
-      "type": "civil",
+      name: "Baths",
+      age: 1,
+      color: "blue",
+      min_players: 7,
+      cost: [{ type: "stone", count: 1 }],
+      produces: [{ type: "points", count: 3 }],
+      chain_from: null,
+      chain_to: ["Aqueduct"],
+      type: "civil",
     });
 
     wonder.build({
-      "name": "Barracks",
-      "age": 1,
-      "color": "red",
-      "min_players": 3,
-      "cost": [{ "type": "ore", "count": 1 }],
-      "produces": [{ "type": "shield", "count": 1 }],
-      "effect": null,
-      "chain_from": null,
-      "chain_to": ["Stables", "Walls"],
+      name: "Barracks",
+      age: 1,
+      color: "red",
+      min_players: 3,
+      cost: [{ type: "ore", count: 1 }],
+      produces: [{ type: "shield", count: 1 }],
+      effect: null,
+      chain_from: null,
+      chain_to: ["Stables", "Walls"],
     });
 
     const futureBenefits = wonder.futureBenefits;

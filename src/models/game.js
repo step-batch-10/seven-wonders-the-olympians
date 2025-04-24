@@ -59,6 +59,10 @@ class Game {
     return this.#gameID;
   }
 
+  get gameStatus() {
+    return this.#gameStatus;
+  }
+
   get discardedDeck() {
     return this.#discardedDeck;
   }
@@ -220,13 +224,6 @@ class Game {
   initAge() {
     this.resetRound();
     this.distributeCards();
-  }
-
-  gameData() {
-    return {
-      gameStatus: this.#gameStatus,
-      currentAge: this.#currentAge,
-    };
   }
 
   getPlayerInfo(playerID) {

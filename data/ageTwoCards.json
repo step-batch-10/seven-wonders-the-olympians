@@ -252,7 +252,7 @@
         "effect_type": "card",
         "card_color": "brown",
         "count": 1,
-        "applies_to": ["self", "left_neighbor", "right_neighbor"]
+        "applies_to": ["self", "left_neighbour", "right_neighbour"]
       }
     ],
     "chain_from": null,
@@ -271,7 +271,7 @@
       "effect_type": "card",
       "card_color": "grey",
       "count": 2,
-      "applies_to": ["self", "left_neighbor", "right_neighbor"]
+      "applies_to": ["self", "left_neighbour", "right_neighbour"]
     },
     "chain_from": null,
     "chain_to": [],
@@ -584,7 +584,7 @@
         "effect_type": "card",
         "card_color": "brown",
         "count": 1,
-        "applies_to": ["self", "left_neighbor", "right_neighbor"]
+        "applies_to": ["self", "left_neighbour", "right_neighbour"]
       }
     ],
     "chain_from": null,
@@ -603,7 +603,7 @@
       "effect_type": "card",
       "card_color": "grey",
       "count": 2,
-      "applies_to": ["self", "left_neighbor", "right_neighbor"]
+      "applies_to": ["self", "left_neighbour", "right_neighbour"]
     },
     "chain_from": null,
     "chain_to": [],

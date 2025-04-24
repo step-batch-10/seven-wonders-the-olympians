@@ -1,3 +1,17 @@
+export class SevenWonders {
+  async fetchGetReq(url) {
+    return await fetch(url);
+  }
+
+  async toJson(req) {
+    return await req.json();
+  }
+
+  async toText(req) {
+    return await req.text();
+  }
+}
+
 const fetchPlayersDetails = async () =>
   await (await fetch("/game/info")).json();
 
@@ -28,7 +42,7 @@ const updatePlayerView = async () => {
   const response = await fetch("/player/view", {
     method: "PUT",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify({ status: "upto-date" }),
+    body: JSON.stringify({ isUptoDate: "upto-date" }),
   });
 
   return await response.json();

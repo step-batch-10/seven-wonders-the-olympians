@@ -14,7 +14,7 @@
         "type": "bonus_points_per_staged",
         "card_type": "stage",
         "bonus_per_card": 1,
-        "applies_to": ["self", "right_neighbor", "left_neighbor"]
+        "applies_to": ["self", "right_neighbour", "left_neighbour"]
       }
     ],
     "immediate_effect": [],
@@ -37,7 +37,7 @@
         "type": "bonus_points_per_building",
         "card_type": "gray",
         "bonus_per_card": 2,
-        "applies_to": ["left_neighbor", "right_neighbor"]
+        "applies_to": ["left_neighbour", "right_neighbour"]
       }
     ],
     "immediate_effect": [],
@@ -61,7 +61,7 @@
         "type": "bonus_points_per_building",
         "card_type": "blue",
         "bonus_per_card": 1,
-        "applies_to": ["left_neighbor", "right_neighbor"]
+        "applies_to": ["left_neighbour", "right_neighbour"]
       }
     ],
     "immediate_effect": [],
@@ -84,7 +84,7 @@
         "type": "bonus_points_per_building",
         "card_type": "green",
         "bonus_per_card": 1,
-        "applies_to": ["left_neighbor", "right_neighbor"]
+        "applies_to": ["left_neighbour", "right_neighbour"]
       }
     ],
     "immediate_effect": [],
@@ -160,7 +160,7 @@
         "type": "bonus_points_per_building",
         "card_type": "red",
         "bonus_per_card": 1,
-        "applies_to": ["left_neighbor", "right_neighbor"]
+        "applies_to": ["left_neighbour", "right_neighbour"]
       }
     ],
     "immediate_effect": [],
@@ -184,7 +184,7 @@
         "type": "bonus_points_per_negative_war_token",
         "card_type": "",
         "bonus_per_card": 1,
-        "applies_to": ["left_neighbor", "right_neighbor"]
+        "applies_to": ["left_neighbour", "right_neighbour"]
       }
     ],
     "immediate_effect": [],
@@ -208,7 +208,7 @@
         "type": "bonus_points_per_building",
         "card_type": "yellow",
         "bonus_per_card": 1,
-        "applies_to": ["left_neighbor", "right_neighbor"]
+        "applies_to": ["left_neighbour", "right_neighbour"]
       }
     ],
     "immediate_effect": [],
@@ -233,7 +233,7 @@
         "type": "bonus_points_per_building",
         "card_type": "brown",
         "bonus_per_card": 1,
-        "applies_to": ["left_neighbor", "right_neighbor"]
+        "applies_to": ["left_neighbour", "right_neighbour"]
       }
     ],
     "immediate_effect": [],

@@ -151,14 +151,14 @@ class Wonder {
     this.#militaryStrength += count;
   }
 
-  addFutureBenifits(card) {
+  addFutureBenefits(card) {
     if (!card.chain_to.length) return;
 
     card.chain_to.map((chain) => this.#futureBenefits.add(chain));
   }
 
   getCardBenefits(card) {
-    this.addFutureBenifits(card);
+    this.addFutureBenefits(card);
     if (this.isResourceCard(card)) {
       this.addResources(card);
     }

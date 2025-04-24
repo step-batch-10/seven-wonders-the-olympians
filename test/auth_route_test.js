@@ -45,6 +45,7 @@ describe("Testing auth route", () => {
       method: "POST",
       body: aliceFormData,
     });
+
     const res2 = await app.request("/auth/login", {
       method: "POST",
       body: bobFormData,
@@ -76,14 +77,17 @@ describe("Testing auth route", () => {
       method: "POST",
       body: aliceFormData,
     });
+
     const res2 = await app.request("/auth/login", {
       method: "POST",
       body: bobFormData,
     });
+
     const res3 = await app.request("/auth/login", {
       method: "POST",
       body: adamFormData,
     });
+
     const res4 = await app.request("/auth/login", {
       method: "POST",
       body: eveFormData,
@@ -99,18 +103,22 @@ describe("Testing auth route", () => {
       method: "POST",
       body: aliceFormData,
     });
+
     const res2 = await app.request("/auth/login", {
       method: "POST",
       body: bobFormData,
     });
+
     const res3 = await app.request("/auth/login", {
       method: "POST",
       body: adamFormData,
     });
+
     const res4 = await app.request("/auth/login", {
       method: "POST",
       body: eveFormData,
     });
+
     const res5 = await app.request("/auth/login", {
       method: "POST",
       body: tomFormData,
@@ -153,10 +161,9 @@ describe("Testing auth route", () => {
       method: "POST",
       body: aliceFormData,
     });
-
     const { playerID } = parseCookies(res1);
 
-    const cookieHeader = `gameID=falseGameID; playerID=${playerID}`;
+    const cookieHeader = `gameID=fakeGameId; playerID=${playerID}`;
 
     const res2 = await app.request("/auth/login", {
       method: "POST",

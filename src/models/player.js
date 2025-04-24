@@ -18,7 +18,6 @@ class Player {
 
   constructor(userName) {
     this.#name = userName;
-
     this.#playerID = Player.generateUniquePlayerID();
     this.#rightPlayer = null;
     this.#leftPlayer = null;
@@ -323,7 +322,7 @@ class Player {
     }));
   }
 
-  resourcesFromNeighbour(cost) {
+  resourcesFromneighbour(cost) {
     const trade = {};
     const leftPlayerPendings = this.#leftPlayer.haveResources(cost);
     trade.leftPlayer = this.tradeDetails(cost, leftPlayerPendings);
@@ -377,7 +376,7 @@ class Player {
   }
 
   #trade(cost) {
-    const { canTrade, trade } = this.resourcesFromNeighbour(cost);
+    const { canTrade, trade } = this.resourcesFromneighbour(cost);
     return canTrade ? this.#addTradeDetails(trade, {}) : null;
   }
 

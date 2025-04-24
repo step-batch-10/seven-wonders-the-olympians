@@ -1,25 +1,33 @@
-const userName = async () => {
-  const res = await fetch("/player/name");
-  return `${await res.text()}!`;
-};
+import { SevenWonders } from "./game_model.js";
 
-const data = async (intervalId) => {
-  const res = await fetch("/game/status");
-  const data = await res.json();
+const gameStatus = async (sevenWonders, intervalId) => {
+  const res = await sevenWonders.fetchGetReq("/game/status");
+  const data = await sevenWonders.toJson(res);
 
-  if (data.gameStatus === "matched") {
+  if (data.status === "matched") {
     clearInterval(intervalId);
     globalThis.location.replace("/player_wonder.html");
   }
 };
 
-const displayUserName = async () => {
-  const name = await userName();
-  const location = document.querySelector(".name");
-  location.innerText = `${location.innerText}  ${name}`;
+const pollGameStatus = (sevenWonders) => {
+  //common function for polling
   const intervalId = setInterval(() => {
-    data(intervalId);
+    gameStatus(sevenWonders, intervalId);
   }, 1000);
 };
 
-globalThis.onload = displayUserName;
+const renderPlayerName = (name) => {
+  const field = document.getElementById("name");
+  field.innerText = `Hey ${name}`;
+};
+
+const main = async () => {
+  const sevenWonders = new SevenWonders();
+  const res = await sevenWonders.fetchGetReq("/player/name");
+  const name = await sevenWonders.toText(res);
+  renderPlayerName(name);
+  pollGameStatus(sevenWonders);
+};
+
+globalThis.onload = main;

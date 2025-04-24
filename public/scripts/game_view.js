@@ -545,7 +545,7 @@ export {
   renderAge,
   renderDeck,
   renderMilitaryConflicts,
-  renderNeighbours,
+  renderNeighbours as renderNeighbours,
   renderOtherPlayerStats,
   renderPlayerInfo,
   renderPlayerName,

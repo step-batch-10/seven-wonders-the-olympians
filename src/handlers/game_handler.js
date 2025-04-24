@@ -1,45 +1,41 @@
-const getPlayerDetails = (ctx) => {
-  const { gameID, playerID } = ctx.getCookie(ctx);
-
+const extractGameData = (ctx) => {
+  const gameID = ctx.getCookie(ctx, "gameID");
+  const playerID = ctx.getCookie(ctx, "playerID");
   const gameMap = ctx.get("gameMap");
   const game = gameMap.get(gameID);
+  const playerMap = ctx.get("playerMap");
+  const player = playerMap.get(playerID);
+
+  return { gameID, gameMap, game, playerID, playerMap, player };
+};
+
+const getPlayerDetails = (ctx) => {
+  const { playerID, game } = extractGameData(ctx);
   const info = game.getPlayerInfo(playerID);
+
   return ctx.json(info);
 };
 
-const debug = (args) => {
-  return args;
-};
-
 const getPlayerHand = (ctx) => {
-  const gameID = ctx.getCookie(ctx, "gameID");
-  const playerID = ctx.getCookie(ctx, "playerID");
-
-  const gameMap = ctx.get("gameMap");
-  const game = gameMap.get(gameID);
-
-  return ctx.json(debug(game.getPlayerHandData(playerID)));
+  const { playerID, game } = extractGameData(ctx);
+  return ctx.json(game.getPlayerHandData(playerID));
 };
 
 const didAllPlayerSelectCard = (ctx) => {
-  const gameMap = ctx.get("gameMap");
-  const game = gameMap.get(ctx.getCookie(ctx, "gameID"));
+  const { game } = extractGameData(ctx);
   const status = game.didAllPlayerSelectCard();
 
   return ctx.json({ didAllSelectCard: status });
 };
 
 const sendStatus = (ctx) => {
-  const gameMap = ctx.get("gameMap");
-  const game = gameMap.get(ctx.getCookie(ctx, "gameID"));
-  return ctx.json(game.gameData());
+  const { game } = extractGameData(ctx);
+  return ctx.json({ status: game.gameStatus });
 };
 
 const getPlayersStatus = async (ctx, nxt) => {
-  const gameMap = ctx.get("gameMap");
-  const { playerID, gameID } = ctx.getCookie(ctx);
+  const { playerID, game } = extractGameData(ctx);
 
-  const game = gameMap.get(gameID);
   const playersStatus = game.getPlayersStatus(playerID);
   if (game.didAllPlayerSelectCard()) await nxt();
 
@@ -47,18 +43,13 @@ const getPlayersStatus = async (ctx, nxt) => {
 };
 
 const updatePlayersStatus = (ctx) => {
-  const gameMap = ctx.get("gameMap");
-  const { gameID } = ctx.getCookie(ctx);
-
-  const game = gameMap.get(gameID);
+  const { game } = extractGameData(ctx);
   game.updatePlayersStatus();
 };
 
 const performPlayersAction = async (ctx, nxt) => {
-  const gameMap = ctx.get("gameMap");
-  const { gameID } = ctx.getCookie(ctx);
+  const { game } = extractGameData(ctx);
 
-  const game = gameMap.get(gameID);
   game.executeTempActs();
   game.passHands();
 
@@ -66,19 +57,12 @@ const performPlayersAction = async (ctx, nxt) => {
 };
 
 const fetchAge = (ctx) => {
-  const gameMap = ctx.get("gameMap");
-  const { gameID } = ctx.getCookie(ctx);
-
-  const game = gameMap.get(gameID);
+  const { game } = extractGameData(ctx);
   return ctx.json({ age: game.currentAge });
 };
 
 const warHandler = (ctx) => {
-  const gameMap = ctx.get("gameMap");
-  const playerMap = ctx.get("playerMap");
-  const { playerID, gameID } = ctx.getCookie(ctx);
-  const game = gameMap.get(gameID);
-  const player = playerMap.get(playerID);
+  const { game, player } = extractGameData(ctx);
 
   if (game.doesNoOneDoneWithWar()) {
     game.nextAge();

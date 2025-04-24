@@ -19,7 +19,6 @@ body {
 main {
   min-height: 35vh;
   width: 30%;
-  /* height: 30%; */
   background-color: #705519;
   display: flex;
   align-items: center;

@@ -18,22 +18,20 @@ const injectContext = (gameMap, playerMap, playerGameMap, waitingGames) => {
   };
 };
 
-export const resetCookie = () => {
-  return (ctx) => {
-    if (ctx.getCookie(ctx, "playerID")) {
-      deleteCookie(ctx, "playerID");
-    }
-    if (ctx.getCookie(ctx, "gameID")) {
-      deleteCookie(ctx, "gameID");
-    }
+export const resetCookie = (ctx) => {
+  if (ctx.getCookie(ctx, "playerID")) {
+    deleteCookie(ctx, "playerID");
+  }
+  if (ctx.getCookie(ctx, "gameID")) {
+    deleteCookie(ctx, "gameID");
+  }
 
-    return ctx.html(`
+  return ctx.html(`
   <div style="font-family: sans-serif; padding: 2rem; text-align: center;">
     <h1>👋 Logged out. Cookies cleared!</h1>
     <a href="/" style="color: blue; text-decoration: underline;">Go to login page</a>
   </div>
 `);
-  };
 };
 
 const createApp = () => {
@@ -47,7 +45,7 @@ const createApp = () => {
   app
     .use(logger())
     .use(injectContext(gameMap, playerMap, playerGameMap, waitingGames))
-    .get("/logout", resetCookie())
+    .get("/logout", resetCookie)
     .get("/", serveStatic({ path: "public/index.html" }))
     .route("/auth", createAuthRoute())
     .route("/game", createGameRoute())

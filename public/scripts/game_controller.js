@@ -1,5 +1,6 @@
 import * as api from "./game_model.js";
 import * as uiView from "./game_view.js";
+import { SevenWonders } from "./game_model.js";
 
 const renderGame = async (hand) => {
   const data = await api.fetchPlayersDetails();
@@ -42,14 +43,20 @@ const pollForPlayerStatus = () => {
   }, 1500);
 };
 
-const gameManager = async () => {
-  const { _, hand } = await api.fetchDeck();
-  await uiView.renderAge(await api.fetchAge());
+const gameManager = async (sevenWonders) => {
+  const cardsRes = await sevenWonders.fetchGetReq("/game/cards");
+  const { hand } = await sevenWonders.toJson(cardsRes);
+  const ageRes = await sevenWonders.fetchGetReq("/game/age");
+  const { age } = await sevenWonders.toJson(ageRes);
+
+  await uiView.renderAge(age);
   renderGame(hand);
 };
 
 const main = async () => {
-  await gameManager();
+  const sevenWonders = new SevenWonders();
+
+  await gameManager(sevenWonders);
   pollForPlayerStatus();
 };
 

@@ -411,7 +411,7 @@ describe("Testing the Game class", () => {
         g1 = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
       });
 
-      it("Should pass player's hand to the left neighbor", () => {
+      it("Should pass player's hand to the left neighbour", () => {
         const aliceID = p1.playerID;
         const bobID = p2.playerID;
 
@@ -426,7 +426,7 @@ describe("Testing the Game class", () => {
         assertEquals(beforePassingBobsHand, afterPassingAlicesHand);
       });
 
-      it("Should pass all player's hand to their left neighbor as it's age 1", () => {
+      it("Should pass all player's hand to their left neighbour as it's age 1", () => {
         const aliceID = p1.playerID;
         const bobID = p2.playerID;
         const adamID = p3.playerID;
@@ -454,7 +454,7 @@ describe("Testing the Game class", () => {
     });
 
     describe("Testing if the passing hand works for age two, i.e. pass to right", () => {
-      it("Should pass player's hand to the left neighbor", () => {
+      it("Should pass player's hand to the left neighbour", () => {
         const p1 = new Player("Alice");
         const p2 = new Player("Bob");
         const p3 = new Player("Adam");
@@ -477,7 +477,7 @@ describe("Testing the Game class", () => {
         testIfHandsAreSame(beforePassingAlicesHand, afterPassingBobsHand);
       });
 
-      it("Should pass all player's hand to their right neighbor as it's age 1", () => {
+      it("Should pass all player's hand to their right neighbour as it's age 1", () => {
         const p1 = new Player("Alice");
         const p2 = new Player("Bob");
         const p3 = new Player("Adam");
@@ -533,7 +533,7 @@ describe("testing isLastRound", () => {
     assertFalse(g.isLastRound());
   });
 
-  it("isLastRound should return false for 2nd Round", () => {
+  it("isLastRound should return true for 6th Round", () => {
     g.round = 6;
     assert(g.isLastRound());
   });
@@ -614,7 +614,7 @@ describe("Testing didAllPlayersSelected", () => {
   });
 });
 
-describe("Testing gameData()", () => {
+describe("Testing gameStatus", () => {
   let p1, p2, p3, p4, g;
   beforeEach(() => {
     p1 = new Player("Alice");
@@ -627,13 +627,13 @@ describe("Testing gameData()", () => {
   });
 
   it("should return gameData with status as waiting if there are not much players", () => {
-    assertEquals(g.gameData(), { gameStatus: "waiting", currentAge: 0 });
+    assertEquals(g.gameStatus, "waiting");
   });
 
   it("should return gameData with status as matched if there is a match", () => {
     g.addPlayer(p3);
     g.addPlayer(p4);
-    assertEquals(g.gameData(), { gameStatus: "matched", currentAge: 1 });
+    assertEquals(g.gameStatus, "matched");
   });
 });
 

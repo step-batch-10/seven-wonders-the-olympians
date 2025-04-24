@@ -1,15 +1,14 @@
-import { loginMain } from "./login.js";
 const text = "Welcome to 7 wonders...";
 const speed = 70;
 let i = 0;
 
-function typeWriter() {
+const typeWriter = () => {
   if (i < text.length) {
     document.getElementById("typewriter").textContent += text.charAt(i);
     i++;
     setTimeout(typeWriter, speed);
   }
-}
+};
 
 document.addEventListener("DOMContentLoaded", typeWriter);
 
@@ -19,7 +18,6 @@ const closePop = () => {
   sound.play();
   const pop = document.querySelector(".popUpWindow");
   pop.style.transform = "scale(0)";
-  // pop.style = "display:none";
 };
 
 const popOut = () => {
@@ -33,8 +31,7 @@ const popOut = () => {
 };
 
 const main = () => {
-  document.querySelector("button").addEventListener("click", popOut);
-  loginMain();
+  document.getElementById("login-btn").addEventListener("click", popOut);
 };
 
 globalThis.onload = main;
