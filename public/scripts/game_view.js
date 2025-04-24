@@ -17,7 +17,7 @@ const createWaitingWindow = () => {
 
 const removeWaitingWindow = () => {
   const waitingWindow = document.querySelector(".waiting-window");
-  if (waitingWindow) waitingWindow?.remove();
+  waitingWindow?.remove();
 };
 
 const renderWonder = (wonder) => {
@@ -247,8 +247,7 @@ const createHoverMessage = (message) => {
 
 const removeHoverMessage = () => {
   const buildMessageEle = document.querySelector("#build-message");
-
-  if (buildMessageEle) buildMessageEle.remove();
+  buildMessageEle?.remove();
 };
 
 const createBuild = (card, postPlayerAction) => {
@@ -401,17 +400,18 @@ const renderAge = async ({ age }) => {
   el.style.display = "none";
 };
 
-const createEl = (tag, options = {}) => {
-  const el = document.createElement(tag);
-  if (options.className) el.className = options.className;
-  if (options.id) el.id = options.id;
-  if (options.text) el.textContent = options.text;
-  if (options.attrs) {
-    for (const attr in options.attrs) {
-      el.setAttribute(attr, options.attrs[attr]);
-    }
+const createEl = (tag, options = { id: "", class: "", text: "" }) => {
+  const element = document.createElement(tag);
+
+  element.classList.add(options.class);
+  element.id = options.id;
+  element.textContent = text;
+
+  for (const attr in options.attrs) {
+    element.setAttribute(attr, options.attrs[attr]);
   }
-  return el;
+
+  return element;
 };
 
 const createImg = (src, className = "", alt = "") =>
@@ -468,7 +468,7 @@ const createConflict = (conflict, player) => {
   return [person, playerStatus];
 };
 
-const renderGameUI = async ({
+const renderConflictsResults = async ({
   militaryShields,
   leftConflict,
   rightConflict,
@@ -521,7 +521,7 @@ const renderMilitaryConflicts = async (conflicts) => {
   ele.style.display = "flex";
   await sleep(3000);
   ele.style.display = "none";
-  await renderGameUI(conflicts);
+  await renderConflictsResults(conflicts);
 };
 
 export {
