@@ -12,7 +12,7 @@ class Player {
   #wonder;
   #status;
   #tempAct;
-  #view;
+  #isUptoDate;
   #currentTrades;
   #doneWithConflict;
 
@@ -26,7 +26,7 @@ class Player {
     this.#hand = [];
     this.#wonder = null;
     this.#status = "waiting";
-    this.#view = "upto-date";
+    this.#isUptoDate = true;
     this.#currentTrades = {};
     this.#doneWithConflict = false;
   }
@@ -59,8 +59,8 @@ class Player {
     this.#playerID = playerId;
   }
 
-  get view() {
-    return this.#view;
+  get isUptoDate() {
+    return this.#isUptoDate;
   }
 
   get status() {
@@ -293,8 +293,8 @@ class Player {
     const trade2Rate = trade2[type]?.rate;
 
     return trade1Rate < trade2Rate
-      ? trade1Rate * trade1Count + ((count - trade1Count) * trade2Rate)
-      : trade2Rate * trade2Count + ((count - trade2Count) * trade1Rate);
+      ? trade1Rate * trade1Count + (count - trade1Count) * trade2Rate
+      : trade2Rate * trade2Count + (count - trade2Count) * trade1Rate;
   }
 
   canTrade({ leftPlayer, rightPlayer }, cost) {
@@ -387,7 +387,7 @@ class Player {
   #canAffordCoinCost(cost) {
     const isCoin = cost.length === 1 && cost[0]?.type === "coin";
 
-    return isCoin && (cost[0]?.count <= this.#coins)
+    return isCoin && cost[0]?.count <= this.#coins
       ? this.#addBuildDetails("pay bank", {})
       : null;
   }
@@ -451,7 +451,7 @@ class Player {
 
     this.deductCoins(card);
     this.addBenefits(card);
-    this.#view = "upto-date";
+    this.#isUptoDate = true;
 
     this.#wonder.build(card);
     this.updateHand(cardName);
@@ -470,7 +470,7 @@ class Player {
   }
 
   updateViewStatus(status) {
-    this.#view = status;
+    this.#isUptoDate = status;
   }
 }
 

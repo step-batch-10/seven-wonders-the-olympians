@@ -396,7 +396,7 @@ const createAgeElements = (age) => {
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-const renderAge = async ({ age }) => {
+const renderAge = async (age) => {
   const el = document.querySelector("#age");
   el.style.display = "flex";
   el.replaceChildren(...createAgeElements(age));
@@ -404,10 +404,10 @@ const renderAge = async ({ age }) => {
   el.style.display = "none";
 };
 
-const createEl = (tag, options = { id: "", class: "", text: "" }) => {
+const createEl = (tag, options = { id: "", className: "", text: "" }) => {
   const element = document.createElement(tag);
 
-  element.classList.add(options.class);
+  element.classList.add(options.className);
   element.id = options.id;
   element.textContent = options.text;
 
@@ -422,7 +422,7 @@ const createImg = (src, className = "", alt = "") =>
   createEl("img", { className, attrs: { src, alt } });
 
 const createShieldBlock = (shieldSrc, count) => {
-  const wrapper = createEl("div", { id: "othershield" });
+  const wrapper = createEl("div", { className: "othershield" });
   wrapper.append(
     createImg(shieldSrc, "shield"),
     createEl("p", { text: count }),
@@ -496,6 +496,7 @@ const renderConflictsResults = async ({
   leftConflict,
   rightConflict,
 }) => {
+  console.log({ militaryShields, leftConflict, rightConflict });
   const parent = document.querySelector(".conflictContainer");
   parent.style.display = "flex";
   const conflict = createConflictContainer();
@@ -516,7 +517,9 @@ const renderConflictsResults = async ({
     right,
     rightPlayerStatus,
   );
-  await sleep(6000);
+  console.log(conflict);
+
+  await sleep(20000);
   parent.style.display = "none";
 };
 
@@ -547,7 +550,7 @@ export {
   renderAge,
   renderDeck,
   renderMilitaryConflicts,
-  renderNeighbours as renderNeighbours,
+  renderNeighbours,
   renderOtherPlayerStats,
   renderPlayerInfo,
   renderPlayerName,

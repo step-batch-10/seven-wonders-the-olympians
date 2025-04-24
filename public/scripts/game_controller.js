@@ -1,63 +1,69 @@
-import * as api from "./game_model.js";
 import * as uiView from "./game_view.js";
 import { SevenWonders } from "./game_model.js";
 
-const renderGame = async (hand) => {
-  const data = await api.fetchPlayersDetails();
+const renderGame = async (sevenWonders, hand) => {
+  const data = await sevenWonders.requestJsonData("/game/info");
 
   uiView.renderPlayerInfo(data);
   uiView.renderNeighbours(data);
   uiView.renderOtherPlayerStats(data);
-
-  uiView.renderDeck(hand, api.postPlayerAction);
+  uiView.renderDeck(hand, sevenWonders.postPlayerAction);
 };
 
-const renderUpdatedGame = async (hand) => {
-  const updateViewResponse = await api.updatePlayerView();
+const renderUpdatedGame = async (sevenWonders, hand) => {
+  const updateViewResponse = await sevenWonders.updatePlayerView();
 
   uiView.notify(updateViewResponse.message);
   uiView.removeWaitingWindow();
-  renderGame(hand);
+  renderGame(sevenWonders, hand);
 };
 
-const pollForPlayerStatus = () => {
+const endAnAge = async (sevenWonders) => {
+  document.querySelector(".waiting-window")?.remove();
+  const conflictData = await sevenWonders.requestJsonData(
+    "/game/military-conflicts"
+  );
+
+  await uiView.renderMilitaryConflicts(conflictData);
+  const { age } = await sevenWonders.requestJsonData("/game/age");
+  await uiView.renderAge(age);
+  return;
+};
+
+const pollGameState = async (sevenWonders) => {
+  sevenWonders.requestJsonData("/game/players-status");
+  const { isUptoDate } = await sevenWonders.requestJsonData("/player/view");
+
+  if (!isUptoDate) {
+    const { isLastRound, hand } = await sevenWonders.requestJsonData(
+      "/game/cards"
+    );
+
+    if (isLastRound) return await endAnAge(sevenWonders);
+
+    return renderUpdatedGame(sevenWonders, hand);
+  }
+};
+
+const pollForPlayerStatus = (sevenWonders) => {
   setInterval(async () => {
-    const playersStatus = await api.getPlayersStatus();
-    console.log(playersStatus);
-
-    const { view } = await api.getPlayersViewStatus();
-    console.log(view);
-
-    if (view === "not upto-date") {
-      const { isLastRound, hand } = await api.fetchDeck();
-      if (isLastRound) {
-        document.querySelector(".waiting-window")?.remove();
-        await uiView.renderMilitaryConflicts(
-          await api.fetchMilitaryConflicts(),
-        );
-        await uiView.renderAge(await api.fetchAge());
-        return;
-      }
-      return renderUpdatedGame(hand);
-    }
+    await pollGameState(sevenWonders);
   }, 1500);
 };
 
 const gameManager = async (sevenWonders) => {
-  const cardsRes = await sevenWonders.fetchGetReq("/game/cards");
-  const { hand } = await sevenWonders.toJson(cardsRes);
-  const ageRes = await sevenWonders.fetchGetReq("/game/age");
-  const { age } = await sevenWonders.toJson(ageRes);
+  const { hand } = await sevenWonders.requestJsonData("/game/cards");
+  const { age } = await sevenWonders.requestJsonData("/game/age");
 
   await uiView.renderAge(age);
-  renderGame(hand);
+  renderGame(sevenWonders, hand);
 };
 
 const main = async () => {
   const sevenWonders = new SevenWonders();
 
   await gameManager(sevenWonders);
-  pollForPlayerStatus();
+  pollForPlayerStatus(sevenWonders);
 };
 
 globalThis.onload = main;

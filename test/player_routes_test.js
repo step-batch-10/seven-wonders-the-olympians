@@ -196,7 +196,7 @@ describe("Testing get player view status", () => {
     });
 
     assertEquals(res2.status, 200);
-    assertEquals(await res2.json(), { view: "upto-date" });
+    assertEquals(await res2.json(), { isUptoDate: true });
   });
 });
 

@@ -26,17 +26,17 @@ const setPlayerAction = async (ctx) => {
 const getPlayerViewStatus = (ctx) => {
   const playerMap = ctx.get("playerMap");
   const player = playerMap.get(ctx.getCookie(ctx, "playerID"));
-
-  return ctx.json({ view: player.view });
+  console.log({ isUptoDate: player.view });
+  return ctx.json({ isUptoDate: player.isUptoDate });
 };
 
 const updateViewStatus = async (ctx) => {
   const playerMap = ctx.get("playerMap");
   const player = playerMap.get(ctx.getCookie(ctx, "playerID"));
 
-  const { status } = await ctx.req.json();
+  const { isUptoDate } = await ctx.req.json();
 
-  player.updateViewStatus(status);
+  player.updateViewStatus(isUptoDate);
 
   return ctx.json({ message: "successfully updated player view status" });
 };

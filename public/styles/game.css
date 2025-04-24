@@ -392,6 +392,7 @@ main img {
 .conflict {
   display: none;
 }
+
 #player-name {
   color: #9a6a1c;
   font-weight: 700;
@@ -462,7 +463,8 @@ hr {
   height: 20px;
   width: 20px;
 }
-#othershield {
+
+.othershield {
   display: flex;
   justify-content: center;
   align-items: center;

@@ -283,7 +283,7 @@ class Game {
   updatePlayersStatus() {
     this.#players.forEach((player) => {
       player.updateStatus("waiting");
-      player.updateViewStatus("not upto-date");
+      player.updateViewStatus(false);
     });
   }
 
