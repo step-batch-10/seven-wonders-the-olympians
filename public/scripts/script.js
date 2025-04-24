@@ -1,3 +1,4 @@
+import { loginMain } from "./login.js";
 const text = "Welcome to 7 wonders...";
 const speed = 70;
 let i = 0;
@@ -12,21 +13,22 @@ function typeWriter() {
 
 document.addEventListener("DOMContentLoaded", typeWriter);
 
+const closePop = () => {
+  const pop = document.querySelector(".popUpWindow");
+  pop.style.transform = "scale(0)";
+  // pop.style = "display:none";
+};
+
 const popOut = () => {
-  document.querySelector("main").style = "filter: blur(5px)";
-  const iframe = document.createElement("iframe");
-  iframe.src = "login.html";
-  iframe.width = "40%";
-  iframe.height = "600";
-  iframe.style.border = "none";
   const pop = document.querySelector(".popUpWindow");
   pop.style = "display:flex";
 
-  pop.replaceChildren(iframe);
+  document.querySelector(".close").addEventListener("click", closePop);
 };
 
 const main = () => {
   document.querySelector("button").addEventListener("click", popOut);
+  loginMain();
 };
 
 globalThis.onload = main;

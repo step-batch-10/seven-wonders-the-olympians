@@ -16,8 +16,7 @@ const login = async (event) => {
   }
 };
 
-const main = () => {
+export const loginMain = () => {
   const form = document.querySelector("form");
   form.addEventListener("submit", login);
 };
-globalThis.onload = main;

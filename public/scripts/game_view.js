@@ -216,7 +216,7 @@ const removeList = () => {
 
 const createCancel = () => {
   const [stage, content, image] = createElements(["div", "p", "img"]);
-  image.src = "/img/icons/cancel.avif";
+  image.src = "/img/icons/cancel.png";
 
   content.innerText = "Cancel";
   stage.append(image, content);

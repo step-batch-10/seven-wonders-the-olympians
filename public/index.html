@@ -5,14 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>7 wonders</title>
     <link rel="stylesheet" href="styles/style.css" />
-    <script defer src="scripts/script.js"></script>
+    <script defer src="scripts/script.js" type="module"></script>
+    <link rel="stylesheet" href="styles/login.css" />
   </head>
   <body>
     <main>
-      <button>Login</button>
+      <button class="loginBtn">Login</button>
       <h1><span id="typewriter"></span></h1>
       <h2>-Regards, The Olympians</h2>
     </main>
-    <div class="popUpWindow"></div>
+    <div class="popUpWindow">
+      <form class="login-form">
+        <div class="close-menu">
+          <img src="img/icons/cancel.png" alt="" class="close" />
+        </div>
+        <h1 id="form-title">Login</h1>
+        <input
+          type="text"
+          name="username"
+          id="username"
+          placeholder="Username"
+          required
+        />
+        <button type="submit" id="join-btn">Join</button>
+      </form>
+    </div>
   </body>
 </html>
