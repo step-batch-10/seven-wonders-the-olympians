@@ -21,7 +21,7 @@ const renderUpdatedGame = async (sevenWonders, hand) => {
 const endAnAge = async (sevenWonders) => {
   document.querySelector(".waiting-window")?.remove();
   const conflictData = await sevenWonders.requestJsonData(
-    "/game/military-conflicts"
+    "/game/military-conflicts",
   );
 
   await uiView.renderMilitaryConflicts(conflictData);
@@ -36,7 +36,7 @@ const pollGameState = async (sevenWonders) => {
 
   if (!isUptoDate) {
     const { isLastRound, hand } = await sevenWonders.requestJsonData(
-      "/game/cards"
+      "/game/cards",
     );
 
     if (isLastRound) return await endAnAge(sevenWonders);
