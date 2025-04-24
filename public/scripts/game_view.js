@@ -407,7 +407,7 @@ const createEl = (tag, options = { id: "", class: "", text: "" }) => {
 
   element.classList.add(options.class);
   element.id = options.id;
-  element.textContent = text;
+  element.textContent = options.text;
 
   for (const attr in options.attrs) {
     element.setAttribute(attr, options.attrs[attr]);
