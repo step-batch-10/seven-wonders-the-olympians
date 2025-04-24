@@ -80,8 +80,8 @@ main {
   height: 100vh;
   width: 100vw;
   background-image:
-    linear-gradient(#0000009a, #0000009a),
-    url("../img/image.png");
+    linear-gradient(#00000030, #00000030),
+    url("../img/lobby-page.png");
   background-size: cover;
   background-position: center;
 }
@@ -154,4 +154,24 @@ main {
   width: 30px;
   align-items: end;
   cursor: pointer;
+}
+
+#fireCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+#lightningCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
 }

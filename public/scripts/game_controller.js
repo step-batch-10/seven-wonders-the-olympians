@@ -65,7 +65,6 @@ const gameManager = async (sevenWonders) => {
 
 const main = async () => {
   const sevenWonders = new SevenWonders();
-
   await gameManager(sevenWonders);
   pollForPlayerStatus(sevenWonders);
 };

@@ -21,12 +21,16 @@ const removeWaitingWindow = () => {
 };
 
 const renderWonder = (wonder) => {
+  const wonderImgStr = wonder.toLowerCase();
   const holder = document.getElementById("wonder-placeholder");
   const img = document.createElement("img");
-  img.src = `/img/wonders/${wonder.toLowerCase()}A.jpeg`;
+  img.src = `/img/wonders/${wonderImgStr}A.jpeg`;
   img.alt = wonder;
   img.id = "player-wonder";
   holder.replaceChildren(img);
+  document.querySelector("body").style = `background-image: 
+  radial-gradient(ellipse at bottom center, #f0ddb7cd, #ad884c90),
+  url("../img/wonders/${wonderImgStr}BG.png");`;
 };
 
 const renderPlayerName = (name) => {
