@@ -7,7 +7,9 @@
     "test-coverage": "deno test -A --coverage=coverage",
     "coverage": {
       "command": "deno coverage --html",
-      "dependencies": ["test-coverage"]
+      "dependencies": [
+        "test-coverage"
+      ]
     }
   },
   "imports": {
@@ -20,8 +22,12 @@
   },
   "lint": {
     "rules": {
-      "tags": ["recommended"],
-      "include": ["camelcase"],
+      "tags": [
+        "recommended"
+      ],
+      "include": [
+        "camelcase"
+      ],
       "exclude": []
     }
   },
@@ -29,6 +35,16 @@
     "indentWidth": 2,
     "semiColons": true,
     "lineWidth": 80,
-    "exclude": ["**/*.md"]
+    "exclude": [
+      "**/*.md"
+    ]
+  },
+  "deploy": {
+    "project": "bc1b267d-123f-49ce-b5a7-8e67b38d4763",
+    "exclude": [
+      "**/node_modules"
+    ],
+    "include": [],
+    "entrypoint": "main.js"
   }
 }

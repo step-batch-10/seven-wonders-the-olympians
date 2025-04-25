@@ -91,7 +91,21 @@ describe("Testing the Game class", () => {
         wonder: "Gizah",
         coins: 3,
         warTokens: { positive: 0, negative: 0 },
-        stagedCards: [],
+        stage: [],
+        stages: {
+          stage1: {
+            cost: [{ type: "stone", count: 2 }],
+            powers: [{ type: "points", value: 3 }],
+          },
+          stage2: {
+            cost: [{ type: "wood", count: 3 }],
+            powers: [{ type: "points", value: 5 }],
+          },
+          stage3: {
+            cost: [{ type: "stone", count: 4 }],
+            powers: [{ type: "points", value: 7 }],
+          },
+        },
         buildings: {
           brown: [],
           grey: [],
@@ -107,7 +121,21 @@ describe("Testing the Game class", () => {
           wonder: "Olympia",
           coins: 3,
           warTokens: { positive: 0, negative: 0 },
-          stagedCards: [],
+          stage: [],
+          stages: {
+            stage1: {
+              cost: [{ type: "wood", count: 2 }],
+              powers: [{ type: "points", value: 3 }],
+            },
+            stage2: {
+              cost: [{ type: "stone", count: 2 }],
+              powers: [{ type: "free_card_per_age" }],
+            },
+            stage3: {
+              cost: [{ type: "ore", count: 2 }],
+              powers: [{ type: "points", value: 7 }],
+            },
+          },
           buildings: {
             brown: [],
             grey: [],
@@ -124,7 +152,21 @@ describe("Testing the Game class", () => {
           wonder: "Ephesos",
           coins: 3,
           warTokens: { positive: 0, negative: 0 },
-          stagedCards: [],
+          stage: [],
+          stages: {
+            stage1: {
+              cost: [{ type: "stone", count: 2 }],
+              powers: [{ type: "points", value: 3 }],
+            },
+            stage2: {
+              cost: [{ type: "wood", count: 2 }],
+              powers: [{ type: "coin", value: 9 }],
+            },
+            stage3: {
+              cost: [{ type: "papyrus", count: 2 }],
+              powers: [{ type: "points", value: 7 }],
+            },
+          },
           buildings: {
             brown: [],
             grey: [],
@@ -142,7 +184,21 @@ describe("Testing the Game class", () => {
             wonder: "Alexandria",
             coins: 3,
             warTokens: { positive: 0, negative: 0 },
-            stagedCards: [],
+            stage: [],
+            stages: {
+              stage1: {
+                cost: [{ type: "stone", count: 2 }],
+                powers: [{ type: "points", value: 3 }],
+              },
+              stage2: {
+                cost: [{ type: "wood", count: 2 }],
+                powers: [{ type: "wild_resource" }],
+              },
+              stage3: {
+                cost: [{ type: "glass", count: 2 }],
+                powers: [{ type: "points", value: 7 }],
+              },
+            },
             buildings: {
               brown: [],
               grey: [],
@@ -172,7 +228,21 @@ describe("Testing the Game class", () => {
         wonder: "Halikarnassos",
         coins: 3,
         warTokens: { positive: 0, negative: 0 },
-        stagedCards: [],
+        stage: [],
+        stages: {
+          stage1: {
+            cost: [{ type: "clay", count: 2 }],
+            powers: [{ type: "points", value: 3 }],
+          },
+          stage2: {
+            cost: [{ type: "wood", count: 3 }],
+            powers: [{ type: "play_discarded_card" }],
+          },
+          stage3: {
+            cost: [{ type: "textile", count: 2 }],
+            powers: [{ type: "points", value: 7 }],
+          },
+        },
         buildings: {
           brown: [],
           grey: [],
@@ -188,7 +258,21 @@ describe("Testing the Game class", () => {
           wonder: "Alexandria",
           coins: 3,
           warTokens: { positive: 0, negative: 0 },
-          stagedCards: [],
+          stage: [],
+          stages: {
+            stage1: {
+              cost: [{ type: "stone", count: 2 }],
+              powers: [{ type: "points", value: 3 }],
+            },
+            stage2: {
+              cost: [{ type: "wood", count: 2 }],
+              powers: [{ type: "wild_resource" }],
+            },
+            stage3: {
+              cost: [{ type: "glass", count: 2 }],
+              powers: [{ type: "points", value: 7 }],
+            },
+          },
           buildings: {
             brown: [],
             grey: [],
@@ -205,7 +289,21 @@ describe("Testing the Game class", () => {
           wonder: "Olympia",
           coins: 3,
           warTokens: { positive: 0, negative: 0 },
-          stagedCards: [],
+          stage: [],
+          stages: {
+            stage1: {
+              cost: [{ type: "wood", count: 2 }],
+              powers: [{ type: "points", value: 3 }],
+            },
+            stage2: {
+              cost: [{ type: "stone", count: 2 }],
+              powers: [{ type: "free_card_per_age" }],
+            },
+            stage3: {
+              cost: [{ type: "ore", count: 2 }],
+              powers: [{ type: "points", value: 7 }],
+            },
+          },
           buildings: {
             brown: [],
             grey: [],
@@ -223,7 +321,21 @@ describe("Testing the Game class", () => {
             wonder: "Ephesos",
             coins: 3,
             warTokens: { positive: 0, negative: 0 },
-            stagedCards: [],
+            stage: [],
+            stages: {
+              stage1: {
+                cost: [{ type: "stone", count: 2 }],
+                powers: [{ type: "points", value: 3 }],
+              },
+              stage2: {
+                cost: [{ type: "wood", count: 2 }],
+                powers: [{ type: "coin", value: 9 }],
+              },
+              stage3: {
+                cost: [{ type: "papyrus", count: 2 }],
+                powers: [{ type: "points", value: 7 }],
+              },
+            },
             buildings: {
               brown: [],
               grey: [],
@@ -240,7 +352,21 @@ describe("Testing the Game class", () => {
             wonder: "Gizah",
             coins: 3,
             warTokens: { positive: 0, negative: 0 },
-            stagedCards: [],
+            stage: [],
+            stages: {
+              stage1: {
+                cost: [{ type: "stone", count: 2 }],
+                powers: [{ type: "points", value: 3 }],
+              },
+              stage2: {
+                cost: [{ type: "wood", count: 3 }],
+                powers: [{ type: "points", value: 5 }],
+              },
+              stage3: {
+                cost: [{ type: "stone", count: 4 }],
+                powers: [{ type: "points", value: 7 }],
+              },
+            },
             buildings: {
               brown: [],
               grey: [],
