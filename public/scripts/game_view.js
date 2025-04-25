@@ -236,8 +236,6 @@ const createCancel = () => {
   return stage;
 };
 
-const nothing = () => {};
-
 const removeOtherActionsInteractions = () => {
   document.querySelector("#build-message")?.remove();
   document.querySelector(".actionsBox").remove();
@@ -247,7 +245,16 @@ const removeOtherActionsInteractions = () => {
   Array.from(cards).forEach((card) => {
     card.removeEventListener("mouseenter", handleHover);
     card.removeEventListener("mouseleave", handleHoverLeave);
-    card.querySelector("img").onclick = nothing;
+    const cardImg = card.querySelector(".card-image");
+    cardImg.removeEventListener("click", cardImg.onClickHandler);
+  });
+};
+
+const resetCardsEventListeners = () => {
+  const cards = document.querySelectorAll(".card-image");
+
+  Array.from(cards).forEach((card) => {
+    card.addEventListener("click", card.onClickHandler);
   });
 };
 
@@ -256,6 +263,7 @@ const reselectCard = (resetPlayerAction) => {
     event.target.closest(".deck").classList.remove("hovered");
     event.target.remove();
     addHoverForChildren("#cardsContainer");
+    resetCardsEventListeners();
 
     notify((await resetPlayerAction()).message);
   };
@@ -266,19 +274,12 @@ const addReselectOption = (event, resetPlayerAction) => {
   img.addEventListener("click", reselectCard(resetPlayerAction));
   const card = event.target.closest(".deck");
   card.appendChild(img);
-  card.classList.add("img.reselect-state");
-  const cardImg = card.querySelector(".card-image");
-  console.log(cardImg.onClickHandler);
-  console.log(cardImg.onClickHandler);
-  console.log("this is the card img eleent", cardImg);
-  cardImg.onclick = eval(cardImg.onClickHandler);
-  console.log(cardImg.onclick);
 };
 
 const reqBuildCard = (card, postPlayerAction, resetPlayerAction) => {
   return (event) => {
     addReselectOption(event, resetPlayerAction);
-    removeOtherActionsInteractions(event);
+    removeOtherActionsInteractions();
 
     postPlayerAction({ card: card.name, action: "build" });
   };
@@ -339,15 +340,16 @@ const createBuild = (card, postPlayerAction, resetPlayerAction) => {
   );
 };
 
-const reqToDiscard = (card, postPlayerAction) => {
+const reqToDiscard = (card, postPlayerAction, resetPlayerAction) => {
   return (event) => {
-    removeList(event);
-    createWaitingWindow();
+    addReselectOption(event, resetPlayerAction);
+    removeOtherActionsInteractions();
+
     postPlayerAction({ card: card.name, action: "discard" });
   };
 };
 
-const createDiscard = (card, postPlayerAction) => {
+const createDiscard = (card, postPlayerAction, resetPlayerAction) => {
   const [stage, content, image] = createElements(["div", "p", "img"]);
 
   image.src = "/img/icons/discard.png";
@@ -359,7 +361,10 @@ const createDiscard = (card, postPlayerAction) => {
     return stage;
   }
 
-  stage.addEventListener("click", reqToDiscard(card, postPlayerAction));
+  stage.addEventListener(
+    "click",
+    reqToDiscard(card, postPlayerAction, resetPlayerAction),
+  );
   return stage;
 };
 
@@ -392,7 +397,7 @@ const showActions = (card, postPlayerAction, resetPlayerAction) => {
   actionBox.classList.add("actionsBox");
 
   actionBox.append(
-    createDiscard(card, postPlayerAction),
+    createDiscard(card, postPlayerAction, resetPlayerAction),
     createStage(card),
     createBuild(card, postPlayerAction, resetPlayerAction),
     createCancel(),
@@ -436,18 +441,17 @@ const createCardsContainer = (
     postPlayerAction,
     resetPlayerAction,
   );
-  // const img = createEl("img", { className: "card-image", attrs: { src: `/img/cards/${convert(card.name)}.jpeg`, onClickHandler } });
-  const img = document.createElement("img");
-  img.src = `/img/cards/${convert(card.name)}.jpeg`;
+  const img = createEl("img", {
+    className: "card-image",
+    attrs: { src: `/img/cards/${convert(card.name)}.jpeg`, onClickHandler },
+  });
   img.onClickHandler = onClickHandler;
-  img.classList.add("card-image");
-  img.onclick = onClickHandler;
+  img.addEventListener("click", onClickHandler);
 
-  console.log(img, img.onclick, "onclickHanler", img.onClickHandler);
-  // const imageContainer = createEl("div", { className: "deck", attrs: { style: `--index:${index + 1 - offset}; --middle:${offset}` } });
-  const imageContainer = document.createElement("div");
-  imageContainer.style = `--index:${index + 1 - offset}; --middle:${offset}`;
-  imageContainer.classList.add("deck");
+  const imageContainer = createEl("div", {
+    className: "deck",
+    attrs: { style: `--index:${index + 1 - offset}; --middle:${offset}` },
+  });
   imageContainer.appendChild(img);
 
   return imageContainer;
