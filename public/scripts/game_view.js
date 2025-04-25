@@ -46,7 +46,7 @@ const getPlayerPoints = (coins, tokens) => {
   const tokensEl = document.createElement("p");
 
   coinsEl.textContent = `💲 ${coins}`;
-  tokensEl.textContent = `⚔️ ${tokens.positive} / ${tokens.negative}`;
+  tokensEl.textContent = `⚔️  ${tokens.negative}`;
   container.append(coinsEl, tokensEl);
   return container;
 };
@@ -72,6 +72,7 @@ const fetchImage = (card, index) => {
 
 const renderBuildings = ([colour, cards]) => {
   const container = document.querySelector(`.${colour}`);
+  console.log(colour, container);
   container.classList.add(colour);
   container.replaceChildren(...cards.map(fetchImage));
 };
@@ -162,14 +163,14 @@ const getNeighbourStats = (player, template) => {
   const playerClone = template.content.cloneNode(true);
   const header = playerClone.querySelector(".player-stats-header");
 
-  header.append(getPlayerStats(name));
-  header.append(getPlayerPoints(coins, warTokens));
+  header?.append(getPlayerStats(name));
+  header?.append(getPlayerPoints(coins, warTokens));
 
-  const cards = playerClone.querySelector(".cards");
+  const cards = playerClone?.querySelector(".cards");
   if (cards) appendPlayerBuildings(playerClone, buildings);
 
   const wonderStats = playerClone.querySelector(".wonder-stats");
-  wonderStats.append(...getWonderStats(wonder, bonusResource));
+  wonderStats?.append(...getWonderStats(wonder, bonusResource));
 
   return playerClone;
 };
@@ -539,6 +540,7 @@ const createShieldBlock = (shieldSrc, count) => {
     createImg(shieldSrc, "shield"),
     createEl("p", { text: count }),
   );
+
   return wrapper;
 };
 
@@ -594,6 +596,18 @@ const createUserShield = (militaryShields) => {
   return ele;
 };
 
+const createConflictChilds = (militaryShields, leftConflict, rightConflict) => {
+  const top = createUserShield(militaryShields);
+  const hr = document.createElement("hr");
+  const [left, leftPlayerStatus] = createConflict(leftConflict, "leftPlayer");
+  const [right, rightPlayerStatus] = createConflict(
+    rightConflict,
+    "rightPlayer",
+  );
+
+  return [top, left, leftPlayerStatus, hr, right, rightPlayerStatus];
+};
+
 const createConflictContainer = () => {
   const conflict = document.querySelector(".conflict");
   conflict.style.display = "flex";
@@ -612,22 +626,9 @@ const renderConflictsResults = async ({
   const parent = document.querySelector(".conflictContainer");
   parent.style.display = "flex";
   const conflict = createConflictContainer();
-  const top = createUserShield(militaryShields);
 
-  const [left, leftPlayerStatus] = createConflict(leftConflict, "leftPlayer");
-  const [right, rightPlayerStatus] = createConflict(
-    rightConflict,
-    "rightPlayer",
-  );
-
-  const hr = document.createElement("hr");
   conflict.replaceChildren(
-    top,
-    left,
-    leftPlayerStatus,
-    hr,
-    right,
-    rightPlayerStatus,
+    ...createConflictChilds(militaryShields, leftConflict, rightConflict),
   );
 
   console.log(parent);

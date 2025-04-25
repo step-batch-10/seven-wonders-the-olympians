@@ -3,6 +3,11 @@
   padding: 0;
   border: 0;
   box-sizing: border-box;
+  font-family: sans-serif;
+  font-size: 1.2rem;
+  color: #9a6a1c;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 body {
   height: 100vh;
@@ -21,11 +26,13 @@ main {
   width: 100vw;
 }
 
-header {
+.header {
+  padding: 1rem;
   height: 6vh;
+  display: flex;
+  justify-content: space-between;
 }
 
-header,
 .player-points,
 .wonder-stats,
 #other-players,
@@ -41,7 +48,7 @@ header,
 }
 
 #other-players {
-  height: 20vh;
+  height: 50px;
 }
 
 #player-wonder {
@@ -81,7 +88,9 @@ header,
   padding: 0.2rem;
   width: 100%;
 }
-
+.cards {
+  overflow-y: scroll;
+}
 .cards img {
   position: absolute;
   z-index: calc(var(--z-index));
@@ -118,20 +127,28 @@ header,
 }
 
 .png {
-  height: 90%;
+  height: 52.7%;
   aspect-ratio: 1;
 }
 
 p {
   text-transform: capitalize;
 }
+#other-players > div {
+  height: 100%;
+  width: 250px;
+}
 
+.deck {
+  transition: all 2s ease-in-out;
+  height: 200px;
+}
 .other-player-stats {
   flex-direction: column;
   gap: 5px;
 }
 .deck {
-  width: 100px;
+  width: 130px;
 }
 
 .deck img {
@@ -178,6 +195,10 @@ p {
   bottom: -20px;
 }
 
+.buildedCards {
+  position: relative;
+  bottom: -114px;
+}
 .buildedCards > div > img {
   position: absolute;
   width: 100%;
@@ -220,7 +241,6 @@ p {
   align-items: center;
   justify-content: center;
   position: relative;
-  top: -58%;
 }
 
 .actionsBox {
@@ -319,9 +339,9 @@ main img {
 }
 
 .deck {
-  --rotate: calc(var(--index) * 6deg);
-  --offset-x: calc(var(--index) * 80px);
-  --offset-y: calc(var(--index) * var(--index) * 5px);
+  --rotate: calc(var(--index) * 10deg);
+  --offset-x: calc(var(--index) * 100px);
+  --offset-y: calc(var(--index) * var(--index) * 8px);
   position: absolute;
   transform: translateX(var(--offset-x)) translateY(var(--offset-y))
     rotateZ(var(--rotate));
@@ -339,7 +359,10 @@ main img {
 .second-col > * {
   position: absolute;
 }
-
+.neighbour {
+  height: 80vh;
+  align-self: flex-end;
+}
 .popup {
   position: absolute;
   right: 0;
