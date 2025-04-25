@@ -422,7 +422,7 @@ class Player {
 
     const possibleActions = stageCard ? this.#getActionDetails(stageCard) : {
       canBuild: false,
-      cannotStage: true,
+      isStagingCompleted: true,
     };
 
     return { canStage: possibleActions.canBuild, ...possibleActions };

@@ -1094,7 +1094,7 @@ describe("Testing the Player class", () => {
 
         const [handData] = p1.getHandData();
         assertEquals(handData.stage.canStage, false);
-        assertEquals(handData.stage.cannotStage, true);
+        assertEquals(handData.stage.isStagingCompleted, true);
       });
 
       it("should not able to stage when i already staged 3 satges", () => {

@@ -90,7 +90,6 @@ const getPlayerPoints = (coins, tokens) => {
 
 const addStagedCard = (stagedCards, card, i) => {
   const holder = stagedCards.querySelector(`.stage${i + 1}`);
-  // console.log(holder, i, "--------------------------")
   const [img] = createElements(["img"]);
 
   img.src = `/img/ages/age${card.age}.jpeg`;
@@ -104,7 +103,7 @@ const renderStagedCards = (stagedCards) => {
 
 const renderPlayerInfo = (info) => {
   const { wonder, name, coins, warTokens, buildings, stagedCards } = info;
-  console.log(stagedCards, "hello------------------------------");
+
   renderWonder(wonder);
   renderPlayerName(name);
   renderCards(buildings);
@@ -373,6 +372,7 @@ const addBuildOptEvtListener = (
 const getHoverMsg = (actions, action) => {
   const messages = {
     isAlreadyBuild: "You already own the card. No duplicates allowed!",
+    isStagingCompleted: "Staging is completed, cannot stage anymore",
     trade:
       "You don't have enough resources. You can trade with the neighbours.",
     isFutureCard:
@@ -454,6 +454,8 @@ const createDiscard = (card, postPlayerAction, resetPlayerAction) => {
 const reqToStage = (card, postAction, reset) => {
   return (event) => {
     addReselectOption(event, reset);
+    removeOtherActionsInteractions();
+
     postAction({ card: card.name, action: "stage" });
   };
 };
