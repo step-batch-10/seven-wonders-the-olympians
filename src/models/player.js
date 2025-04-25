@@ -343,7 +343,7 @@ class Player {
     });
   }
 
-  resourcesFromneighbour(cost) {
+  resourcesFromNeighbour(cost) {
     const trade = {};
     const discounts = this.#wonder.discounts;
 
@@ -366,52 +366,46 @@ class Player {
     return { canTrade, trade };
   }
 
-  #addBuildDetails(msg, actionDetails) {
-    actionDetails.buildDetails = msg;
-
-    return actionDetails;
+  #addAction(action, key, value = true) {
+    action[key] = value;
+    return action;
   }
 
-  #addTradeDetails(trade, actionDetails) {
-    actionDetails.tradeDetails = trade;
-
-    return actionDetails;
-  }
-
-  #isCardFree(cost) {
+  #isCardFree(cost, actions) {
     return cost.length === 0
-      ? this.#addBuildDetails("no resources required", {})
+      ? this.#addAction(actions, "isCardFree", true)
       : null;
   }
 
-  #canAffordCoinCost(cost) {
-    const isCoin = cost.length === 1 && cost[0]?.type === "coin";
+  #canAffordCoinCost(cost, actions) {
+    const coinCost = cost.find(({ type }) => type === "coin");
 
-    return isCoin && cost[0]?.count <= this.#coins
-      ? this.#addBuildDetails("pay bank", {})
+    return coinCost && this.#coins >= coinCost.count
+      ? this.#addAction(actions, "needToPayCoinsToBank", true)
       : null;
   }
 
-  #hasEnoughResources(tradeCost) {
+  #hasEnoughResources(tradeCost, actions) {
     return tradeCost.length === 0
-      ? this.#addBuildDetails("had enough resources", {})
+      ? this.#addAction(actions, "hadEnoughResources", true)
       : null;
   }
 
-  #hasFutureCard(card) {
+  #hasFutureCard(card, actions) {
     return this.#wonder.futureBenefits.has(card.name)
-      ? this.#addBuildDetails("future free card", {})
+      ? this.#addAction(actions, "isFutureCard", true)
       : null;
   }
 
-  #trade(cost) {
-    const { canTrade, trade } = this.resourcesFromneighbour(cost);
-    return canTrade ? this.#addTradeDetails(trade, {}) : null;
+  #trade(cost, actions) {
+    const { canTrade, trade } = this.resourcesFromNeighbour(cost);
+    return canTrade ? this.#addAction(actions, "trade", trade) : null;
   }
 
-  #alreadyHave(card) {
+  #alreadyHave(card, actions) {
     if (this.#wonder.alreadyBuilt(card.name)) {
-      return {};
+      this.#addAction(actions, "isAlreadyBuild", true);
+      return this.#addAction(actions, "canBuild", false);
     }
     return null;
   }
@@ -419,31 +413,41 @@ class Player {
   #getActionDetails(card) {
     const cost = card.cost;
     const tradeCost = this.haveResources(cost);
+    const possibleActions = { canBuild: true };
 
     return (
-      this.#alreadyHave(card) ||
-      this.#isCardFree(cost) ||
-      this.#canAffordCoinCost(cost) ||
-      this.#hasFutureCard(card) ||
-      this.#hasEnoughResources(tradeCost) ||
-      this.#trade(tradeCost) ||
-      {}
+      this.#alreadyHave(card, possibleActions) ||
+      this.#isCardFree(cost, possibleActions) ||
+      this.#canAffordCoinCost(cost, possibleActions) ||
+      this.#hasFutureCard(card, possibleActions) ||
+      this.#hasEnoughResources(tradeCost, possibleActions) ||
+      this.#trade(tradeCost, possibleActions) || {
+        canBuild: false,
+        noResources: true,
+      }
     );
   }
 
-  #addActionDetails(card) {
-    const actionDetails = this.#getActionDetails(card);
+  #canStage() {
+    const noOfStages = `stage${this.#wonder.staged.length + 1}`;
+    const stageCard = this.#wonder.stages[noOfStages];
+    const possibleActions = this.#getActionDetails(stageCard);
 
+    return { canStage: possibleActions.canBuild, ...possibleActions };
+  }
+
+  #addActionDetails(card, stage) {
     return {
       name: card.name,
-      actionDetails,
-      canStage: false,
-      canDiscard: true,
+      build: this.#getActionDetails(card),
+      stage: stage,
+      discard: { canDiscard: true },
     };
   }
 
   getHandData() {
-    return this.#hand.map((card) => this.#addActionDetails(card));
+    const stage = this.#canStage();
+    return this.#hand.map((card) => this.#addActionDetails(card, stage));
   }
 
   buildCard(cardName) {

@@ -285,7 +285,7 @@ const reqBuildCard = (card, postPlayerAction, resetPlayerAction) => {
   };
 };
 
-const createHoverMessage = (message) => {
+const createHoverMsg = (message) => {
   return (event) => {
     const hoverMessage = document.createElement("div");
     hoverMessage.textContent = message;
@@ -308,16 +308,41 @@ const addBuildOptEvtListener = (
   resetPlayerAction,
 ) => {
   stage.addEventListener(
-    "mouseenter",
-    createHoverMessage(card.actionDetails.buildDetails),
-  );
-  stage.addEventListener("mouseleave", removeHoverMessage);
-  stage.addEventListener(
     "click",
     reqBuildCard(card, postPlayerAction, resetPlayerAction),
   );
 
   return stage;
+};
+
+const getHoverMsg = (actions, action) => {
+  const messages = {
+    isAlreadyBuild: "You already own the card. No duplicates allowed!",
+    trade: "You don't have enough resources. Try trading with your neighbors.",
+    isFutureCard:
+      "You get this card for free! You already have the required linked card.",
+    hadEnoughResources:
+      `Nice! You can ${action} this card with your own resources.`,
+    needToPayCoinsToBank:
+      `You need to pay coins to the bank to ${action} this card.`,
+    isCardFree: `You can ${action} this card at no cost.`,
+    noResources: `You don't have enough resources to ${action} this card.`,
+  };
+
+  const [possibleAction] = Object.keys(actions).filter(
+    (key) => actions[key] && !key.startsWith("can"),
+  );
+
+  return (
+    messages[possibleAction] ||
+    "You don't have enough resources to build this card."
+  );
+};
+
+const addHoverListener = (ele, actions, action) => {
+  const hoverMsg = getHoverMsg(actions, action);
+  ele.addEventListener("mouseenter", createHoverMsg(hoverMsg));
+  ele.addEventListener("mouseleave", removeHoverMessage);
 };
 
 const createBuild = (card, postPlayerAction, resetPlayerAction) => {
@@ -327,7 +352,9 @@ const createBuild = (card, postPlayerAction, resetPlayerAction) => {
   content.innerText = "Build";
   stage.append(image, content);
 
-  if (!("buildDetails" in card.actionDetails)) {
+  addHoverListener(stage, card.build, "build");
+
+  if (!card.build.canBuild) {
     stage.classList.add("disabled");
     return stage;
   }
@@ -356,7 +383,7 @@ const createDiscard = (card, postPlayerAction, resetPlayerAction) => {
   content.innerText = "Discard";
   stage.append(image, content);
 
-  if (!card.canDiscard) {
+  if (!card.discard.canDiscard) {
     stage.classList.add("disabled");
     return stage;
   }
@@ -368,27 +395,28 @@ const createDiscard = (card, postPlayerAction, resetPlayerAction) => {
   return stage;
 };
 
-const reqToStage = (card, postPlayerAction) => {
+const reqToStage = (card, postAction, reset) => {
   return (event) => {
-    removeList(event);
-    createWaitingWindow();
-    postPlayerAction({ card: card.name, action: "stage" });
+    addReselectOption(event, reset);
+    postAction({ card: card.name, action: "stage" });
   };
 };
 
-const createStage = (card, postPlayerAction) => {
+const createStage = (card, postAction, resetAction) => {
   const [stage, content, image] = createElements(["div", "p", "img"]);
 
   image.src = "/img/icons/stage.png";
   content.innerText = "Stage";
   stage.append(image, content);
 
-  if (!card.canStage) {
+  addHoverListener(stage, card.stage, "stage");
+
+  if (!card.stage.canStage) {
     stage.classList.add("disabled");
     return stage;
   }
 
-  stage.addEventListener("click", reqToStage(card, postPlayerAction));
+  stage.addEventListener("click", reqToStage(card, postAction, resetAction));
   return stage;
 };
 
@@ -397,7 +425,7 @@ const showActions = (card, postPlayerAction, resetPlayerAction) => {
   actionBox.classList.add("actionsBox");
 
   actionBox.append(
-    createDiscard(card, postPlayerAction, resetPlayerAction),
+    createDiscard(card, postPlayerAction),
     createStage(card),
     createBuild(card, postPlayerAction, resetPlayerAction),
     createCancel(),

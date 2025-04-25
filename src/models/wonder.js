@@ -10,7 +10,6 @@ class Wonder {
   #militaryStrength;
   #victoryPoints;
   #futureBenefits;
-  #stages;
 
   constructor(wonder) {
     this.#wonder = wonder;
