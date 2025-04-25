@@ -232,7 +232,7 @@ class Player {
       wonder: this.#wonder.name,
       coins: this.#coins,
       warTokens: this.warTokensObj,
-      stage: this.#wonder.staged,
+      stagedCards: this.#wonder.staged,
       stages: this.#wonder.stages,
       buildings: this.#wonder.buildings,
       bonusResource: this.#wonder.bonusResource,
