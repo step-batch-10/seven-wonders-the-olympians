@@ -232,7 +232,7 @@ class Player {
       wonder: this.#wonder.name,
       coins: this.#coins,
       warTokens: this.warTokensObj,
-      stage: this.#wonder.staged,
+      stagedCards: this.#wonder.staged,
       buildings: this.#wonder.buildings,
       bonusResource: this.#wonder.bonusResource,
     };
@@ -262,19 +262,6 @@ class Player {
 
     return playersStatus;
   }
-
-  // canStage () {
-  //   const stage = this.wonder.getNextStage();
-  //   return this.canBuild(stage.cost);
-  // }
-
-  // validateTrades () {
-  //   this.#hand.forEach((card) => {
-  //     this.#currentTrades[card.name] = this.canBuild(card.cost);
-  //   });
-
-  //   this.#currentTrades.stage = this.canStage();
-  // }
 
   deductCoins(card) {
     const coinCost = card.cost.find(({ type }) => type === "coin");
@@ -431,7 +418,11 @@ class Player {
   #canStage() {
     const noOfStages = `stage${this.#wonder.staged.length + 1}`;
     const stageCard = this.#wonder.stages[noOfStages];
-    const possibleActions = this.#getActionDetails(stageCard);
+
+    const possibleActions = stageCard ? this.#getActionDetails(stageCard) : {
+      canBuild: false,
+      cannotStage: true,
+    };
 
     return { canStage: possibleActions.canBuild, ...possibleActions };
   }

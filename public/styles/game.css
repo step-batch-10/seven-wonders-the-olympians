@@ -236,6 +236,11 @@ p {
   height: 200px;
 }
 
+.wonder > #wonder-placeholder > img {
+  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+  box-shadow: 0px 11px 11px 0px rgba(0, 0, 0, 0.55);
+}
+
 .wonder > #wonder-placeholder {
   display: flex;
   align-items: center;
@@ -517,4 +522,37 @@ img.reselect-icon {
   width: 30px;
   left: calc(50% - 15px);
   bottom: -40px;
+}
+
+.staged-cards {
+  position: absolute;
+  height: 40%;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  gap: 50px;
+  bottom: -201px;
+}
+
+.staged-cards div {
+  position: relative;
+  width: 130px;
+  height: 200px;
+}
+
+.stage1 {
+  left: 378px;
+}
+
+.stage2 {
+  left: 378px;
+}
+.stage3 {
+  left: 378px;
+}
+
+.staged-cards img {
+  width: 130px;
+  box-shadow: rgba(0, 0, 0, 0.44) 0px 3px 8px;
+  border: 0.2px solid gray;
 }

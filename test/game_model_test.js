@@ -91,7 +91,7 @@ describe("Testing the Game class", () => {
         wonder: "Gizah",
         coins: 3,
         warTokens: { positive: 0, negative: 0 },
-        stage: [],
+        stagedCards: [],
         buildings: {
           brown: [],
           grey: [],
@@ -107,7 +107,7 @@ describe("Testing the Game class", () => {
           wonder: "Olympia",
           coins: 3,
           warTokens: { positive: 0, negative: 0 },
-          stage: [],
+          stagedCards: [],
           buildings: {
             brown: [],
             grey: [],
@@ -124,7 +124,7 @@ describe("Testing the Game class", () => {
           wonder: "Ephesos",
           coins: 3,
           warTokens: { positive: 0, negative: 0 },
-          stage: [],
+          stagedCards: [],
           buildings: {
             brown: [],
             grey: [],
@@ -142,7 +142,7 @@ describe("Testing the Game class", () => {
             wonder: "Alexandria",
             coins: 3,
             warTokens: { positive: 0, negative: 0 },
-            stage: [],
+            stagedCards: [],
             buildings: {
               brown: [],
               grey: [],
@@ -172,7 +172,7 @@ describe("Testing the Game class", () => {
         wonder: "Halikarnassos",
         coins: 3,
         warTokens: { positive: 0, negative: 0 },
-        stage: [],
+        stagedCards: [],
         buildings: {
           brown: [],
           grey: [],
@@ -188,7 +188,7 @@ describe("Testing the Game class", () => {
           wonder: "Alexandria",
           coins: 3,
           warTokens: { positive: 0, negative: 0 },
-          stage: [],
+          stagedCards: [],
           buildings: {
             brown: [],
             grey: [],
@@ -205,7 +205,7 @@ describe("Testing the Game class", () => {
           wonder: "Olympia",
           coins: 3,
           warTokens: { positive: 0, negative: 0 },
-          stage: [],
+          stagedCards: [],
           buildings: {
             brown: [],
             grey: [],
@@ -223,7 +223,7 @@ describe("Testing the Game class", () => {
             wonder: "Ephesos",
             coins: 3,
             warTokens: { positive: 0, negative: 0 },
-            stage: [],
+            stagedCards: [],
             buildings: {
               brown: [],
               grey: [],
@@ -240,7 +240,7 @@ describe("Testing the Game class", () => {
             wonder: "Gizah",
             coins: 3,
             warTokens: { positive: 0, negative: 0 },
-            stage: [],
+            stagedCards: [],
             buildings: {
               brown: [],
               grey: [],

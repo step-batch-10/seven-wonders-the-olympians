@@ -48,10 +48,27 @@ const getPlayerPoints = (coins, tokens) => {
   return container;
 };
 
-const renderPlayerInfo = ({ wonder, name, coins, warTokens, buildings }) => {
+const addStagedCard = (stagedCards, card, i) => {
+  const holder = stagedCards.querySelector(`.stage${i + 1}`);
+  // console.log(holder, i, "--------------------------")
+  const [img] = createElements(["img"]);
+
+  img.src = `/img/ages/age${card.age}.jpeg`;
+  holder.replaceChildren(img);
+};
+
+const renderStagedCards = (stagedCards) => {
+  const stagedCardsElement = document.querySelector(".staged-cards");
+  stagedCards.forEach((card, i) => addStagedCard(stagedCardsElement, card, i));
+};
+
+const renderPlayerInfo = (info) => {
+  const { wonder, name, coins, warTokens, buildings, stagedCards } = info;
+  console.log(stagedCards, "hello------------------------------");
   renderWonder(wonder);
   renderPlayerName(name);
   renderCards(buildings);
+  renderStagedCards(stagedCards);
 
   const header = document.querySelector(".property");
   header.replaceChildren(getPlayerPoints(coins, warTokens));
@@ -425,7 +442,7 @@ const showActions = (card, postPlayerAction, resetPlayerAction) => {
 
   actionBox.append(
     createDiscard(card, postPlayerAction),
-    createStage(card),
+    createStage(card, postPlayerAction, resetPlayerAction),
     createBuild(card, postPlayerAction, resetPlayerAction),
     createCancel(),
   );

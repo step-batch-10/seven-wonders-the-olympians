@@ -1008,6 +1008,17 @@ describe("Testing the Player class", () => {
           chain_from: null,
           chain_to: [],
         },
+        {
+          name: "Aqueduct",
+          age: 2,
+          color: "blue",
+          min_players: 3,
+          cost: [{ type: "stone", count: 3 }],
+          produces: [{ type: "points", count: 5 }],
+          chain_from: "Baths",
+          chain_to: [],
+          type: "civil",
+        },
       ];
 
       const hand3 = [
@@ -1023,6 +1034,7 @@ describe("Testing the Player class", () => {
           type: "civil",
         },
       ];
+
       const hand4 = [
         {
           name: "Study",
@@ -1069,6 +1081,31 @@ describe("Testing the Player class", () => {
         p3.buildCard("Stone Pit");
         p3.assignHand([...hand2]);
         p3.buildCard("Loom");
+      });
+
+      it("should not able to stage when i already staged 3 satges", () => {
+        p1.addCoins(2);
+        p1.assignHand([...hand2]);
+        p1.stageCard("Loom");
+        p1.assignHand([...hand2]);
+        p1.stageCard("Stone Pit");
+        p1.assignHand([...hand2]);
+        p1.stageCard("Aqueduct");
+
+        const [handData] = p1.getHandData();
+        assertEquals(handData.stage.canStage, false);
+        assertEquals(handData.stage.cannotStage, true);
+      });
+
+      it("should not able to stage when i already staged 3 satges", () => {
+        p1.addCoins(2);
+
+        assertEquals(p1.coins, 2);
+
+        p1.assignHand([...hand2]);
+        p1.discardCard("Loom");
+
+        assertEquals(p1.coins, 5);
       });
 
       it("should return actionDetails withoout discounts", () => {
