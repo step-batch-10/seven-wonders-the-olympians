@@ -7,10 +7,6 @@ export class SevenWonders {
     return await req.json();
   }
 
-  async toText(req) {
-    return await req.text();
-  }
-
   async requestJsonData(url) {
     const req = await this.fetchGetReq(url);
     return await this.toJson(req);
@@ -42,28 +38,3 @@ export class SevenWonders {
     return await response.json();
   };
 }
-
-// const fetchPlayersDetails = async () =>
-//   await (await fetch("/game/info")).json();
-
-// const fetchDeck = async () => await (await fetch("/game/cards")).json();
-
-// const fetchAge = async () => await (await fetch("/game/age")).json();
-
-// const fetchMilitaryConflicts = async () =>
-//   await (await fetch("/game/military-conflicts")).json();
-
-// const getPlayersStatus = async () =>
-//   await (await fetch("/game/players-status")).json();
-
-// const getPlayersViewStatus = async () =>
-//   await (await fetch("/player/view")).json();
-
-export {}; // fetchAge,
-// fetchDeck,
-// fetchMilitaryConflicts,
-// fetchPlayersDetails,
-// getPlayersStatus,
-// getPlayersViewStatus,
-// postPlayerAction,
-// updatePlayerView,

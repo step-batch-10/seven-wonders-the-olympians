@@ -55,7 +55,7 @@ describe("Testing player route", () => {
 
       const name = await res2.text();
 
-      assertEquals(name, "Alice");
+      assertEquals(name, JSON.stringify({ name: "Alice" }));
     });
 
     it("Should return name if cookies are valid, testing with two players", async () => {
@@ -88,7 +88,7 @@ describe("Testing player route", () => {
         },
       });
 
-      assertEquals(await res2.text(), "Bob");
+      assertEquals(await res2.text(), JSON.stringify({ name: "Bob" }));
     });
   });
 

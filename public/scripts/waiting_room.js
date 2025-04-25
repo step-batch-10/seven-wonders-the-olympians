@@ -24,9 +24,7 @@ const renderPlayerName = (name) => {
 
 const main = async () => {
   const sevenWonders = new SevenWonders();
-  const res = await sevenWonders.fetchGetReq("/player/name");
-  const name = await sevenWonders.toText(res);
-  console.log(name);
+  const { name } = await sevenWonders.requestJsonData("/player/name");
   renderPlayerName(name);
   pollGameStatus(sevenWonders);
 };

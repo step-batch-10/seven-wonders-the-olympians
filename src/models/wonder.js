@@ -22,12 +22,13 @@ class Wonder {
       red: [],
       purple: [],
     };
+
     this.#buildingsSet = new Set();
     this.#resources = { choices: [] };
     this.#resources[wonder.resource] = 1;
     this.#discounts = {
-      "left_neighbour": new Set(),
-      "right_neighbour": new Set(),
+      left_neighbour: new Set(),
+      right_neighbour: new Set(),
     };
     this.#militaryStrength = 0;
     this.#victoryPoints = 0;
@@ -92,12 +93,48 @@ class Wonder {
     return this.#buildingsSet;
   }
 
+  calculateResources(cards) {
+    const resources = {
+      wood: 0,
+      ore: 0,
+      clay: 0,
+      stone: 0,
+      papyrus: 0,
+      glass: 0,
+      textile: 0,
+      loom: 0,
+      choices: [],
+    };
+
+    cards.forEach((card) => {
+      const type = card.produces[0].type;
+
+      if (type === "choice") {
+        resources.choices.push(card.produces[0].options);
+      } else {
+        resources[type] += card.produces[0].count;
+      }
+    });
+
+    resources[this.wonder.resource] += 1;
+    return resources;
+  }
+
+  aggregatedResources() {
+    const brown = this.#buildings.brown;
+    const grey = this.#buildings.grey;
+    const yellow = this.#buildings.yellow.filter(
+      ({ produces }) => produces.length > 0,
+    );
+    return this.calculateResources([...brown, ...grey, ...yellow]);
+  }
+
   alreadyBuilt(cardName) {
     return this.#buildingsSet.has(cardName);
   }
 
   isResourceCard(card) {
-    const resources = ["brown", "grey", "green"];
+    const resources = ["brown", "grey"];
     return resources.includes(card.color);
   }
 
@@ -172,9 +209,13 @@ class Wonder {
     }
   }
 
-  build(card) {
+  addToBuildings(card) {
     this.#buildings[card.color].push(card);
     this.#buildingsSet.add(card.name);
+  }
+
+  build(card) {
+    this.addToBuildings(card);
     this.getCardBenefits(card);
   }
 

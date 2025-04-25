@@ -270,7 +270,7 @@ class Player {
   }
 
   addBenefits(card) {
-    const benefits = card.produces.find(({ type }) => type === "coin"); // card.effect also
+    const benefits = card.produces.find(({ type }) => type === "coin");
     if (benefits) this.#coins += benefits.count;
   }
 
@@ -419,7 +419,6 @@ class Player {
   #canStage() {
     const noOfStages = `stage${this.#wonder.staged.length + 1}`;
     const stageCard = this.#wonder.stages[noOfStages];
-
     const possibleActions = stageCard ? this.#getActionDetails(stageCard) : {
       canBuild: false,
       isStagingCompleted: true,
@@ -428,18 +427,61 @@ class Player {
     return { canStage: possibleActions.canBuild, ...possibleActions };
   }
 
+  evaluateFreeBuild(card) {
+    const canBuild = card.cost.length === 0;
+
+    return canBuild
+      ? { canBuild, buildOptions: { mode: "no_cost" } }
+      : { canBuild };
+  }
+
+  evaluateResources(card) {
+    const cost = card.cost;
+    const resources = this.#wonder.aggregatedResources();
+
+    const canBuild = cost.every((c) => c.count <= resources[c.type]);
+    return canBuild
+      ? { canBuild, buildOptions: { mode: "enough_resources" } }
+      : { canBuild };
+  }
+
+  // evaluateFutureCard(card) {}
+
+  evaluateBuildOptions(card) {
+    const options = [
+      (card) => this.evaluateFreeBuild(card),
+      // (card) => this.evaluateFutureCard(card),
+      (card) => this.evaluateResources(card),
+      // ()=>this.evaluateBuy(card),
+      // ()=>this.evaluateTrade(card),
+    ];
+
+    options.forEach((option) => {
+      const { canBuild, buildOptions } = option(card);
+      if (canBuild) return { canBuild, buildOptions };
+    });
+
+    return { canBuild: false };
+  }
+
   #addActionDetails(card, stage) {
+    const { canBuild, buildOptions } = this.evaluateBuildOptions(card);
     return {
       name: card.name,
       build: this.#getActionDetails(card),
-      stage: stage,
+      stage,
       discard: { canDiscard: true },
+      canBuild,
+      buildOptions,
     };
   }
 
   getHandData() {
     const stage = this.#canStage();
-    return this.#hand.map((card) => this.#addActionDetails(card, stage));
+
+    const cards = this.#hand.map((card) => this.#addActionDetails(card, stage));
+    return cards;
+    // also need to return stage bcz stage status will be same for all the cards
   }
 
   buildCard(cardName) {
