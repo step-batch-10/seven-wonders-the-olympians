@@ -1,3 +1,43 @@
+const card1 = {
+  "age": 1,
+};
+const hide1 = (event) => {
+  event.target.classList.toggle("hide2");
+  document.querySelector(".stage-details2").classList.toggle("hide2");
+};
+const hide = (event) => {
+  event.target.classList.toggle("hide");
+  document.querySelector(".stage-details").classList.toggle("hide");
+};
+const _main = () => {
+  document.querySelector(".toggle").addEventListener("click", hide);
+  document.querySelector(".toggle2").addEventListener("click", hide1);
+};
+
+const card2 = {
+  "age": 1,
+};
+
+const _leftNeighbour = {
+  staged: [card1, card2],
+  wonder: {
+    stages: {
+      "stage1": {
+        "cost": [{ "type": "stone", "count": 2 }],
+        "powers": [{ "type": "points", "value": 3 }],
+      },
+      "stage2": {
+        "cost": [{ "type": "wood", "count": 3 }],
+        "powers": [{ "type": "points", "value": 5 }],
+      },
+      "stage3": {
+        "cost": [{ "type": "stone", "count": 4 }],
+        "powers": [{ "type": "points", "value": 7 }],
+      },
+    },
+  },
+};
+
 const createElements = (tags) => tags.map((tag) => document.createElement(tag));
 
 const notify = (msg) => {
@@ -194,8 +234,8 @@ const renderNeighbours = ({ leftPlayerData, rightPlayerData }) => {
   const left = getNeighbourStats(leftPlayerData, template);
   const right = getNeighbourStats(rightPlayerData, template);
 
-  document.getElementById("left-neighbour").replaceChildren(left);
-  document.getElementById("right-neighbour").replaceChildren(right);
+  document.getElementById("left-neighbour-stats").replaceChildren(left);
+  document.getElementById("right-neighbour-stats").replaceChildren(right);
 };
 
 const renderOtherPlayerStats = ({ others }) => {

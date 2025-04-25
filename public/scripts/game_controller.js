@@ -3,7 +3,7 @@ import { SevenWonders } from "./game_model.js";
 
 const renderGame = async (sevenWonders, hand) => {
   const data = await sevenWonders.requestJsonData("/game/info");
-
+  console.log(data);
   uiView.renderPlayerInfo(data);
   uiView.renderNeighbours(data);
   uiView.renderOtherPlayerStats(data);

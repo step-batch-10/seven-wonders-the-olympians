@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="styles/game.css" />
+    <script>
+      globalThis.onload = main;
+    </script>
+  </head>
+  <body>
+    <body>
+      <div id="age" style="display: none">
+        <h1>Age</h1>
+        <img src="img/ages/age1.png" />
+      </div>
+      <div class="conflictContainer">
+        <div class="conflict"></div>
+      </div>
+
+      <main>
+        <div id="other-players">
+          <div class="wonder-stats players-wonder-stats">
+            <img src="img/resources/glass.png" class="png" alt="glass" />
+            <p>Alexandria</p>
+          </div>
+        </div>
+        <div id="three-players">
+          <div id="left-neighbour" class="neighbour">
+            <div class="neighbour-stats">
+              <div class="player-stats-header">
+                <div class="player-points">
+                  <p>qwe</p>
+                  <p>⏳</p>
+                </div>
+                <div class="player-points">
+                  <p>💲 3</p>
+                  <p>⚔️ 0</p>
+                </div>
+              </div>
+
+              <div class="cards">
+                <div class="first-col">
+                  <img src="img/cards/academy.jpeg" alt="" />
+                  <img src="img/cards/academy.jpeg" alt="" />
+                </div>
+                <div class="second-col">
+                  <img src="img/cards/academy.jpeg" alt="" />
+                  <img src="img/cards/academy.jpeg" alt="" />
+                </div>
+              </div>
+              <div class="wonder-stats">
+                <img src="img/resources/stone.png" class="png" alt="stone" />
+                <p>Gizah</p>
+                <img
+                  src="img/stages/empty-stage.png"
+                  class="png"
+                  alt="empty-stage.png"
+                />
+              </div>
+            </div>
+            <div class="stage-details">
+              <div class="stage1">
+                <img
+                  src="img/stages/empty-stage.png"
+                  class="png"
+                  alt="empty-stage.png"
+                />
+                <div class="cost">
+                  <img src="img/resources/wood.png" alt="" />
+                  <img src="img/resources/wood.png" alt="" />
+                </div>
+                <img src="img/resource-powers/3points.png" alt="" />
+              </div>
+              <div class="stage1">
+                <img
+                  src="img/stages/empty-stage.png"
+                  class="png"
+                  alt="empty-stage.png"
+                />
+                <div class="cost">
+                  <img src="img/resources/wood.png" alt="" />
+                  <img src="img/resources/wood.png" alt="" />
+                </div>
+                <img src="img/resource-powers/3points.png" alt="" />
+              </div>
+              <div class="stage1">
+                <img
+                  src="img/stages/empty-stage.png"
+                  class="png"
+                  alt="empty-stage.png"
+                />
+                <div class="cost">
+                  <img src="img/resources/wood.png" alt="" />
+                  <img src="img/resources/wood.png" alt="" />
+                </div>
+                <img src="img/resource-powers/3points.png" alt="" />
+              </div>
+            </div>
+            <!-- <div class="open"> -->
+            <button class="toggle">></button>
+            <!-- </div> -->
+          </div>
+          <div id="player-placeholder">
+            <div class="deckPlaceHolder">
+              <div id="cardsContainer" style="--total: 7">
+                <div
+                  class="deck"
+                  id="undefined"
+                  style="--index: -3; --middle: 4"
+                >
+                  <img
+                    class="card-image"
+                    id="undefined"
+                    src="img/cards/pawnshop.jpeg"
+                  />
+                </div>
+                <div
+                  class="deck"
+                  id="undefined"
+                  style="--index: -2; --middle: 4"
+                >
+                  <img
+                    class="card-image"
+                    id="undefined"
+                    src="img/cards/press.jpeg"
+                  />
+                </div>
+                <div
+                  class="deck"
+                  id="undefined"
+                  style="--index: -1; --middle: 4"
+                >
+                  <img
+                    class="card-image"
+                    id="undefined"
+                    src="img/cards/theater.jpeg"
+                  />
+                </div>
+                <div
+                  class="deck"
+                  id="undefined"
+                  style="--index: 0; --middle: 4"
+                >
+                  <img
+                    class="card-image"
+                    id="undefined"
+                    src="img/cards/guardtower.jpeg"
+                  />
+                </div>
+                <div
+                  class="deck"
+                  id="undefined"
+                  style="--index: 1; --middle: 4"
+                >
+                  <img
+                    class="card-image"
+                    id="undefined"
+                    src="img/cards/scriptorium.jpeg"
+                  />
+                </div>
+                <div
+                  class="deck"
+                  id="undefined"
+                  style="--index: 2; --middle: 4"
+                >
+                  <img
+                    class="card-image"
+                    id="undefined"
+                    src="img/cards/guardtower.jpeg"
+                  />
+                </div>
+                <div
+                  class="deck"
+                  id="undefined"
+                  style="--index: 3; --middle: 4"
+                >
+                  <img
+                    class="card-image"
+                    id="undefined"
+                    src="img/cards/barracks.jpeg"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="wonder">
+              <div class="buildedCards">
+                <div class="purple"></div>
+                <div class="resources"></div>
+                <div class="yellow"></div>
+                <div class="red"></div>
+                <div class="green"></div>
+                <div class="blue"></div>
+              </div>
+              <div id="wonder-placeholder">
+                <img
+                  src="img/wonders/halikarnassosA.jpeg"
+                  alt="Halikarnassos"
+                  id="player-wonder"
+                />
+              </div>
+              <div class="header">
+                <p id="player-name">Player : Akashkumar2006</p>
+                <div id="settings"></div>
+                <div class="property">
+                  <div class="player-points">
+                    <p>💲 3</p>
+                    <p>⚔️ 0</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="right-neighbour" class="neighbour">
+            <div class="neighbour-stats">
+              <div class="player-stats-header">
+                <div class="player-points">
+                  <p>qwe</p>
+                  <p>⏳</p>
+                </div>
+                <div class="player-points">
+                  <p>💲 3</p>
+                  <p>⚔️ 0</p>
+                </div>
+              </div>
+
+              <div class="cards">
+                <div class="first-col"></div>
+                <div class="second-col"></div>
+              </div>
+              <div class="wonder-stats">
+                <img src="img/resources/stone.png" class="png" alt="stone" />
+                <p>Gizah</p>
+                <img
+                  src="img/stages/empty-stage.png"
+                  class="png"
+                  alt="empty-stage.png"
+                />
+              </div>
+            </div>
+            <div class="stage-details2">
+              <div class="stage1">
+                <img
+                  src="img/stages/empty-stage.png"
+                  class="png"
+                  alt="empty-stage.png"
+                />
+                <div class="cost">
+                  <img src="img/resources/wood.png" alt="" />
+                  <img src="img/resources/wood.png" alt="" />
+                </div>
+                <img src="img/resource-powers/3points.png" alt="" />
+              </div>
+              <div class="stage1">
+                <img
+                  src="img/stages/empty-stage.png"
+                  class="png"
+                  alt="empty-stage.png"
+                />
+                <div class="cost">
+                  <img src="img/resources/wood.png" alt="" />
+                  <img src="img/resources/wood.png" alt="" />
+                </div>
+                <img src="img/resource-powers/3points.png" alt="" />
+              </div>
+              <div class="stage1">
+                <img
+                  src="img/stages/empty-stage.png"
+                  class="png"
+                  alt="empty-stage.png"
+                />
+                <div class="cost">
+                  <img src="img/resources/wood.png" alt="" />
+                  <img src="img/resources/wood.png" alt="" />
+                </div>
+                <img src="img/resource-powers/3points.png" alt="" />
+              </div>
+            </div>
+            <!-- <div class="open"> -->
+            <button class="toggle2"><</button>
+            <!-- </div> -->
+          </div>
+        </div>
+      </main>
+    </body>
+  </body>
+</html>
