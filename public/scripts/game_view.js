@@ -28,9 +28,6 @@ const renderWonder = (wonder) => {
   img.alt = wonder;
   img.id = "player-wonder";
   holder.replaceChildren(img);
-  document.querySelector("body").style = `background-image: 
-  radial-gradient(ellipse at bottom center, #f0ddb7cd, #ad884c90),
-  url("../img/wonders/${wonderImgStr}BG.png");`;
 };
 
 const renderPlayerName = (name) => {
@@ -319,11 +316,12 @@ const addBuildOptEvtListener = (
 const getHoverMsg = (actions, action) => {
   const messages = {
     isAlreadyBuild: "You already own the card. No duplicates allowed!",
-    trade: "You don't have enough resources. Try trading with your neighbors.",
+    trade:
+      "You don't have enough resources. You can trade with the neighbours.",
     isFutureCard:
       "You get this card for free! You already have the required linked card.",
-    hadEnoughResources:
-      `Nice! You can ${action} this card with your own resources.`,
+    haveEnoughResources:
+      `You can ${action} this card, You have enough resources.`,
     needToPayCoinsToBank:
       `You need to pay coins to the bank to ${action} this card.`,
     isCardFree: `You can ${action} this card at no cost.`,

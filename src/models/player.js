@@ -387,7 +387,7 @@ class Player {
 
   #hasEnoughResources(tradeCost, actions) {
     return tradeCost.length === 0
-      ? this.#addAction(actions, "hadEnoughResources", true)
+      ? this.#addAction(actions, "haveEnoughResources", true)
       : null;
   }
 

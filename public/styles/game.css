@@ -261,18 +261,18 @@ main img {
 }
 
 .player-stats-header {
-  background-color: #ddb35bcd;
+  background-color: #ddb35b;
 }
 .wonder-stats {
   background-color: #ddb35b;
 }
 
 .neighbour > .cards {
-  background-color: #9a6a1ccd;
+  background-color: #9a6a1c;
 }
 
 .other-player-stats > .player-stats-header > * {
-  background-color: #9a6a1cbb;
+  background-color: #9a6a1c;
   z-index: 999;
 }
 
@@ -432,7 +432,9 @@ main img {
   background-color: white;
   padding: 10px;
   border-radius: 4px;
+  width: 180px;
   align-self: flex-end;
+  text-align: center;
   flex-shrink: 0;
 }
 

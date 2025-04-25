@@ -605,11 +605,10 @@ describe("Testing the Player class", () => {
 
       const [refinedCard1] = p1.getHandData();
 
-      console.log("hello _______________________________", refinedCard1);
       assertEquals(refinedCard1.name, "Scriptorium");
       assertEquals(refinedCard1.build, {
         canBuild: true,
-        hadEnoughResources: true,
+        haveEnoughResources: true,
       });
     });
 
