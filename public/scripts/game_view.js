@@ -713,7 +713,7 @@ const renderConflictsResults = async ({
   );
 
   console.log(parent);
-  await sleep(50000);
+  await sleep(5000);
   parent.style.display = "none";
 };
 
