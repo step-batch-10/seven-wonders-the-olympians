@@ -1,41 +1,61 @@
-const card1 = {
-  "age": 1,
-};
 const hide1 = (event) => {
-  event.target.classList.toggle("hide2");
+  event.currentTarget.classList.toggle("hide2");
   document.querySelector(".stage-details2").classList.toggle("hide2");
 };
 const hide = (event) => {
-  event.target.classList.toggle("hide");
+  event.currentTarget.classList.toggle("hide");
   document.querySelector(".stage-details").classList.toggle("hide");
 };
-const _main = () => {
-  document.querySelector(".toggle").addEventListener("click", hide);
-  document.querySelector(".toggle2").addEventListener("click", hide1);
+
+const createEmptyStage = (index) => {
+  const stageImg = document.createElement("img");
+  stageImg.src = `img/stages/stage${index + 1}.png`;
+  stageImg.alt = "empty-stage.png";
+  stageImg.className = "png";
+  return stageImg;
 };
 
-const card2 = {
-  "age": 1,
+const createCostDiv = (stage) => {
+  const costDiv = document.createElement("div");
+  costDiv.className = "cost";
+  stage.cost.forEach((resource) => {
+    for (let i = 0; i < resource.count; i++) {
+      const resImg = document.createElement("img");
+      resImg.src = `img/resources/${resource.type}.png`;
+      resImg.alt = resource.type;
+      costDiv.appendChild(resImg);
+    }
+  });
+
+  return costDiv;
 };
 
-const _leftNeighbour = {
-  staged: [card1, card2],
-  wonder: {
-    stages: {
-      "stage1": {
-        "cost": [{ "type": "stone", "count": 2 }],
-        "powers": [{ "type": "points", "value": 3 }],
-      },
-      "stage2": {
-        "cost": [{ "type": "wood", "count": 3 }],
-        "powers": [{ "type": "points", "value": 5 }],
-      },
-      "stage3": {
-        "cost": [{ "type": "stone", "count": 4 }],
-        "powers": [{ "type": "points", "value": 7 }],
-      },
-    },
-  },
+const createWonderEffect = (stage) => {
+  const power = stage.powers[0];
+  const powerImg = document.createElement("img");
+  const value = power.value ? power.value : "";
+  powerImg.src = `img/wonder-effect/${value}${power.type}.png`;
+  powerImg.alt = `${value} ${power.type}`;
+
+  return powerImg;
+};
+
+const renderPoints = (person, className) => {
+  const container = document.querySelector(`.${className}`);
+  const holder = document.createElement("div");
+  Object.entries(person.stages).forEach(([key, stage], index) => {
+    const stageDiv = document.createElement("div");
+    stageDiv.className = key;
+
+    stageDiv.appendChild(createEmptyStage(index));
+    stageDiv.appendChild(createCostDiv(stage));
+    stageDiv.appendChild(createWonderEffect(stage));
+    console.log(person.stagedCards, index);
+    if (person.stagedCards.length <= index) stageDiv.classList.add("dim");
+    holder.appendChild(stageDiv);
+  });
+
+  container.replaceChildren(...holder.children);
 };
 
 const createElements = (tags) => tags.map((tag) => document.createElement(tag));
@@ -231,10 +251,14 @@ const getNeighbourStats = (player, template) => {
 const renderNeighbours = ({ leftPlayerData, rightPlayerData }) => {
   const template = document.getElementById("neighbour-template");
   const left = getNeighbourStats(leftPlayerData, template);
+  renderPoints(leftPlayerData, "stage-details");
   const right = getNeighbourStats(rightPlayerData, template);
+  renderPoints(rightPlayerData, "stage-details2");
 
   document.getElementById("left-neighbour-stats").replaceChildren(left);
   document.getElementById("right-neighbour-stats").replaceChildren(right);
+  document.querySelector(".toggle").addEventListener("click", hide);
+  document.querySelector(".toggle2").addEventListener("click", hide1);
 };
 
 const renderOtherPlayerStats = ({ others }) => {

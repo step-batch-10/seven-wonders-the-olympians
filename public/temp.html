@@ -6,6 +6,28 @@
     <title>Document</title>
     <link rel="stylesheet" href="styles/game.css" />
     <script>
+      const hide1 = (event) => {
+        event.target.classList.toggle("hide2");
+        document.querySelector(".stage-details2").classList.toggle(
+          "hide2",
+        );
+      };
+      const hide = (event) => {
+        event.target.classList.toggle("hide");
+        document.querySelector(".stage-details").classList.toggle(
+          "hide",
+        );
+      };
+      const main = () => {
+        document.querySelector(".toggle").addEventListener(
+          "click",
+          hide,
+        );
+        document.querySelector(".toggle2").addEventListener(
+          "click",
+          hide1,
+        );
+      };
       globalThis.onload = main;
     </script>
   </head>
