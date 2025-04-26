@@ -704,7 +704,7 @@ const renderConflictsResults = async ({
   rightConflict,
 }) => {
   console.log({ militaryShields, leftConflict, rightConflict });
-  const parent = document.querySelector(".conflictContainer");
+  const parent = document.querySelector(".conflict-container");
   parent.style.display = "flex";
   const conflict = createConflictContainer();
 
@@ -713,7 +713,7 @@ const renderConflictsResults = async ({
   );
 
   console.log(parent);
-  await sleep(20000);
+  await sleep(50000);
   parent.style.display = "none";
 };
 

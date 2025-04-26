@@ -239,7 +239,7 @@ p {
   position: relative;
   width: 100%;
   height: 200px;
-  bottom: -200px;
+  bottom: -230px;
 }
 
 .wonder > #wonder-placeholder > img {
@@ -449,12 +449,13 @@ main img {
   flex-shrink: 0;
 }
 
-.conflictContainier {
+.conflict-container {
   height: 100vh;
   width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 .conflict-Border {
   border: 3px solid #9a6a1c;
@@ -509,10 +510,10 @@ hr {
   gap: 8px;
 }
 
-.conflictContainer {
+.conflict-container {
   backdrop-filter: blur(4px);
   position: absolute;
-  z-index: 9999;
+  z-index: 999999;
   background-color: rgba(0, 0, 0, 0.4);
   display: none;
 }
@@ -537,7 +538,7 @@ img.reselect-icon {
   display: flex;
   align-items: flex-start;
   gap: 50px;
-  bottom: -33px;
+  bottom: -10px;
 }
 
 .staged-cards div {
@@ -611,6 +612,7 @@ img.reselect-icon {
   background-color: #ddb35b;
   padding: 30px;
   border: 4px solid #9a6a1c;
+  transform: translateX(-3px);
 }
 .stage-details2 {
   transition: all 0.7s ease-in-out;
@@ -621,6 +623,10 @@ img.reselect-icon {
   background-color: #ddb35b;
   padding: 30px;
   border: 4px solid #9a6a1c;
+  transform: translateX(3px);
+}
+.stage-details2 > div {
+  flex-direction: row-reverse;
 }
 .open {
   display: flex;
@@ -642,11 +648,11 @@ img.reselect-icon {
 }
 
 .hide {
-  transform: translateX(-252px);
+  transform: translateX(-251px);
 }
 
 .hide2 {
-  transform: translateX(252px);
+  transform: translateX(251px);
 }
 
 .buildedCards {
