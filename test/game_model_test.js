@@ -897,16 +897,16 @@ describe("Testing getPlayersStatus", () => {
       g.militaryConflicts();
       g.currentAge = 2;
 
-      [p1, p2, p3, p4].forEach((p) => p.toggleDoneWithConflict());
+      [p1, p2, p3, p4].forEach((p) => p.resetDoneWithConflict());
 
       g.militaryConflicts();
       g.currentAge = 3;
 
-      [p1, p2, p3, p4].forEach((p) => p.toggleDoneWithConflict());
+      [p1, p2, p3, p4].forEach((p) => p.resetDoneWithConflict());
 
       g.militaryConflicts();
 
-      [p1, p2, p3, p4].forEach((p) => p.toggleDoneWithConflict());
+      [p1, p2, p3, p4].forEach((p) => p.resetDoneWithConflict());
 
       assertEquals(p1.warTokensObj, { positive: 9, negative: 0 });
       assertEquals(p2.warTokensObj, { positive: 9, negative: 0 });
@@ -931,7 +931,7 @@ describe("Testing getPlayersStatus", () => {
       g.militaryConflicts();
       g.currentAge = 2;
 
-      [p1, p2, p3, p4].forEach((p) => p.toggleDoneWithConflict());
+      [p1, p2, p3, p4].forEach((p) => p.resetDoneWithConflict());
 
       p1.wonder.addMilitaryStrength({
         produces: [{ type: "shield", count: 3 }],
@@ -946,7 +946,7 @@ describe("Testing getPlayersStatus", () => {
       g.militaryConflicts();
       g.currentAge = 3;
 
-      [p1, p2, p3, p4].forEach((p) => p.toggleDoneWithConflict());
+      [p1, p2, p3, p4].forEach((p) => p.resetDoneWithConflict());
 
       p1.wonder.addMilitaryStrength({
         produces: [{ type: "shield", count: 3 }],

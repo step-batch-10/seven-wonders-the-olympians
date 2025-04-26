@@ -35,8 +35,8 @@ class Player {
     return "pid" + uniqid();
   }
 
-  toggleDoneWithConflict() {
-    this.#doneWithConflict = !this.#doneWithConflict;
+  resetDoneWithConflict() {
+    this.#doneWithConflict = false;
   }
 
   get doneWithConflict() {
