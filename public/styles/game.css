@@ -155,12 +155,14 @@ p {
   gap: 5px;
 }
 
-.deck img {
+.deck > img {
   width: 126px;
   height: 196px;
   cursor: pointer;
 }
-
+.deck img {
+  cursor: pointer;
+}
 #cardsContainer {
   display: flex;
   justify-content: center;
@@ -201,7 +203,7 @@ p {
 
 .buildedCards {
   position: relative;
-  bottom: -103px;
+  bottom: -104px;
 }
 .buildedCards > div > img {
   position: absolute;
