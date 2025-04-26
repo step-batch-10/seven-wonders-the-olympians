@@ -199,6 +199,7 @@ class Game {
 
   endAge() {
     this.endAgeDiscards();
+    this.players.forEach((player) => player.resetDoneWithConflict());
     if (this.#currentAge > 3) {
       this.endGame();
     }
