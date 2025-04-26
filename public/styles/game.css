@@ -95,6 +95,7 @@ main {
 }
 .cards {
   overflow-y: scroll;
+  gap: 30px;
 }
 .cards img {
   position: absolute;
@@ -146,19 +147,17 @@ p {
 
 .deck {
   transition: all 2s ease-in-out;
-  height: 200px;
+  height: 196px;
+  width: 127px;
 }
 .other-player-stats {
   flex-direction: column;
   gap: 5px;
 }
-.deck {
-  width: 130px;
-}
 
 .deck img {
-  width: 100%;
-  height: 100%;
+  width: 126px;
+  height: 196px;
   cursor: pointer;
 }
 
@@ -202,7 +201,7 @@ p {
 
 .buildedCards {
   position: relative;
-  bottom: -114px;
+  bottom: -103px;
 }
 .buildedCards > div > img {
   position: absolute;
@@ -214,18 +213,18 @@ p {
 
 .first-col,
 .second-col {
-  width: 46%;
+  width: 126px;
   height: 200px;
 }
 
 .first-col > img {
-  height: 200px;
-  width: 100%;
+  height: 196px;
+  width: 126px;
 }
 
 .second-col > img {
-  height: 200px;
-  width: 100%;
+  height: 196px;
+  width: 126px;
 }
 
 .buildedCards {
