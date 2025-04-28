@@ -128,7 +128,7 @@ class Game {
   }
 
   segregateCards(cards) {
-    return cards.filter((card) => card.min_players <= this.#noOfPlayers);
+    return cards.filter((card) => card.minPlayers <= this.#noOfPlayers);
   }
 
   segregateGuildCards(guildCards) {
@@ -275,24 +275,16 @@ class Game {
     player.stageCard(card);
   }
 
-  performAction(player) {
-    const { action, card } = player.tempAct;
-    switch (action) {
-      case "discard":
-        this.#discardCard(card, player);
-        break;
-      case "build":
-        this.#buildCard(card, player);
-        break;
-      case "stage":
-        this.#stageCard(card, player);
-        break;
-    }
-  }
-
   executeTempActs() {
+    const build = this.#buildCard;
+    const discard = this.#discardCard.bind(this);
+    const stage = this.#stageCard;
+
+    const actions = { build, discard, stage };
+
     this.#players.forEach((player) => {
-      this.performAction(player);
+      const { action, card } = player.tempAct;
+      actions[action](card, player);
     });
   }
 

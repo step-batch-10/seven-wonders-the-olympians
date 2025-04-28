@@ -145,7 +145,7 @@ const fetchImage = (card, index) => {
 
 const renderBuildings = ([colour, cards]) => {
   const container = document.querySelector(`.${colour}`);
-  console.log(colour, container);
+
   container.classList.add(colour);
   container.replaceChildren(...cards.map(fetchImage));
 };
@@ -699,8 +699,7 @@ const renderConflictsResults = async ({
   leftConflict,
   rightConflict,
 }) => {
-  console.log({ militaryShields, leftConflict, rightConflict });
-  const parent = document.querySelector(".conflict-container");
+  const parent = document.querySelector(".conflictContainer");
   parent.style.display = "flex";
   const conflict = createConflictContainer();
 
@@ -708,8 +707,7 @@ const renderConflictsResults = async ({
     ...createConflictChilds(militaryShields, leftConflict, rightConflict),
   );
 
-  console.log(parent);
-  await sleep(5000);
+  await sleep(20000);
   parent.style.display = "none";
 };
 

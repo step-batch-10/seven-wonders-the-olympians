@@ -17,7 +17,7 @@ export const registerUser = async (ctx) => {
   playerMap.set(player.playerID, player);
 
   if (waitingGames.size === 0) {
-    game = new Game(4, player);
+    game = new Game(3, player);
     waitingGames.add(game.gameID);
     gameMap.set(game.gameID, game);
   } else {

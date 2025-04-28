@@ -11,15 +11,15 @@
     "produces": [],
     "effect": [
       {
-        "type": "bonus_points_per_staged",
-        "card_type": "stage",
-        "bonus_per_card": 1,
-        "applies_to": ["self", "right_neighbour", "left_neighbour"]
+        "type": "points",
+        "effectType": "stage",
+        "count": 1,
+        "appliesTo": ["self", "rightNeighbour", "leftNeighbour"]
       }
     ],
     "immediate_effect": [],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "guild"
   },
 
@@ -34,15 +34,16 @@
     "produces": [],
     "effect": [
       {
-        "type": "bonus_points_per_building",
-        "card_type": "gray",
-        "bonus_per_card": 2,
-        "applies_to": ["left_neighbour", "right_neighbour"]
+        "type": "points",
+        "effectType": "card",
+        "cardColor": "grey",
+        "count": 2,
+        "appliesTo": ["leftNeighbour", "rightNeighbour"]
       }
     ],
     "immediate_effect": [],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "guild"
   },
 
@@ -58,15 +59,16 @@
     "produces": [],
     "effect": [
       {
-        "type": "bonus_points_per_building",
-        "card_type": "blue",
-        "bonus_per_card": 1,
-        "applies_to": ["left_neighbour", "right_neighbour"]
+        "type": "points",
+        "effectType": "card",
+        "cardColor": "blue",
+        "count": 1,
+        "appliesTo": ["leftNeighbour", "rightNeighbour"]
       }
     ],
     "immediate_effect": [],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "guild"
   },
   {
@@ -81,15 +83,16 @@
     "produces": [],
     "effect": [
       {
-        "type": "bonus_points_per_building",
-        "card_type": "green",
-        "bonus_per_card": 1,
-        "applies_to": ["left_neighbour", "right_neighbour"]
+        "type": "points",
+        "effectType": "card",
+        "cardColor": "green",
+        "count": 1,
+        "appliesTo": ["leftNeighbour", "rightNeighbour"]
       }
     ],
     "immediate_effect": [],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "guild"
   },
   {
@@ -106,8 +109,8 @@
     ],
     "effect": [],
     "immediate_effect": [],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "guild"
   },
   {
@@ -122,27 +125,30 @@
     "produces": [],
     "effect": [
       {
-        "type": "bonus_points_per_building",
-        "card_type": "brown",
-        "bonus_per_card": 1,
-        "applies_to": ["self"]
+        "type": "points",
+        "effectType": "card",
+        "cardColor": "brown",
+        "count": 1,
+        "appliesTo": ["self"]
       },
       {
-        "type": "bonus_points_per_building",
-        "card_type": "gray",
-        "bonus_per_card": 1,
-        "applies_to": ["self"]
+        "type": "points",
+        "effectType": "card",
+        "cardColor": "grey",
+        "count": 1,
+        "appliesTo": ["self"]
       },
       {
-        "type": "bonus_points_per_building",
-        "card_type": "purple",
-        "bonus_per_card": 1,
-        "applies_to": ["self"]
+        "type": "points",
+        "effectType": "card",
+        "cardColor": "purple",
+        "count": 1,
+        "appliesTo": ["self"]
       }
     ],
     "immediate_effect": [],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "guild"
   },
 
@@ -157,15 +163,16 @@
     "produces": [],
     "effect": [
       {
-        "type": "bonus_points_per_building",
-        "card_type": "red",
-        "bonus_per_card": 1,
-        "applies_to": ["left_neighbour", "right_neighbour"]
+        "type": "points",
+        "effectType": "card",
+        "cardColor": "red",
+        "count": 1,
+        "appliesTo": ["leftNeighbour", "rightNeighbour"]
       }
     ],
     "immediate_effect": [],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "guild"
   },
 
@@ -181,15 +188,15 @@
     "produces": [],
     "effect": [
       {
-        "type": "bonus_points_per_negative_war_token",
-        "card_type": "",
-        "bonus_per_card": 1,
-        "applies_to": ["left_neighbour", "right_neighbour"]
+        "type": "points",
+        "effectType": "war",
+        "count": 1,
+        "appliesTo": ["leftNeighbour", "rightNeighbour"]
       }
     ],
     "immediate_effect": [],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "guild"
   },
 
@@ -205,15 +212,16 @@
     "produces": [],
     "effect": [
       {
-        "type": "bonus_points_per_building",
-        "card_type": "yellow",
-        "bonus_per_card": 1,
-        "applies_to": ["left_neighbour", "right_neighbour"]
+        "type": "points",
+        "effectType": "card",
+        "cardColor": "yellow",
+        "count": 1,
+        "appliesTo": ["leftNeighbour", "rightNeighbour"]
       }
     ],
     "immediate_effect": [],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "guild"
   },
 
@@ -230,15 +238,16 @@
     "produces": [],
     "effect": [
       {
-        "type": "bonus_points_per_building",
-        "card_type": "brown",
-        "bonus_per_card": 1,
-        "applies_to": ["left_neighbour", "right_neighbour"]
+        "type": "points",
+        "effectType": "card",
+        "cardColor": "brown",
+        "count": 1,
+        "appliesTo": ["leftNeighbour", "rightNeighbour"]
       }
     ],
     "immediate_effect": [],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "guild"
   }
 ]

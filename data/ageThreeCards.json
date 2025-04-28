@@ -3,50 +3,50 @@
     "name": "Fortifications",
     "age": 3,
     "color": "red",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [
       { "type": "stone", "count": 1 },
       { "type": "ore", "count": 3 }
     ],
     "produces": [{ "type": "shields", "count": 3 }],
-    "chain_from": "Walls",
-    "chain_to": [],
+    "chainFrom": "Walls",
+    "chainTo": [],
     "type": "military"
   },
   {
     "name": "Arsenal",
     "age": 3,
     "color": "red",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [
       { "type": "wood", "count": 2 },
       { "type": "ore", "count": 1 },
       { "type": "textile", "count": 1 }
     ],
     "produces": [{ "type": "shields", "count": 3 }],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "military"
   },
   {
     "name": "Circus",
     "age": 3,
     "color": "red",
-    "min_players": 4,
+    "minPlayers": 4,
     "cost": [
       { "type": "stone", "count": 3 },
       { "type": "ore", "count": 1 }
     ],
     "produces": [{ "type": "shields", "count": 3 }],
-    "chain_from": "Training Ground",
-    "chain_to": [],
+    "chainFrom": "Training Ground",
+    "chainTo": [],
     "type": "military"
   },
   {
     "name": "Palace",
     "age": 3,
     "color": "blue",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [
       { "type": "wood", "count": 1 },
       { "type": "stone", "count": 1 },
@@ -57,45 +57,45 @@
       { "type": "textile", "count": 1 }
     ],
     "produces": [{ "type": "points", "count": 8 }],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "civil"
   },
   {
     "name": "Senate",
     "age": 3,
     "color": "blue",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [
       { "type": "stone", "count": 1 },
       { "type": "ore", "count": 1 },
       { "type": "wood", "count": 2 }
     ],
     "produces": [{ "type": "points", "count": 6 }],
-    "chain_from": "Forum",
-    "chain_to": [],
+    "chainFrom": "Forum",
+    "chainTo": [],
     "type": "civil"
   },
   {
     "name": "Town Hall",
     "age": 3,
     "color": "blue",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [
       { "type": "stone", "count": 2 },
       { "type": "glass", "count": 1 },
       { "type": "ore", "count": 1 }
     ],
     "produces": [{ "type": "points", "count": 6 }],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "civil"
   },
   {
     "name": "Pantheon",
     "age": 3,
     "color": "blue",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [
       { "type": "clay", "count": 2 },
       { "type": "textile", "count": 1 },
@@ -104,58 +104,58 @@
       { "type": "glass", "count": 1 }
     ],
     "produces": [{ "type": "points", "count": 7 }],
-    "chain_from": "Temple",
-    "chain_to": [],
+    "chainFrom": "Temple",
+    "chainTo": [],
     "type": "civil"
   },
   {
     "name": "Gardens",
     "age": 3,
     "color": "blue",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [
       { "type": "clay", "count": 2 },
       { "type": "wood", "count": 1 }
     ],
     "produces": [{ "type": "points", "count": 5 }],
-    "chain_from": "Statue",
-    "chain_to": [],
+    "chainFrom": "Statue",
+    "chainTo": [],
     "type": "civil"
   },
   {
     "name": "Academy",
     "age": 3,
     "color": "green",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [
       { "type": "stone", "count": 3 },
       { "type": "glass", "count": 1 }
     ],
     "produces": [{ "type": "compass", "count": 1 }],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "science"
   },
   {
     "name": "Observatory",
     "age": 3,
     "color": "green",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [
       { "type": "ore", "count": 2 },
       { "type": "glass", "count": 1 },
       { "type": "textile", "count": 1 }
     ],
     "produces": [{ "type": "gear", "count": 1 }],
-    "chain_from": "Library",
-    "chain_to": [],
+    "chainFrom": "Library",
+    "chainTo": [],
     "type": "science"
   },
   {
     "name": "Haven",
     "age": 3,
     "color": "yellow",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [
       { "type": "wood", "count": 1 },
       { "type": "ore", "count": 1 },
@@ -164,28 +164,28 @@
     "effect": [
       {
         "type": "coin",
-        "effect_type": "card",
-        "card_color": "brown",
+        "effectType": "card",
+        "cardColor": "brown",
         "count": 1,
-        "applies_to": ["self"]
+        "appliesTo": ["self"]
       },
       {
         "type": "points",
-        "effect_type": "card",
-        "card_color": "brown",
+        "effectType": "card",
+        "cardColor": "brown",
         "count": 1,
-        "applies_to": ["self"]
+        "appliesTo": ["self"]
       }
     ],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "commerce"
   },
   {
     "name": "Lighthouse",
     "age": 3,
     "color": "yellow",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [
       { "type": "glass", "count": 1 },
       { "type": "stone", "count": 1 }
@@ -193,28 +193,28 @@
     "effect": [
       {
         "type": "coin",
-        "effect_type": "card",
-        "card_color": "yellow",
+        "effectType": "card",
+        "cardColor": "yellow",
         "count": 1,
-        "applies_to": ["self"]
+        "appliesTo": ["self"]
       },
       {
         "type": "points",
-        "effect_type": "card",
-        "card_color": "yellow",
+        "effectType": "card",
+        "cardColor": "yellow",
         "count": 1,
-        "applies_to": ["self"]
+        "appliesTo": ["self"]
       }
     ],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "commerce"
   },
   {
     "name": "Chamber of Commerce",
     "age": 3,
     "color": "yellow",
-    "min_players": 4,
+    "minPlayers": 4,
     "cost": [
       { "type": "clay", "count": 2 },
       { "type": "papyrus", "count": 1 }
@@ -222,28 +222,28 @@
     "effect": [
       {
         "type": "coin",
-        "effect_type": "card",
-        "card_color": "grey",
+        "effectType": "card",
+        "cardColor": "grey",
         "count": 2,
-        "applies_to": ["self"]
+        "appliesTo": ["self"]
       },
       {
         "type": "points",
-        "effect_type": "card",
-        "card_color": "grey",
+        "effectType": "card",
+        "cardColor": "grey",
         "count": 2,
-        "applies_to": ["self"]
+        "appliesTo": ["self"]
       }
     ],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "commerce"
   },
   {
     "name": "Arena",
     "age": 3,
     "color": "yellow",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [
       { "type": "stone", "count": 2 },
       { "type": "ore", "count": 1 }
@@ -251,157 +251,157 @@
     "effect": [
       {
         "type": "coin",
-        "effect_type": "stage",
+        "effectType": "stage",
         "count": 3,
-        "applies_to": ["self"]
+        "appliesTo": ["self"]
       },
       {
         "type": "points",
-        "effect_type": "stage",
+        "effectType": "stage",
         "count": 1,
-        "applies_to": ["self"]
+        "appliesTo": ["self"]
       }
     ],
-    "chain_from": "Dispensary",
-    "chain_to": [],
+    "chainFrom": "Dispensary",
+    "chainTo": [],
     "type": "commerce"
   },
   {
     "name": "Siege Workshop",
     "age": 3,
     "color": "red",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [
       { "type": "wood", "count": 1 },
       { "type": "clay", "count": 3 }
     ],
     "produces": [{ "type": "shields", "count": 3 }],
-    "chain_from": "Laboratory",
-    "chain_to": [],
+    "chainFrom": "Laboratory",
+    "chainTo": [],
     "type": "military"
   },
   {
     "name": "Lodge",
     "age": 3,
     "color": "green",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [
       { "type": "clay", "count": 2 },
       { "type": "textile", "count": 1 },
       { "type": "papyrus", "count": 1 }
     ],
     "produces": [{ "type": "compass", "count": 1 }],
-    "chain_from": "Dispensary",
-    "chain_to": [],
+    "chainFrom": "Dispensary",
+    "chainTo": [],
     "type": "science"
   },
   {
     "name": "University",
     "age": 3,
     "color": "green",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [
       { "type": "wood", "count": 2 },
       { "type": "glass", "count": 1 },
       { "type": "papyrus", "count": 1 }
     ],
     "produces": [{ "type": "tablet", "count": 1 }],
-    "chain_from": "Library",
-    "chain_to": [],
+    "chainFrom": "Library",
+    "chainTo": [],
     "type": "science"
   },
   {
     "name": "Study",
     "age": 3,
     "color": "green",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [
       { "type": "wood", "count": 1 },
       { "type": "papyrus", "count": 1 },
       { "type": "textile", "count": 1 }
     ],
     "produces": [{ "type": "gear", "count": 1 }],
-    "chain_from": "School",
-    "chain_to": [],
+    "chainFrom": "School",
+    "chainTo": [],
     "type": "science"
   },
   {
     "name": "Fortifications",
     "age": 3,
     "color": "red",
-    "min_players": 7,
+    "minPlayers": 7,
     "cost": [
       { "type": "stone", "count": 1 },
       { "type": "ore", "count": 3 }
     ],
     "produces": [{ "type": "shields", "count": 3 }],
-    "chain_from": "Walls",
-    "chain_to": [],
+    "chainFrom": "Walls",
+    "chainTo": [],
     "type": "military"
   },
   {
     "name": "Arsenal",
     "age": 3,
     "color": "red",
-    "min_players": 4,
+    "minPlayers": 4,
     "cost": [
       { "type": "wood", "count": 2 },
       { "type": "ore", "count": 1 },
       { "type": "textile", "count": 1 }
     ],
     "produces": [{ "type": "shields", "count": 3 }],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "military"
   },
   {
     "name": "Arsenal",
     "age": 3,
     "color": "red",
-    "min_players": 7,
+    "minPlayers": 7,
     "cost": [
       { "type": "wood", "count": 2 },
       { "type": "ore", "count": 1 },
       { "type": "textile", "count": 1 }
     ],
     "produces": [{ "type": "shields", "count": 3 }],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "military"
   },
   {
     "name": "Circus",
     "age": 3,
     "color": "red",
-    "min_players": 5,
+    "minPlayers": 5,
     "cost": [
       { "type": "stone", "count": 3 },
       { "type": "ore", "count": 1 }
     ],
     "produces": [{ "type": "shields", "count": 3 }],
-    "chain_from": "Training Ground",
-    "chain_to": [],
+    "chainFrom": "Training Ground",
+    "chainTo": [],
     "type": "military"
   },
   {
     "name": "Circus",
     "age": 3,
     "color": "red",
-    "min_players": 6,
+    "minPlayers": 6,
     "cost": [
       { "type": "stone", "count": 3 },
       { "type": "ore", "count": 1 }
     ],
     "produces": [{ "type": "shields", "count": 3 }],
-    "chain_from": "Training Ground",
-    "chain_to": [],
+    "chainFrom": "Training Ground",
+    "chainTo": [],
     "type": "military"
   },
   {
     "name": "Palace",
     "age": 3,
     "color": "blue",
-    "min_players": 7,
+    "minPlayers": 7,
     "cost": [
       { "type": "wood", "count": 1 },
       { "type": "stone", "count": 1 },
@@ -412,60 +412,60 @@
       { "type": "textile", "count": 1 }
     ],
     "produces": [{ "type": "points", "count": 8 }],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "civil"
   },
   {
     "name": "Senate",
     "age": 3,
     "color": "blue",
-    "min_players": 5,
+    "minPlayers": 5,
     "cost": [
       { "type": "stone", "count": 1 },
       { "type": "ore", "count": 1 },
       { "type": "wood", "count": 2 }
     ],
     "produces": [{ "type": "points", "count": 6 }],
-    "chain_from": "Forum",
-    "chain_to": [],
+    "chainFrom": "Forum",
+    "chainTo": [],
     "type": "civil"
   },
   {
     "name": "Town Hall",
     "age": 3,
     "color": "blue",
-    "min_players": 5,
+    "minPlayers": 5,
     "cost": [
       { "type": "stone", "count": 2 },
       { "type": "glass", "count": 1 },
       { "type": "ore", "count": 1 }
     ],
     "produces": [{ "type": "points", "count": 6 }],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "civil"
   },
   {
     "name": "Town Hall",
     "age": 3,
     "color": "blue",
-    "min_players": 6,
+    "minPlayers": 6,
     "cost": [
       { "type": "stone", "count": 2 },
       { "type": "glass", "count": 1 },
       { "type": "ore", "count": 1 }
     ],
     "produces": [{ "type": "points", "count": 6 }],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "civil"
   },
   {
     "name": "Pantheon",
     "age": 3,
     "color": "blue",
-    "min_players": 6,
+    "minPlayers": 6,
     "cost": [
       { "type": "clay", "count": 2 },
       { "type": "textile", "count": 1 },
@@ -474,58 +474,58 @@
       { "type": "glass", "count": 1 }
     ],
     "produces": [{ "type": "points", "count": 7 }],
-    "chain_from": "Temple",
-    "chain_to": [],
+    "chainFrom": "Temple",
+    "chainTo": [],
     "type": "civil"
   },
   {
     "name": "Gardens",
     "age": 3,
     "color": "blue",
-    "min_players": 4,
+    "minPlayers": 4,
     "cost": [
       { "type": "clay", "count": 2 },
       { "type": "wood", "count": 1 }
     ],
     "produces": [{ "type": "points", "count": 5 }],
-    "chain_from": "Statue",
-    "chain_to": [],
+    "chainFrom": "Statue",
+    "chainTo": [],
     "type": "civil"
   },
   {
     "name": "Academy",
     "age": 3,
     "color": "green",
-    "min_players": 7,
+    "minPlayers": 7,
     "cost": [
       { "type": "stone", "count": 3 },
       { "type": "glass", "count": 1 }
     ],
     "produces": [{ "type": "compass", "count": 1 }],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "science"
   },
   {
     "name": "Observatory",
     "age": 3,
     "color": "green",
-    "min_players": 7,
+    "minPlayers": 7,
     "cost": [
       { "type": "ore", "count": 2 },
       { "type": "glass", "count": 1 },
       { "type": "textile", "count": 1 }
     ],
     "produces": [{ "type": "gear", "count": 1 }],
-    "chain_from": "Library",
-    "chain_to": [],
+    "chainFrom": "Library",
+    "chainTo": [],
     "type": "science"
   },
   {
     "name": "Haven",
     "age": 3,
     "color": "yellow",
-    "min_players": 4,
+    "minPlayers": 4,
     "cost": [
       { "type": "wood", "count": 1 },
       { "type": "ore", "count": 1 },
@@ -534,28 +534,28 @@
     "effect": [
       {
         "type": "coin",
-        "effect_type": "card",
-        "card_color": "brown",
+        "effectType": "card",
+        "cardColor": "brown",
         "count": 1,
-        "applies_to": ["self"]
+        "appliesTo": ["self"]
       },
       {
         "type": "points",
-        "effect_type": "card",
-        "card_color": "brown",
+        "effectType": "card",
+        "cardColor": "brown",
         "count": 1,
-        "applies_to": ["self"]
+        "appliesTo": ["self"]
       }
     ],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "commerce"
   },
   {
     "name": "Lighthouse",
     "age": 3,
     "color": "yellow",
-    "min_players": 6,
+    "minPlayers": 6,
     "cost": [
       { "type": "glass", "count": 1 },
       { "type": "stone", "count": 1 }
@@ -563,28 +563,28 @@
     "effect": [
       {
         "type": "coin",
-        "effect_type": "card",
-        "card_color": "yellow",
+        "effectType": "card",
+        "cardColor": "yellow",
         "count": 1,
-        "applies_to": ["self"]
+        "appliesTo": ["self"]
       },
       {
         "type": "points",
-        "effect_type": "card",
-        "card_color": "yellow",
+        "effectType": "card",
+        "cardColor": "yellow",
         "count": 1,
-        "applies_to": ["self"]
+        "appliesTo": ["self"]
       }
     ],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "commerce"
   },
   {
     "name": "Chamber of Commerce",
     "age": 3,
     "color": "yellow",
-    "min_players": 6,
+    "minPlayers": 6,
     "cost": [
       { "type": "clay", "count": 2 },
       { "type": "papyrus", "count": 1 }
@@ -592,28 +592,28 @@
     "effect": [
       {
         "type": "coin",
-        "effect_type": "card",
-        "card_color": "grey",
+        "effectType": "card",
+        "cardColor": "grey",
         "count": 2,
-        "applies_to": ["self"]
+        "appliesTo": ["self"]
       },
       {
         "type": "points",
-        "effect_type": "card",
-        "card_color": "grey",
+        "effectType": "card",
+        "cardColor": "grey",
         "count": 2,
-        "applies_to": ["self"]
+        "appliesTo": ["self"]
       }
     ],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "commerce"
   },
   {
     "name": "Arena",
     "age": 3,
     "color": "yellow",
-    "min_players": 5,
+    "minPlayers": 5,
     "cost": [
       { "type": "stone", "count": 2 },
       { "type": "ore", "count": 1 }
@@ -621,26 +621,26 @@
     "effect": [
       {
         "type": "coin",
-        "effect_type": "stage",
+        "effectType": "stage",
         "count": 3,
-        "applies_to": ["self"]
+        "appliesTo": ["self"]
       },
       {
         "type": "points",
-        "effect_type": "stage",
+        "effectType": "stage",
         "count": 1,
-        "applies_to": ["self"]
+        "appliesTo": ["self"]
       }
     ],
-    "chain_from": "Dispensary",
-    "chain_to": [],
+    "chainFrom": "Dispensary",
+    "chainTo": [],
     "type": "commerce"
   },
   {
     "name": "Arena",
     "age": 3,
     "color": "yellow",
-    "min_players": 7,
+    "minPlayers": 7,
     "cost": [
       { "type": "stone", "count": 2 },
       { "type": "ore", "count": 1 }
@@ -648,78 +648,78 @@
     "effect": [
       {
         "type": "coin",
-        "effect_type": "stage",
+        "effectType": "stage",
         "count": 3,
-        "applies_to": ["self"]
+        "appliesTo": ["self"]
       },
       {
         "type": "points",
-        "effect_type": "stage",
+        "effectType": "stage",
         "count": 1,
-        "applies_to": ["self"]
+        "appliesTo": ["self"]
       }
     ],
-    "chain_from": "Dispensary",
-    "chain_to": [],
+    "chainFrom": "Dispensary",
+    "chainTo": [],
     "type": "commerce"
   },
   {
     "name": "Siege Workshop",
     "age": 3,
     "color": "red",
-    "min_players": 5,
+    "minPlayers": 5,
     "cost": [
       { "type": "wood", "count": 1 },
       { "type": "clay", "count": 3 }
     ],
     "produces": [{ "type": "shields", "count": 3 }],
-    "chain_from": "Laboratory",
-    "chain_to": [],
+    "chainFrom": "Laboratory",
+    "chainTo": [],
     "type": "military"
   },
   {
     "name": "Lodge",
     "age": 3,
     "color": "green",
-    "min_players": 6,
+    "minPlayers": 6,
     "cost": [
       { "type": "clay", "count": 2 },
       { "type": "textile", "count": 1 },
       { "type": "papyrus", "count": 1 }
     ],
     "produces": [{ "type": "compass", "count": 1 }],
-    "chain_from": "Dispensary",
-    "chain_to": [],
+    "chainFrom": "Dispensary",
+    "chainTo": [],
     "type": "science"
   },
   {
     "name": "University",
     "age": 3,
     "color": "green",
-    "min_players": 4,
+    "minPlayers": 4,
     "cost": [
       { "type": "wood", "count": 2 },
       { "type": "glass", "count": 1 },
       { "type": "papyrus", "count": 1 }
     ],
     "produces": [{ "type": "tablet", "count": 1 }],
-    "chain_from": "Library",
-    "chain_to": [],
+    "chainFrom": "Library",
+    "chainTo": [],
     "type": "science"
   },
   {
     "name": "Study",
     "age": 3,
     "color": "green",
-    "min_players": 5,
+    "minPlayers": 5,
     "cost": [
       { "type": "wood", "count": 1 },
       { "type": "papyrus", "count": 1 },
       { "type": "textile", "count": 1 }
     ],
     "produces": [{ "type": "gear", "count": 1 }],
-    "chain_from": "School",
-    "chain_to": [],
+    "chainFrom": "School",
+    "chainTo": [],
     "type": "science"
   }
 ]

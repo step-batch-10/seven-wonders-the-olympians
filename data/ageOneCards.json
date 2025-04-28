@@ -3,95 +3,95 @@
     "name": "Lumber Yard",
     "age": 1,
     "color": "brown",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [],
     "produces": [{ "type": "wood", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Lumber Yard",
     "age": 1,
     "color": "brown",
-    "min_players": 4,
+    "minPlayers": 4,
     "cost": [],
     "produces": [{ "type": "wood", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Stone Pit",
     "age": 1,
     "color": "brown",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [],
     "produces": [{ "type": "stone", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Stone Pit",
     "age": 1,
     "color": "brown",
-    "min_players": 5,
+    "minPlayers": 5,
     "cost": [],
     "produces": [{ "type": "stone", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Clay Pool",
     "age": 1,
     "color": "brown",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [],
     "produces": [{ "type": "clay", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Clay Pool",
     "age": 1,
     "color": "brown",
-    "min_players": 5,
+    "minPlayers": 5,
     "cost": [],
     "produces": [{ "type": "clay", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Ore Vein",
     "age": 1,
     "color": "brown",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [],
     "produces": [{ "type": "ore", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Ore Vein",
     "age": 1,
     "color": "brown",
-    "min_players": 4,
+    "minPlayers": 4,
     "cost": [],
     "produces": [{ "type": "ore", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Tree Farm",
     "age": 1,
     "color": "brown",
-    "min_players": 6,
+    "minPlayers": 6,
     "cost": [{ "type": "coin", "count": 1 }],
     "produces": [
       {
@@ -101,14 +101,14 @@
       }
     ],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Excavation",
     "age": 1,
     "color": "brown",
-    "min_players": 4,
+    "minPlayers": 4,
     "cost": [{ "type": "coin", "count": 1 }],
     "produces": [
       {
@@ -118,14 +118,14 @@
       }
     ],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Clay Pit",
     "age": 1,
     "color": "brown",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [{ "type": "coin", "count": 1 }],
     "produces": [
       {
@@ -135,14 +135,14 @@
       }
     ],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Timber Yard",
     "age": 1,
     "color": "brown",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [{ "type": "coin", "count": 1 }],
     "produces": [
       {
@@ -151,15 +151,15 @@
         "count": 1
       }
     ],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "raw_material"
   },
   {
     "name": "Forest Cave",
     "age": 1,
     "color": "brown",
-    "min_players": 5,
+    "minPlayers": 5,
     "cost": [{ "type": "coin", "count": 1 }],
     "produces": [
       {
@@ -169,14 +169,14 @@
       }
     ],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Mine",
     "age": 1,
     "color": "brown",
-    "min_players": 6,
+    "minPlayers": 6,
     "cost": [{ "type": "coin", "count": 1 }],
     "produces": [
       {
@@ -185,441 +185,441 @@
         "count": 1
       }
     ],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "raw_material"
   },
   {
     "name": "Glassworks",
     "age": 1,
     "color": "grey",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [],
     "produces": [{ "type": "glass", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Glassworks",
     "age": 1,
     "color": "grey",
-    "min_players": 6,
+    "minPlayers": 6,
     "cost": [],
     "produces": [{ "type": "glass", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Press",
     "age": 1,
     "color": "grey",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [],
     "produces": [{ "type": "papyrus", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Press",
     "age": 1,
     "color": "grey",
-    "min_players": 6,
+    "minPlayers": 6,
     "cost": [],
     "produces": [{ "type": "papyrus", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Loom",
     "age": 1,
     "color": "grey",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [],
     "produces": [{ "type": "textile", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Loom",
     "age": 1,
     "color": "grey",
-    "min_players": 6,
+    "minPlayers": 6,
     "cost": [],
     "produces": [{ "type": "textile", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Tavern",
     "age": 1,
     "color": "yellow",
-    "min_players": 4,
+    "minPlayers": 4,
     "cost": [],
     "produces": [{ "type": "coin", "count": 5 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Tavern",
     "age": 1,
     "color": "yellow",
-    "min_players": 5,
+    "minPlayers": 5,
     "cost": [],
     "produces": [{ "type": "coin", "count": 5 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Tavern",
     "age": 1,
     "color": "yellow",
-    "min_players": 7,
+    "minPlayers": 7,
     "cost": [],
     "produces": [{ "type": "coin", "count": 5 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "East Trading Post",
     "age": 1,
     "color": "yellow",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [],
     "produces": [],
     "effect": [
       {
         "type": "resource",
-        "effect_type": "buy",
+        "effectType": "buy",
         "cost": [{ "type": "coin", "count": 1 }],
-        "applies_to": ["right_neighbour"],
+        "appliesTo": ["rightNeighbour"],
         "options": ["clay", "stone", "wood", "ore"]
       }
     ],
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "East Trading Post",
     "age": 1,
     "color": "yellow",
-    "min_players": 7,
+    "minPlayers": 7,
     "cost": [],
     "produces": [],
     "effect": [
       {
         "type": "resource",
-        "effect_type": "buy",
+        "effectType": "buy",
         "cost": [{ "type": "coin", "count": 1 }],
-        "applies_to": ["right_neighbour"],
+        "appliesTo": ["rightNeighbour"],
         "options": ["clay", "stone", "wood", "ore"]
       }
     ],
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "West Trading Post",
     "age": 1,
     "color": "yellow",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [],
     "produces": [],
     "effect": [
       {
         "type": "resource",
-        "effect_type": "buy",
+        "effectType": "buy",
         "cost": [{ "type": "coin", "count": 1 }],
-        "applies_to": ["left_neighbour"],
+        "appliesTo": ["leftNeighbour"],
         "options": ["clay", "stone", "wood", "ore"]
       }
     ],
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "West Trading Post",
     "age": 1,
     "color": "yellow",
-    "min_players": 7,
+    "minPlayers": 7,
     "cost": [],
     "produces": [],
     "effect": [
       {
         "type": "resource",
-        "effect_type": "buy",
+        "effectType": "buy",
         "cost": [{ "type": "coin", "count": 1 }],
-        "applies_to": ["left_neighbour"],
+        "appliesTo": ["leftNeighbour"],
         "options": ["clay", "stone", "wood", "ore"]
       }
     ],
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Marketplace",
     "age": 1,
     "color": "yellow",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [],
     "produces": [],
     "effect": [
       {
         "type": "resource",
-        "effect_type": "buy",
+        "effectType": "buy",
         "cost": [{ "type": "coin", "count": 1 }],
-        "applies_to": ["left_neighbour", "right_neighbour"],
+        "appliesTo": ["leftNeighbour", "rightNeighbour"],
         "options": ["glass", "papyrus", "textile"]
       }
     ],
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Marketplace",
     "age": 1,
     "color": "yellow",
-    "min_players": 6,
+    "minPlayers": 6,
     "cost": [],
     "produces": [],
     "effect": [
       {
         "type": "resource",
-        "effect_type": "buy",
+        "effectType": "buy",
         "cost": [{ "type": "coin", "count": 1 }],
-        "applies_to": ["left_neighbour", "right_neighbour"],
+        "appliesTo": ["leftNeighbour", "rightNeighbour"],
         "options": ["glass", "papyrus", "textile"]
       }
     ],
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Guard Tower",
     "age": 1,
     "color": "red",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [{ "type": "clay", "count": 1 }],
     "produces": [{ "type": "shield", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Guard Tower",
     "age": 1,
     "color": "red",
-    "min_players": 4,
+    "minPlayers": 4,
     "cost": [{ "type": "clay", "count": 1 }],
     "produces": [{ "type": "shield", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Stockade",
     "age": 1,
     "color": "red",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [{ "type": "wood", "count": 1 }],
     "produces": [{ "type": "shield", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Stockade",
     "age": 1,
     "color": "red",
-    "min_players": 7,
+    "minPlayers": 7,
     "cost": [{ "type": "wood", "count": 1 }],
     "produces": [{ "type": "shield", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": []
+    "chainFrom": null,
+    "chainTo": []
   },
   {
     "name": "Barracks",
     "age": 1,
     "color": "red",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [{ "type": "ore", "count": 1 }],
     "produces": [{ "type": "shield", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": ["Stables", "Walls"]
+    "chainFrom": null,
+    "chainTo": ["Stables", "Walls"]
   },
   {
     "name": "Barracks",
     "age": 1,
     "color": "red",
-    "min_players": 5,
+    "minPlayers": 5,
     "cost": [{ "type": "ore", "count": 1 }],
     "produces": [{ "type": "shield", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": ["Stables", "Walls"]
+    "chainFrom": null,
+    "chainTo": ["Stables", "Walls"]
   },
   {
     "name": "Scriptorium",
     "age": 1,
     "color": "green",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [{ "type": "papyrus", "count": 1 }],
     "produces": [{ "type": "tablet", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": ["Library"]
+    "chainFrom": null,
+    "chainTo": ["Library"]
   },
   {
     "name": "Scriptorium",
     "age": 1,
     "color": "green",
-    "min_players": 4,
+    "minPlayers": 4,
     "cost": [{ "type": "papyrus", "count": 1 }],
     "produces": [{ "type": "tablet", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": ["Library"]
+    "chainFrom": null,
+    "chainTo": ["Library"]
   },
   {
     "name": "Apothecary",
     "age": 1,
     "color": "green",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [{ "type": "textile", "count": 1 }],
     "produces": [{ "type": "compass", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": ["Stables", "Dispensary"]
+    "chainFrom": null,
+    "chainTo": ["Stables", "Dispensary"]
   },
   {
     "name": "Apothecary",
     "age": 1,
     "color": "green",
-    "min_players": 5,
+    "minPlayers": 5,
     "cost": [{ "type": "textile", "count": 1 }],
     "produces": [{ "type": "compass", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": ["Stables", "Dispensary"]
+    "chainFrom": null,
+    "chainTo": ["Stables", "Dispensary"]
   },
   {
     "name": "Workshop",
     "age": 1,
     "color": "green",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [{ "type": "glass", "count": 1 }],
     "produces": [{ "type": "gear", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": ["Laboratory"]
+    "chainFrom": null,
+    "chainTo": ["Laboratory"]
   },
   {
     "name": "Workshop",
     "age": 1,
     "color": "green",
-    "min_players": 7,
+    "minPlayers": 7,
     "cost": [{ "type": "glass", "count": 1 }],
     "produces": [{ "type": "gear", "count": 1 }],
     "effect": null,
-    "chain_from": null,
-    "chain_to": ["Laboratory"]
+    "chainFrom": null,
+    "chainTo": ["Laboratory"]
   },
   {
     "name": "Altar",
     "age": 1,
     "color": "blue",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [],
     "produces": [{ "type": "points", "count": 2 }],
-    "chain_from": null,
-    "chain_to": ["Temple"],
+    "chainFrom": null,
+    "chainTo": ["Temple"],
     "type": "civil"
   },
   {
     "name": "Altar",
     "age": 1,
     "color": "blue",
-    "min_players": 5,
+    "minPlayers": 5,
     "cost": [],
     "produces": [{ "type": "points", "count": 2 }],
-    "chain_from": null,
-    "chain_to": ["Temple"],
+    "chainFrom": null,
+    "chainTo": ["Temple"],
     "type": "civil"
   },
   {
     "name": "Baths",
     "age": 1,
     "color": "blue",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [{ "type": "stone", "count": 1 }],
     "produces": [{ "type": "points", "count": 3 }],
-    "chain_from": null,
-    "chain_to": ["Aqueduct"],
+    "chainFrom": null,
+    "chainTo": ["Aqueduct"],
     "type": "civil"
   },
   {
     "name": "Baths",
     "age": 1,
     "color": "blue",
-    "min_players": 7,
+    "minPlayers": 7,
     "cost": [{ "type": "stone", "count": 1 }],
     "produces": [{ "type": "points", "count": 3 }],
-    "chain_from": null,
-    "chain_to": ["Aqueduct"],
+    "chainFrom": null,
+    "chainTo": ["Aqueduct"],
     "type": "civil"
   },
   {
     "name": "Theater",
     "age": 1,
     "color": "blue",
-    "min_players": 3,
+    "minPlayers": 3,
     "cost": [],
     "produces": [{ "type": "points", "count": 2 }],
-    "chain_from": null,
-    "chain_to": ["Statue"],
+    "chainFrom": null,
+    "chainTo": ["Statue"],
     "type": "civil"
   },
   {
     "name": "Theater",
     "age": 1,
     "color": "blue",
-    "min_players": 6,
+    "minPlayers": 6,
     "cost": [],
     "produces": [{ "type": "points", "count": 2 }],
-    "chain_from": null,
-    "chain_to": ["Statue"],
+    "chainFrom": null,
+    "chainTo": ["Statue"],
     "type": "civil"
   },
   {
     "name": "Pawn Shop",
     "age": 1,
     "color": "blue",
-    "min_players": 4,
+    "minPlayers": 4,
     "cost": [],
     "produces": [{ "type": "points", "count": 3 }],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "civil"
   },
   {
     "name": "Pawn Shop",
     "age": 1,
     "color": "blue",
-    "min_players": 7,
+    "minPlayers": 7,
     "cost": [],
     "produces": [{ "type": "points", "count": 3 }],
-    "chain_from": null,
-    "chain_to": [],
+    "chainFrom": null,
+    "chainTo": [],
     "type": "civil"
   }
 ]
