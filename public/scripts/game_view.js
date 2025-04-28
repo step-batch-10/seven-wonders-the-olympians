@@ -395,18 +395,14 @@ const addBuildOptEvtListener = (
 
 const getHoverMsg = (actions, action) => {
   const messages = {
-    isAlreadyBuild: "You already own the card. No duplicates allowed!",
-    isStagingCompleted: "Staging is completed, cannot stage anymore",
-    trade:
-      "You don't have enough resources. You can trade with the neighbours.",
-    isFutureCard:
-      "You get this card for free! You already have the required linked card.",
-    haveEnoughResources:
-      `You can ${action} this card, You have enough resources.`,
-    needToPayCoinsToBank:
-      `You need to pay coins to the bank to ${action} this card.`,
-    isCardFree: `You can ${action} this card at no cost.`,
-    noResources: `You don't have enough resources to ${action} this card.`,
+    isAlreadyBuild: "Card already owned!",
+    isStagingCompleted: "Staging is completed!",
+    trade: "Trade to get it!",
+    isFutureCard: "Free with linked card!",
+    haveEnoughResources: `Enough resources to ${action}!`,
+    needToPayCoinsToBank: `Pay bank to ${action}.`,
+    isCardFree: `${action} at no cost!`,
+    noResources: `Resource shortage!`,
   };
 
   const [possibleAction] = Object.keys(actions).filter(
