@@ -1,5 +1,6 @@
 {
   "tasks": {
+    "start": "deno run -A main.js",
     "testResults": "rm -rf coverage/ && deno test -A --coverage && deno coverage --html",
     "preCheck": "deno lint && deno fmt",
     "dev": "deno run -A --watch main.js",
