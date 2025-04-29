@@ -409,7 +409,6 @@ class Player {
     if (leftTrades.length <= 0 && rightTrades.length <= 0) return false;
 
     const trade = { neededCoins: 0 };
-    console.log(leftTrades, rightTrades);
     const hasTrade = this.possibleTrades(leftTrades, rightTrades, cart, trade);
 
     return hasTrade && trade.neededCoins <= this.#result.coins;
@@ -420,6 +419,13 @@ class Player {
     return this.#useEffects(playerCart, direction);
   }
 
+  formatTrades(leftTrades, rightTrades) {
+    return {
+      left: leftTrades[0]?.coin || 0,
+      right: rightTrades[0]?.coin || 0,
+    };
+  }
+
   resourcesFromNeighbour() {
     const cart = this.#cart;
     const cost = [...cart.toBuy].map(([_, cost]) => cost);
@@ -428,8 +434,8 @@ class Player {
     const rightTrades = this.getTrades(this.#rightPlayer, cost, "right");
 
     const canTrade = this.#canTrade(leftTrades, rightTrades, cart);
-
-    return { canTrade, trade: { leftTrades, rightTrades } };
+    const trade = this.formatTrades(leftTrades, rightTrades);
+    return { canTrade, trade };
   }
 
   #addAction(action, key, value = true) {
@@ -470,7 +476,9 @@ class Player {
 
   #trade(actions) {
     const { canTrade, trade } = this.resourcesFromNeighbour();
-    return canTrade ? this.#addAction(actions, "trade", trade) : null;
+    return canTrade
+      ? { canTrade, ...this.#addAction(actions, "trade", trade) }
+      : null;
   }
 
   #alreadyHave(card, actions) {
@@ -511,6 +519,11 @@ class Player {
   }
 
   #addActionDetails(card, stage) {
+    console.log(
+      "\n--->\n",
+      { card, build: this.#getActionDetails(card) },
+      "\n<---\n",
+    );
     return {
       name: card.name,
       build: this.#getActionDetails(card),
