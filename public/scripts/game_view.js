@@ -340,19 +340,45 @@ const oppentView = (playerInfo) => {
   ele.replaceChildren(playerStat);
 };
 
+const createStatusHolder = (name) => {
+  const imgEl = createEl("img", { id: `${name}-status`, className: "status" });
+  imgEl.src = "img/icons/hour-glass.gif";
+
+  return imgEl;
+};
+
+const getOpponentsStats = (playerInfo) => {
+  const opponentStats = createEl("div", { className: "opponent" });
+
+  opponentStats.append(
+    createStatusHolder(playerInfo.name),
+    getWonderHolder(playerInfo.wonder),
+    getStageHolder(playerInfo.stagedCards),
+  );
+
+  return opponentStats;
+};
+
 const renderOtherPlayerStats = ({ others }) => {
   const otherPlayersContainer = document.getElementById("other-players");
-  const playerTemplate = document.getElementById("other-players-template");
+  // const template = document.getElementById("other-players-template");
 
   const stats = others.map((playerInfo) => {
-    const currentPlayerStat = getNeighbourStats(playerInfo, playerTemplate);
-    const eventTarget = currentPlayerStat.querySelector(
-      ".players-wonder-stats",
+    const currentPlayerStat = getOpponentsStats(playerInfo);
+    // const eventTarget = currentPlayerStat.querySelector(
+    //   ".players-wonder-stats",
+    // );
+    currentPlayerStat.addEventListener(
+      "mouseenter",
+      () => oppentView(playerInfo),
     );
-    eventTarget.addEventListener("mouseenter", () => oppentView(playerInfo));
-    eventTarget.addEventListener("mouseleave", () => oppentView(playerInfo));
+    currentPlayerStat.addEventListener(
+      "mouseleave",
+      () => oppentView(playerInfo),
+    );
     return currentPlayerStat;
   });
+
   otherPlayersContainer.replaceChildren(...stats);
 };
 

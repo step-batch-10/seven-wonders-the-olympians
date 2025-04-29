@@ -447,7 +447,6 @@ main img {
   padding: 10px;
   border-radius: 4px;
   width: 180px;
-  align-self: flex-end;
   text-align: center;
   flex-shrink: 0;
   font-size: 0.8rem;
@@ -802,5 +801,16 @@ button {
 }
 
 .status {
-  width: 50px;
+  width: 28px;
+}
+
+.opponent {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #ddb35b;
+}
+
+.opponent img {
+  width: 28px;
 }
