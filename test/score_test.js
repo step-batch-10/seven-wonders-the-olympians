@@ -1,11 +1,11 @@
 import { describe, it } from "test/bdd";
 import {
-  calcWonderStagePoints,
-  calcTreasuryPoints,
-  calcMilitaryConflictPoints,
   calcCivilStructurePoints,
+  calcComStructurePoints,
+  calcMilitaryConflictPoints,
   calcSciStructurePoints,
-  calcComStructurePoints
+  calcTreasuryPoints,
+  calcWonderStagePoints,
 } from "../src/models/score.js";
 import wonderData from "./../data/wonders.json" with { type: "json" };
 import { assertEquals } from "assert";
@@ -281,7 +281,7 @@ describe("Testing calculating points of scientific structures", () => {
     assertEquals(calcSciStructurePoints(sciCards), 21);
   });
 
-   it("Should return 31 if there are 3 compasses, 2 tablets and 2 gear", () => {
+  it("Should return 31 if there are 3 compasses, 2 tablets and 2 gear", () => {
     const sciCards = [
       {
         color: "green",

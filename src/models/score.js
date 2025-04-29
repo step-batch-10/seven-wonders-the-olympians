@@ -8,7 +8,7 @@ const calcTreasuryPoints = (coins) => {
   return Math.floor(coins / 3);
 };
 
-const totalStagingPoints = (total, stage) => {  
+const totalStagingPoints = (total, stage) => {
   const [effect] = stage[1].effects;
   effect.type === "points" && (total += effect.count);
   return total;
@@ -31,7 +31,7 @@ const calcCivilStructurePoints = (civilCards) => {
 const calcIdenticalCombination = (cardGroups) => {
   return Object.values(cardGroups).reduce(
     (total, group) => total + group.length ** 2,
-    0
+    0,
   );
 };
 
@@ -39,7 +39,7 @@ const calcDiffCombination = (cardGroups) => {
   if (_.size(cardGroups) < 3) return 0;
 
   const combinations = _.min(
-    Object.values(cardGroups).map((group) => group.length)
+    Object.values(cardGroups).map((group) => group.length),
   );
 
   return combinations * 7;
@@ -70,7 +70,7 @@ const calcComStructurePoints = (buildings, stagedCards) => {
   return effects.reduce(commEffect(buildings, stagedCards), 0);
 };
 
-const calcGuildsPoints = (player) => {
+const calcGuildsPoints = () => {
   return 0;
 };
 
@@ -91,11 +91,11 @@ const calculateScore = (player) => {
 };
 
 export {
+  calcCivilStructurePoints,
+  calcComStructurePoints,
+  calcMilitaryConflictPoints,
+  calcSciStructurePoints,
+  calcTreasuryPoints,
   calculateScore,
   calcWonderStagePoints,
-  calcTreasuryPoints,
-  calcMilitaryConflictPoints,
-  calcCivilStructurePoints,
-  calcSciStructurePoints,
-  calcComStructurePoints,
 };
