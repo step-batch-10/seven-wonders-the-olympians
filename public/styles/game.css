@@ -32,7 +32,6 @@ main {
 }
 
 .header {
-  padding: 1rem;
   height: 6vh;
   display: flex;
   justify-content: space-between;
@@ -64,7 +63,7 @@ main {
 
 #left-neighbour,
 #right-neighbour {
-  width: 528px;
+  width: 283px;
   z-index: 999;
 }
 
@@ -75,7 +74,7 @@ main {
 }
 
 #player-placeholder {
-  width: 41%;
+  width: 69%;
   display: flex;
   flex-direction: column;
   gap: 100px;
@@ -139,6 +138,7 @@ main {
 
 p {
   text-transform: capitalize;
+  font-size: 1rem;
 }
 #other-players > div {
   height: 100%;
@@ -163,7 +163,7 @@ p {
 .deck img {
   cursor: pointer;
 }
-#cardsContainer {
+#cards-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -171,14 +171,14 @@ p {
   height: 157px;
 }
 
-.deckPlaceHolder {
+.deck-placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
 }
 
-.actionsBox > div {
+.actions-box > div {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -186,7 +186,7 @@ p {
   cursor: pointer;
 }
 
-.actionsBox > div img {
+.actions-box > div img {
   width: 30px;
 }
 
@@ -194,20 +194,20 @@ p {
   opacity: 0.4;
 }
 
-.buildedCards > * {
+.built-cards > * {
   height: 180px;
   width: 130px;
   position: relative;
   bottom: -20px;
 }
 
-.buildedCards {
+.built-cards {
   position: relative;
   bottom: -104px;
 }
-.buildedCards > div > img {
+.built-cards > div > img {
   position: absolute;
-  width: 100%;
+  width: 129px;
   transform: translateY(calc(var(--index) * -42px));
   z-index: calc(var(--z-index));
   transition: 0.1s linear;
@@ -229,40 +229,40 @@ p {
   width: 126px;
 }
 
-.buildedCards {
+.built-cards {
   width: 100%;
   display: flex;
   justify-content: center;
-  gap: 27px;
+  gap: 39px;
 }
 
-.wonder {
+.wonder,
+.others-wonder {
   position: relative;
   width: 100%;
   height: 200px;
   bottom: -230px;
 }
 
-.wonder > #wonder-placeholder > img {
-  /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
+.wonder-placeholder > img {
   box-shadow: 0px 11px 11px 0px rgba(0, 0, 0, 0.55);
 }
 
-.wonder > #wonder-placeholder {
+.wonder-placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
 }
 
-.actionsBox {
+.actions-box {
   background-color: white;
   border-radius: 4px;
   z-index: 99;
   padding: 20px;
 }
 
-.actionsBox > div {
+.actions-box > div {
   display: flex;
   justify-content: space-evenly;
   color: black;
@@ -331,7 +331,7 @@ main img {
   z-index: 5;
 }
 
-#cardsContainer {
+#cards-container {
   position: relative;
   width: 100%;
   height: 300px;
@@ -341,7 +341,7 @@ main img {
   gap: 0;
 }
 
-#cardsContainer {
+#cards-container {
   position: relative;
   width: 100%;
   height: 320px;
@@ -436,11 +436,8 @@ main img {
   font-size: 1.5rem;
 }
 
-.buildedCards img:hover {
+.built-cards img:hover {
   transform: translateY(calc(var(--index) * -42px - 156px));
-}
-.hover-message::first-letter {
-  text-transform: uppercase;
 }
 
 .hover-message {
@@ -448,10 +445,10 @@ main img {
   padding: 10px;
   border-radius: 4px;
   width: 180px;
-  /* font-size: 16px; */
   align-self: flex-end;
   text-align: center;
   flex-shrink: 0;
+  font-size: 0.8rem;
 }
 
 .conflict-container {
@@ -493,8 +490,8 @@ hr {
   width: 50px;
   height: 50px;
 }
-.leftPerson,
-.rightPerson {
+.left-person,
+.right-person {
   gap: 10px;
 }
 .points {
@@ -508,7 +505,7 @@ hr {
   width: 20px;
 }
 
-.othershield {
+.other-shield {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -553,14 +550,14 @@ img.reselect-icon {
 }
 
 .stage1 {
-  left: 115px;
+  left: 364px;
 }
 
 .stage2 {
-  left: 115px;
+  left: 364px;
 }
 .stage3 {
-  left: 115px;
+  left: 364px;
 }
 
 .staged-cards img {
@@ -660,18 +657,18 @@ img.reselect-icon {
   transform: translateX(251px);
 }
 
-.buildedCards {
+.built-cards {
   width: 125%;
   display: flex;
   justify-content: flex-start;
-  gap: 30.4px;
+  gap: 19.5px;
   position: absolute;
-  left: -87.6px;
+  left: 157.5px;
   flex-wrap: nowrap;
   bottom: 85px;
 }
 
-.buildedCards > * {
+.built-cards > * {
   height: 180px;
   width: 135.3px;
   position: relative;
@@ -684,7 +681,7 @@ img.reselect-icon {
   align-items: center;
 }
 
-.deckPlaceHolder {
+.deck-placeholder {
   position: relative;
   z-index: 9999;
 }
@@ -719,4 +716,50 @@ button > img {
   width: 30px;
   height: 30px;
   color: #ddb35b;
+}
+
+#right-neighbour-stats > .player-stats-header > div,
+#right-neighbour-stats .wonder-stats {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.other-player-stats {
+  transition: all 0.7s ease-in-out;
+  box-sizing: content-box;
+  overflow: hidden;
+  top: 55px;
+  left: 25%;
+  padding: 10px;
+  position: absolute;
+  z-index: 9999999;
+  width: 51vw;
+  height: 51vh;
+  background-color: #9a6a1c;
+  border: 10px solid #ddb35b;
+  backdrop-filter: blur(5px);
+}
+
+.none {
+  transform-origin: top;
+  scale: 0;
+}
+
+.other-player-stats img {
+  height: 200px;
+}
+
+.other-player-stats .built-cards {
+  bottom: 411.4px;
+  left: 0.4px;
+  gap: 20.9px;
+}
+
+.other-player-stats .stage1,
+.other-player-stats .stage2,
+.other-player-stats .stage3 {
+  left: 194px;
+}
+.other-player-stats .staged-cards {
+  bottom: 165px;
 }

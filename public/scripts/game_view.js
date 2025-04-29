@@ -1,28 +1,60 @@
-const hide1 = (event) => {
-  event.currentTarget.classList.toggle("hide2");
+const createEl = (tag, options = { id: "", className: "", text: "" }) => {
+  const element = document.createElement(tag);
+
+  element.classList.add(options.className);
+  element.id = options.id;
+  element.textContent = options.text;
+
+  for (const attr in options.attrs) {
+    element.setAttribute(attr, options.attrs[attr]);
+  }
+
+  return element;
+};
+
+const hide1 = () => {
   document.querySelector(".stage-details2").classList.toggle("hide2");
 };
-const hide = (event) => {
-  event.currentTarget.classList.toggle("hide");
+const hide = () => {
   document.querySelector(".stage-details").classList.toggle("hide");
 };
 
+const fireEvent = (event) => {
+  if (event.key === "f") {
+    hide();
+  }
+  if (event.key === "j") {
+    hide1();
+  }
+
+  return;
+};
+
+const addEvent = () => {
+  document.addEventListener("keydown", fireEvent);
+};
+
+addEvent();
+
 const createEmptyStage = (index) => {
-  const stageImg = document.createElement("img");
-  stageImg.src = `img/stages/stage${index + 1}.png`;
-  stageImg.alt = "empty-stage.png";
-  stageImg.className = "png";
+  const stageImg = createEl("img", {
+    className: "png",
+    attrs: { src: `img/stages/stage${index + 1}.png`, alt: "empty-stage.png" },
+  });
   return stageImg;
 };
 
 const createCostDiv = (stage) => {
-  const costDiv = document.createElement("div");
-  costDiv.className = "cost";
+  const costDiv = createEl("div", { className: "cost" });
   stage.cost.forEach((resource) => {
     for (let i = 0; i < resource.count; i++) {
-      const resImg = document.createElement("img");
-      resImg.src = `img/resources/${resource.type}.png`;
-      resImg.alt = resource.type;
+      const resImg = createEl("img", {
+        attrs: {
+          src: `img/resources/${resource.type}.png`,
+          alt: resource.type,
+        },
+      });
+
       costDiv.appendChild(resImg);
     }
   });
@@ -32,10 +64,14 @@ const createCostDiv = (stage) => {
 
 const createWonderEffect = (stage) => {
   const power = stage.effects[0];
-  const powerImg = document.createElement("img");
-  const value = power.value ? power.value : "";
-  powerImg.src = `img/wonder-effect/${value}${power.type}.png`;
-  powerImg.alt = `${value} ${power.type}`;
+
+  const value = power.count ? power.count : "";
+  const powerImg = createEl("img", {
+    attrs: {
+      src: `img/wonder-effect/${value}${power.type}.png`,
+      alt: `${value} ${power.type}`,
+    },
+  });
 
   return powerImg;
 };
@@ -44,8 +80,7 @@ const renderPoints = (person, className) => {
   const container = document.querySelector(`.${className}`);
   const holder = document.createElement("div");
   Object.entries(person.stages).forEach(([key, stage], index) => {
-    const stageDiv = document.createElement("div");
-    stageDiv.className = key;
+    const stageDiv = createEl("div", { className: key });
 
     stageDiv.appendChild(createEmptyStage(index));
     stageDiv.appendChild(createCostDiv(stage));
@@ -79,9 +114,10 @@ const removeWaitingWindow = () => {
   waitingWindow?.remove();
 };
 
-const renderWonder = (wonder) => {
+const renderWonder = (wonder, parentElement) => {
+  console.log(parentElement);
   const wonderImgStr = wonder.toLowerCase();
-  const holder = document.getElementById("wonder-placeholder");
+  const holder = parentElement.querySelector(".wonder-placeholder");
   const img = document.createElement("img");
   img.src = `/img/wonders/${wonderImgStr}A.jpeg`;
   img.alt = wonder;
@@ -89,8 +125,8 @@ const renderWonder = (wonder) => {
   holder.replaceChildren(img);
 };
 
-const renderPlayerName = (name) => {
-  const nameHolder = document.getElementById("player-name");
+const renderPlayerName = (name, parentElement) => {
+  const nameHolder = parentElement.getElementById("player-name");
   nameHolder.textContent = `Player : ${name}`;
 };
 
@@ -115,20 +151,20 @@ const addStagedCard = (stagedCards, card, i) => {
   holder.replaceChildren(img);
 };
 
-const renderStagedCards = (stagedCards) => {
-  const stagedCardsElement = document.querySelector(".staged-cards");
+const renderStagedCards = (stagedCards, parentElement) => {
+  const stagedCardsElement = parentElement.querySelector(".staged-cards");
   stagedCards.forEach((card, i) => addStagedCard(stagedCardsElement, card, i));
 };
 
-const renderPlayerInfo = (info) => {
+const renderPlayerInfo = (info, parentElement = document) => {
   const { wonder, name, coins, warTokens, buildings, stagedCards } = info;
 
-  renderWonder(wonder);
-  renderPlayerName(name);
-  renderCards(buildings);
-  renderStagedCards(stagedCards);
+  renderWonder(wonder, parentElement);
+  renderPlayerName(name, parentElement);
+  renderCards(buildings, parentElement);
+  renderStagedCards(stagedCards, parentElement);
 
-  const header = document.querySelector(".property");
+  const header = parentElement.querySelector(".property");
   header.replaceChildren(getPlayerPoints(coins, warTokens));
 };
 
@@ -142,8 +178,8 @@ const fetchImage = (card, index) => {
   return image;
 };
 
-const renderBuildings = ([colour, cards]) => {
-  const container = document.querySelector(`.${colour}`);
+const renderBuildings = (parentElement, [colour, cards]) => {
+  const container = parentElement.querySelector(`.${colour}`);
 
   container.classList.add(colour);
   container.replaceChildren(...cards.map(fetchImage));
@@ -154,13 +190,13 @@ const withoutResource = ([color]) => {
   return !resourceColors.has(color);
 };
 
-const renderCards = (cards) => {
+const renderCards = (cards, parentElement) => {
   const brownCards = cards["brown"];
   const greyCards = cards["grey"];
   cards["resources"] = brownCards.concat(greyCards);
 
   const builds = Object.entries(cards).filter(withoutResource);
-  return builds.forEach(renderBuildings);
+  return builds.forEach(renderBuildings.bind(null, parentElement));
 };
 
 const getPlayerStats = (name) => {
@@ -190,20 +226,20 @@ const getWonderHolder = (wonder) => {
   return wonderHolder;
 };
 
-const getStageHolder = () => {
+const getStageHolder = (staged) => {
   const stageHolder = document.createElement("img");
 
-  stageHolder.src = "/img/stages/empty-stage.png";
+  stageHolder.src = `/img/stages/stage${staged.length}.png`;
   stageHolder.className = "png";
   stageHolder.alt = "empty-stage.png";
-
+  stageHolder.addEventListener("click", hide);
   return stageHolder;
 };
 
-const getWonderStats = (wonder, resource) => [
+const getWonderStats = (wonder, resource, stagedCards) => [
   getResourceHolder(resource),
   getWonderHolder(wonder),
-  getStageHolder(),
+  getStageHolder(stagedCards),
 ];
 
 const getColourCards = (builds, arr, color) => {
@@ -231,7 +267,15 @@ const appendPlayerBuildings = (clone, buildings) => {
 };
 
 const getNeighbourStats = (player, template) => {
-  const { name, coins, warTokens, wonder, bonusResource, buildings } = player;
+  const {
+    name,
+    coins,
+    warTokens,
+    wonder,
+    bonusResource,
+    buildings,
+    stagedCards,
+  } = player;
   const playerClone = template.content.cloneNode(true);
   const header = playerClone.querySelector(".player-stats-header");
 
@@ -242,7 +286,7 @@ const getNeighbourStats = (player, template) => {
   if (cards) appendPlayerBuildings(playerClone, buildings);
 
   const wonderStats = playerClone.querySelector(".wonder-stats");
-  wonderStats?.append(...getWonderStats(wonder, bonusResource));
+  wonderStats?.append(...getWonderStats(wonder, bonusResource, stagedCards));
 
   return playerClone;
 };
@@ -256,17 +300,31 @@ const renderNeighbours = ({ leftPlayerData, rightPlayerData }) => {
 
   document.getElementById("left-neighbour-stats").replaceChildren(left);
   document.getElementById("right-neighbour-stats").replaceChildren(right);
-  document.querySelector(".toggle").addEventListener("click", hide);
-  document.querySelector(".toggle2").addEventListener("click", hide1);
+};
+
+const oppentView = (playerInfo) => {
+  const { wonder, name, buildings, stagedCards } = playerInfo;
+  const playerStatTemplate = document.querySelector("#other-player-view");
+  const playerStat = playerStatTemplate.content.cloneNode(true);
+  renderWonder(wonder, playerStat);
+  renderPlayerName(name, playerStat);
+  renderCards(buildings, playerStat);
+  renderStagedCards(stagedCards, playerStat);
+  const ele = document.querySelector(".other-player-stats");
+  ele.classList.toggle("none");
+  ele.replaceChildren(playerStat);
 };
 
 const renderOtherPlayerStats = ({ others }) => {
   const otherPlayersContainer = document.getElementById("other-players");
   const playerTemplate = document.getElementById("other-players-template");
 
-  const stats = others.map((playerInfo) =>
-    getNeighbourStats(playerInfo, playerTemplate)
-  );
+  const stats = others.map((playerInfo) => {
+    const currentPlayerStat = getNeighbourStats(playerInfo, playerTemplate);
+    currentPlayerStat.querySelector(".players-wonder-stats")
+      .addEventListener("click", () => oppentView(playerInfo));
+    return currentPlayerStat;
+  });
   otherPlayersContainer.replaceChildren(...stats);
 };
 
@@ -293,12 +351,12 @@ const addHoverForChildren = (parentSelector) => {
 
 const clearPerviousThings = () => {
   document.querySelector("#build-message")?.remove();
-  document.querySelector(".actionsBox").remove();
+  document.querySelector(".actions-box").remove();
   document.querySelector(".hovered").classList.remove("hovered");
 };
 
 const removeList = () => {
-  addHoverForChildren("#cardsContainer");
+  addHoverForChildren("#cards-container");
   clearPerviousThings();
 };
 
@@ -315,7 +373,7 @@ const createCancel = () => {
 
 const removeOtherActionsInteractions = () => {
   document.querySelector("#build-message")?.remove();
-  document.querySelector(".actionsBox").remove();
+  document.querySelector(".actions-box").remove();
 
   const cards = document.querySelectorAll(".deck");
 
@@ -339,7 +397,7 @@ const reselectCard = (resetPlayerAction) => {
   return async (event) => {
     event.target.closest(".deck").classList.remove("hovered");
     event.target.remove();
-    addHoverForChildren("#cardsContainer");
+    addHoverForChildren("#cards-container");
     resetCardsEventListeners();
 
     notify((await resetPlayerAction()).message);
@@ -364,12 +422,12 @@ const reqBuildCard = (card, postPlayerAction, resetPlayerAction) => {
 
 const createHoverMsg = (message) => {
   return (event) => {
-    const hoverMessage = document.createElement("div");
-    hoverMessage.textContent = message;
-    hoverMessage.classList.add("hover-message");
-    hoverMessage.id = "build-message";
-
-    event.target.closest(".deck").appendChild(hoverMessage);
+    const hoverDiv = createEl("div", {
+      id: "build-message",
+      className: "hover-message",
+      text: message,
+    });
+    event.target.closest(".deck").appendChild(hoverDiv);
   };
 };
 
@@ -498,9 +556,7 @@ const createStage = (card, postAction, resetAction) => {
 };
 
 const showActions = (card, postPlayerAction, resetPlayerAction) => {
-  const actionBox = document.createElement("div");
-  actionBox.classList.add("actionsBox");
-
+  const actionBox = createEl("div", { className: "actions-box" });
   actionBox.append(
     createDiscard(card, postPlayerAction),
     createStage(card, postPlayerAction, resetPlayerAction),
@@ -508,7 +564,7 @@ const showActions = (card, postPlayerAction, resetPlayerAction) => {
     createCancel(),
   );
 
-  removeHover("#cardsContainer");
+  removeHover("#cards-container");
   return actionBox;
 };
 
@@ -523,13 +579,13 @@ const removeHover = (parentSelector) => {
 
 const createSelectCardHandler = (card, postPlayerAction, resetPlayerAction) => {
   return (event) => {
-    if (document.querySelector(".actionsBox")) clearPerviousThings();
+    if (document.querySelector(".actions-box")) clearPerviousThings();
 
     event.target.parentNode.append(
       showActions(card, postPlayerAction, resetPlayerAction),
     );
-
-    removeHover("#cardsContainer");
+    event.target.parentNode.classList.add("deck-selected");
+    removeHover("#cards-container");
     cardHover(event);
   };
 };
@@ -563,7 +619,7 @@ const createCardsContainer = (
 };
 
 const renderDeck = (cards, postPlayerAction, resetPlayerAction) => {
-  const container = document.querySelector("#cardsContainer");
+  const container = document.querySelector("#cards-container");
   const offset = Math.ceil(cards.length / 2);
   const cardEls = cards.map((card, i) =>
     createCardsContainer(card, i, offset, postPlayerAction, resetPlayerAction)
@@ -571,14 +627,12 @@ const renderDeck = (cards, postPlayerAction, resetPlayerAction) => {
 
   container.style = `--total:${cards.length}`;
   container.replaceChildren(...cardEls);
-  addHoverForChildren("#cardsContainer");
+  addHoverForChildren("#cards-container");
 };
 
 const createAgeElements = (age) => {
-  const h1 = document.createElement("h1");
-  h1.textContent = "Age";
-  const image = document.createElement("img");
-  image.src = `img/ages/age${age}.png`;
+  const h1 = createEl("h1", { text: "Age" });
+  const image = createEl("img", { attrs: { src: `img/ages/age${age}.png` } });
 
   return [h1, image];
 };
@@ -593,25 +647,11 @@ const renderAge = async (age) => {
   el.style.display = "none";
 };
 
-const createEl = (tag, options = { id: "", className: "", text: "" }) => {
-  const element = document.createElement(tag);
-
-  element.classList.add(options.className);
-  element.id = options.id;
-  element.textContent = options.text;
-
-  for (const attr in options.attrs) {
-    element.setAttribute(attr, options.attrs[attr]);
-  }
-
-  return element;
-};
-
 const createImg = (src, className = "", alt = "") =>
   createEl("img", { className, attrs: { src, alt } });
 
 const createShieldBlock = (shieldSrc, count) => {
-  const wrapper = createEl("div", { className: "othershield" });
+  const wrapper = createEl("div", { className: "other-shield" });
   wrapper.append(
     createImg(shieldSrc, "shield"),
     createEl("p", { text: count }),
@@ -651,10 +691,11 @@ const createConflict = (conflict, player) => {
   );
 
   const direction = player === "leftPlayer" ? "<---" : "--->";
-  const playerStatus = createEl("div", { className: `playerStatus` });
+  const playerStatus = createEl("div", { className: `player-status` });
 
+  const helpingVerb = result === "draw" ? "with" : "against";
   const drawText = createEl("p", {
-    text: `you ${result} with ${opponentName}  ${direction}`,
+    text: `you ${result} ${helpingVerb} ${opponentName}  ${direction}`,
   });
 
   playerStatus.append(drawText);
@@ -711,10 +752,12 @@ const renderConflictsResults = async ({
 };
 
 const conflictAnimation = () => {
-  const imag1 = document.createElement("img");
-  imag1.src = "/img/miltiry-conflits/person1.png";
-  const imag2 = document.createElement("img");
-  imag2.src = "/img/miltiry-conflits/person2.png";
+  const imag1 = createEl("img", {
+    attrs: { src: "/img/miltiry-conflits/person1.png" },
+  });
+  const imag2 = createEl("img", {
+    attrs: { src: "/img/miltiry-conflits/person2.png" },
+  });
 
   return [imag1, imag2];
 };

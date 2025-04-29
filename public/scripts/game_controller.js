@@ -42,7 +42,9 @@ const pollGameState = async (sevenWonders) => {
       "/game/cards",
     );
 
-    if (isLastRound) return await endAnAge(sevenWonders);
+    if (isLastRound) {
+      return await endAnAge(sevenWonders);
+    }
 
     return renderUpdatedGame(sevenWonders, hand);
   }

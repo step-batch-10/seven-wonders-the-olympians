@@ -13,21 +13,19 @@
 
     <main>
       <div id="other-players"></div>
+      <div class="other-player-stats none"></div>
       <div id="three-players">
         <div id="left-neighbour" class="neighbour">
           <div class="neighbour-stats" id="left-neighbour-stats"></div>
           <div class="stage-details hide"></div>
-          <button class="toggle hide">
-            <img src="img/icons/right.svg" alt="" />
-          </button>
         </div>
         <div id="player-placeholder">
-          <div class="deckPlaceHolder">
-            <div id="cardsContainer"></div>
+          <div class="deck-placeholder">
+            <div id="cards-container"></div>
           </div>
 
           <div class="wonder">
-            <div class="buildedCards">
+            <div class="built-cards">
               <div class="purple"></div>
               <div class="resources"></div>
               <div class="yellow"></div>
@@ -36,7 +34,7 @@
               <div class="blue"></div>
             </div>
 
-            <div id="wonder-placeholder"></div>
+            <div class="wonder-placeholder"></div>
 
             <div class="staged-cards">
               <div class="stage1"></div>
@@ -55,9 +53,6 @@
         <div id="right-neighbour" class="neighbour">
           <div class="neighbour-stats" id="right-neighbour-stats"></div>
           <div class="stage-details2 hide2"></div>
-          <button class="toggle2 hide2">
-            <img src="img/icons/left.svg" alt="" />
-          </button>
         </div>
       </div>
     </main>
@@ -73,6 +68,33 @@
 
     <template id="other-players-template">
       <div class="wonder-stats players-wonder-stats"></div>
+    </template>
+
+    <template id="other-player-view">
+      <div class="others-wonder">
+        <div class="built-cards">
+          <div class="purple"></div>
+          <div class="resources"></div>
+          <div class="yellow"></div>
+          <div class="red"></div>
+          <div class="green"></div>
+          <div class="blue"></div>
+        </div>
+
+        <div class="wonder-placeholder"></div>
+
+        <div class="staged-cards">
+          <div class="stage1"></div>
+          <div class="stage2"></div>
+          <div class="stage3"></div>
+        </div>
+
+        <div class="header">
+          <p id="player-name"></p>
+          <div id="settings"></div>
+          <div class="property"></div>
+        </div>
+      </div>
     </template>
   </body>
 </html>
