@@ -155,7 +155,7 @@
     "color": "red",
     "minPlayers": 3,
     "cost": [{ "type": "stone", "count": 3 }],
-    "produces": [{ "type": "shields", "count": 2 }],
+    "produces": [{ "type": "shield", "count": 2 }],
     "chainFrom": null,
     "chainTo": ["Fortifications"],
     "type": "military"
@@ -169,7 +169,7 @@
       { "type": "wood", "count": 1 },
       { "type": "ore", "count": 2 }
     ],
-    "produces": [{ "type": "shields", "count": 2 }],
+    "produces": [{ "type": "shield", "count": 2 }],
     "chainFrom": null,
     "chainTo": ["Circus"],
     "type": "military"
@@ -184,7 +184,7 @@
       { "type": "wood", "count": 1 },
       { "type": "ore", "count": 1 }
     ],
-    "produces": [{ "type": "shields", "count": 2 }],
+    "produces": [{ "type": "shield", "count": 2 }],
     "chainFrom": null,
     "chainTo": ["Circus"],
     "type": "military"
@@ -288,7 +288,7 @@
       { "type": "wood", "count": 2 },
       { "type": "ore", "count": 1 }
     ],
-    "produces": [{ "type": "shields", "count": 2 }],
+    "produces": [{ "type": "shield", "count": 2 }],
     "chainFrom": "Apothecary",
     "chainTo": ["Siege Workshop"],
     "type": "military"
@@ -439,7 +439,7 @@
     "color": "red",
     "minPlayers": 7,
     "cost": [{ "type": "stone", "count": 3 }],
-    "produces": [{ "type": "shields", "count": 2 }],
+    "produces": [{ "type": "shield", "count": 2 }],
     "chainFrom": null,
     "chainTo": ["Fortifications"],
     "type": "military"
@@ -453,7 +453,7 @@
       { "type": "wood", "count": 1 },
       { "type": "ore", "count": 2 }
     ],
-    "produces": [{ "type": "shields", "count": 2 }],
+    "produces": [{ "type": "shield", "count": 2 }],
     "chainFrom": null,
     "chainTo": ["Circus"],
     "type": "military"
@@ -467,7 +467,7 @@
       { "type": "wood", "count": 1 },
       { "type": "ore", "count": 2 }
     ],
-    "produces": [{ "type": "shields", "count": 2 }],
+    "produces": [{ "type": "shield", "count": 2 }],
     "chainFrom": null,
     "chainTo": ["Circus"],
     "type": "military"
@@ -482,7 +482,7 @@
       { "type": "wood", "count": 1 },
       { "type": "ore", "count": 1 }
     ],
-    "produces": [{ "type": "shields", "count": 2 }],
+    "produces": [{ "type": "shield", "count": 2 }],
     "chainFrom": null,
     "chainTo": ["Circus"],
     "type": "military"
@@ -622,7 +622,7 @@
       { "type": "wood", "count": 2 },
       { "type": "ore", "count": 1 }
     ],
-    "produces": [{ "type": "shields", "count": 2 }],
+    "produces": [{ "type": "shield", "count": 2 }],
     "chainFrom": "Apothecary",
     "chainTo": ["Siege Workshop"],
     "type": "military"

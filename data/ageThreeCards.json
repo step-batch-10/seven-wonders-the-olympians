@@ -8,7 +8,7 @@
       { "type": "stone", "count": 1 },
       { "type": "ore", "count": 3 }
     ],
-    "produces": [{ "type": "shields", "count": 3 }],
+    "produces": [{ "type": "shield", "count": 3 }],
     "chainFrom": "Walls",
     "chainTo": [],
     "type": "military"
@@ -23,7 +23,7 @@
       { "type": "ore", "count": 1 },
       { "type": "textile", "count": 1 }
     ],
-    "produces": [{ "type": "shields", "count": 3 }],
+    "produces": [{ "type": "shield", "count": 3 }],
     "chainFrom": null,
     "chainTo": [],
     "type": "military"
@@ -37,7 +37,7 @@
       { "type": "stone", "count": 3 },
       { "type": "ore", "count": 1 }
     ],
-    "produces": [{ "type": "shields", "count": 3 }],
+    "produces": [{ "type": "shield", "count": 3 }],
     "chainFrom": "Training Ground",
     "chainTo": [],
     "type": "military"
@@ -275,7 +275,7 @@
       { "type": "wood", "count": 1 },
       { "type": "clay", "count": 3 }
     ],
-    "produces": [{ "type": "shields", "count": 3 }],
+    "produces": [{ "type": "shield", "count": 3 }],
     "chainFrom": "Laboratory",
     "chainTo": [],
     "type": "military"
@@ -334,7 +334,7 @@
       { "type": "stone", "count": 1 },
       { "type": "ore", "count": 3 }
     ],
-    "produces": [{ "type": "shields", "count": 3 }],
+    "produces": [{ "type": "shield", "count": 3 }],
     "chainFrom": "Walls",
     "chainTo": [],
     "type": "military"
@@ -349,7 +349,7 @@
       { "type": "ore", "count": 1 },
       { "type": "textile", "count": 1 }
     ],
-    "produces": [{ "type": "shields", "count": 3 }],
+    "produces": [{ "type": "shield", "count": 3 }],
     "chainFrom": null,
     "chainTo": [],
     "type": "military"
@@ -364,7 +364,7 @@
       { "type": "ore", "count": 1 },
       { "type": "textile", "count": 1 }
     ],
-    "produces": [{ "type": "shields", "count": 3 }],
+    "produces": [{ "type": "shield", "count": 3 }],
     "chainFrom": null,
     "chainTo": [],
     "type": "military"
@@ -378,7 +378,7 @@
       { "type": "stone", "count": 3 },
       { "type": "ore", "count": 1 }
     ],
-    "produces": [{ "type": "shields", "count": 3 }],
+    "produces": [{ "type": "shield", "count": 3 }],
     "chainFrom": "Training Ground",
     "chainTo": [],
     "type": "military"
@@ -392,7 +392,7 @@
       { "type": "stone", "count": 3 },
       { "type": "ore", "count": 1 }
     ],
-    "produces": [{ "type": "shields", "count": 3 }],
+    "produces": [{ "type": "shield", "count": 3 }],
     "chainFrom": "Training Ground",
     "chainTo": [],
     "type": "military"
@@ -672,7 +672,7 @@
       { "type": "wood", "count": 1 },
       { "type": "clay", "count": 3 }
     ],
-    "produces": [{ "type": "shields", "count": 3 }],
+    "produces": [{ "type": "shield", "count": 3 }],
     "chainFrom": "Laboratory",
     "chainTo": [],
     "type": "military"

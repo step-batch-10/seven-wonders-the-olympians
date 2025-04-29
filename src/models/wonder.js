@@ -30,7 +30,7 @@ class Wonder {
     //   leftNeighbour: new Set(),
     //   rightNeighbour: new Set(),
     // };
-    // this.#militaryStrength = 0;
+    this.#militaryStrength = 0;
     // this.#victoryPoints = 0;
     this.#staged = [];
     this.#futureBenefits = new Set();

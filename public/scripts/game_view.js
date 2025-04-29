@@ -50,7 +50,6 @@ const renderPoints = (person, className) => {
     stageDiv.appendChild(createEmptyStage(index));
     stageDiv.appendChild(createCostDiv(stage));
     stageDiv.appendChild(createWonderEffect(stage));
-    console.log(person.stagedCards, index);
     if (person.stagedCards.length <= index) stageDiv.classList.add("dim");
     holder.appendChild(stageDiv);
   });
