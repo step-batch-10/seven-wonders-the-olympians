@@ -321,8 +321,11 @@ const renderOtherPlayerStats = ({ others }) => {
 
   const stats = others.map((playerInfo) => {
     const currentPlayerStat = getNeighbourStats(playerInfo, playerTemplate);
-    currentPlayerStat.querySelector(".players-wonder-stats")
-      .addEventListener("click", () => oppentView(playerInfo));
+    const eventTarget = currentPlayerStat.querySelector(
+      ".players-wonder-stats",
+    );
+    eventTarget.addEventListener("mouseenter", () => oppentView(playerInfo));
+    eventTarget.addEventListener("mouseleave", () => oppentView(playerInfo));
     return currentPlayerStat;
   });
   otherPlayersContainer.replaceChildren(...stats);
