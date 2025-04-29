@@ -129,7 +129,7 @@ describe("Testing the Game class", () => {
             },
             stage2: {
               cost: [{ type: "stone", count: 2 }],
-              effects: [{ effectType: "freeCard", type: "power" }],
+              effects: [{ type: "free_card_per_age" }],
             },
             stage3: {
               cost: [{ type: "ore", count: 2 }],
@@ -192,7 +192,7 @@ describe("Testing the Game class", () => {
               },
               stage2: {
                 cost: [{ type: "wood", count: 2 }],
-                effects: [{ effectType: "wildResource", type: "power" }],
+                effects: [{ type: "wild_resource" }],
               },
               stage3: {
                 cost: [{ type: "glass", count: 2 }],
@@ -273,8 +273,7 @@ describe("Testing the Game class", () => {
               ],
               effects: [
                 {
-                  effectType: "wildResource",
-                  type: "power",
+                  type: "wild_resource",
                 },
               ],
             },
@@ -468,8 +467,7 @@ describe("Testing the Game class", () => {
               ],
               effects: [
                 {
-                  effectType: "freeCard",
-                  type: "power",
+                  type: "free_card_per_age",
                 },
               ],
             },
@@ -519,8 +517,7 @@ describe("Testing the Game class", () => {
             ],
             effects: [
               {
-                effectType: "discard",
-                type: "power",
+                type: "play_discarded_card",
               },
             ],
           },
