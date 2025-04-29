@@ -942,9 +942,9 @@ describe("Testing getPlayersStatus", () => {
 
   it("should return gameStatus of current and neighbour players as waiting", () => {
     assertEquals(g.getPlayersStatus("123"), {
-      leftPlayerStatus: "waiting",
-      rightPlayerStatus: "waiting",
-      status: "waiting",
+      Adam: "waiting",
+      Bob: "waiting",
+      Eve: "waiting",
     });
   });
 
@@ -954,9 +954,9 @@ describe("Testing getPlayersStatus", () => {
     p3.status = "selected";
     p4.status = "selected";
     assertEquals(g.getPlayersStatus("123"), {
-      leftPlayerStatus: "selected",
-      rightPlayerStatus: "selected",
-      status: "selected",
+      Adam: "selected",
+      Bob: "selected",
+      Eve: "selected",
     });
   });
 

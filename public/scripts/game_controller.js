@@ -33,8 +33,11 @@ const endAnAge = async (sevenWonders) => {
   return;
 };
 
-const pollGameState = async (sevenWonders) => {
-  sevenWonders.requestJsonData("/game/players-status");
+const pollGameState = async (sevenWonders, currentPlayerStatus) => {
+  const playersStatus = await sevenWonders.requestJsonData(
+    "/game/players-status",
+  );
+  uiView.updatePlayersStatus(playersStatus, currentPlayerStatus);
   const { isUptoDate } = await sevenWonders.requestJsonData("/player/view");
 
   if (!isUptoDate) {
@@ -50,9 +53,9 @@ const pollGameState = async (sevenWonders) => {
   }
 };
 
-const pollForPlayerStatus = (sevenWonders) => {
+const pollForPlayerStatus = (sevenWonders, currentPlayerStatus) => {
   setInterval(async () => {
-    await pollGameState(sevenWonders);
+    await pollGameState(sevenWonders, currentPlayerStatus);
   }, 1500);
 };
 
@@ -67,7 +70,7 @@ const gameManager = async (sevenWonders) => {
 const main = async () => {
   const sevenWonders = new SevenWonders();
   await gameManager(sevenWonders);
-  pollForPlayerStatus(sevenWonders);
+  pollForPlayerStatus(sevenWonders, {});
 };
 
 globalThis.onload = main;

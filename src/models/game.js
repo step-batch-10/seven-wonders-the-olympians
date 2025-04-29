@@ -247,13 +247,13 @@ class Game {
 
   getPlayersStatus(playerID) {
     const player = this.#players.find((player) => player.playerID === playerID);
-    const playersStatus = { status: player.status };
+    const otherPlayers = player.getOtherPlayersStatus();
+    const playersStatus = {};
 
-    playersStatus.leftPlayerStatus = player.leftPlayer.status;
-    playersStatus.rightPlayerStatus = player.rightPlayer.status;
-    player.others = player.getOtherPlayersStatus();
+    playersStatus[player.leftPlayer.name] = player.leftPlayer.status;
+    playersStatus[player.rightPlayer.name] = player.rightPlayer.status;
 
-    return playersStatus;
+    return { ...playersStatus, ...otherPlayers };
   }
 
   getPlayerHandData(playerID) {

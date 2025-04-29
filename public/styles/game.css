@@ -194,7 +194,7 @@ p {
   opacity: 0.4;
 }
 
-.built-cards > * {
+.built-cards > div {
   height: 180px;
   width: 130px;
   position: relative;
@@ -375,6 +375,7 @@ main img {
   height: 80vh;
   align-self: flex-end;
 }
+
 .popup {
   position: absolute;
   right: 0;
@@ -385,6 +386,7 @@ main img {
   border: 2px solid #f0ddb7;
   border-radius: 8px;
 }
+
 #age {
   backdrop-filter: blur(4px);
   display: flex;
@@ -459,9 +461,11 @@ main img {
   justify-content: center;
   position: relative;
 }
+
 .conflict-Border {
   border: 3px solid #9a6a1c;
 }
+
 .conflict {
   background-color: #ddb35b;
   width: 550px;
@@ -469,23 +473,28 @@ main img {
   gap: 10px;
   flex-direction: column;
 }
+
 .img {
   width: 375px;
   height: 150px;
 }
+
 .conflict > * {
   display: flex;
   justify-content: center;
 }
+
 .top {
   justify-content: center;
   align-items: center;
 }
+
 hr {
   height: 2px;
   background-color: #9a6a1c;
   width: 100%;
 }
+
 .small {
   width: 50px;
   height: 50px;
@@ -494,12 +503,14 @@ hr {
 .right-person {
   gap: 10px;
 }
+
 .points {
   width: 15%;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
 }
+
 .shield {
   height: 20px;
   width: 20px;
@@ -565,6 +576,7 @@ img.reselect-icon {
   box-shadow: rgba(0, 0, 0, 0.44) 0px 3px 8px;
   border: 0.2px solid gray;
 }
+
 .stage-details > div,
 .stage-details2 > div {
   display: flex;
@@ -592,6 +604,7 @@ img.reselect-icon {
   flex-direction: row;
   align-items: center;
 }
+
 #right-neighbour {
   display: flex;
   flex-direction: row-reverse;
@@ -616,6 +629,7 @@ img.reselect-icon {
   border: 4px solid #9a6a1c;
   transform: translateX(-3px);
 }
+
 .stage-details2 {
   transition: all 0.7s ease-in-out;
   z-index: 998;
@@ -627,9 +641,11 @@ img.reselect-icon {
   border: 4px solid #9a6a1c;
   transform: translateX(3px);
 }
+
 .stage-details2 > div {
   flex-direction: row-reverse;
 }
+
 .open {
   display: flex;
   width: 2rem;
@@ -766,4 +782,25 @@ button > img {
 
 .wonder-stats {
   cursor: pointer;
+}
+.trade-summary {
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  padding: 10px;
+}
+
+.trade-summary p {
+  white-space: nowrap;
+}
+
+button {
+  cursor: pointer;
+}
+
+.status {
+  width: 50px;
 }

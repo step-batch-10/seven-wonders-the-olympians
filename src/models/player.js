@@ -277,10 +277,10 @@ class Player {
   }
 
   getOtherPlayersStatus() {
-    const playersStatus = [];
+    const playersStatus = {};
     let otherPlayer = this.#leftPlayer.leftPlayer;
     while (otherPlayer.playerID !== this.#rightPlayer.playerID) {
-      playersStatus.push(otherPlayer.status);
+      playersStatus[otherPlayer.name] = otherPlayer.status;
       otherPlayer = otherPlayer.leftPlayer;
     }
 

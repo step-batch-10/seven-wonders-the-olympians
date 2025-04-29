@@ -15,6 +15,26 @@ const createEl = (tag, options = { id: "", className: "", text: "" }) => {
 const hide1 = () => {
   document.querySelector(".stage-details2").classList.toggle("hide2");
 };
+const statusImgMap = {
+  "waiting": "img/icons/hour-glass.gif",
+  "selected": "img/icons/tick-mark.png",
+};
+
+const changeStatus = (playerName, cStatus, previousStatus) => {
+  console.log(playerName, cStatus, previousStatus);
+  if (previousStatus[playerName] === cStatus) return;
+
+  previousStatus[playerName] = cStatus;
+  const playerStatusEl = document.querySelector(`#${playerName}-status`);
+  playerStatusEl.src = statusImgMap[cStatus];
+};
+
+const updatePlayersStatus = (currentStatus, previousStatus) => {
+  Object.entries(currentStatus).forEach(([key, value]) => {
+    changeStatus(key, value, previousStatus);
+  });
+};
+
 const hide = () => {
   document.querySelector(".stage-details").classList.toggle("hide");
 };
@@ -85,6 +105,7 @@ const renderPoints = (person, className) => {
     stageDiv.appendChild(createEmptyStage(index));
     stageDiv.appendChild(createCostDiv(stage));
     stageDiv.appendChild(createWonderEffect(stage));
+
     if (person.stagedCards.length <= index) stageDiv.classList.add("dim");
     holder.appendChild(stageDiv);
   });
@@ -92,7 +113,10 @@ const renderPoints = (person, className) => {
   container.replaceChildren(...holder.children);
 };
 
-const createElements = (tags) => tags.map((tag) => document.createElement(tag));
+const createElements = (...tags) => {
+  console.log(tags, "tagsssssssssssssss");
+  return tags.map((tag) => document.createElement(tag));
+};
 
 const notify = (msg) => {
   const popup = document.createElement("span");
@@ -200,10 +224,12 @@ const renderCards = (cards, parentElement) => {
 };
 
 const getPlayerStats = (name) => {
-  const [div, nameP, statusP] = createElements(["div", "p", "p"]);
+  const [div, nameP, statusP] = createElements("div", "p", "img");
   div.className = "player-points";
   nameP.textContent = name;
-  statusP.textContent = "⏳";
+  statusP.src = "img/icons/hour-glass.gif";
+  statusP.classList.add("status");
+  statusP.id = `${name}-status`;
   div.append(nameP, statusP);
 
   return div;
@@ -352,19 +378,20 @@ const addHoverForChildren = (parentSelector) => {
   });
 };
 
-const clearPerviousThings = () => {
+const clearPreviousThings = () => {
   document.querySelector("#build-message")?.remove();
-  document.querySelector(".actions-box").remove();
+  document.querySelector(".actions-box")?.remove();
+  document.querySelector(".trade-summary")?.remove();
   document.querySelector(".hovered").classList.remove("hovered");
 };
 
 const removeList = () => {
   addHoverForChildren("#cards-container");
-  clearPerviousThings();
+  clearPreviousThings();
 };
 
 const createCancel = () => {
-  const [stage, content, image] = createElements(["div", "p", "img"]);
+  const [stage, content, image] = createElements("div", "p", "img");
   image.src = "/img/icons/cancel.png";
 
   content.innerText = "Cancel";
@@ -374,13 +401,17 @@ const createCancel = () => {
   return stage;
 };
 
+const removeHoverMsgAndActBox = () => {
+  document.querySelector(".hover-message")?.remove();
+  document.querySelector(".actions-box")?.remove();
+};
+
 const removeOtherActionsInteractions = () => {
-  document.querySelector("#build-message")?.remove();
-  document.querySelector(".actions-box").remove();
-
   const cards = document.querySelectorAll(".deck");
+  removeHoverMsgAndActBox();
+  document.querySelector(".trade-summary")?.remove();
 
-  Array.from(cards).forEach((card) => {
+  cards.forEach((card) => {
     card.removeEventListener("mouseenter", handleHover);
     card.removeEventListener("mouseleave", handleHoverLeave);
     const cardImg = card.querySelector(".card-image");
@@ -391,7 +422,7 @@ const removeOtherActionsInteractions = () => {
 const resetCardsEventListeners = () => {
   const cards = document.querySelectorAll(".card-image");
 
-  Array.from(cards).forEach((card) => {
+  cards.forEach((card) => {
     card.addEventListener("click", card.onClickHandler);
   });
 };
@@ -423,20 +454,44 @@ const reqBuildCard = (card, postPlayerAction, resetPlayerAction) => {
   };
 };
 
-const createHoverMsg = (message) => {
-  return (event) => {
-    const hoverDiv = createEl("div", {
-      id: "build-message",
-      className: "hover-message",
-      text: message,
-    });
-    event.target.closest(".deck").appendChild(hoverDiv);
-  };
+const createHoverMsg = (message) => (event) => {
+  const hoverMessage = document.createElement("div");
+  hoverMessage.textContent = message;
+  hoverMessage.classList.add("hover-message");
+  hoverMessage.id = "build-message";
+
+  event.target.closest(".deck").appendChild(hoverMessage);
 };
 
 const removeHoverMessage = () => {
-  const buildMessageEle = document.querySelector("#build-message");
-  buildMessageEle?.remove();
+  const elements = document.querySelectorAll(".hover-message");
+  elements.forEach((element) => element.remove());
+};
+
+const createTradeBody = ({ right, left }) => {
+  const [div, rightEl, leftEl] = createElements("div", "p", "p");
+  leftEl.textContent = `Left : 💲 ${left}`;
+  rightEl.textContent = `Right : 💲 ${right}`;
+  div.append(leftEl, rightEl);
+
+  return div;
+};
+
+const tradeAction = (card, postPlayerAction, resetPlayerAction) => (event) => {
+  const tradeSummary = createEl("div", { className: "trade-summary" });
+  const heading = createEl("p", { text: "Trade" });
+  const tradeBtn = createEl("button", { text: "Pay" });
+  tradeBtn.addEventListener(
+    "click",
+    reqBuildCard(card, postPlayerAction, resetPlayerAction),
+  );
+  const tradeBody = createTradeBody(card.build.trade);
+
+  tradeSummary.append(heading, tradeBody, tradeBtn);
+  const actionsBox = event.target.closest(".actions-box");
+  actionsBox.parentNode.replaceChild(tradeSummary, actionsBox);
+
+  removeHoverMsgAndActBox();
 };
 
 const addBuildOptEvtListener = (
@@ -445,9 +500,12 @@ const addBuildOptEvtListener = (
   postPlayerAction,
   resetPlayerAction,
 ) => {
+  console.log(card);
+  const listener = card.build.canTrade ? tradeAction : reqBuildCard;
+
   stage.addEventListener(
     "click",
-    reqBuildCard(card, postPlayerAction, resetPlayerAction),
+    listener(card, postPlayerAction, resetPlayerAction),
   );
 
   return stage;
@@ -482,7 +540,7 @@ const addHoverListener = (ele, actions, action) => {
 };
 
 const createBuild = (card, postPlayerAction, resetPlayerAction) => {
-  const [stage, content, image] = createElements(["div", "p", "img"]);
+  const [stage, content, image] = createElements("div", "p", "img");
 
   image.src = "/img/icons/build.png";
   content.innerText = "Build";
@@ -513,21 +571,17 @@ const reqToDiscard = (card, postPlayerAction, resetPlayerAction) => {
 };
 
 const createDiscard = (card, postPlayerAction, resetPlayerAction) => {
-  const [stage, content, image] = createElements(["div", "p", "img"]);
+  const [stage, content, image] = createElements("div", "p", "img");
 
   image.src = "/img/icons/discard.png";
   content.innerText = "Discard";
   stage.append(image, content);
 
-  if (!card.discard.canDiscard) {
-    stage.classList.add("disabled");
-    return stage;
-  }
-
   stage.addEventListener(
     "click",
     reqToDiscard(card, postPlayerAction, resetPlayerAction),
   );
+
   return stage;
 };
 
@@ -541,7 +595,7 @@ const reqToStage = (card, postAction, reset) => {
 };
 
 const createStage = (card, postAction, resetAction) => {
-  const [stage, content, image] = createElements(["div", "p", "img"]);
+  const [stage, content, image] = createElements("div", "p", "img");
 
   image.src = "/img/icons/stage.png";
   content.innerText = "Stage";
@@ -561,7 +615,7 @@ const createStage = (card, postAction, resetAction) => {
 const showActions = (card, postPlayerAction, resetPlayerAction) => {
   const actionBox = createEl("div", { className: "actions-box" });
   actionBox.append(
-    createDiscard(card, postPlayerAction),
+    createDiscard(card, postPlayerAction, resetPlayerAction),
     createStage(card, postPlayerAction, resetPlayerAction),
     createBuild(card, postPlayerAction, resetPlayerAction),
     createCancel(),
@@ -582,12 +636,11 @@ const removeHover = (parentSelector) => {
 
 const createSelectCardHandler = (card, postPlayerAction, resetPlayerAction) => {
   return (event) => {
-    if (document.querySelector(".actions-box")) clearPerviousThings();
+    clearPreviousThings();
 
     event.target.parentNode.append(
       showActions(card, postPlayerAction, resetPlayerAction),
     );
-    event.target.parentNode.classList.add("deck-selected");
     removeHover("#cards-container");
     cardHover(event);
   };
@@ -742,7 +795,7 @@ const renderConflictsResults = async ({
   leftConflict,
   rightConflict,
 }) => {
-  const parent = document.querySelector(".conflictContainer");
+  const parent = document.querySelector(".conflict-container");
   parent.style.display = "flex";
   const conflict = createConflictContainer();
 
@@ -788,4 +841,5 @@ export {
   renderPlayerInfo,
   renderPlayerName,
   renderWonder,
+  updatePlayersStatus,
 };
