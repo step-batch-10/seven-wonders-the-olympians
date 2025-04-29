@@ -716,12 +716,12 @@ img.reselect-icon {
 
 .header p {
   position: relative;
-  left: -250px;
+  right: -20px;
 }
 
 .header .player-points {
   position: relative;
-  left: 390px;
+  left: -50px;
 }
 
 .dim {

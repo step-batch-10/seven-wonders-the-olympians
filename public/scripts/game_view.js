@@ -329,11 +329,10 @@ const renderNeighbours = ({ leftPlayerData, rightPlayerData }) => {
 };
 
 const oppentView = (playerInfo) => {
-  const { wonder, name, buildings, stagedCards } = playerInfo;
+  const { wonder, buildings, stagedCards } = playerInfo;
   const playerStatTemplate = document.querySelector("#other-player-view");
   const playerStat = playerStatTemplate.content.cloneNode(true);
   renderWonder(wonder, playerStat);
-  renderPlayerName(name, playerStat);
   renderCards(buildings, playerStat);
   renderStagedCards(stagedCards, playerStat);
   const ele = document.querySelector(".other-player-stats");
