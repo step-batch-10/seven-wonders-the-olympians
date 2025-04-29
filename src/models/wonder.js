@@ -85,6 +85,10 @@ class Wonder {
   }
 
   get buildings() {
+    return this.#buildings;
+  }
+
+  get buildingsName() {
     return Object.fromEntries(
       Object.entries(this.#buildings).map(([colors, cards]) => {
         const cardNames = cards.map((card) => card.name);

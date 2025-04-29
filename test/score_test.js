@@ -1,13 +1,18 @@
-import { describe, it } from "test/bdd";
+import { beforeEach, describe, it } from "test/bdd";
 import {
   calcCivilStructurePoints,
   calcComStructurePoints,
+  calcGuildsPoints,
   calcMilitaryConflictPoints,
   calcSciStructurePoints,
   calcTreasuryPoints,
   calcWonderStagePoints,
 } from "../src/models/score.js";
+import { Player } from "../src/models/player.js";
+import { Game } from "../src/models/game.js";
 import wonderData from "./../data/wonders.json" with { type: "json" };
+import guildCards from "./../data/guildCards.json" with { type: "json" };
+import ageOneCards from "./../data/ageOneCards.json" with { type: "json" };
 import { assertEquals } from "assert";
 import _ from "lodash";
 
@@ -16,23 +21,23 @@ describe("Testing calculating points for staging wonder", () => {
 
   it("Should return 3, 8 and 15 for corresponding stages for Gizah", () => {
     const gizah = wondersObj.Gizah;
-    assertEquals(calcWonderStagePoints([1], gizah.stages), 3);
-    assertEquals(calcWonderStagePoints([1, 2], gizah.stages), 8);
-    assertEquals(calcWonderStagePoints([1, 2, 3], gizah.stages), 15);
+    assertEquals(calcWonderStagePoints(1, gizah.stages), 3);
+    assertEquals(calcWonderStagePoints(2, gizah.stages), 8);
+    assertEquals(calcWonderStagePoints(3, gizah.stages), 15);
   });
 
   it("Should return 3, 8 and 15 for corresponding stages for Olympia", () => {
     const olympia = wondersObj.Olympia;
-    assertEquals(calcWonderStagePoints([1], olympia.stages), 3);
-    assertEquals(calcWonderStagePoints([1, 2], olympia.stages), 3);
-    assertEquals(calcWonderStagePoints([1, 2, 3], olympia.stages), 10);
+    assertEquals(calcWonderStagePoints(1, olympia.stages), 3);
+    assertEquals(calcWonderStagePoints(2, olympia.stages), 3);
+    assertEquals(calcWonderStagePoints(3, olympia.stages), 10);
   });
 
   it("Should return 3, 8 and 15 for corresponding stages for Ephesos", () => {
     const ephesos = wondersObj.Ephesos;
-    assertEquals(calcWonderStagePoints([1], ephesos.stages), 3);
-    assertEquals(calcWonderStagePoints([1, 2], ephesos.stages), 3);
-    assertEquals(calcWonderStagePoints([1, 2, 3], ephesos.stages), 10);
+    assertEquals(calcWonderStagePoints(1, ephesos.stages), 3);
+    assertEquals(calcWonderStagePoints(2, ephesos.stages), 3);
+    assertEquals(calcWonderStagePoints(3, ephesos.stages), 10);
   });
 });
 
@@ -330,7 +335,139 @@ describe("Testing calculating points of commerce structures", () => {
     const buildings = {
       yellow: [],
     };
-
     assertEquals(calcComStructurePoints(buildings, stagedCards), 0);
+  });
+});
+
+describe("Testing calculating points for guild structures", () => {
+  let p1, p2, p3, p4, g;
+
+  beforeEach(() => {
+    p1 = new Player("Alice");
+    p2 = new Player("Bob");
+    p3 = new Player("Adam");
+    p4 = new Player("Eve");
+
+    g = new Game(4, p1, ([...arr]) => arr.sort(() => 0));
+    g.addPlayer(p2);
+    g.addPlayer(p3);
+    g.addPlayer(p4);
+  });
+
+  it("Should return zero if there is no guild card", () => {
+    assertEquals(calcGuildsPoints(p1), 0);
+  });
+
+  it("Should return 3 if having Guild of Builders card and self & neighbour has total of 3 staged count", () => {
+    p2.wonder.build(guildCards[0]);
+
+    p2.wonder.stage(ageOneCards[0]);
+    p1.wonder.stage(ageOneCards[1]);
+    p3.wonder.stage(ageOneCards[2]);
+
+    assertEquals(calcGuildsPoints(p2), 3);
+  });
+
+  it("Should return 5 if having Guild of Builders card and s = 1, ln = 2, rn = 2", () => {
+    p2.wonder.build(guildCards[0]);
+
+    p2.wonder.stage(ageOneCards[0]);
+    p1.wonder.stage(ageOneCards[1]);
+    p1.wonder.stage(ageOneCards[2]);
+    p3.wonder.stage(ageOneCards[3]);
+    p3.wonder.stage(ageOneCards[4]);
+
+    assertEquals(calcGuildsPoints(p2), 5);
+  });
+
+  it("Should return 10 if having Guild of Craftmens card and greyCard: ln = 2, rn = 3", () => {
+    p2.wonder.build(guildCards[1]);
+
+    p1.wonder.build(ageOneCards[15]);
+    p1.wonder.build(ageOneCards[16]);
+    p3.wonder.build(ageOneCards[17]);
+    p3.wonder.build(ageOneCards[18]);
+    p3.wonder.build(ageOneCards[19]);
+
+    assertEquals(calcGuildsPoints(p2), 10);
+  });
+
+  it("Should return 4 if having Guild of Magistrates card and blueCard: ln = 2, rn = 2", () => {
+    p2.wonder.build(guildCards[2]);
+
+    p1.wonder.build(ageOneCards[42]);
+    p1.wonder.build(ageOneCards[43]);
+    p3.wonder.build(ageOneCards[44]);
+    p3.wonder.build(ageOneCards[45]);
+
+    assertEquals(calcGuildsPoints(p2), 4);
+  });
+
+  it("Should return 4 if having Guild of Philosopher card and greenCard: ln = 1, rn = 5", () => {
+    p2.wonder.build(guildCards[3]);
+
+    p1.wonder.build(ageOneCards[35]);
+    p3.wonder.build(ageOneCards[36]);
+    p3.wonder.build(ageOneCards[37]);
+    p3.wonder.build(ageOneCards[38]);
+    p3.wonder.build(ageOneCards[39]);
+    p3.wonder.build(ageOneCards[40]);
+
+    assertEquals(calcGuildsPoints(p2), 6);
+  });
+
+  it("Should return 5 if having Guild of Shipowners card and cards: b = 1, gray = 2, p = 2", () => {
+    p2.wonder.build(guildCards[5]);
+    p2.wonder.build(guildCards[4]);
+
+    p2.wonder.build(ageOneCards[0]);
+    p2.wonder.build(ageOneCards[14]);
+    p2.wonder.build(ageOneCards[15]);
+
+    assertEquals(calcGuildsPoints(p2), 5);
+  });
+
+  it("Should return 5 if having Guild of Spies card and red cards: ln = 3, rn = 2", () => {
+    p2.wonder.build(guildCards[6]);
+
+    p1.wonder.build(ageOneCards[29]);
+    p1.wonder.build(ageOneCards[30]);
+    p1.wonder.build(ageOneCards[31]);
+    p3.wonder.build(ageOneCards[32]);
+    p3.wonder.build(ageOneCards[33]);
+
+    assertEquals(calcGuildsPoints(p2), 5);
+  });
+
+  it("Should return 3 if having Guild of Strategies card and red -ve: ln = 1, rn = 2", () => {
+    p2.wonder.build(guildCards[7]);
+
+    p1.addWarTokens(-1);
+    p3.addWarTokens(-1);
+    p3.addWarTokens(-1);
+
+    assertEquals(calcGuildsPoints(p2), 3);
+  });
+
+  it("Should return 4 if having Guild of Traders card and yellow cards: ln = 2, rn = 2", () => {
+    p2.wonder.build(guildCards[8]);
+
+    p1.wonder.build(ageOneCards[20]);
+    p1.wonder.build(ageOneCards[21]);
+    p3.wonder.build(ageOneCards[22]);
+    p3.wonder.build(ageOneCards[23]);
+
+    assertEquals(calcGuildsPoints(p2), 4);
+  });
+
+  it("Should return 4 if having Guild of Workers card and brown cards: ln = 1, rn = 3", () => {
+    p2.wonder.build(guildCards[9]);
+
+    p1.wonder.build(ageOneCards[0]);
+    p3.wonder.build(ageOneCards[1]);
+    p3.wonder.build(ageOneCards[2]);
+    p3.wonder.build(ageOneCards[3]);
+
+    assertEquals(calcGuildsPoints(p2), 4);
   });
 });

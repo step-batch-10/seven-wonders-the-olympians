@@ -248,6 +248,15 @@ class Player {
     this.#tempCard = null;
   }
 
+  scoringData() {
+    return {
+      stagedCount: this.#wonder.staged.length,
+      stages: this.#wonder.stages,
+      buildings: this.#wonder.buildings,
+      warTokens: this.warTokensObj,
+    };
+  }
+
   playerData() {
     this.#executeTempCard();
     const data = {
@@ -257,7 +266,7 @@ class Player {
       warTokens: this.warTokensObj,
       stagedCards: this.#wonder.staged,
       stages: this.#wonder.stages,
-      buildings: this.#wonder.buildings,
+      buildings: this.#wonder.buildingsName,
       bonusResource: this.#wonder.bonusResource,
     };
 
