@@ -26,10 +26,10 @@ class Wonder {
 
     this.#buildingsSet = new Set();
     this.#resources = [{ id: wonder.name, type: wonder.resource, count: 1 }];
-    this.#discounts = {
-      leftNeighbour: new Set(),
-      rightNeighbour: new Set(),
-    };
+    // this.#discounts = {
+    //   leftNeighbour: new Set(),
+    //   rightNeighbour: new Set(),
+    // };
     // this.#militaryStrength = 0;
     // this.#victoryPoints = 0;
     this.#staged = [];
@@ -180,7 +180,6 @@ class Wonder {
 
   addFutureBenefits(card) {
     if (!card.chainTo.length) return;
-
     card.chainTo.map((chain) => this.#futureBenefits.add(chain));
   }
 
@@ -208,14 +207,6 @@ class Wonder {
   }
 
   stage(card) {
-    const stage = this.getNextStage();
-    const benefit = this.#wonder.stages[stage].powers[0];
-
-    if (benefit.type === "points") {
-      const count = benefit.value;
-      this.#victoryPoints += count;
-    }
-
     this.#staged.push(card);
   }
 }

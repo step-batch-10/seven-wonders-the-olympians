@@ -31,7 +31,7 @@ const createCostDiv = (stage) => {
 };
 
 const createWonderEffect = (stage) => {
-  const power = stage.powers[0];
+  const power = stage.effects[0];
   const powerImg = document.createElement("img");
   const value = power.value ? power.value : "";
   powerImg.src = `img/wonder-effect/${value}${power.type}.png`;

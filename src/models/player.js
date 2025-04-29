@@ -31,7 +31,7 @@ class Player {
     this.#doneWithConflict = false;
     this.#tempCard = null;
     this.#effects = [];
-    this.#result = { coins: 0 };
+    this.#result = { coins: 0, yellow: [], blue: [], purple: [] };
     this.#cart = null;
   }
 
@@ -188,7 +188,7 @@ class Player {
 
   buyResources(cart, resources, cost, i) {
     const resource = resources.find(
-      (res) => res.type === cost.type && !cart.resourceIds.has(res.id),
+      ({ type, id }) => type === cost.type && !cart.resourceIds.has(id),
     );
     cart.toBuy.set(i, cost);
 
@@ -303,7 +303,9 @@ class Player {
     appliesTo.forEach((player) => {
       const playedBy = player === "self" ? this : players[player];
 
-      this.#result[type] += playedBy.staged.length * count; //TODO: type of result
+      if (type === "coin") {
+        this.#result[`${type}s`] += playedBy.staged.length * count;
+      }
     });
   }
 
@@ -312,7 +314,9 @@ class Player {
       const played = player === "self" ? this : players[player];
       const buildings = played.#wonder.buildings;
 
-      this.#result[type] += buildings[cardColor].length * count;
+      if (type === "coin") {
+        this.#result[type] += buildings[cardColor].length * count;
+      }
     });
   }
 
@@ -342,107 +346,89 @@ class Player {
     this.deductCoins(card).addValueCoins(card).addEffect(card, players);
   }
 
-  #getPlayerEffect(direction, cart) {
+  #getPlayerEffect(direction, resource) {
     const player = `${direction}Neighbour`;
+
     return this.#effects.find(
-      (eff) => eff.appliesTo.includes(player) && !cart.effectIds.has(eff.id),
+      (effect) =>
+        effect.appliesTo.includes(player) &&
+        effect.options.includes(resource.type),
     );
   }
 
-  #getTradeOptions(id, cart, direction, trades, resources) {
-    console.log({ trades });
-    const resource = resources.find((res) => res.id === id);
-    const effect = this.#getPlayerEffect(direction, cart);
+  #getTradeOptions(direction, trades, resource) {
+    const effect = this.#getPlayerEffect(direction, resource);
 
     if (!effect) return trades.push({ coin: 2, ...resource });
-    cart.effectIds.add(effect.id);
-
-    if (!effect.options.includes(resource.type)) {
-      return this.#getTradeOptions(id, cart, direction, trades, resources);
-    }
 
     const noOfCoins = effect.cost.find(({ type }) => type === "coin");
-    cart.effectIds = new Set();
     return trades.push({ coin: noOfCoins.count, ...resource });
   }
 
-  #useEffects({ resourceIds, resources }, direction, playerCart) {
+  #useEffects({ resourceIds, resources }, direction) {
     const trades = [];
-    if (resourceIds.size === 0) return { canTrade: false }; //
 
     [...resourceIds].forEach((id) => {
       const getTradeOptions = this.#getTradeOptions.bind(this);
-      getTradeOptions(id, playerCart, direction, trades, resources);
+      const resource = resources.find((res) => res.id === id);
+
+      getTradeOptions(direction, trades, resource);
     });
 
-    return { trades };
+    return trades;
   }
 
   isResourceInChoice({ type, options }, resourceType) {
     return type === "choice" && options.includes(resourceType);
   }
 
-  totalResources(trades, type) {
+  totalCount(trades, type) {
     const resourceCards = trades.filter(
       (res) => res.type === type || this.isResourceInChoice(res, type),
     );
 
-    return resourceCards.reduce(
-      (total, { count, coin }) => {
-        total.count += count;
-        total.coin += coin;
-        return total;
-      },
-      { count: 0, coin: 0 },
-    );
+    const count = resourceCards.reduce((total, { count }) => total + count, 0);
+    const coin = resourceCards.reduce((total, { coin }) => total + coin, 0);
+
+    return { coin, count };
   }
 
-  possibleTrades(leftTrades, rightTrades, cart, canTrade) {
-    console.log({ leftTrades, rightTrades });
-    return [...cart.toBuy].some(([_, { type, count }]) => {
-      const left = leftTrades
-        ? this.totalResources(leftTrades, type)
-        : { coin: 0, count: 0 };
-      const right = rightTrades
-        ? this.totalResources(rightTrades, type)
-        : { coin: 0, count: 0 };
+  possibleTrades(leftTrade, rightTrade, cart, trade) {
+    return [...cart.toBuy].every(([_, { type, count }]) => {
+      const left = this.totalCount(leftTrade, type);
+      const right = this.totalCount(rightTrade, type);
 
-      canTrade.neededCoins += Math.min(left.coin, right.coin) ||
+      trade.neededCoins += Math.min(left.coin, right.coin) ||
         Math.max(left.coin, right.coin);
 
       return left.count >= count || right.count >= count;
     });
   }
 
-  #canTrade(left, right, cart) {
-    const leftTrades = left?.trades;
-    const rightTrades = right?.trades;
-
-    console.log(left, right, "trades");
-    if (!leftTrades && !rightTrades) return false;
+  #canTrade(leftTrades, rightTrades, cart) {
+    if (leftTrades.length <= 0 && rightTrades.length <= 0) return false;
 
     const trade = { neededCoins: 0 };
-
+    console.log(leftTrades, rightTrades);
     const hasTrade = this.possibleTrades(leftTrades, rightTrades, cart, trade);
 
     return hasTrade && trade.neededCoins <= this.#result.coins;
   }
 
+  getTrades(player, cost, direction) {
+    const playerCart = player.calculateCost(cost);
+    return this.#useEffects(playerCart, direction);
+  }
+
   resourcesFromNeighbour() {
     const cart = this.#cart;
-    cart.effectIds = new Set();
-
     const cost = [...cart.toBuy].map(([_, cost]) => cost);
 
-    const leftPlayerCart = this.#leftPlayer.calculateCost(cost);
-    const rightPlayerCart = this.#rightPlayer.calculateCost(cost);
-
-    const leftTrades = this.#useEffects(leftPlayerCart, "left", cart);
-    const rightTrades = this.#useEffects(rightPlayerCart, "right", cart);
+    const leftTrades = this.getTrades(this.#leftPlayer, cost, "left");
+    const rightTrades = this.getTrades(this.#rightPlayer, cost, "right");
 
     const canTrade = this.#canTrade(leftTrades, rightTrades, cart);
 
-    this.#cart = null;
     return { canTrade, trade: { leftTrades, rightTrades } };
   }
 
@@ -547,10 +533,19 @@ class Player {
     this.updateHand(cardName);
   }
 
+  #getStageBenifits() {
+    const stageCount = `stage${this.#wonder.staged.length}`;
+    const { effects } = this.#wonder.stages[stageCount];
+    const effect = effects.find(({ type }) => type === "coin");
+
+    if (effect) this.#result.coins += effect.count;
+  }
+
   stageCard(cardName) {
     const card = this.#hand.find((card) => card.name === cardName);
 
     this.#wonder.stage(card);
+    this.#getStageBenifits();
     this.updateHand(cardName);
   }
 

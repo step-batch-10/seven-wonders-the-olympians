@@ -7,15 +7,15 @@
     "stages": {
       "stage1": {
         "cost": [{ "type": "wood", "count": 2 }],
-        "powers": [{ "type": "points", "value": 3 }]
+        "effects": [{ "type": "points", "count": 3 }]
       },
       "stage2": {
         "cost": [{ "type": "stone", "count": 2 }],
-        "powers": [{ "type": "free_card_per_age" }]
+        "effects": [{ "type": "power", "effectType": "freeCard" }]
       },
       "stage3": {
         "cost": [{ "type": "ore", "count": 2 }],
-        "powers": [{ "type": "points", "value": 7 }]
+        "effects": [{ "type": "points", "count": 7 }]
       }
     }
   },
@@ -27,15 +27,15 @@
     "stages": {
       "stage1": {
         "cost": [{ "type": "stone", "count": 2 }],
-        "powers": [{ "type": "points", "value": 3 }]
+        "effects": [{ "type": "points", "count": 3 }]
       },
       "stage2": {
         "cost": [{ "type": "wood", "count": 3 }],
-        "powers": [{ "type": "points", "value": 5 }]
+        "effects": [{ "type": "points", "count": 5 }]
       },
       "stage3": {
         "cost": [{ "type": "stone", "count": 4 }],
-        "powers": [{ "type": "points", "value": 7 }]
+        "effects": [{ "type": "points", "count": 7 }]
       }
     }
   },
@@ -47,15 +47,15 @@
     "stages": {
       "stage1": {
         "cost": [{ "type": "stone", "count": 2 }],
-        "powers": [{ "type": "points", "value": 3 }]
+        "effects": [{ "type": "points", "count": 3 }]
       },
       "stage2": {
         "cost": [{ "type": "wood", "count": 2 }],
-        "powers": [{ "type": "coin", "value": 9 }]
+        "effects": [{ "type": "coin", "count": 9 }]
       },
       "stage3": {
         "cost": [{ "type": "papyrus", "count": 2 }],
-        "powers": [{ "type": "points", "value": 7 }]
+        "effects": [{ "type": "points", "count": 7 }]
       }
     }
   },
@@ -67,15 +67,15 @@
     "stages": {
       "stage1": {
         "cost": [{ "type": "clay", "count": 2 }],
-        "powers": [{ "type": "points", "value": 3 }]
+        "effects": [{ "type": "points", "count": 3 }]
       },
       "stage2": {
         "cost": [{ "type": "wood", "count": 3 }],
-        "powers": [{ "type": "extra_scientific_symbol" }]
+        "effects": [{ "type": "card", "effectType": "scientific" }]
       },
       "stage3": {
         "cost": [{ "type": "clay", "count": 4 }],
-        "powers": [{ "type": "points", "value": 7 }]
+        "effects": [{ "type": "points", "count": 7 }]
       }
     }
   },
@@ -87,15 +87,15 @@
     "stages": {
       "stage1": {
         "cost": [{ "type": "wood", "count": 2 }],
-        "powers": [{ "type": "points", "value": 3 }]
+        "effects": [{ "type": "points", "count": 3 }]
       },
       "stage2": {
         "cost": [{ "type": "clay", "count": 3 }],
-        "powers": [{ "type": "military", "value": 2 }]
+        "effects": [{ "type": "card", "effectType": "miltary", "count": 2 }]
       },
       "stage3": {
         "cost": [{ "type": "ore", "count": 4 }],
-        "powers": [{ "type": "points", "value": 7 }]
+        "effects": [{ "type": "points", "count": 7 }]
       }
     }
   },
@@ -107,15 +107,15 @@
     "stages": {
       "stage1": {
         "cost": [{ "type": "clay", "count": 2 }],
-        "powers": [{ "type": "points", "value": 3 }]
+        "effects": [{ "type": "points", "count": 3 }]
       },
       "stage2": {
         "cost": [{ "type": "wood", "count": 3 }],
-        "powers": [{ "type": "play_discarded_card" }]
+        "effects": [{ "type": "power", "effectType": "discard" }]
       },
       "stage3": {
         "cost": [{ "type": "textile", "count": 2 }],
-        "powers": [{ "type": "points", "value": 7 }]
+        "effects": [{ "type": "points", "count": 7 }]
       }
     }
   },
@@ -127,15 +127,15 @@
     "stages": {
       "stage1": {
         "cost": [{ "type": "stone", "count": 2 }],
-        "powers": [{ "type": "points", "value": 3 }]
+        "effects": [{ "type": "points", "count": 3 }]
       },
       "stage2": {
         "cost": [{ "type": "wood", "count": 2 }],
-        "powers": [{ "type": "wild_resource" }]
+        "effects": [{ "type": "power", "effectType": "wildResource" }]
       },
       "stage3": {
         "cost": [{ "type": "glass", "count": 2 }],
-        "powers": [{ "type": "points", "value": 7 }]
+        "effects": [{ "type": "points", "count": 7 }]
       }
     }
   }
