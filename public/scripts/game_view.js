@@ -514,7 +514,9 @@ const tradeAction =
     tradeSummary.append(heading, tradeBody, tradeBtn);
     const actionsBox = event.target.closest(".actions-box");
     actionsBox.parentNode.replaceChild(tradeSummary, actionsBox);
-    document.querySelector(".selected-card")?.classList.remove(".selected-card");
+    document.querySelector(".selected-card")?.classList.remove(
+      ".selected-card",
+    );
     removeHoverMsgAndActBox();
   };
 
