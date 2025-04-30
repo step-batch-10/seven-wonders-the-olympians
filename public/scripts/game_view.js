@@ -402,6 +402,7 @@ const addHoverForChildren = (parentSelector) => {
 const clearPreviousThings = () => {
   document.querySelector("#build-message")?.remove();
   document.querySelector(".actions-box")?.remove();
+  document.querySelector(".selected-card")?.classList.remove("selected-card");
   document.querySelector(".trade-summary")?.remove();
   document.querySelector(".hovered").classList.remove("hovered");
 };
@@ -425,6 +426,7 @@ const createCancel = () => {
 const removeHoverMsgAndActBox = () => {
   document.querySelector(".hover-message")?.remove();
   document.querySelector(".actions-box")?.remove();
+  document.querySelector(".selected-card")?.classList.remove(".selected-card");
 };
 
 const removeOtherActionsInteractions = () => {
@@ -512,7 +514,7 @@ const tradeAction =
     tradeSummary.append(heading, tradeBody, tradeBtn);
     const actionsBox = event.target.closest(".actions-box");
     actionsBox.parentNode.replaceChild(tradeSummary, actionsBox);
-
+    document.querySelector(".selected-card")?.classList.remove(".selected-card");
     removeHoverMsgAndActBox();
   };
 
@@ -670,6 +672,7 @@ const createSelectCardHandler = (card, postPlayerAction, resetPlayerAction) => {
     event.target.parentNode.append(
       showActions(card, postPlayerAction, resetPlayerAction),
     );
+    event.target.parentNode.classList.add("selected-card");
     removeHover("#cards-container");
     cardHover(event);
   };

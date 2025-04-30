@@ -342,7 +342,7 @@ p {
   transform-origin: top center;
   display: flex;
   align-items: center;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease-in-out;
   gap: 10px;
 }
 
@@ -812,4 +812,17 @@ button {
 
 .opponent img {
   width: 28px;
+}
+
+.selected-card {
+  transition: all 0s ease-in-out !important;
+  transform-origin: bottom center;
+  --offset-x: calc(var(--index) * 90px);
+  --offset-y: calc(var(--index) * var(--index) * 5px);
+  position: absolute;
+  transform: translateX(var(--offset-x)) translateY(var(--offset-y));
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease;
+  gap: 10px;
 }

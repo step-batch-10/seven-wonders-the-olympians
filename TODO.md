@@ -1,6 +1,13 @@
-#TODO:
+think about the wonder to show audience - ephesos
 
-  [❌] : verify wonders.json data.
-  [❌] : change resource in stages in wonders.json to cost.
-  [❌] : write tests for canBuild method in player Instance.
-  [❌] : write tests for canStage method in player Instance.
+plan the entire presentation
+
+and fixed what headache said
+
+fix the layout
+
+higlighting the cards
+
+has to give some feedback that coins are something changed
+
+while hover show both negative and postive militry points
