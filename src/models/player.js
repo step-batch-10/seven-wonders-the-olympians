@@ -186,66 +186,57 @@ class Player {
     _.remove(this.#hand, (_ele, idx) => idx === indexOfCard);
   }
 
-  buyResources(cart, resources, cost, i) {
-    const resource = resources.find(
-      ({ type, id }) => type === cost.type && !cart.resourceIds.has(id),
+  #getResources(cart, type) {
+    return cart.resources.find(
+      (res) => res.type === type && !cart.resourceIds.has(res.id),
     );
-    cart.toBuy.set(i, cost);
-
-    if (!resource) return;
-    cart.resourceIds.add(resource.id);
-    cart.resources.push(resource);
-    cart.toBuy.delete(i);
-
-    if (resource.count >= cost.count) return;
-
-    const newCost = { type: cost.type, count: cost.count - resource.count };
-    return this.buyResources(cart, resources, newCost, i);
   }
 
-  choices(cart, resources, [id, cost], i) {
-    const resource = resources.find(
-      (res) => res.type === "choice" && !cart.resourceIds.has(res.id),
-    );
-    cart.toBuy.set(id, { type: cost.type, count: cost.count });
-
+  addResources(cart, resourceFn, [id, cost]) {
+    const resource = resourceFn(cart, cost.type);
     if (!resource) return;
+
     cart.resourceIds.add(resource.id);
-    cart.resources.push(resource);
-
-    if (!resource.options.includes(cost.type)) {
-      return this.choices(cart, resources, [id, cost], i);
-    }
-
+    cart.usedResources.push(resource);
     cart.toBuy.delete(id);
 
     if (resource.count >= cost.count) return;
 
-    const newCost = { type: cost.type, count: cost.count - resource.count };
-    return this.choices(cart, resources, [id, newCost], i);
+    const newCost = { ...cost, count: cost.count - resource.count };
+    cart.toBuy.set(id, newCost);
+
+    return this.addResources(cart, resourceFn, [id, newCost]);
+  }
+
+  #getChoiceResources(cart, type) {
+    return cart.resources.find(
+      (res) =>
+        res.type === "choice" &&
+        !cart.resourceIds.has(res.id) &&
+        res.options.includes(type),
+    );
   }
 
   calculateCost(cost) {
-    const resources = this.#wonder.resources;
     const cart = {
       toBuy: new Map(),
       resourceIds: new Set(),
-      cost: new Map(),
-      resources: [],
+      resources: this.#wonder.resources,
+      usedResources: [],
     };
-
-    cost.forEach(this.buyResources.bind(this, cart, resources));
     this.#cart = cart;
 
-    if (cart.toBuy.size === 0) return cart;
-    [...cart.toBuy].forEach(this.choices.bind(this, cart, resources));
+    cost.forEach((cost, i) => cart.toBuy.set(i, cost));
+    console.log(cart, "before add resource", "@".repeat(30));
+    const resourceFn = this.#getResources;
+    [...cart.toBuy].forEach(this.addResources.bind(this, cart, resourceFn));
+
+    console.log(cart, "after add resource", "@".repeat(30));
+    const choiceFn = this.#getChoiceResources;
+    [...cart.toBuy].forEach(this.addResources.bind(this, cart, choiceFn));
+    console.log(cart, "after choice resource", "@".repeat(30));
 
     return cart;
-  }
-
-  #executeTempCard() {
-    if (this.#tempCard) this.wonder.build(this.#tempCard);
-    this.#tempCard = null;
   }
 
   scoringData() {
@@ -258,7 +249,6 @@ class Player {
   }
 
   playerData() {
-    this.#executeTempCard();
     const data = {
       name: this.name,
       wonder: this.#wonder.name,
@@ -357,6 +347,7 @@ class Player {
 
   #getPlayerEffect(direction, resource) {
     const player = `${direction}Neighbour`;
+    console.log(this.#effects, this.#wonder.name, "*".repeat(50));
 
     return this.#effects.find(
       (effect) =>
@@ -365,26 +356,22 @@ class Player {
     );
   }
 
-  #getTradeOptions(direction, trades, resource) {
+  #getTradeOptions(direction, resource) {
     const effect = this.#getPlayerEffect(direction, resource);
 
-    if (!effect) return trades.push({ coin: 2, ...resource });
+    if (!effect) return { coin: 2, ...resource };
 
     const noOfCoins = effect.cost.find(({ type }) => type === "coin");
-    return trades.push({ coin: noOfCoins.count, ...resource });
+    return { coin: noOfCoins.count || 2, ...resource };
   }
 
   #useEffects({ resourceIds, resources }, direction) {
-    const trades = [];
-
-    [...resourceIds].forEach((id) => {
+    return [...resourceIds].map((id) => {
       const getTradeOptions = this.#getTradeOptions.bind(this);
       const resource = resources.find((res) => res.id === id);
 
-      getTradeOptions(direction, trades, resource);
+      return getTradeOptions(direction, resource);
     });
-
-    return trades;
   }
 
   isResourceInChoice({ type, options }, resourceType) {
@@ -402,49 +389,90 @@ class Player {
     return { coin, count };
   }
 
+  canResourceTrade(cost, player, type, count, trade, side) {
+    if (cost > 0 && cost === player.coin && player.count >= count) {
+      trade.possibleTrades.push({ side, coin: cost, type });
+      return true;
+    }
+  }
+
+  isBothResource(cost, left, right, type, count, trade) {
+    if (cost > 0 && right.count + left.count >= count) {
+      trade.possibleTrades.push(
+        { side: "right", coin: right.coin, type },
+        { side: "right", coin: left.coin, type },
+      );
+      return true;
+    }
+  }
+
+  cannotTrade(trade) {
+    return !(trade.canTrade = false);
+  }
+
+  findPossibleTrade(left, right, trade, count, type) {
+    const cost = Math.min(left.coin, right.coin) ||
+      Math.max(left.coin, right.coin);
+    console.log({ left, right, trade, type, cost });
+
+    return (
+      this.canResourceTrade(cost, left, type, count, trade, "left") ||
+      this.canResourceTrade(cost, right, type, count, trade, "right") ||
+      this.isBothResource(cost, left, right, type, count, trade) ||
+      this.cannotTrade(trade)
+    );
+  }
+
   possibleTrades(leftTrade, rightTrade, cart, trade) {
     return [...cart.toBuy].every(([_, { type, count }]) => {
-      const left = this.totalCount(leftTrade, type);
-      const right = this.totalCount(rightTrade, type);
-
-      trade.neededCoins += Math.min(left.coin, right.coin) ||
-        Math.max(left.coin, right.coin);
-
-      return left.count >= count || right.count >= count;
+      const left = this.totalCount(leftTrade, type, trade);
+      const right = this.totalCount(rightTrade, type, trade);
+      this.findPossibleTrade(left, right, trade, count, type);
+      console.log({ trade });
+      return trade.canTrade;
     });
   }
 
-  #canTrade(leftTrades, rightTrades, cart) {
-    if (leftTrades.length <= 0 && rightTrades.length <= 0) return false;
+  #doNeighboursHaveResources(left, right) {
+    return (
+      (left.trades.length <= 0 && right.trades.length <= 0) ||
+      (left.cart.toBuy.size <= 0 && right.cart.toBuy.size <= 0)
+    );
+  }
 
-    const trade = { neededCoins: 0 };
+  #evaluteTrade(leftTrades, rightTrades, cart) {
+    const trade = { canTrade: true, possibleTrades: [] };
     const hasTrade = this.possibleTrades(leftTrades, rightTrades, cart, trade);
 
-    return hasTrade && trade.neededCoins <= this.#result.coins;
+    const allTrades = trade.possibleTrades;
+    const totalCost = allTrades.reduce((total, { coin }) => total + coin, 0);
+    console.log({ hasTrade, totalCost, coins: this.#result.coins });
+    const canTrade = hasTrade && totalCost <= this.#result.coins;
+
+    return { canTrade, possibleTrades: trade.possibleTrades };
   }
 
   getTrades(player, cost, direction) {
-    const playerCart = player.calculateCost(cost);
-    return this.#useEffects(playerCart, direction);
-  }
-
-  formatTrades(leftTrades, rightTrades) {
-    return {
-      left: leftTrades[0]?.coin || 0,
-      right: rightTrades[0]?.coin || 0,
-    };
+    const cart = player.calculateCost(cost);
+    const trades = this.#useEffects(cart, direction);
+    // console.log(playerCart, "trades", "=".repeat(40));
+    return { cart, trades };
   }
 
   resourcesFromNeighbour() {
     const cart = this.#cart;
     const cost = [...cart.toBuy].map(([_, cost]) => cost);
 
-    const leftTrades = this.getTrades(this.#leftPlayer, cost, "left");
-    const rightTrades = this.getTrades(this.#rightPlayer, cost, "right");
+    const left = this.getTrades(this.#leftPlayer, cost, "left");
+    const right = this.getTrades(this.#rightPlayer, cost, "right");
 
-    const canTrade = this.#canTrade(leftTrades, rightTrades, cart);
-    const trade = this.formatTrades(leftTrades, rightTrades);
-    return { canTrade, trade };
+    if (this.#doNeighboursHaveResources(left, right)) {
+      return { canTrade: false };
+    }
+
+    console.log("-*-".repeat(20), "after trades");
+
+    return this.#evaluteTrade(left.trades, right.trades, cart);
   }
 
   #addAction(action, key, value = true) {
@@ -484,9 +512,10 @@ class Player {
   }
 
   #trade(actions) {
-    const { canTrade, trade } = this.resourcesFromNeighbour();
+    const { canTrade, possibleTrades } = this.resourcesFromNeighbour();
+    console.log(canTrade, possibleTrades, "*".repeat(30));
     return canTrade
-      ? { canTrade, ...this.#addAction(actions, "trade", trade) }
+      ? { canTrade, ...this.#addAction(actions, "trade", possibleTrades) }
       : null;
   }
 
@@ -518,6 +547,7 @@ class Player {
   #canStage() {
     const noOfStages = `stage${this.#wonder.staged.length + 1}`;
     const stageCard = this.#wonder.stages[noOfStages];
+    // console.log(noOfStages, stageCard, "stagings");
     const alreadyStaged = { canBuild: false, isStagingCompleted: true };
 
     const possibleActions = stageCard
@@ -546,6 +576,11 @@ class Player {
     return this.#hand.map((card) => this.#addActionDetails(card, stage));
   }
 
+  #executeTempCard() {
+    if (this.#tempCard) this.wonder.build(this.#tempCard);
+    this.#tempCard = null;
+  }
+
   buildCard(cardName) {
     const card = this.#hand.find((card) => card.name === cardName);
 
@@ -553,6 +588,7 @@ class Player {
     this.#isUptoDate = true;
     this.#tempCard = card;
     this.updateHand(cardName);
+    setTimeout(this.#executeTempCard.bind(this), 0);
   }
 
   #getStageBenifits() {

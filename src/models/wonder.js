@@ -183,12 +183,13 @@ class Wonder {
   }
 
   addFutureBenefits(card) {
-    if (!card.chainTo.length) return;
+    if (!card.chainTo?.length) return;
     card.chainTo.map((chain) => this.#futureBenefits.add(chain));
   }
 
   getCardBenefits(card) {
     this.addFutureBenefits(card);
+    console.log(card, "card ---------------------");
     this.addResources(card);
     this.addMilitaryStrength(card);
   }
