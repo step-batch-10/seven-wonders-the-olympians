@@ -460,7 +460,6 @@ class Player {
       { left: 0, right: 0 },
     );
 
-    console.log({ canTrade, right, left });
     return { canTrade, tradeOptions: { right, left } };
   }
 
@@ -563,6 +562,13 @@ class Player {
   }
 
   #addActionDetails(card, stage) {
+    console.log({
+      name: card.name,
+      build: this.#getActionDetails(card),
+      stage,
+      discard: { canDiscard: true },
+    });
+
     return {
       name: card.name,
       build: this.#getActionDetails(card),
@@ -581,24 +587,12 @@ class Player {
     this.#tempCard = null;
   }
 
-  postTradeActions(action) {
-    console.log({ action });
-    const { right, left } = action.build.trade;
-    console.log(
-      "-->",
-      this.#result.coins,
-      this.leftPlayer.#result.coins,
-      this.rightPlayer.#result.coins,
-    );
+  postTradeActions(action, subAction) {
+    const { right, left } = action[subAction].trade;
+
     this.leftPlayer.addCoins(left);
     this.rightPlayer.addCoins(right);
     this.#result.coins -= left + right;
-    console.log(
-      "-->",
-      this.#result.coins,
-      this.leftPlayer.#result.coins,
-      this.rightPlayer.#result.coins,
-    );
   }
 
   buildCard(cardName) {
@@ -607,7 +601,7 @@ class Player {
     const action = this.#addActionDetails(card, stage);
 
     if (action.build.canTrade) {
-      this.postTradeActions(action);
+      this.postTradeActions(action, "build");
     }
 
     this.addBenefits(card);
@@ -634,8 +628,8 @@ class Player {
     const stage = this.#canStage();
     const action = this.#addActionDetails(card, stage);
 
-    if (action.build.canTrade) {
-      this.postTradeActions(action);
+    if (action.stage.canTrade) {
+      this.postTradeActions(action, "stage");
     }
 
     this.#wonder.stage(card);

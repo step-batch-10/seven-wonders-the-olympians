@@ -498,22 +498,23 @@ const createTradeBody = ({ right, left }) => {
   return div;
 };
 
-const tradeAction = (card, postPlayerAction, resetPlayerAction) => (event) => {
-  const tradeSummary = createEl("div", { className: "trade-summary" });
-  const heading = createEl("p", { text: "Trade" });
-  const tradeBtn = createEl("button", { text: "Pay" });
-  tradeBtn.addEventListener(
-    "click",
-    reqBuildCard(card, postPlayerAction, resetPlayerAction),
-  );
-  const tradeBody = createTradeBody(card.build.trade);
+const tradeAction =
+  (action, callBack, card, postPlayerAction, resetPlayerAction) => (event) => {
+    const tradeSummary = createEl("div", { className: "trade-summary" });
+    const heading = createEl("p", { text: "Trade" });
+    const tradeBtn = createEl("button", { text: "Pay" });
+    tradeBtn.addEventListener(
+      "click",
+      callBack(card, postPlayerAction, resetPlayerAction),
+    );
+    const tradeBody = createTradeBody(card[action].trade);
 
-  tradeSummary.append(heading, tradeBody, tradeBtn);
-  const actionsBox = event.target.closest(".actions-box");
-  actionsBox.parentNode.replaceChild(tradeSummary, actionsBox);
+    tradeSummary.append(heading, tradeBody, tradeBtn);
+    const actionsBox = event.target.closest(".actions-box");
+    actionsBox.parentNode.replaceChild(tradeSummary, actionsBox);
 
-  removeHoverMsgAndActBox();
-};
+    removeHoverMsgAndActBox();
+  };
 
 const addBuildOptEvtListener = (
   card,
@@ -521,7 +522,10 @@ const addBuildOptEvtListener = (
   postPlayerAction,
   resetPlayerAction,
 ) => {
-  const listener = card.build.canTrade ? tradeAction : reqBuildCard;
+  console.log(card);
+  const listener = card.build.canTrade
+    ? tradeAction.bind(null, "build", reqBuildCard)
+    : reqBuildCard;
 
   stage.addEventListener(
     "click",
@@ -622,13 +626,18 @@ const createStage = (card, postAction, resetAction) => {
   stage.append(image, content);
 
   addHoverListener(stage, card.stage, "stage");
+  console.log({ card });
 
   if (!card.stage.canStage) {
     stage.classList.add("disabled");
     return stage;
   }
 
-  stage.addEventListener("click", reqToStage(card, postAction, resetAction));
+  const listener = card.stage.canTrade
+    ? tradeAction.bind(null, "stage", reqToStage)
+    : reqToStage;
+
+  stage.addEventListener("click", listener(card, postAction, resetAction));
   return stage;
 };
 
