@@ -15,9 +15,22 @@ const createEl = (tag, options = { id: "", className: "", text: "" }) => {
 const hide1 = () => {
   document.querySelector(".stage-details2").classList.toggle("hide2");
 };
+
+const setWaitingImg = (ele) => {
+  ele.src = "img/icons/hour-glass.gif";
+
+  ele.classList.add("hour-glass");
+};
+
+const setSelectedImg = (ele) => {
+  ele.src = "img/icons/tick-mark.png";
+
+  ele.classList.remove("hour-glass");
+};
+
 const statusImgMap = {
-  "waiting": "img/icons/hour-glass.gif",
-  "selected": "img/icons/tick-mark.png",
+  "waiting": setWaitingImg,
+  "selected": setSelectedImg,
 };
 
 const changeStatus = (playerName, cStatus, previousStatus) => {
@@ -26,7 +39,8 @@ const changeStatus = (playerName, cStatus, previousStatus) => {
 
   previousStatus[playerName] = cStatus;
   const playerStatusEl = document.querySelector(`#${playerName}-status`);
-  playerStatusEl.src = statusImgMap[cStatus];
+
+  statusImgMap[cStatus](playerStatusEl);
 };
 
 const updatePlayersStatus = (currentStatus, previousStatus) => {
@@ -228,7 +242,7 @@ const getPlayerStats = (name) => {
   div.className = "player-points";
   nameP.textContent = name;
   statusP.src = "img/icons/hour-glass.gif";
-  statusP.classList.add("status");
+  statusP.classList.add("status", "hour-glass");
   statusP.id = `${name}-status`;
   div.append(nameP, statusP);
 
@@ -342,6 +356,7 @@ const oppentView = (playerInfo) => {
 
 const createStatusHolder = (name) => {
   const imgEl = createEl("img", { id: `${name}-status`, className: "status" });
+  imgEl.classList.add("hour-glass");
   imgEl.src = "img/icons/hour-glass.gif";
 
   return imgEl;
