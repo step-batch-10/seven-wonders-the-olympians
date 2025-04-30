@@ -148,9 +148,7 @@ class Wonder {
   }
 
   stage(card) {
-    console.log("before-->", this.#staged);
     this.#staged.push(card);
-    console.log("after-->", this.#staged);
   }
 }
 

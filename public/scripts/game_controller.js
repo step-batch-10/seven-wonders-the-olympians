@@ -21,19 +21,25 @@ const renderUpdatedGame = async (sevenWonders, hand) => {
   renderGame(sevenWonders, hand);
 };
 
-const endAnAge = async (sevenWonders) => {
+const endAnAge = async (sevenWonders, id) => {
   document.querySelector(".waiting-window")?.remove();
   const conflictData = await sevenWonders.requestJsonData(
     "/game/military-conflicts",
   );
 
   await uiView.renderMilitaryConflicts(conflictData);
+
   const { age } = await sevenWonders.requestJsonData("/game/age");
+
+  if (age > 3) {
+    clearInterval(id);
+    return globalThis.location.replace("/results.html");
+  }
   await uiView.renderAge(age);
   return;
 };
 
-const pollGameState = async (sevenWonders, currentPlayerStatus) => {
+const pollGameState = async (sevenWonders, currentPlayerStatus, id) => {
   const playersStatus = await sevenWonders.requestJsonData(
     "/game/players-status",
   );
@@ -46,7 +52,7 @@ const pollGameState = async (sevenWonders, currentPlayerStatus) => {
     );
 
     if (isLastRound) {
-      return await endAnAge(sevenWonders);
+      return await endAnAge(sevenWonders, id);
     }
 
     return renderUpdatedGame(sevenWonders, hand);
@@ -54,8 +60,8 @@ const pollGameState = async (sevenWonders, currentPlayerStatus) => {
 };
 
 const pollForPlayerStatus = (sevenWonders, currentPlayerStatus) => {
-  setInterval(async () => {
-    await pollGameState(sevenWonders, currentPlayerStatus);
+  const id = setInterval(async () => {
+    await pollGameState(sevenWonders, currentPlayerStatus, id);
   }, 1500);
 };
 

@@ -5,6 +5,7 @@ import ageTwoCards from "../../data/ageTwoCards.json" with { type: "json" };
 import ageThreeCards from "../../data/ageThreeCards.json" with { type: "json" };
 import guildCards from "../../data/guildCards.json" with { type: "json" };
 import { Wonder } from "./wonder.js";
+import { calculateScore } from "./score.js";
 
 const shuffleArray = ([...arr]) => arr.sort(() => Math.random() - 0.5);
 
@@ -30,6 +31,7 @@ class Game {
   #round;
   shuffleDeck;
   #hands;
+  // #result;
 
   constructor(noOfPlayers, player, shuffleDeck = shuffleArray) {
     this.#noOfPlayers = noOfPlayers;
@@ -46,6 +48,7 @@ class Game {
       3: null,
     };
     this.round = 0;
+    // this.#result = {};
   }
 
   get players() {
@@ -83,6 +86,11 @@ class Game {
   get round() {
     return this.#round;
   }
+
+  // get result() {
+  //   this.#calculateResult();
+  //   return this.#result;
+  // }
 
   static generateUniqueGameID() {
     return "gid" + uniqid();
@@ -199,9 +207,8 @@ class Game {
 
   endAge() {
     this.endAgeDiscards();
-    this.players.forEach((player) => player.resetDoneWithConflict());
     if (this.#currentAge > 3) {
-      this.endGame();
+      return this.endGame();
     }
   }
 
@@ -232,6 +239,7 @@ class Game {
   initAge() {
     this.resetRound();
     this.distributeCards();
+    this.players.forEach((player) => player.resetDoneWithConflict());
   }
 
   getPlayerInfo(playerID) {
@@ -275,6 +283,16 @@ class Game {
     player.stageCard(card);
   }
 
+  calculateResult() {
+    const result = {};
+    this.#players.forEach((player) => {
+      console.log(calculateScore(player));
+
+      result[player.wonder.name] = calculateScore(player);
+    });
+    return result;
+  }
+
   executeTempActs() {
     const build = this.#buildCard;
     const discard = this.#discardCard.bind(this);
@@ -303,7 +321,10 @@ class Game {
     return this.players.every((player) => !player.doneWithConflict);
   }
 
-  endGame() {}
+  endGame() {
+    this.#gameStatus = "finished";
+    //  this.#result = this.#calculateResult();
+  }
 }
 
 export { Game };

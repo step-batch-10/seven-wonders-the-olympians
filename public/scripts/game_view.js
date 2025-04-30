@@ -34,7 +34,6 @@ const statusImgMap = {
 };
 
 const changeStatus = (playerName, cStatus, previousStatus) => {
-  console.log(playerName, cStatus, previousStatus);
   if (previousStatus[playerName] === cStatus) return;
 
   previousStatus[playerName] = cStatus;
@@ -128,7 +127,6 @@ const renderPoints = (person, className) => {
 };
 
 const createElements = (...tags) => {
-  console.log(tags, "tagsssssssssssssss");
   return tags.map((tag) => document.createElement(tag));
 };
 
@@ -153,7 +151,6 @@ const removeWaitingWindow = () => {
 };
 
 const renderWonder = (wonder, parentElement) => {
-  console.log(parentElement);
   const wonderImgStr = wonder.toLowerCase();
   const holder = parentElement.querySelector(".wonder-placeholder");
   const img = document.createElement("img");
@@ -541,7 +538,6 @@ const addBuildOptEvtListener = (
   postPlayerAction,
   resetPlayerAction,
 ) => {
-  console.log(card);
   const listener = card.build.canTrade
     ? tradeAction.bind(null, "build", reqBuildCard)
     : reqBuildCard;
@@ -645,7 +641,6 @@ const createStage = (card, postAction, resetAction) => {
   stage.append(image, content);
 
   addHoverListener(stage, card.stage, "stage");
-  console.log({ card });
 
   if (!card.stage.canStage) {
     stage.classList.add("disabled");
@@ -852,7 +847,7 @@ const renderConflictsResults = async ({
     ...createConflictChilds(militaryShields, leftConflict, rightConflict),
   );
 
-  await sleep(20000);
+  await sleep(5000);
   parent.style.display = "none";
 };
 

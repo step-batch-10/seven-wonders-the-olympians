@@ -6,6 +6,7 @@ import {
   getPlayerHand,
   getPlayersStatus,
   performPlayersAction,
+  sendGameResult,
   sendStatus,
   updatePlayersStatus,
   warHandler,
@@ -26,6 +27,7 @@ const createGameRoute = () => {
   gameApp.get("/check-all-selected", didAllPlayerSelectCard);
   gameApp.get("/age", fetchAge);
   gameApp.get("/military-conflicts", warHandler);
+  gameApp.get("/result", sendGameResult);
   return gameApp;
 };
 

@@ -300,7 +300,7 @@ class Player {
       const playedBy = player === "self" ? this : players[player];
 
       if (type === "coin") {
-        this.#result["coins"] += playedBy.staged.length * count;
+        this.#result["coins"] += playedBy.staged?.length * count;
       }
     });
   }
@@ -562,13 +562,6 @@ class Player {
   }
 
   #addActionDetails(card, stage) {
-    console.log({
-      name: card.name,
-      build: this.#getActionDetails(card),
-      stage,
-      discard: { canDiscard: true },
-    });
-
     return {
       name: card.name,
       build: this.#getActionDetails(card),

@@ -129,14 +129,16 @@ const calculateScore = (player) => {
   const { stagedCount, stages, buildings, warTokens } = player.scoringData();
 
   const score = {
-    militaryConflict: calcMilitaryConflictPoints(warTokens),
-    treasury: calcTreasuryPoints(player.coins),
-    wonderStage: calcWonderStagePoints(stagedCount, stages),
-    civilianStructure: calcCivilStructurePoints(buildings.blue),
-    scientificStructure: calcSciStructurePoints(buildings.green),
-    commerceStructure: calcComStructurePoints(buildings, stagedCount),
-    guilds: calcGuildsPoints(player),
+    militaryConflictPoints: calcMilitaryConflictPoints(warTokens),
+    treasuryPoints: calcTreasuryPoints(player.coins),
+    wonderStagesPoints: calcWonderStagePoints(stagedCount, stages),
+    civilianStructuresPoints: calcCivilStructurePoints(buildings.blue),
+    scientificStructuresPoints: calcSciStructurePoints(buildings.green),
+    commerceStructuresPoints: calcComStructurePoints(buildings, stagedCount),
+    guildsPoints: calcGuildsPoints(player),
   };
+
+  score.totalPoints = Object.values(score).reduce((sum, val) => sum + val, 0);
 
   return score;
 };

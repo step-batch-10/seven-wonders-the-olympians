@@ -161,6 +161,7 @@
       { "type": "ore", "count": 1 },
       { "type": "textile", "count": 1 }
     ],
+    "produces": [],
     "effect": [
       {
         "type": "coin",
@@ -190,6 +191,7 @@
       { "type": "glass", "count": 1 },
       { "type": "stone", "count": 1 }
     ],
+    "produces": [],
     "effect": [
       {
         "type": "coin",
@@ -219,6 +221,7 @@
       { "type": "clay", "count": 2 },
       { "type": "papyrus", "count": 1 }
     ],
+    "produces": [],
     "effect": [
       {
         "type": "coin",
@@ -248,6 +251,7 @@
       { "type": "stone", "count": 2 },
       { "type": "ore", "count": 1 }
     ],
+    "produces": [],
     "effect": [
       {
         "type": "coin",
@@ -531,6 +535,7 @@
       { "type": "ore", "count": 1 },
       { "type": "textile", "count": 1 }
     ],
+    "produces": [],
     "effect": [
       {
         "type": "coin",
@@ -560,6 +565,8 @@
       { "type": "glass", "count": 1 },
       { "type": "stone", "count": 1 }
     ],
+    "produces": [],
+
     "effect": [
       {
         "type": "coin",
@@ -589,6 +596,7 @@
       { "type": "clay", "count": 2 },
       { "type": "papyrus", "count": 1 }
     ],
+    "produces": [],
     "effect": [
       {
         "type": "coin",
@@ -618,6 +626,7 @@
       { "type": "stone", "count": 2 },
       { "type": "ore", "count": 1 }
     ],
+    "produces": [],
     "effect": [
       {
         "type": "coin",
@@ -641,6 +650,7 @@
     "age": 3,
     "color": "yellow",
     "minPlayers": 7,
+    "produces": [],
     "cost": [
       { "type": "stone", "count": 2 },
       { "type": "ore", "count": 1 }
@@ -672,6 +682,7 @@
       { "type": "wood", "count": 1 },
       { "type": "clay", "count": 3 }
     ],
+
     "produces": [{ "type": "shield", "count": 3 }],
     "chainFrom": "Laboratory",
     "chainTo": [],

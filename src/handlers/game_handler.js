@@ -64,14 +64,20 @@ const fetchAge = (ctx) => {
 const warHandler = (ctx) => {
   const { game, player } = extractGameData(ctx);
 
-  if (game.doesNoOneDoneWithWar()) {
-    game.nextAge();
-  }
+  // if (game.doesNoOneDoneWithWar()) {
+  // }
+
   if (game.doesEveryOneDoneWithWar()) {
+    game.nextAge();
     game.initAge();
   }
 
   return ctx.json(player.calculateWarPoints(game.currentAge));
+};
+
+const sendGameResult = (ctx) => {
+  const { game } = extractGameData(ctx);
+  return ctx.json(game.calculateResult());
 };
 
 export {
@@ -81,6 +87,7 @@ export {
   getPlayerHand,
   getPlayersStatus,
   performPlayersAction,
+  sendGameResult,
   sendStatus,
   updatePlayersStatus,
   warHandler,
