@@ -227,14 +227,11 @@ class Player {
     this.#cart = cart;
 
     cost.forEach((cost, i) => cart.toBuy.set(i, cost));
-    console.log(cart, "before add resource", "@".repeat(30));
     const resourceFn = this.#getResources;
     [...cart.toBuy].forEach(this.addResources.bind(this, cart, resourceFn));
 
-    console.log(cart, "after add resource", "@".repeat(30));
     const choiceFn = this.#getChoiceResources;
     [...cart.toBuy].forEach(this.addResources.bind(this, cart, choiceFn));
-    console.log(cart, "after choice resource", "@".repeat(30));
 
     return cart;
   }
@@ -303,7 +300,7 @@ class Player {
       const playedBy = player === "self" ? this : players[player];
 
       if (type === "coin") {
-        this.#result[`${type}s`] += playedBy.staged.length * count;
+        this.#result["coins"] += playedBy.staged.length * count;
       }
     });
   }
@@ -314,7 +311,7 @@ class Player {
       const buildings = played.#wonder.buildings;
 
       if (type === "coin") {
-        this.#result[type] += buildings[cardColor].length * count;
+        this.#result["coins"] += buildings[cardColor].length * count;
       }
     });
   }
@@ -347,7 +344,6 @@ class Player {
 
   #getPlayerEffect(direction, resource) {
     const player = `${direction}Neighbour`;
-    console.log(this.#effects, this.#wonder.name, "*".repeat(50));
 
     return this.#effects.find(
       (effect) =>
@@ -413,7 +409,6 @@ class Player {
   findPossibleTrade(left, right, trade, count, type) {
     const cost = Math.min(left.coin, right.coin) ||
       Math.max(left.coin, right.coin);
-    console.log({ left, right, trade, type, cost });
 
     return (
       this.canResourceTrade(cost, left, type, count, trade, "left") ||
@@ -428,7 +423,6 @@ class Player {
       const left = this.totalCount(leftTrade, type, trade);
       const right = this.totalCount(rightTrade, type, trade);
       this.findPossibleTrade(left, right, trade, count, type);
-      console.log({ trade });
       return trade.canTrade;
     });
   }
@@ -446,7 +440,6 @@ class Player {
 
     const allTrades = trade.possibleTrades;
     const totalCost = allTrades.reduce((total, { coin }) => total + coin, 0);
-    console.log({ hasTrade, totalCost, coins: this.#result.coins });
     const canTrade = hasTrade && totalCost <= this.#result.coins;
 
     return { canTrade, possibleTrades: trade.possibleTrades };
@@ -455,8 +448,20 @@ class Player {
   getTrades(player, cost, direction) {
     const cart = player.calculateCost(cost);
     const trades = this.#useEffects(cart, direction);
-    // console.log(playerCart, "trades", "=".repeat(40));
     return { cart, trades };
+  }
+
+  formatTrade({ canTrade, possibleTrades }) {
+    const { left, right } = possibleTrades.reduce(
+      (acc, trade) => {
+        acc[trade.side] += trade.coin;
+        return acc;
+      },
+      { left: 0, right: 0 },
+    );
+
+    console.log({ canTrade, right, left });
+    return { canTrade, tradeOptions: { right, left } };
   }
 
   resourcesFromNeighbour() {
@@ -470,9 +475,11 @@ class Player {
       return { canTrade: false };
     }
 
-    console.log("-*-".repeat(20), "after trades");
+    const trades = this.formatTrade(
+      this.#evaluteTrade(left.trades, right.trades, cart),
+    );
 
-    return this.#evaluteTrade(left.trades, right.trades, cart);
+    return trades;
   }
 
   #addAction(action, key, value = true) {
@@ -512,10 +519,9 @@ class Player {
   }
 
   #trade(actions) {
-    const { canTrade, possibleTrades } = this.resourcesFromNeighbour();
-    console.log(canTrade, possibleTrades, "*".repeat(30));
+    const { canTrade, tradeOptions } = this.resourcesFromNeighbour();
     return canTrade
-      ? { canTrade, ...this.#addAction(actions, "trade", possibleTrades) }
+      ? { canTrade, ...this.#addAction(actions, "trade", tradeOptions) }
       : null;
   }
 
@@ -547,7 +553,6 @@ class Player {
   #canStage() {
     const noOfStages = `stage${this.#wonder.staged.length + 1}`;
     const stageCard = this.#wonder.stages[noOfStages];
-    // console.log(noOfStages, stageCard, "stagings");
     const alreadyStaged = { canBuild: false, isStagingCompleted: true };
 
     const possibleActions = stageCard
@@ -558,11 +563,6 @@ class Player {
   }
 
   #addActionDetails(card, stage) {
-    console.log(
-      "\n--->\n",
-      { card, build: this.#getActionDetails(card) },
-      "\n<---\n",
-    );
     return {
       name: card.name,
       build: this.#getActionDetails(card),
@@ -581,8 +581,34 @@ class Player {
     this.#tempCard = null;
   }
 
+  postTradeActions(action) {
+    console.log({ action });
+    const { right, left } = action.build.trade;
+    console.log(
+      "-->",
+      this.#result.coins,
+      this.leftPlayer.#result.coins,
+      this.rightPlayer.#result.coins,
+    );
+    this.leftPlayer.addCoins(left);
+    this.rightPlayer.addCoins(right);
+    this.#result.coins -= left + right;
+    console.log(
+      "-->",
+      this.#result.coins,
+      this.leftPlayer.#result.coins,
+      this.rightPlayer.#result.coins,
+    );
+  }
+
   buildCard(cardName) {
     const card = this.#hand.find((card) => card.name === cardName);
+    const stage = this.#canStage();
+    const action = this.#addActionDetails(card, stage);
+
+    if (action.build.canTrade) {
+      this.postTradeActions(action);
+    }
 
     this.addBenefits(card);
     this.#isUptoDate = true;
@@ -591,7 +617,7 @@ class Player {
     setTimeout(this.#executeTempCard.bind(this), 0);
   }
 
-  #getStageBenifits() {
+  #getStageBenefits() {
     const stageCount = `stage${this.#wonder.staged.length}`;
     const { effects } = this.#wonder.stages[stageCount];
     const effect = effects.find(({ type }) => type === "coin");
@@ -601,9 +627,15 @@ class Player {
 
   stageCard(cardName) {
     const card = this.#hand.find((card) => card.name === cardName);
+    const stage = this.#canStage();
+    const action = this.#addActionDetails(card, stage);
+
+    if (action.build.canTrade) {
+      this.postTradeActions(action);
+    }
 
     this.#wonder.stage(card);
-    this.#getStageBenifits();
+    this.#getStageBenefits();
     this.updateHand(cardName);
   }
 

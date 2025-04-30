@@ -189,7 +189,6 @@ class Wonder {
 
   getCardBenefits(card) {
     this.addFutureBenefits(card);
-    console.log(card, "card ---------------------");
     this.addResources(card);
     this.addMilitaryStrength(card);
   }
