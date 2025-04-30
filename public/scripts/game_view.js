@@ -29,8 +29,8 @@ const setSelectedImg = (ele) => {
 };
 
 const statusImgMap = {
-  "waiting": setWaitingImg,
-  "selected": setSelectedImg,
+  waiting: setWaitingImg,
+  selected: setSelectedImg,
 };
 
 const changeStatus = (playerName, cStatus, previousStatus) => {
@@ -464,6 +464,7 @@ const resetCardsEventListeners = () => {
 
 const reselectCard = (resetPlayerAction) => {
   return async (event) => {
+    document.querySelector(".selected-card")?.classList.remove("selected-card");
     event.target.closest(".deck").classList.remove("hovered");
     event.target.remove();
     addHoverForChildren("#cards-container");
@@ -526,9 +527,9 @@ const tradeAction =
     tradeSummary.append(heading, tradeBody, tradeBtn);
     const actionsBox = event.target.closest(".actions-box");
     actionsBox.parentNode.replaceChild(tradeSummary, actionsBox);
-    document.querySelector(".selected-card")?.classList.remove(
-      ".selected-card",
-    );
+    document
+      .querySelector(".selected-card")
+      ?.classList.remove(".selected-card");
     removeHoverMsgAndActBox();
   };
 

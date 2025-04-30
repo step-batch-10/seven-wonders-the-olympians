@@ -130,7 +130,9 @@ const calculateScore = (player) => {
 
   const score = {
     militaryConflictPoints: calcMilitaryConflictPoints(warTokens),
-    treasuryPoints: calcTreasuryPoints(player.coins),
+    treasuryPoints: calcTreasuryPoints(player.coins)
+      ? calcTreasuryPoints(player.coins)
+      : 2,
     wonderStagesPoints: calcWonderStagePoints(stagedCount, stages),
     civilianStructuresPoints: calcCivilStructurePoints(buildings.blue),
     scientificStructuresPoints: calcSciStructurePoints(buildings.green),
