@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Seven Wonders</title>
+  </head>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle, #f0ddb7, #ad884c);
+      height: 100vh;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .heading {
+      margin: 40px;
+      color: #9a6a1c;
+    }
+
+    .score-board {
+      display: flex;
+      border: 2px solid #333;
+      overflow: hidden;
+      max-width: 100%;
+      font-size: 20px;
+      margin: 40px;
+      border-radius: 4px;
+    }
+
+    .category {
+      font-size: bold;
+    }
+
+    .col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      background: #222;
+      font-weight: bold;
+    }
+
+    .category {
+      font-weight: bold;
+    }
+
+    .military {
+      background: rgba(181, 5, 11, 0.4);
+    }
+
+    .military :first-of-type {
+      background: rgba(181, 5, 11, 1);
+      font-size: 40px;
+    }
+
+    .treasury {
+      background: rgba(122, 97, 66, 0.4);
+    }
+
+    .wonder {
+      background: rgba(206, 170, 48, 0.4);
+    }
+
+    .civilian {
+      background: rgba(8, 92, 182, 0.4);
+    }
+
+    .commerce {
+      background: rgba(209, 134, 41, 0.4);
+    }
+
+    .guild {
+      background: rgba(120, 13, 117, 0.4);
+    }
+
+    .science {
+      background: rgba(0, 96, 22, 0.4);
+    }
+
+    .total {
+      background: rgba(51, 51, 51, 0.4);
+      font-weight: bold;
+    }
+
+    #return-home {
+      padding: 10px;
+      font-size: 20px;
+      outline: none;
+      margin: 40px;
+      color: #f0ddb7;
+      background-color: #9a6a1c;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+    }
+
+    .cell {
+      padding: 20px 40px;
+      width: 210px;
+    }
+  </style>
+
+  <body>
+    <h1 class="heading">Score Board</h1>
+    <div class="score-board" id="score-board">
+      <div class="col">
+        <div class="category cell">Category</div>
+        <div class="military cell">Military</div>
+        <div class="treasury cell">Treasury</div>
+        <div class="wonder cell">Wonder</div>
+        <div class="civilian cell">Civilian</div>
+        <div class="science cell">Science</div>
+        <div class="commerce cell">Commerce</div>
+        <div class="guild cell">Guild</div>
+        <div class="total cell">Total</div>
+      </div>
+    </div>
+    <button id="return-home">Go Home</button>
+    <script>
+      const redirectHome = () => {
+        window.location.href = "/index.html";
+      };
+
+      const labels = [
+        { key: "militaryConflictPoints", class: "military" },
+        { key: "treasury", class: "treasury" },
+        { key: "wonderStagesPoints", class: "wonder" },
+        { key: "civilianStructuresPoints", class: "civilian" },
+        { key: "scientificStructuresPoints", class: "science" },
+        { key: "commerceStructuresPoints", class: "commerce" },
+        { key: "guildsPoints", class: "guild" },
+        { key: "totalPoints", class: "total" },
+      ];
+
+      const data = {
+        Gizah: {
+          militaryConflictPoints: 0,
+          treasury: 0,
+          wonderStagesPoints: 0,
+          civilianStructuresPoints: 0,
+          scientificStructuresPoints: 0,
+          commerceStructuresPoints: 0,
+          guildsPoints: 0,
+          totalPoints: 0,
+        },
+        Olympia: {
+          militaryConflictPoints: 8,
+          treasury: 2,
+          wonderStagesPoints: 10,
+          civilianStructuresPoints: 15,
+          scientificStructuresPoints: 20,
+          commerceStructuresPoints: 5,
+          guildsPoints: 15,
+          totalPoints: 75,
+        },
+        Alexandria: {
+          militaryConflictPoints: 0,
+          treasury: 0,
+          wonderStagesPoints: 0,
+          civilianStructuresPoints: 0,
+          scientificStructuresPoints: 0,
+          commerceStructuresPoints: 0,
+          guildsPoints: 0,
+          totalPoints: 0,
+        },
+        Ephesos: {
+          militaryConflictPoints: 0,
+          treasury: 0,
+          wonderStagesPoints: 0,
+          civilianStructuresPoints: 0,
+          scientificStructuresPoints: 0,
+          commerceStructuresPoints: 0,
+          guildsPoints: 0,
+          totalPoints: 0,
+        },
+        Babylon: {
+          militaryConflictPoints: 0,
+          treasury: 0,
+          wonderStagesPoints: 0,
+          civilianStructuresPoints: 0,
+          scientificStructuresPoints: 0,
+          commerceStructuresPoints: 0,
+          guildsPoints: 0,
+          totalPoints: 0,
+        },
+        Halikarnassos: {
+          militaryConflictPoints: 0,
+          treasury: 0,
+          wonderStagesPoints: 0,
+          civilianStructuresPoints: 0,
+          scientificStructuresPoints: 0,
+          commerceStructuresPoints: 0,
+          guildsPoints: 0,
+          totalPoints: 0,
+        },
+        ewrastdyfuyg: {
+          militaryConflictPoints: 0,
+          treasury: 0,
+          wonderStagesPoints: 0,
+          civilianStructuresPoints: 0,
+          scientificStructuresPoints: 0,
+          commerceStructuresPoints: 0,
+          guildsPoints: 0,
+          totalPoints: 0,
+        },
+      };
+
+      const createEle = (tag, { class: className, id }) => {
+        const ele = document.createElement(tag);
+        if (className) ele.classList.add(...className);
+        if (id) ele.id = id;
+
+        return ele;
+      };
+
+      const createCell = ({ class: className, key }, stats) => {
+        const valueEle = createEle("div", {
+          class: [className, "cell"],
+        });
+        valueEle.textContent = stats[key] ?? 0;
+
+        return valueEle;
+      };
+
+      const createPlayerCol = ([wonder, stats], label) => {
+        const columnEle = createEle("div", { class: ["col"] });
+
+        const wonderNameEle = createEle("div", {
+          class: ["cell", "category"],
+        });
+        wonderNameEle.textContent = wonder;
+
+        const playerScore = labels.map((label) => {
+          return createCell(label, stats);
+        });
+
+        columnEle.append(wonderNameEle, ...playerScore);
+
+        return columnEle;
+      };
+
+      const renderResults = () => {
+        const scoreBoard = document.querySelector(".score-board");
+
+        const playersScore = Object.entries(data).map((playerData) => {
+          return createPlayerCol(playerData, labels);
+        });
+
+        scoreBoard.append(...playersScore);
+      };
+
+      const main = () => {
+        const homeBtn = document.querySelector("#return-home");
+        homeBtn.addEventListener("click", redirectHome);
+
+        renderResults();
+      };
+
+      globalThis.onload = main;
+    </script>
+  </body>
+</html>

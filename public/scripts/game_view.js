@@ -361,13 +361,9 @@ const getOpponentsStats = (playerInfo) => {
 
 const renderOtherPlayerStats = ({ others }) => {
   const otherPlayersContainer = document.getElementById("other-players");
-  // const template = document.getElementById("other-players-template");
 
   const stats = others.map((playerInfo) => {
     const currentPlayerStat = getOpponentsStats(playerInfo);
-    // const eventTarget = currentPlayerStat.querySelector(
-    //   ".players-wonder-stats",
-    // );
     currentPlayerStat.addEventListener(
       "mouseenter",
       () => oppentView(playerInfo),
@@ -525,7 +521,6 @@ const addBuildOptEvtListener = (
   postPlayerAction,
   resetPlayerAction,
 ) => {
-  console.log(card);
   const listener = card.build.canTrade ? tradeAction : reqBuildCard;
 
   stage.addEventListener(
