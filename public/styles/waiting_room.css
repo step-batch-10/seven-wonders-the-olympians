@@ -27,6 +27,7 @@ main {
   gap: 30px;
   color: #f6da9d;
   text-transform: capitalize;
+  border-radius: 10px;
 }
 
 .loader {

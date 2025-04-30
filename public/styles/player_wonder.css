@@ -18,8 +18,10 @@ body {
   background-color: #705519;
   color: white;
   font-size: 3rem;
+  border-radius: 10px;
 }
 
 .wonder-img {
   width: 60%;
+  border-radius: 10px;
 }

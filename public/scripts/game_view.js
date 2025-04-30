@@ -504,8 +504,8 @@ const removeHoverMessage = () => {
 };
 
 const createTradeBody = ({ right, left }) => {
-  const [div, rightEl, leftEl] = createElements("div", "p", "p");
-  leftEl.textContent = `Left : 💲 ${left}`;
+  const [div, rightEl, leftEl] = createElements("div", "pre", "pre");
+  leftEl.textContent = `Left   : 💲 ${left}`;
   rightEl.textContent = `Right : 💲 ${right}`;
   div.append(leftEl, rightEl);
 

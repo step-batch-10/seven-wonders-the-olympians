@@ -6,6 +6,7 @@
   font-family: sans-serif;
   font-size: 1.2rem;
   color: #9a6a1c;
+  font-weight: bold;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
@@ -53,6 +54,8 @@ main {
 }
 
 #other-players {
+  width: 100%;
+  position: absolute;
   height: 50px;
 }
 
@@ -252,6 +255,10 @@ p {
   padding: 20px;
 }
 
+.deck * {
+  font-weight: 500 !important;
+}
+
 .actions-box > div {
   display: flex;
   color: black;
@@ -352,6 +359,7 @@ p {
 }
 
 .popup {
+  margin: 10px;
   position: absolute;
   right: 0;
   top: 0;
@@ -408,7 +416,7 @@ p {
 }
 
 #player-name {
-  color: black;
+  color: #9a6a1c;
   font-weight: 700;
   font-size: 1.5rem;
 }
@@ -778,17 +786,26 @@ button > img {
   cursor: pointer;
 }
 .trade-summary {
+  border-radius: 4px;
   background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 10px;
   justify-content: center;
-  padding: 10px;
+  padding: 20px;
 }
 
 .trade-summary p {
   white-space: nowrap;
+}
+
+.trade-summary > button {
+  font-size: 16px;
+  padding: 4px 10px;
+  border: 1px solid #9a6a1c;
+  border-radius: 4px;
+  background-color: #f0ddb7;
 }
 
 button {
