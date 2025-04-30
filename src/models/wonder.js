@@ -26,12 +26,7 @@ class Wonder {
 
     this.#buildingsSet = new Set();
     this.#resources = [{ id: wonder.name, type: wonder.resource, count: 1 }];
-    // this.#discounts = {
-    //   leftNeighbour: new Set(),
-    //   rightNeighbour: new Set(),
-    // };
     this.#militaryStrength = 0;
-    // this.#victoryPoints = 0;
     this.#staged = [];
     this.#futureBenefits = new Set();
   }
@@ -101,60 +96,9 @@ class Wonder {
     return this.#buildingsSet;
   }
 
-  // calculateResources(cards) {
-  //   const resources = {
-  //     wood: 0,
-  //     ore: 0,
-  //     clay: 0,
-  //     stone: 0,
-  //     papyrus: 0,
-  //     glass: 0,
-  //     textile: 0,
-  //     loom: 0,
-  //     choices: [],
-  //   };
-
-  //   cards.forEach((card) => {
-  //     const type = card.produces[0].type;
-
-  //     if (type === "choice") {
-  //       resources.choices.push(card.produces[0].options);
-  //     } else {
-  //       resources[type] += card.produces[0].count;
-  //     }
-  //   });
-
-  //   resources[this.wonder.resource] += 1;
-  //   return resources;
-  // }
-
-  // aggregatedResources() {
-  //   const brown = this.#buildings.brown;
-  //   const grey = this.#buildings.grey;
-  //   const yellow = this.#buildings.yellow.filter(
-  //     ({ produces }) => produces.length > 0
-  //   );
-  //   return this.calculateResources([...brown, ...grey, ...yellow]);
-  // }
-
   alreadyBuilt(cardName) {
     return this.#buildingsSet.has(cardName);
   }
-
-  // isDiscountCard(card) {
-  //   const isYellowCard = card.color === "yellow";
-  //   const isDiscountCard = card.effect && card.effect[0]?.effectType === "buy";
-
-  //   return isYellowCard && isDiscountCard;
-  // }
-
-  // isMilitaryStrength(card) {
-  //   return card.color === "red";
-  // }
-
-  // isVictoryPoints(card) {
-  //   return card.color === "blue";
-  // }
 
   addResources(card) {
     const tradables = new Set(["brown", "grey"]);
@@ -164,20 +108,6 @@ class Wonder {
       this.resources.push({ id: card.name, ...produced, tradable });
     });
   }
-
-  // addDiscounts(card) {
-  //   const resources = card.effect[0].options;
-  //   const newNeighbours = card.effect[0].appliesTo;
-
-  //   newNeighbours.forEach((neighbour) => {
-  //     resources.forEach((resource) => this.#discounts[neighbour].add(resource));
-  //   });
-  // }
-
-  // addVictoryPoints(card) {
-  //   const count = card.produces[0].count;
-  //   this.#victoryPoints += count;
-  // }
 
   increaseMilitaryStrengthBy(count) {
     this.#militaryStrength += count;
