@@ -183,7 +183,6 @@ p {
 .actions-box > div {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 0.5em;
   cursor: pointer;
 }
@@ -255,7 +254,6 @@ p {
 
 .actions-box > div {
   display: flex;
-  justify-content: space-evenly;
   color: black;
 }
 

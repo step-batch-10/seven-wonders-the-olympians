@@ -581,7 +581,7 @@ const addHoverListener = (ele, actions, action) => {
 const createBuild = (card, postPlayerAction, resetPlayerAction) => {
   const [stage, content, image] = createElements("div", "p", "img");
 
-  image.src = "/img/icons/build.png";
+  image.src = "/img/icons/abhinav-bin.png";
   content.innerText = "Build";
   stage.append(image, content);
 
@@ -612,7 +612,7 @@ const reqToDiscard = (card, postPlayerAction, resetPlayerAction) => {
 const createDiscard = (card, postPlayerAction, resetPlayerAction) => {
   const [stage, content, image] = createElements("div", "p", "img");
 
-  image.src = "/img/icons/discard.png";
+  image.src = "/img/icons/abhinav-stage.png";
   content.innerText = "Discard";
   stage.append(image, content);
 
@@ -636,7 +636,7 @@ const reqToStage = (card, postAction, reset) => {
 const createStage = (card, postAction, resetAction) => {
   const [stage, content, image] = createElements("div", "p", "img");
 
-  image.src = "/img/icons/stage.png";
+  image.src = "/img/icons/abhinav-build.png";
   content.innerText = "Stage";
   stage.append(image, content);
 
