@@ -620,9 +620,15 @@ class Player {
   #getStageBenefits() {
     const stageCount = `stage${this.#wonder.staged.length}`;
     const { effects } = this.#wonder.stages[stageCount];
-    const effect = effects.find(({ type }) => type === "coin");
+    const coinEffects = effects.find(({ type }) => type === "coin");
+    const militaryEffect = effects.find(({ type }) => type === "military");
+    console.log("ak before =====>", this.wonder.militaryStrength);
 
-    if (effect) this.#result.coins += effect.count;
+    if (coinEffects) this.#result.coins += coinEffects.count;
+    if (militaryEffect) {
+      this.wonder.increaseMilitaryStrengthBy(militaryEffect.count);
+    }
+    console.log("ak after =====>", this.wonder.militaryStrength);
   }
 
   stageCard(cardName) {

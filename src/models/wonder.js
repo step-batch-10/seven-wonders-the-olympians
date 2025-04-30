@@ -157,8 +157,11 @@ class Wonder {
   // }
 
   addResources(card) {
+    const tradables = new Set(["brown", "grey"]);
+    const tradable = tradables.has(card.color);
+
     card?.produces.forEach((produced) => {
-      this.resources.push({ id: card.name, ...produced });
+      this.resources.push({ id: card.name, ...produced, tradable });
     });
   }
 
@@ -176,9 +179,13 @@ class Wonder {
   //   this.#victoryPoints += count;
   // }
 
+  increaseMilitaryStrengthBy(count) {
+    this.#militaryStrength += count;
+  }
+
   addMilitaryStrength(card) {
     card?.produces.forEach(({ type, count }) => {
-      if (type === "shield") this.#militaryStrength += count;
+      if (type === "shield") this.increaseMilitaryStrengthBy(count);
     });
   }
 
