@@ -9,17 +9,18 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
+
 body {
   height: 100vh;
   width: 100vw;
-  background: radial-gradient(ellipse at bottom center, #f0ddb7, #ad884c);
+  background: radial-gradient(circle, #f0ddb7, #ad884c);
   background-size: cover;
   background-position: center;
   overflow: hidden;
 }
 
 body img {
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
 main {
@@ -92,10 +93,7 @@ main {
   padding: 0.2rem;
   width: 100%;
 }
-.cards {
-  overflow-y: scroll;
-  gap: 30px;
-}
+
 .cards img {
   position: absolute;
   z-index: calc(var(--z-index));
@@ -115,6 +113,8 @@ main {
 
 .cards {
   z-index: -2;
+  background-color: #9a6a1c;
+
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -122,6 +122,9 @@ main {
   position: relative;
   height: 100%;
   width: 100%;
+  overflow-y: scroll;
+  gap: 12px;
+  padding: 6px;
 }
 
 .wonder-stats {
@@ -160,9 +163,7 @@ p {
   height: 196px;
   cursor: pointer;
 }
-.deck img {
-  cursor: pointer;
-}
+
 #cards-container {
   display: flex;
   justify-content: center;
@@ -201,15 +202,10 @@ p {
   bottom: -20px;
 }
 
-.built-cards {
-  position: relative;
-  bottom: -104px;
-}
-
 .built-cards > div > img {
   position: absolute;
   width: 129px;
-  transform: translateY(calc(var(--index) * -42px));
+  transform: translateY(calc(var(--index) * -40px));
   z-index: calc(var(--z-index));
   transition: 0.1s linear;
 }
@@ -228,13 +224,6 @@ p {
 .second-col > img {
   height: 196px;
   width: 126px;
-}
-
-.built-cards {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 39px;
 }
 
 .wonder,
@@ -269,19 +258,11 @@ p {
   color: black;
 }
 
-main img {
-  border-radius: 5px;
-}
-
 .player-stats-header {
   background-color: #ddb35b;
 }
 .wonder-stats {
   background-color: #ddb35b;
-}
-
-.cards {
-  background-color: #9a6a1c;
 }
 
 .other-player-stats > .player-stats-header > * {
@@ -605,6 +586,22 @@ img.reselect-icon {
   align-items: center;
 }
 
+#left-neighbour .wonder-stats {
+  border-bottom-right-radius: 10px;
+}
+
+#right-neighbour .wonder-stats {
+  border-bottom-left-radius: 10px;
+}
+
+#left-neighbour .player-stats-header {
+  border-top-right-radius: 10px;
+}
+
+#right-neighbour .player-stats-header {
+  border-top-left-radius: 10px;
+}
+
 #right-neighbour {
   display: flex;
   flex-direction: row-reverse;
@@ -666,18 +663,18 @@ img.reselect-icon {
 }
 
 .hide {
-  transform: translateX(-251px);
+  transform: translateX(-252px);
 }
 
 .hide2 {
-  transform: translateX(251px);
+  transform: translateX(252px);
 }
 
 .built-cards {
   width: 125%;
   display: flex;
   justify-content: flex-start;
-  gap: 19.5px;
+  gap: 26px;
   position: absolute;
   left: 157.5px;
   flex-wrap: nowrap;
@@ -810,6 +807,7 @@ button {
   align-items: center;
   justify-content: space-around;
   background-color: #ddb35b;
+  border-bottom: 10px;
 }
 
 .opponent img {
