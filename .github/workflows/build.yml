@@ -1,4 +1,4 @@
-name: Build & Analyze with SonarQube
+name: Deno Build & SonarQube Analysis
 
 on:
   push:
@@ -13,20 +13,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Full history for Sonar relevance
+          fetch-depth: 0  # required for accurate Sonar analysis
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Set up Deno
+        uses: denoland/setup-deno@v1
         with:
-          node-version: '20'
+          deno-version: v1.x
 
-      - name: Install dependencies
-        run: npm install
+      - name: Run Deno tests with coverage
+        run: |
+          deno test --coverage=coverage
+          deno coverage coverage --lcov > coverage/lcov.info
 
-      - name: Run tests with coverage
-        run: npm run test -- --code-coverage --watch=false
-
-      - name: SonarQube Scan
+      - name: Run SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
