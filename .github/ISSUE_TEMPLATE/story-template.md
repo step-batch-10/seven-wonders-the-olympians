@@ -1,9 +1,9 @@
 ---
 name: Story template
 about: A story template
-title: ''
-labels: ''
-assignees: ''
+title: ""
+labels: ""
+assignees: ""
 ---
 
 ### Story
